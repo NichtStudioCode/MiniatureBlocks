@@ -1,0 +1,21 @@
+name: MiniatureBlocks
+author: StudioCode
+version: "0.1"
+api-version: "1.16"
+main: de.studiocode.miniatureblocks.MiniatureBlocks
+
+commands: 
+  miniatureworld:
+    description: Teleports you to the world for building miniatures
+    usage: /miniatureworld
+    aliases: [mw]
+    permission: miniatureblocks.miniatureworld
+  createminiature:
+    description: Create a new model
+    usage: /createmodel <Parse Type> <Name>
+    aliases: [cm]
+    permission: miniatureblocks.createnewmodel
+  miniatures:
+    description: Open the miniatures inventory
+    usage: /miniatures
+    permission: miniatureblocks.miniatures
