@@ -4,8 +4,6 @@ import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.commands.PlayerCommand
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser.ParseType
-import de.studiocode.miniatureblocks.utils.ItemBuilder
-import org.bukkit.Material
 import org.bukkit.entity.Player
 
 class CreateMiniatureCommand : PlayerCommand() {

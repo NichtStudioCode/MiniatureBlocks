@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
-class MiniatureItem(private val name: String, private val customModelData: Int) : MenuItem() {
+class MiniatureItem(private val name: String, customModelData: Int) : MenuItem() {
     
     private val itemStack = ItemBuilder(Material.JACK_O_LANTERN, name = "§f$name", customModelData = customModelData).also { 
         it.addLoreLine("§7Left-click to obtain miniature")
@@ -25,7 +25,7 @@ class MiniatureItem(private val name: String, private val customModelData: Int) 
             (event.whoClicked as Player).inventory.addItem(itemStack)
         } else if (clickType == ClickType.RIGHT) {
             MiniatureBlocks.INSTANCE.resourcePack.removeModel(name)
-            //TODO: remove all armorstands with the deleted model
+            //TODO: remove all armor stands with the deleted model
         }
         return false
     }

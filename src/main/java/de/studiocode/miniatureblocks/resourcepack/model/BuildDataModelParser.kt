@@ -1,10 +1,10 @@
 package de.studiocode.miniatureblocks.resourcepack.model
 
-import BlockTexture
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import de.studiocode.miniatureblocks.builderworld.BuildData
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bukkit.Material
 
 class BuildDataModelParser(buildData: BuildData) {

@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.builderworld
 
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.utils.WorldUtils
 import org.bukkit.*
 import org.bukkit.entity.Player

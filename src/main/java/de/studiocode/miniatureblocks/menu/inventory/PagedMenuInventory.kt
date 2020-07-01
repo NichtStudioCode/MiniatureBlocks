@@ -6,7 +6,7 @@ import de.studiocode.miniatureblocks.menu.item.impl.pagedmenu.ForwardItem
 import java.util.stream.IntStream
 import kotlin.math.roundToInt
 
-abstract class PagedMenuInventory(title: String, lines: Int = 6, val bBtn: Int = 48, val fBtn: Int = 50,
+abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBtn: Int = 48, private val fBtn: Int = 50,
                                   private val scrollableSlots: IntArray = IntStream.range(0, 45).toArray()) : MenuInventory(title, lines) {
     
     var currentPage = 0

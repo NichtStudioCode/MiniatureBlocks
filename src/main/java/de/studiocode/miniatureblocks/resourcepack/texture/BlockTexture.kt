@@ -1,6 +1,9 @@
+package de.studiocode.miniatureblocks.resourcepack.texture
+
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser.BlockFace
 import org.bukkit.Material
 
+@Suppress("unused")
 enum class BlockTexture {
 
     ACACIA_LOG(Material.ACACIA_LOG, "acacia_log_top", "acacia_log"),
@@ -20,7 +23,7 @@ enum class BlockTexture {
     BLACKSTONE(Material.BLACKSTONE, "blackstone_top", "blackstone"),
     BLACK_CONCRETE(Material.BLACK_CONCRETE),
     BLACK_GLAZED_TERRACOTTA(Material.BLACK_GLAZED_TERRACOTTA),
-    BlACK_SHULKER_BOX(Material.BLACK_SHULKER_BOX), //has multiple textures ingame but i could only find one texture in the assets
+    BLACK_SHULKER_BOX(Material.BLACK_SHULKER_BOX), //has multiple textures in-game but i could only find one texture in the assets
     BLACK_STAINED_GLASS(Material.BLACK_STAINED_GLASS),
     BLACK_TERRACOTTA(Material.BLACK_TERRACOTTA),
     BLACK_WOOL(Material.BLACK_WOOL),
@@ -38,7 +41,7 @@ enum class BlockTexture {
     BRICKS(Material.BRICKS),
     BROWN_CONCRETE(Material.BROWN_CONCRETE),
     BROWN_GLAZED_TERRACOTTA(Material.BROWN_GLAZED_TERRACOTTA),
-    BROWM_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK),
+    BROWN_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK),
     BROWN_SHULKER_BOX(Material.BROWN_SHULKER_BOX),
     BROWN_STAINED_GLASS(Material.BROWN_STAINED_GLASS),
     BROWN_TERRACOTTA(Material.BROWN_TERRACOTTA),
@@ -104,7 +107,7 @@ enum class BlockTexture {
     GOLD_BLOCK(Material.GOLD_BLOCK),
     GOLD_ORE(Material.GOLD_ORE),
     GRANITE(Material.GRANITE),
-    GRASS_BLOCK(Material.GRASS_BLOCK, "lime_wool", "dirt", "grass_block_side"), //lime wool because it is gray otherwise
+    GRASS_BLOCK(Material.GRASS_BLOCK, "lime_wool", "dirt", "grass_block_side"), //lime wool because it is gray otherwise Todo: find alternative
     GRASS_PATH(Material.GRASS_PATH, "grass_path_top", "dirt", "grass_path_side"),
     GRAY_CONCRETE(Material.GRAY_CONCRETE),
     GRAY_GLAZED_TERRACOTTA(Material.GRAY_GLAZED_TERRACOTTA),
@@ -289,12 +292,12 @@ enum class BlockTexture {
     YELLOW_WOOL(Material.YELLOW_WOOL);
 
     val material: Material
-    val textureTop: String
-    val textureBottom: String
-    val textureFront: String
-    val textureSouth: String
-    val textureEast: String
-    val textureWest: String
+    private val textureTop: String
+    private val textureBottom: String
+    private val textureFront: String
+    private val textureSouth: String
+    private val textureEast: String
+    private val textureWest: String
 
     constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureSouth: String, textureEast: String, textureWest: String) {
         this.material = material
