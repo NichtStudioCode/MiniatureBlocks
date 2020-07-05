@@ -14,6 +14,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
+import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.inventory.ItemStack
 
 class MiniatureManager : Listener {
@@ -75,13 +76,37 @@ class MiniatureManager : Listener {
         armorStand.isCollidable = false
         armorStand.setGravity(false)
     }
+    
+    fun removeMiniatureArmorStands(itemStack: ItemStack) {
+        for (world in Bukkit.getWorlds()) {
+            for (armorStand in world.entities.filterIsInstance<ArmorStand>()) {
+                if (armorStand.isMiniature(itemStack)) armorStand.remove()
+            }
+        }
+    }
+    
+    @EventHandler
+    fun handleChunkLoad(event: ChunkLoadEvent) {
+        for (armorStand in event.chunk.entities.filterIsInstance<ArmorStand>()) {
+            if (armorStand.isMiniature()) {
+                val customModelData = armorStand.equipment!!.helmet!!.itemMeta!!.customModelData
+                if (!MiniatureBlocks.INSTANCE.resourcePack.hasModelData(customModelData)) {
+                    armorStand.remove()
+                }
+            }
+        }
+    }
 
     private fun ArmorStand.isMiniature(): Boolean {
         return equipment?.helmet != null && equipment?.helmet?.isMiniature() ?: false
+    }
+    
+    private fun ArmorStand.isMiniature(itemStack: ItemStack): Boolean {
+        return equipment?.helmet != null && equipment?.helmet == itemStack
     }
 
     private fun ItemStack.isMiniature(): Boolean {
         return type == Material.JACK_O_LANTERN && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
     }
-
+    
 }

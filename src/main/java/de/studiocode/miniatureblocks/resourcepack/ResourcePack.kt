@@ -1,11 +1,9 @@
 package de.studiocode.miniatureblocks.resourcepack
 
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
-import de.studiocode.miniatureblocks.resourcepack.model.Model
+import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
 import de.studiocode.miniatureblocks.resourcepack.model.ModelData
 import de.studiocode.miniatureblocks.utils.FileIOUploadUtils
 import de.studiocode.miniatureblocks.utils.FileUtils
@@ -16,7 +14,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import java.io.File
-import java.io.FileReader
 
 class ResourcePack : Listener {
 
@@ -45,10 +42,7 @@ class ResourcePack : Listener {
             FileUtils.extractFile("/resourcepack/parent.json", modelParent)
         }
 
-        val jsonObject = if (mainModelDataFile.exists()) {
-            JsonParser().parse(FileReader(mainModelDataFile)).asJsonObject
-        } else JsonObject()
-        mainModelData = MainModelData(jsonObject)
+        mainModelData = MainModelData(mainModelDataFile)
     }
 
     fun upload(): String? {
@@ -71,40 +65,44 @@ class ResourcePack : Listener {
         return modelFile.exists()
     }
 
+    fun hasModelData(customModelData: Int): Boolean {
+        return mainModelData.hasCustomModelData(customModelData)
+    }
+
     fun addNewModel(name: String, modelData: ModelData): Int {
         val modelFile = File(moddedItemModelsDir, "$name.json")
         modelData.writeToFile(modelFile)
 
         return addOverride("item/modded/$name")
     }
-    
+
     fun removeModel(name: String) {
         val modelFile = File(moddedItemModelsDir, "$name.json")
         modelFile.delete()
-        
+
         removeOverride(name)
     }
 
     private fun addOverride(model: String): Int {
         val customModelData = mainModelData.getNextCustomModelData()
-        mainModelData.addOverride(customModelData, model)
-        mainModelData.writeToFile(mainModelDataFile)
+        mainModelData.customModels.add(CustomModel(customModelData, model))
+        mainModelData.writeToFile()
 
         createZip()
         forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
         return customModelData
     }
-    
+
     private fun removeOverride(name: String) {
-        mainModelData.removeOverride(name)
-        mainModelData.writeToFile(mainModelDataFile)
+        mainModelData.removeModel(name)
+        mainModelData.writeToFile()
 
         createZip()
         forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
     }
 
-    fun getModels(): ArrayList<Model> {
-        return mainModelData.getModels()
+    fun getModels(): ArrayList<CustomModel> {
+        return mainModelData.customModels
     }
 
     @EventHandler

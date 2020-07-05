@@ -1,63 +1,63 @@
 package de.studiocode.miniatureblocks.resourcepack.model
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import java.io.File
 
-class MainModelData(jsonObject: JsonObject) : ModelData(jsonObject) {
+class MainModelData(private val file: File) {
 
-    private val overrides: JsonArray
-
+    val customModels = ArrayList<CustomModel>()
+    
     init {
-        jsonObject.addProperty("parent", "block/jack_o_lantern")
+        if (file.exists()) {
+            val jsonObj = JsonParser().parse(file.inputStream().reader()).asJsonObject
+            if (jsonObj.has("overrides")) {
+                val overrides = jsonObj.get("overrides").asJsonArray
+                for (customModelObj in overrides.map { it.asJsonObject }) {
+                    val customModelData = jsonObj.get("predicate").asJsonObject.get("custom_model_data").asInt
+                    val model = customModelObj.get("model").asString
 
-        overrides = if (jsonObject.has("overrides")) jsonObject.get("overrides").asJsonArray
-        else JsonArray()
-
-        jsonObject.add("overrides", overrides)
-    }
-
-    fun addOverride(customModelData: Int, model: String) {
-        val overrideObj = JsonObject()
-        val predicate = JsonObject()
-        predicate.addProperty("custom_model_data", customModelData)
-        overrideObj.add("predicate", predicate)
-        overrideObj.addProperty("model", model)
-
-        overrides.add(overrideObj)
-    }
-
-    fun removeOverride(name: String) {
-        overrides.remove(overrides.map(JsonElement::getAsJsonObject)
-                        .first { it.get("model").asString.split("/")[2] == name })
-    }
-
-    fun getNextCustomModelData(): Int {
-        var highest = 10000000
-
-        for (overrideObj in overrides.map(JsonElement::getAsJsonObject)) {
-            if (overrideObj.has("predicate")) {
-                val predicate = overrideObj.get("predicate").asJsonObject
-                if (predicate.has("custom_model_data")) {
-                    val customModelData = predicate.get("custom_model_data").asInt
-                    if (customModelData > highest) highest = customModelData
+                    customModels.add(CustomModel(customModelData, model))
                 }
             }
         }
-
-        return highest + 1
+    }
+    
+    fun writeToFile() {
+        val jsonObject = createJsonObject()
+        file.writeText(jsonObject.toString())
+    }
+    
+    private fun createJsonObject(): JsonObject {
+        val mainObj = JsonObject()
+        mainObj.addProperty("parent", "block/jack_o_lantern")
+        
+        val overrides = JsonArray()
+        for (customModel in customModels) {
+            val customModelObj = JsonObject()
+            val predicateObj = JsonObject()
+            predicateObj.addProperty("custom_model_data", customModel.customModelData)
+            customModelObj.add("predicate", predicateObj)
+            customModelObj.addProperty("model", customModel.model)
+            
+            overrides.add(customModelObj)
+        }
+        mainObj.add("overrides", overrides)
+        
+        return mainObj
     }
 
-    fun getModels(): ArrayList<Model> {
-        val models = ArrayList<Model>()
-        for (overrideObj in overrides.map(JsonElement::getAsJsonObject)) {
-            val name = overrideObj.get("model").asString.split("/")[2]
-            val customModelData = overrideObj.get("predicate").asJsonObject.get("custom_model_data").asInt
-
-            models.add(Model(name, customModelData))
-        }
-
-        return models
+    fun hasCustomModelData(customModelData: Int): Boolean = customModels.any { it.customModelData == customModelData}
+    
+    fun getNextCustomModelData(): Int = (customModels.map { it.customModelData }.max() ?: 1000000) + 1
+    
+    fun removeModel(name: String) = customModels.removeIf { it.name == name }
+    
+    class CustomModel(val customModelData: Int, val model: String) {
+        
+        val name = model.split("/")[2]
+        
     }
 
 }

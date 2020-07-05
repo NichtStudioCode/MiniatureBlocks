@@ -11,21 +11,23 @@ import org.bukkit.inventory.ItemStack
 
 class MiniatureItem(private val name: String, customModelData: Int) : MenuItem() {
     
-    private val itemStack = ItemBuilder(Material.JACK_O_LANTERN, name = "§f$name", customModelData = customModelData).also { 
+    private val itemBuilder = ItemBuilder(Material.JACK_O_LANTERN, name = "§f$name", customModelData = customModelData)
+    private val receivableItem = itemBuilder.build()
+    private val menuItemStack = itemBuilder.also {
         it.addLoreLine("§7Left-click to obtain miniature")
         it.addLoreLine("§7Right-click to delete miniature")
     }.build()
     
     override fun getItemStack(): ItemStack {
-        return itemStack
+        return menuItemStack
     }
 
     override fun handleClick(clickType: ClickType, event: InventoryClickEvent): Boolean {
         if (clickType == ClickType.LEFT) {
-            (event.whoClicked as Player).inventory.addItem(itemStack)
+            (event.whoClicked as Player).inventory.addItem(receivableItem)
         } else if (clickType == ClickType.RIGHT) {
             MiniatureBlocks.INSTANCE.resourcePack.removeModel(name)
-            //TODO: remove all armor stands with the deleted model
+            MiniatureBlocks.INSTANCE.miniatureManager.removeMiniatureArmorStands(receivableItem)
         }
         return false
     }
