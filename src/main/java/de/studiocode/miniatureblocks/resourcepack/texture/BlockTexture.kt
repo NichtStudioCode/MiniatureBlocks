@@ -1,6 +1,5 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
-import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser.BlockFace
 import org.bukkit.Material
 
 @Suppress("unused")
@@ -292,21 +291,21 @@ enum class BlockTexture {
     YELLOW_WOOL(Material.YELLOW_WOOL);
 
     val material: Material
-    private val textureTop: String
-    private val textureBottom: String
-    private val textureFront: String
-    private val textureSouth: String
-    private val textureEast: String
-    private val textureWest: String
+    val textureTop: String
+    val textureBottom: String
+    val textureFront: String
+    val textureBack: String
+    val textureRight: String
+    val textureLeft: String
 
-    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureSouth: String, textureEast: String, textureWest: String) {
+    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureBack: String, textureRight: String, textureLeft: String) {
         this.material = material
         this.textureTop = "block/$textureTop"
         this.textureBottom = "block/$textureBottom"
         this.textureFront = "block/$textureFront"
-        this.textureSouth = "block/$textureSouth"
-        this.textureEast = "block/$textureEast"
-        this.textureWest = "block/$textureWest"
+        this.textureBack = "block/$textureBack"
+        this.textureRight = "block/$textureRight"
+        this.textureLeft = "block/$textureLeft"
     }
 
     constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureSide: String) :
@@ -332,37 +331,26 @@ enum class BlockTexture {
         textureFront = texture + if (front) "_front" else "_side"
 
         val textureSide = texture + "_side"
-        textureSouth = textureSide
-        textureEast = textureSide
-        textureWest = textureSide
-
-    }
-
-    fun getTextureForBlockFace(blockFace: BlockFace): String = when (blockFace) {
-
-        BlockFace.UP -> textureTop
-        BlockFace.DOWN -> textureBottom
-        BlockFace.NORTH -> textureFront
-        BlockFace.SOUTH -> textureSouth
-        BlockFace.WEST -> textureWest
-        BlockFace.EAST -> textureEast
+        textureBack = textureSide
+        textureRight = textureSide
+        textureLeft = textureSide
 
     }
     
     fun getAllTextures(): Array<String> {
-        return arrayOf(textureTop, textureBottom, textureFront, textureSouth, textureWest, textureEast)
+        return arrayOf(textureTop, textureBottom, textureFront, textureBack, textureLeft, textureRight)
     }
-    
+
     companion object {
-        
+
         fun hasMaterial(material: Material): Boolean {
             return values().any { it.material == material }
         }
-        
+
         fun getFromMaterial(material: Material): BlockTexture {
             return values().first { it.material == material }
         }
-        
+
     }
 
 }

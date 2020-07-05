@@ -1,19 +1,23 @@
 package de.studiocode.miniatureblocks.builderworld
 
-import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser.BlockFace
+import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction
 import de.studiocode.miniatureblocks.utils.isSeeTrough
 import org.bukkit.Chunk
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
+import org.bukkit.block.data.Directional
 
 class BuildData(chunk: Chunk) {
 
-    val data = ArrayList<BlockData>()
+    val data = ArrayList<BuildBlockData>()
 
     init {
         for (x in 0..15) {
             for (y in 1..16) {
                 for (z in 0..15) {
-                    val type = chunk.getBlock(x, y, z).type
+                    val block = chunk.getBlock(x, y, z)
+                    val blockData = block.blockData
+                    val type = block.type
                     if (type != Material.AIR) {
                         val blockUp = if (y + 1 != 17) !chunk.getBlock(x, y + 1, z).type.isSeeTrough() else false
                         val blockDown = if (y - 1 != 0) !chunk.getBlock(x, y - 1, z).type.isSeeTrough() else false
@@ -24,27 +28,29 @@ class BuildData(chunk: Chunk) {
                         val blockEast = if (x + 1 != 16) !chunk.getBlock(x + 1, y, z).type.isSeeTrough() else false
                         val blockWest = if (x - 1 != -1) !chunk.getBlock(x - 1, y, z).type.isSeeTrough() else false
 
-                        val blockData = BlockData(x, y, z, type, blockUp, blockDown, blockSouth, blockNorth, blockEast, blockWest)
-                        if (!blockData.isSurroundedByBlocks()) data.add(blockData)
+                        val blockFace = if (blockData is Directional) blockData.facing else BlockFace.NORTH
+                        val buildBlockData = BuildBlockData(x, y, z, type, blockFace, blockUp, blockDown, blockSouth, blockNorth, blockEast, blockWest)
+                        if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
                     }
                 }
             }
         }
     }
 
-    class BlockData(val x: Int, val y: Int, val z: Int, val material: Material,
-                    val blockUp: Boolean = false, val blockDown: Boolean = false, val blockSouth: Boolean = false,
-                    val blockNorth: Boolean = false, val blockEast: Boolean = false, val blockWest: Boolean = false) {
+    class BuildBlockData(val x: Int, val y: Int, val z: Int, val material: Material, val blockFace: BlockFace,
+                         private val blockUp: Boolean = false, private val blockDown: Boolean = false,
+                         private val blockSouth: Boolean = false, private val blockNorth: Boolean = false,
+                         private val blockEast: Boolean = false, private val blockWest: Boolean = false) {
 
         fun isSurroundedByBlocks(): Boolean = blockUp && blockDown && blockSouth && blockNorth && blockEast && blockWest
 
-        fun hasBlock(blockFace: BlockFace): Boolean = when (blockFace) {
-            BlockFace.UP -> blockUp
-            BlockFace.DOWN -> blockDown
-            BlockFace.SOUTH -> blockSouth
-            BlockFace.NORTH -> blockNorth
-            BlockFace.EAST -> blockEast
-            BlockFace.WEST -> blockWest
+        fun hasBlock(side: Direction): Boolean = when (side) {
+            Direction.NORTH -> blockNorth
+            Direction.EAST -> blockEast
+            Direction.SOUTH -> blockSouth
+            Direction.WEST -> blockWest
+            Direction.UP -> blockUp
+            Direction.DOWN -> blockDown
         }
 
     }

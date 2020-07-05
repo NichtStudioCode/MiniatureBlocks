@@ -12,7 +12,7 @@ commands:
     permission: miniatureblocks.miniatureworld
   createminiature:
     description: Create a new model
-    usage: /createmodel <Parse Type> <Name>
+    usage: /createmodel <name>
     aliases: [cm]
     permission: miniatureblocks.createnewmodel
   miniatures:

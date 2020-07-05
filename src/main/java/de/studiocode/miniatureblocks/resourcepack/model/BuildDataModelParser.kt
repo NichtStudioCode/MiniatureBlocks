@@ -2,20 +2,18 @@ package de.studiocode.miniatureblocks.resourcepack.model
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
 import de.studiocode.miniatureblocks.builderworld.BuildData
+import de.studiocode.miniatureblocks.builderworld.BuildData.BuildBlockData
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bukkit.Material
 
 class BuildDataModelParser(buildData: BuildData) {
 
     companion object {
-        private val FULL_UV = JsonArray()
-        private val FIRST_UV = JsonArray()
+        private val UV = JsonArray()
 
         init {
-            intArrayOf(0, 0, 16, 16).forEach { FULL_UV.add(it) }
-            intArrayOf(0, 0, 1, 1).forEach { FIRST_UV.add(it) }
+            intArrayOf(0, 0, 16, 16).forEach { UV.add(it) }
         }
     }
 
@@ -31,9 +29,9 @@ class BuildDataModelParser(buildData: BuildData) {
         mainObj.add("elements", elements)
     }
 
-    fun parse(parseType: ParseType): ModelData {
+    fun parse(): ModelData {
         createTextureIds()
-        parseModelData(parseType)
+        parseModelData()
 
         return ModelData(mainObj)
     }
@@ -66,103 +64,53 @@ class BuildDataModelParser(buildData: BuildData) {
         textureIds.forEach { (texture, id) -> textures.addProperty(id.toString(), texture) }
     }
 
-    private fun parseModelData(parseType: ParseType) {
+    private fun parseModelData() {
         data.forEach {
             val material = it.material
             if (BlockTexture.hasMaterial(material)) {
-                val blockTexture = BlockTexture.getFromMaterial(material)
                 val element = JsonObject()
 
-                val from = JsonArray()
-                from.add(it.x)
-                from.add(it.y)
-                from.add(it.z)
-                element.add("from", from)
+                val blockTexture = BlockTexture.getFromMaterial(it.material)
+                val cube = Cube(blockTexture)
+                cube.setFacing(Cube.Direction.fromBlockFace(it.blockFace))
 
-                val to = JsonArray()
-                to.add(it.x + 1)
-                to.add(it.y + 1)
-                to.add(it.z + 1)
-                element.add("to", to)
-
-                val faces = JsonObject()
-                for (blockFace in BlockFace.values()) {
-                    if (!it.hasBlock(blockFace)) {
-                        val faceObj = JsonObject()
-
-                        val uv = when (parseType) {
-                            ParseType.FULL -> FULL_UV
-                            ParseType.FIRST -> FIRST_UV
-                            ParseType.RIGHT -> createRightUv(it, blockFace)
-                        }
-
-                        //TODO: apply texture depending on blocks rotation
-                        
-                        faceObj.add("uv", uv)
-                        val textureId = textureIds[blockTexture.getTextureForBlockFace(blockFace)]
-                        faceObj.add("texture", JsonPrimitive("#$textureId"))
-
-                        faces.add(blockFace.modelName, faceObj)
-                    }
-                }
-                element.add("faces", faces)
+                addVoxelPos(element, it)
+                addVoxelTextures(element, it, cube)
 
                 elements.add(element)
             } else println("Material $material is invalid, skipping parsing")
         }
     }
 
-    // fixme: I don't think this is working correctly.
-    private fun createRightUv(blockData: BuildData.BlockData, blockFace: BlockFace): JsonArray {
-        val uv = JsonArray()
+    private fun addVoxelPos(element: JsonObject, buildBlockData: BuildBlockData) {
+        val from = JsonArray()
+        from.add(buildBlockData.x)
+        from.add(buildBlockData.y)
+        from.add(buildBlockData.z)
+        element.add("from", from)
 
-        when (blockFace) {
+        val to = JsonArray()
+        to.add(buildBlockData.x + 1)
+        to.add(buildBlockData.y + 1)
+        to.add(buildBlockData.z + 1)
+        element.add("to", to)
+    }
 
-            BlockFace.UP, BlockFace.DOWN -> {
-                uv.add(blockData.x)
-                uv.add(blockData.z)
-                uv.add(blockData.x + 1)
-                uv.add(blockData.z + 1)
+    private fun addVoxelTextures(element: JsonObject, buildBlockData: BuildBlockData, cube: Cube) {
+        val faces = JsonObject()
+
+        for ((side, texture) in cube.calculateTextures()) {
+            if (!buildBlockData.hasBlock(side)) { // don't add a texture when I can't bee seen
+                val faceObj = JsonObject()
+                faceObj.add("uv", UV)
+
+                val textureId = textureIds[texture.texture]
+                faceObj.addProperty("texture", "#$textureId")
+                faceObj.addProperty("rotation", 90 * texture.rotation)
+
+                faces.add(side.modelDataName, faceObj)
             }
-
-            BlockFace.NORTH, BlockFace.SOUTH -> {
-                uv.add(blockData.x)
-                uv.add(blockData.y)
-                uv.add(blockData.x + 1)
-                uv.add(blockData.y + 1)
-            }
-
-            BlockFace.EAST, BlockFace.WEST -> {
-                uv.add(blockData.z)
-                uv.add(blockData.y)
-                uv.add(blockData.z + 1)
-                uv.add(blockData.y + 1)
-            }
-
         }
-
-        return uv
+        element.add("faces", faces)
     }
-
-    enum class BlockFace(val modelName: String) {
-
-        NORTH("north"),
-        EAST("east"),
-        SOUTH("south"),
-        WEST("west"),
-        UP("up"),
-        DOWN("down");
-
-    }
-
-    enum class ParseType {
-
-        //I don't know if I want to keep anything besides 'FULL'
-        
-        FULL,
-        FIRST,
-        RIGHT;
-
-    }
-
 }
