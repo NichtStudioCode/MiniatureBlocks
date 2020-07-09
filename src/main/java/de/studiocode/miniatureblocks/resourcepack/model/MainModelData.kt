@@ -15,9 +15,9 @@ class MainModelData(private val file: File) {
             if (jsonObj.has("overrides")) {
                 val overrides = jsonObj.get("overrides").asJsonArray
                 for (customModelObj in overrides.map { it.asJsonObject }) {
-                    val customModelData = jsonObj.get("predicate").asJsonObject.get("custom_model_data").asInt
-                    val model = customModelObj.get("model").asString
-
+                    val customModelData = customModelObj.get("predicate")?.asJsonObject?.get("custom_model_data")?.asInt ?: 0
+                    val model = customModelObj.get("model")?.asString ?: ""
+                    
                     customModels.add(CustomModel(customModelData, model))
                 }
             }
