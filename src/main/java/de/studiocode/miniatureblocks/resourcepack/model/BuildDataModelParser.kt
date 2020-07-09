@@ -48,7 +48,6 @@ class BuildDataModelParser(buildData: BuildData) {
         //get all textures for used materials and register them in the textureIds HashMap
         var id = 0
         for (material in usedMaterials) {
-            println("Used material: $material")
             if (BlockTexture.hasMaterial(material)) {
                 val blockTexture = BlockTexture.getFromMaterial(material)
                 for (texture in blockTexture.getAllTextures()) {
@@ -71,8 +70,13 @@ class BuildDataModelParser(buildData: BuildData) {
                 val element = JsonObject()
 
                 val blockTexture = BlockTexture.getFromMaterial(it.material)
-                val cube = Cube(blockTexture)
-                cube.setFacing(Cube.Direction.fromBlockFace(it.blockFace))
+                val cube = AdaptingCube(blockTexture)
+                
+                val facing = it.facing
+                if (facing != null) cube.rotate(Cube.Direction.fromBlockFace(facing))
+                
+                val axis = it.axis
+                if (axis != null) cube.rotate(Cube.Direction.fromAxis(axis))
 
                 addVoxelPos(element, it)
                 addVoxelTextures(element, it, cube)
@@ -99,7 +103,7 @@ class BuildDataModelParser(buildData: BuildData) {
     private fun addVoxelTextures(element: JsonObject, buildBlockData: BuildBlockData, cube: Cube) {
         val faces = JsonObject()
 
-        for ((side, texture) in cube.calculateTextures()) {
+        for ((side, texture) in cube.textures) {
             if (!buildBlockData.hasBlock(side)) { // don't add a texture when I can't bee seen
                 val faceObj = JsonObject()
                 faceObj.add("uv", UV)

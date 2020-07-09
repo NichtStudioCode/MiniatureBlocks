@@ -34,6 +34,5 @@ class MiniatureBlocks : JavaPlugin() {
     override fun onDisable() {
         MenuInventoryManager.INSTANCE.closeAllMenuInventories()
     }
-
 }
 

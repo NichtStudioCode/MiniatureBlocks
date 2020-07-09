@@ -1,24 +1,27 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
+import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction
+import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction.NORTH
+import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction.UP
 import org.bukkit.Material
 
 @Suppress("unused")
 enum class BlockTexture {
 
-    ACACIA_LOG(Material.ACACIA_LOG, "acacia_log_top", "acacia_log"),
+    ACACIA_LOG(Material.ACACIA_LOG, "acacia_log_top", "acacia_log", UP),
     ACACIA_PLANKS(Material.ACACIA_PLANKS),
-    ACACIA_WOOD(Material.ACACIA_WOOD, "acacia_log"),
+    ACACIA_WOOD(Material.ACACIA_WOOD, "acacia_log", UP),
     ANCIENT_DEBRIS(Material.ANCIENT_DEBRIS, "ancient_debris_top", "ancient_debris_side"),
     ANDESITE(Material.ANDESITE),
     BARREL(Material.BARREL, "barrel_top", "barrel_bottom", "barrel_side"),
-    BASALT(Material.BASALT, "basalt_top", "basalt_side"),
+    BASALT(Material.BASALT, "basalt_top", "basalt_side", UP),
     BEACON(Material.BEACON), //not really
     BEDROCK(Material.BEDROCK),
     BEEHIVE(Material.BEEHIVE, "beehive_end", "beehive_end", "beehive_front", "beehive_side"),
     BEE_NEST(Material.BEE_NEST, "bee_nest_top", "bee_nest_bottom", "bee_nest_front", "bee_nest_side"),
-    BIRCH_LOG(Material.BIRCH_LOG, "birch_log_top", "birch_log"),
+    BIRCH_LOG(Material.BIRCH_LOG, "birch_log_top", "birch_log", UP),
     BIRCH_PLANKS(Material.BIRCH_PLANKS),
-    BIRCH_WOOD(Material.BIRCH_WOOD, "birch_log"),
+    BIRCH_WOOD(Material.BIRCH_WOOD, "birch_log", UP),
     BLACKSTONE(Material.BLACKSTONE, "blackstone_top", "blackstone"),
     BLACK_CONCRETE(Material.BLACK_CONCRETE),
     BLACK_GLAZED_TERRACOTTA(Material.BLACK_GLAZED_TERRACOTTA),
@@ -34,7 +37,7 @@ enum class BlockTexture {
     BLUE_STAINED_GLASS(Material.BLUE_STAINED_GLASS),
     BLUE_TERRACOTTA(Material.BLUE_TERRACOTTA),
     BLUE_WOOL(Material.BLUE_WOOL),
-    BONE_BLOCK(Material.BONE_BLOCK, true, false, false),
+    BONE_BLOCK(Material.BONE_BLOCK, true, false, false, UP),
     BOOKSHELF(Material.BOOKSHELF, "oak_planks", "bookshelf"),
     BRAIN_CORAL_BLOCK(Material.BRAIN_CORAL_BLOCK),
     BRICKS(Material.BRICKS),
@@ -63,10 +66,10 @@ enum class BlockTexture {
     CRACKED_POLISHED_BLACKSTONE_BRICKS(Material.CRACKED_POLISHED_BLACKSTONE_BRICKS),
     CRACKED_STONE_BRICKS(Material.CRACKED_STONE_BRICKS),
     CRAFTING_TABLE(Material.CRAFTING_TABLE, "crafting_table_top", "oak_planks", "crafting_table_front", "crafting_table_side"),
-    CRIMSON_HYPHAE(Material.CRIMSON_HYPHAE),
+    CRIMSON_HYPHAE(Material.CRIMSON_HYPHAE, UP),
     CRIMSON_NYLIUM(Material.CRIMSON_NYLIUM, "crimson_nylium", "netherrack", "crimson_nylium_side"),
     CRIMSON_PLANKS(Material.CRIMSON_PLANKS),
-    CRIMSON_STEM(Material.CRIMSON_STEM, "crimson_stem_top", "crimson_stem_top", "crimson_stem"),
+    CRIMSON_STEM(Material.CRIMSON_STEM, "crimson_stem_top", "crimson_stem_top", "crimson_stem", UP),
     CRYING_OBSIDIAN(Material.CRYING_OBSIDIAN),
     CUT_RED_SANDSTONE(Material.CUT_RED_SANDSTONE, "red_sandstone_top", "red_sandstone_top", "cut_red_sandstone"),
     CUT_SANDSTONE(Material.CUT_SANDSTONE, "sandstone_top", "sandstone_top", "cut_sandstone"),
@@ -76,9 +79,9 @@ enum class BlockTexture {
     CYAN_STAINED_GLASS(Material.CYAN_STAINED_GLASS),
     CYAN_TERRACOTTA(Material.CYAN_TERRACOTTA),
     CYAN_WOOL(Material.CYAN_WOOL),
-    DARK_OAK_LOG(Material.DARK_OAK_LOG, "dark_oak_log_top", "dark_oak_log"),
+    DARK_OAK_LOG(Material.DARK_OAK_LOG, "dark_oak_log_top", "dark_oak_log", UP),
     DARK_OAK_PLANKS(Material.DARK_OAK_PLANKS),
-    DARK_OAK_WOOD(Material.DARK_OAK_WOOD, "dark_oak_log"),
+    DARK_OAK_WOOD(Material.DARK_OAK_WOOD, "dark_oak_log", UP),
     DARK_PRISMARINE(Material.DARK_PRISMARINE),
     DEAD_BRAIN_CORAL_BLOCK(Material.DEAD_BRAIN_CORAL_BLOCK),
     DEAD_BUBBLE_CORAL_BLOCK(Material.DEAD_BUBBLE_CORAL_BLOCK),
@@ -120,7 +123,7 @@ enum class BlockTexture {
     GREEN_STAINED_GLASS(Material.GREEN_STAINED_GLASS),
     GREEN_TERRACOTTA(Material.GREEN_TERRACOTTA),
     GREEN_WOOL(Material.GREEN_WOOL),
-    HAY_BLOCK(Material.HAY_BLOCK, true, false, false),
+    HAY_BLOCK(Material.HAY_BLOCK, true, false, false, UP),
     HONEYCOMB_BLOCK(Material.HONEYCOMB_BLOCK),
     HONEY_BLOCK(Material.HONEY_BLOCK),
     HORN_CORAL_BLOCK(Material.HORN_CORAL_BLOCK),
@@ -130,9 +133,9 @@ enum class BlockTexture {
     JACK_O_LANTERN(Material.JACK_O_LANTERN, "pumpkin_top", "pumpkin_top", "jack_o_lantern", "pumpkin_side"),
     JIGSAW_BLOCK(Material.JIGSAW, true, true, false),
     JUKEBOX(Material.JUKEBOX, "jukebox_top", "jukebox_side", "jukebox_side"),
-    JUNGLE_LOG(Material.JUNGLE_LOG, "jungle_log_top", "jungle_log"),
+    JUNGLE_LOG(Material.JUNGLE_LOG, "jungle_log_top", "jungle_log", UP),
     JUNGLE_PLANKS(Material.JUNGLE_PLANKS),
-    JUNGLE_WOOD(Material.JUNGLE_WOOD, "jungle_log"),
+    JUNGLE_WOOD(Material.JUNGLE_WOOD, "jungle_log", UP),
     LAPIS_BLOCK(Material.LAPIS_BLOCK),
     LAPIS_ORE(Material.LAPIS_ORE),
     LIGHT_BLUE_CONCRETE(Material.LIGHT_BLUE_CONCRETE),
@@ -174,9 +177,9 @@ enum class BlockTexture {
     NETHER_QUARTZ_ORE(Material.NETHER_QUARTZ_ORE),
     NETHER_WART_BLOCK(Material.NETHER_WART_BLOCK),
     NOTE_BLOCK(Material.NOTE_BLOCK),
-    OAK_LOG(Material.OAK_LOG, "oak_log_top", "oak_log"),
+    OAK_LOG(Material.OAK_LOG, "oak_log_top", "oak_log", UP),
     OAK_PLANKS(Material.OAK_PLANKS),
-    OAK_WOOD(Material.OAK_WOOD, "oak_log"),
+    OAK_WOOD(Material.OAK_WOOD, "oak_log", UP),
     OBSIDIAN(Material.OBSIDIAN),
     ORANGE_CONCRETE(Material.ORANGE_CONCRETE),
     ORANGE_GLAZED_TERRACOTTA(Material.ORANGE_GLAZED_TERRACOTTA),
@@ -191,10 +194,10 @@ enum class BlockTexture {
     PINK_STAINED_GLASS(Material.PINK_STAINED_GLASS),
     PINK_TERRACOTTA(Material.PINK_TERRACOTTA),
     PINK_WOOL(Material.PINK_WOOL),
-    PISTON(Material.PISTON, true, true, false),
+    PISTON(Material.PISTON, true, true, false, UP),
     PODZOL(Material.PODZOL, "podzol_top", "dirt", "podzol_side"),
     POLISHED_ANDESITE(Material.POLISHED_ANDESITE),
-    POLISHED_BASALT(Material.POLISHED_BASALT, true, false, false),
+    POLISHED_BASALT(Material.POLISHED_BASALT, true, false, false, UP),
     POLISHED_BLACKSTONE(Material.POLISHED_BLACKSTONE),
     POLISHED_BLACKSTONE_BRICKS(Material.POLISHED_BLACKSTONE_BRICKS),
     POLISHED_DIORITE(Material.POLISHED_DIORITE),
@@ -209,10 +212,10 @@ enum class BlockTexture {
     PURPLE_TERRACOTTA(Material.PURPLE_TERRACOTTA),
     PURPLE_WOOL(Material.PURPLE_WOOL),
     PURPUR_BLOCK(Material.PURPUR_BLOCK),
-    PURPUR_PILLAR(Material.PURPUR_PILLAR, true, false, false),
+    PURPUR_PILLAR(Material.PURPUR_PILLAR, "purpur_pillar_top", "purpur_pillar", UP),
     QUARTZ_BLOCK(Material.QUARTZ_BLOCK),
     QUARTZ_BRICKS(Material.QUARTZ_BRICKS),
-    QUARTZ_PILLAR(Material.QUARTZ_PILLAR, true, false, false),
+    QUARTZ_PILLAR(Material.QUARTZ_PILLAR, "quartz_pillar_top", "quartz_pillar", UP),
     REDSTONE_BLOCK(Material.REDSTONE_BLOCK),
     REDSTONE_LAMP(Material.REDSTONE_LAMP),
     REDSTONE_ORE(Material.REDSTONE_ORE),
@@ -242,38 +245,38 @@ enum class BlockTexture {
     SOUL_SOIL(Material.SOUL_SOIL),
     SPAWNER(Material.SPAWNER),
     SPONGE(Material.SPONGE),
-    SPRUCE_LOG(Material.SPRUCE_LOG, "spruce_log_top", "spruce_log"),
+    SPRUCE_LOG(Material.SPRUCE_LOG, "spruce_log_top", "spruce_log", UP),
     SPRUCE_PLANKS(Material.SPRUCE_PLANKS),
-    SPRUCE_WOOD(Material.SPRUCE_WOOD, "spruce_og"),
-    STICKY_PISTON(Material.STICKY_PISTON, "piston_top_sticky", "piston_bottom", "piston_side"),
+    SPRUCE_WOOD(Material.SPRUCE_WOOD, "spruce_og", UP),
+    STICKY_PISTON(Material.STICKY_PISTON, "piston_top_sticky", "piston_bottom", "piston_side", UP),
     STONE(Material.STONE),
     STONE_BRICKS(Material.STONE_BRICKS),
     STONE_SLAB(Material.STONE_SLAB),
-    STRIPPED_ACACIA_LOG(Material.STRIPPED_ACACIA_LOG, "stripped_acacia_log_top", "stripped_acacia_log"),
-    STRIPPED_ACACIA_WOOD(Material.STRIPPED_ACACIA_WOOD, "stripped_acacia_log"),
-    STRIPPED_BIRCH_LOG(Material.STRIPPED_BIRCH_LOG, "stripped_birch_log_top", "stripped_birch_log"),
-    STRIPPED_BIRCH_WOOD(Material.STRIPPED_BIRCH_WOOD, "stripped_birch_log"),
-    STRIPPED_CRIMSON_HYPHAE(Material.STRIPPED_CRIMSON_HYPHAE, "stripped_crimson_stem"),
-    STRIPPED_CRIMSON_STEM(Material.STRIPPED_CRIMSON_STEM, "stripped_crimson_stem_top", "stripped_crimson_stem"),
-    STRIPPED_DARK_OAK_LOG(Material.STRIPPED_DARK_OAK_LOG, "stripped_dark_oak_log_top", "stripped_dark_oak_log"),
-    STRIPPED_DARK_OAK_WOOD(Material.STRIPPED_DARK_OAK_WOOD, "stripped_dark_oak_log"),
-    STRIPPED_JUNGLE_LOG(Material.STRIPPED_JUNGLE_LOG, "stripped_jungle_log_top", "stripped_jungle_log"),
-    STRIPPED_JUNGLE_WOOD(Material.STRIPPED_JUNGLE_WOOD, "stripped_jungle_log"),
-    STRIPPED_OAK_LOG(Material.STRIPPED_OAK_LOG, "stripped_oak_log_top", "stripped_oak_log"),
-    STRIPPED_OAK_WOOD(Material.STRIPPED_OAK_WOOD, "stripped_oak_log"),
-    STRIPPED_SPRUCE_LOG(Material.STRIPPED_SPRUCE_LOG, "stripped_spruce_log_top", "stripped_spruce_log"),
-    STRIPPED_SPRUCE_WOOD(Material.STRIPPED_SPRUCE_WOOD, "stripped_spruce_log"),
-    STRIPPED_WARPED_HYPHAE(Material.STRIPPED_WARPED_HYPHAE, "stripped_warped_stem"),
-    STRIPPED_WARPED_STEM(Material.STRIPPED_WARPED_STEM, "stripped_warped_stem_top", "stripped_warped_stem"),
+    STRIPPED_ACACIA_LOG(Material.STRIPPED_ACACIA_LOG, "stripped_acacia_log_top", "stripped_acacia_log", UP),
+    STRIPPED_ACACIA_WOOD(Material.STRIPPED_ACACIA_WOOD, "stripped_acacia_log", UP),
+    STRIPPED_BIRCH_LOG(Material.STRIPPED_BIRCH_LOG, "stripped_birch_log_top", "stripped_birch_log", UP),
+    STRIPPED_BIRCH_WOOD(Material.STRIPPED_BIRCH_WOOD, "stripped_birch_log", UP),
+    STRIPPED_CRIMSON_HYPHAE(Material.STRIPPED_CRIMSON_HYPHAE, "stripped_crimson_stem", UP),
+    STRIPPED_CRIMSON_STEM(Material.STRIPPED_CRIMSON_STEM, "stripped_crimson_stem_top", "stripped_crimson_stem", UP),
+    STRIPPED_DARK_OAK_LOG(Material.STRIPPED_DARK_OAK_LOG, "stripped_dark_oak_log_top", "stripped_dark_oak_log", UP),
+    STRIPPED_DARK_OAK_WOOD(Material.STRIPPED_DARK_OAK_WOOD, "stripped_dark_oak_log", UP),
+    STRIPPED_JUNGLE_LOG(Material.STRIPPED_JUNGLE_LOG, "stripped_jungle_log_top", "stripped_jungle_log", UP),
+    STRIPPED_JUNGLE_WOOD(Material.STRIPPED_JUNGLE_WOOD, "stripped_jungle_log", UP),
+    STRIPPED_OAK_LOG(Material.STRIPPED_OAK_LOG, "stripped_oak_log_top", "stripped_oak_log", UP),
+    STRIPPED_OAK_WOOD(Material.STRIPPED_OAK_WOOD, "stripped_oak_log", UP),
+    STRIPPED_SPRUCE_LOG(Material.STRIPPED_SPRUCE_LOG, "stripped_spruce_log_top", "stripped_spruce_log", UP),
+    STRIPPED_SPRUCE_WOOD(Material.STRIPPED_SPRUCE_WOOD, "stripped_spruce_log", UP),
+    STRIPPED_WARPED_HYPHAE(Material.STRIPPED_WARPED_HYPHAE, "stripped_warped_stem", UP),
+    STRIPPED_WARPED_STEM(Material.STRIPPED_WARPED_STEM, "stripped_warped_stem_top", "stripped_warped_stem", UP),
     STRUCTURE_BLOCK(Material.STRUCTURE_BLOCK),
     TARGET(Material.TARGET),
     TERRACOTTA(Material.TERRACOTTA),
     TNT(Material.TNT, true, true, false),
     DEAD_TUBE_CORAL_BLOCK(Material.TUBE_CORAL_BLOCK),
-    WARPED_HYPHAE(Material.WARPED_HYPHAE),
+    WARPED_HYPHAE(Material.WARPED_HYPHAE, UP),
     WARPED_NYLIUM(Material.WARPED_NYLIUM, "warped_nylium", "netherrack", "warped_nylium_side"),
     WARPED_PLANKS(Material.WARPED_PLANKS),
-    WARPED_STEM(Material.WARPED_STEM, "warped_stem_top", "warped_stem"),
+    WARPED_STEM(Material.WARPED_STEM, "warped_stem_top", "warped_stem", UP),
     WARPED_WART_BLOCK(Material.WARPED_WART_BLOCK),
     WATER(Material.WATER),
     WET_SPONGE(Material.WET_SPONGE),
@@ -297,8 +300,10 @@ enum class BlockTexture {
     val textureBack: String
     val textureRight: String
     val textureLeft: String
-
-    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureBack: String, textureRight: String, textureLeft: String) {
+    val defaultRotation: Direction
+    
+    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureBack: String,
+                textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH) {
         this.material = material
         this.textureTop = "block/$textureTop"
         this.textureBottom = "block/$textureBottom"
@@ -306,22 +311,23 @@ enum class BlockTexture {
         this.textureBack = "block/$textureBack"
         this.textureRight = "block/$textureRight"
         this.textureLeft = "block/$textureLeft"
+        this.defaultRotation = defaultRotation
     }
+    
+    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureSide: String, defaultRotation: Direction = NORTH) :
+            this(material, textureTop, textureBottom, textureFront, textureSide, textureSide, textureSide, defaultRotation)
 
-    constructor(material: Material, textureTop: String, textureBottom: String, textureFront: String, textureSide: String) :
-            this(material, textureTop, textureBottom, textureFront, textureSide, textureSide, textureSide)
+    constructor(material: Material, textureTop: String, textureBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
+            this(material, textureTop, textureBottom, textureSide, textureSide, defaultRotation)
 
-    constructor(material: Material, textureTop: String, textureBottom: String, textureSide: String) :
-            this(material, textureTop, textureBottom, textureSide, textureSide)
+    constructor(material: Material, textureTopBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
+            this(material, textureTopBottom, textureTopBottom, textureSide, defaultRotation)
 
-    constructor(material: Material, textureTopBottom: String, textureSide: String) :
-            this(material, textureTopBottom, textureTopBottom, textureSide)
+    constructor(material: Material, texture: String, defaultRotation: Direction = NORTH) : this(material, texture, texture, defaultRotation)
 
-    constructor(material: Material, texture: String) : this(material, texture, texture)
+    constructor(material: Material, defaultRotation: Direction = NORTH) : this(material, material.toString().toLowerCase(), defaultRotation)
 
-    constructor(material: Material) : this(material, material.toString().toLowerCase())
-
-    constructor(material: Material, top: Boolean, bottom: Boolean, front: Boolean) {
+    constructor(material: Material, top: Boolean, bottom: Boolean, front: Boolean, defaultRotation: Direction = NORTH) {
         this.material = material
 
         val texture = "block/" + material.toString().toLowerCase()
@@ -335,6 +341,7 @@ enum class BlockTexture {
         textureRight = textureSide
         textureLeft = textureSide
 
+        this.defaultRotation = defaultRotation
     }
     
     fun getAllTextures(): Array<String> {

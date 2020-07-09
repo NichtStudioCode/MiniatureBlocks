@@ -2,10 +2,12 @@ package de.studiocode.miniatureblocks.builderworld
 
 import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction
 import de.studiocode.miniatureblocks.utils.isSeeTrough
+import org.bukkit.Axis
 import org.bukkit.Chunk
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.Directional
+import org.bukkit.block.data.Orientable
 
 class BuildData(chunk: Chunk) {
 
@@ -28,8 +30,12 @@ class BuildData(chunk: Chunk) {
                         val blockEast = if (x + 1 != 16) !chunk.getBlock(x + 1, y, z).type.isSeeTrough() else false
                         val blockWest = if (x - 1 != -1) !chunk.getBlock(x - 1, y, z).type.isSeeTrough() else false
 
-                        val blockFace = if (blockData is Directional) blockData.facing else BlockFace.NORTH
-                        val buildBlockData = BuildBlockData(x, y, z, type, blockFace, blockUp, blockDown, blockSouth, blockNorth, blockEast, blockWest)
+
+                        val buildBlockData = BuildBlockData(x, y, z, type, blockUp, blockDown, blockSouth, blockNorth, blockEast, blockWest)
+
+                        if (blockData is Directional) buildBlockData.facing = blockData.facing
+                        if (blockData is Orientable) buildBlockData.axis = blockData.axis
+                        
                         if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
                     }
                 }
@@ -37,10 +43,13 @@ class BuildData(chunk: Chunk) {
         }
     }
 
-    class BuildBlockData(val x: Int, val y: Int, val z: Int, val material: Material, val blockFace: BlockFace,
+    class BuildBlockData(val x: Int, val y: Int, val z: Int, val material: Material,
                          private val blockUp: Boolean = false, private val blockDown: Boolean = false,
                          private val blockSouth: Boolean = false, private val blockNorth: Boolean = false,
                          private val blockEast: Boolean = false, private val blockWest: Boolean = false) {
+
+        var facing: BlockFace? = null
+        var axis: Axis? = null
 
         fun isSurroundedByBlocks(): Boolean = blockUp && blockDown && blockSouth && blockNorth && blockEast && blockWest
 
