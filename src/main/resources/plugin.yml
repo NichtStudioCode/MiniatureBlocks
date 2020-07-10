@@ -14,7 +14,7 @@ commands:
     description: Create a new model
     usage: /createmodel <name>
     aliases: [cm]
-    permission: miniatureblocks.createnewmodel
+    permission: miniatureblocks.createminiature
   miniatures:
     description: Open the miniatures inventory
     usage: /miniatures
