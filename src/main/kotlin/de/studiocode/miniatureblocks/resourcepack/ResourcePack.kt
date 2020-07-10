@@ -27,7 +27,7 @@ class ResourcePack : Listener {
     private val packMcmeta = File(dir, "pack.mcmeta")
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
 
-    private val mainModelDataFile = File(itemModelsDir, "jack_o_lantern.json")
+    private val mainModelDataFile = File(itemModelsDir, "bedrock.json")
     private val mainModelData: MainModelData
 
     init {

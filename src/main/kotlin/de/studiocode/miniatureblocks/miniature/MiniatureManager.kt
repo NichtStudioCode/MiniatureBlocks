@@ -31,12 +31,14 @@ class MiniatureManager : Listener {
         itemStack.amount = 1
         if (itemStack.isMiniature()) {
             event.isCancelled = true
-            spawnArmorStandMiniature(event.blockPlaced.location, itemStack)
-            
-            val player = event.player
+            if (MiniatureBlocks.INSTANCE.resourcePack.hasModelData(itemStack.itemMeta!!.customModelData)) {
+                spawnArmorStandMiniature(event.blockPlaced.location, itemStack)
 
-            if (player.gameMode == GameMode.SURVIVAL) {
-                event.itemInHand.amount--
+                val player = event.player
+
+                if (player.gameMode == GameMode.SURVIVAL) {
+                    event.itemInHand.amount--
+                }
             }
         }
     }
@@ -105,7 +107,7 @@ class MiniatureManager : Listener {
     }
 
     private fun ItemStack.isMiniature(): Boolean {
-        return type == Material.JACK_O_LANTERN && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
+        return type == Material.BEDROCK && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
     }
 
 }

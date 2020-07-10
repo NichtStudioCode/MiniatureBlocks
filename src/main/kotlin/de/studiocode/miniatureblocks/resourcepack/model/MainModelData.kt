@@ -32,7 +32,7 @@ class MainModelData(private val file: File) {
 
     private fun createJsonObject(): JsonObject {
         val mainObj = JsonObject()
-        mainObj.addProperty("parent", "block/jack_o_lantern")
+        mainObj.addProperty("parent", "block/bedrock")
 
         val overrides = JsonArray()
         for (customModel in customModels) {

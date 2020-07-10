@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 
 class MiniatureItem(private val name: String, customModelData: Int) : MenuItem() {
 
-    private val itemBuilder = ItemBuilder(Material.JACK_O_LANTERN, name = "§f$name", customModelData = customModelData)
+    private val itemBuilder = ItemBuilder(Material.BEDROCK, name = "§f$name", customModelData = customModelData)
     private val receivableItem = itemBuilder.build()
     private val menuItemStack = itemBuilder.also {
         it.addLoreLine("§7Left-click to obtain miniature")
