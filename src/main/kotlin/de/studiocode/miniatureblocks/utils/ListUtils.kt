@@ -5,7 +5,7 @@ import kotlin.math.absoluteValue
 fun <E> ArrayList<E>.shift(shift: Int = 1) {
     val shiftRight = shift > 0
 
-    for (i in 0 until shift.absoluteValue) {
+    repeat(shift.absoluteValue) {
         if (shiftRight) {
             add(0, get(size - 1))
             removeAt(size - 1)

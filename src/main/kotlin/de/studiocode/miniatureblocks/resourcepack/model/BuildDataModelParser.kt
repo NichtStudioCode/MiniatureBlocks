@@ -38,29 +38,36 @@ class BuildDataModelParser(buildData: BuildData) {
 
     private fun createTextureIds() {
         // get all used materials
+        val usedMaterials = listUsedMaterials()
+
+        //get all textures for used materials and register them in the textureIds HashMap
+        registerBlockTextures(usedMaterials)
+
+        //also write them to json model
+        textureIds.forEach { (texture, id) -> textures.addProperty(id.toString(), texture) }
+    }
+
+    private fun listUsedMaterials(): ArrayList<Material> {
         val usedMaterials = ArrayList<Material>()
         for (material in data.map { it.material }) {
             if (!usedMaterials.contains(material)) {
                 usedMaterials.add(material)
             }
         }
-
-        //get all textures for used materials and register them in the textureIds HashMap
+        return usedMaterials
+    }
+    
+    private fun registerBlockTextures(usedMaterials: ArrayList<Material>) {
+        val blockTextures = usedMaterials.filter { BlockTexture.hasMaterial(it) }.map { BlockTexture.getFromMaterial(it) }
         var id = 0
-        for (material in usedMaterials) {
-            if (BlockTexture.hasMaterial(material)) {
-                val blockTexture = BlockTexture.getFromMaterial(material)
-                for (texture in blockTexture.getAllTextures()) {
-                    if (!textureIds.containsKey(texture)) {
-                        textureIds[texture] = id
-                        id++
-                    }
+        for (blockTexture in blockTextures) {
+            for (texture in blockTexture.getAllTextures()) {
+                if (!textureIds.containsKey(texture)) {
+                    textureIds[texture] = id
+                    id++
                 }
-            } else println("No BlockTexture for $material")
+            }
         }
-
-        //also write them to json model
-        textureIds.forEach { (texture, id) -> textures.addProperty(id.toString(), texture) }
     }
 
     private fun parseModelData() {
@@ -77,7 +84,7 @@ class BuildDataModelParser(buildData: BuildData) {
 
                 val axis = it.axis
                 if (axis != null) cube.addRotation(Cube.Direction.fromAxis(axis))
-                
+
                 cube.rotate()
 
                 addVoxelPos(element, it)

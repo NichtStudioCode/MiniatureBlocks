@@ -9,7 +9,7 @@ import java.nio.charset.Charset
 class HttpMultipartRequest(requestUrl: String, private val charset: Charset = Charsets.UTF_8) {
 
     private val connection = URL(requestUrl).openConnection() as HttpURLConnection
-    private val boundary = StringUtils.random(25)
+    private val boundary = StringUtils.randomString(25)
     private val outputStream: OutputStream
     private val writer: PrintWriter
 
