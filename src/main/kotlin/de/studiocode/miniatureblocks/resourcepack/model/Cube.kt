@@ -8,11 +8,13 @@ import org.bukkit.block.BlockFace
 open class Cube(private val blockTexture: BlockTexture) {
 
     val textures = createDefaultTextures()
-
+    private var rotateX = 0
+    private var rotateY = 0
+    
     init {
         val defaultRotation = blockTexture.defaultRotation
-        rotateAroundXAxis(-defaultRotation.xRot)
-        rotateAroundYAxis(-defaultRotation.yRot)
+        rotateX -= defaultRotation.xRot
+        rotateY -= defaultRotation.yRot
     }
 
     private fun createDefaultTextures(): HashMap<Direction, SideTexture> {
@@ -33,13 +35,21 @@ open class Cube(private val blockTexture: BlockTexture) {
 
         return defaultTextures
     }
+    
+    fun addRotation(direction: Direction) {
+        rotateX += direction.xRot
+        rotateY += direction.yRot
+    }
+    
+    fun rotate() {
+        rotateAroundXAxis(rotateX)
+        rotateAroundYAxis(rotateY)
 
-    fun rotate(direction: Direction) {
-        rotateAroundXAxis(direction.xRot)
-        rotateAroundYAxis(direction.yRot)
+        rotateX = 0
+        rotateY = 0
     }
 
-    fun rotateAroundXAxis(rotation: Int) {
+    private fun rotateAroundXAxis(rotation: Int) {
         if (rotation == 0) return
 
         // rotate current front texture - 180° (I don't understand why but that's right I guess)
@@ -56,7 +66,7 @@ open class Cube(private val blockTexture: BlockTexture) {
         textures[Direction.NORTH]!!.rotation += 2
     }
 
-    fun rotateAroundYAxis(rotation: Int) {
+    private fun rotateAroundYAxis(rotation: Int) {
         if (rotation == 0) return
 
         // shift sides

@@ -73,10 +73,12 @@ class BuildDataModelParser(buildData: BuildData) {
                 val cube = Cube(blockTexture)
 
                 val facing = it.facing
-                if (facing != null) cube.rotate(Cube.Direction.fromBlockFace(facing))
+                if (facing != null) cube.addRotation(Cube.Direction.fromBlockFace(facing))
 
                 val axis = it.axis
-                if (axis != null) cube.rotate(Cube.Direction.fromAxis(axis))
+                if (axis != null) cube.addRotation(Cube.Direction.fromAxis(axis))
+                
+                cube.rotate()
 
                 addVoxelPos(element, it)
                 addVoxelTextures(element, it, cube)
