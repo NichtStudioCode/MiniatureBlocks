@@ -18,4 +18,5 @@ commands:
   miniatures:
     description: Open the miniatures inventory
     usage: /miniatures
+    aliases: [m, ms]
     permission: miniatureblocks.miniatures
