@@ -13,8 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 
 class BuilderWorld : Listener {
 
-    private val world: World
-    val spawnLocation: Location
+    val world: World
 
     init {
         val worldName = "miniatureBlocks"
@@ -26,8 +25,8 @@ class BuilderWorld : Listener {
             world.time = 12 * 1000
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
             world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
+            world.spawnLocation = Location(world, 0.0, 2.0, 0.0)
         }
-        spawnLocation = Location(world, 0.0, 2.0, 0.0)
     }
 
     @EventHandler
