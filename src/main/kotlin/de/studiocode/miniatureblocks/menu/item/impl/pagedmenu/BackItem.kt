@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 class BackItem(private val pagedMenuInventory: PagedMenuInventory) : MenuItem() {
 
     override fun getItemStack(): ItemStack {
-        return ItemBuilder(material = Material.RED_STAINED_GLASS_PANE, name = "§7Forward").also {
+        return ItemBuilder(material = Material.RED_STAINED_GLASS_PANE, name = "§7Back").also {
             if (pagedMenuInventory.hasPageBefore()) {
                 val pageBefore = pagedMenuInventory.currentPage - 1
                 val pages = pagedMenuInventory.getPageAmount()

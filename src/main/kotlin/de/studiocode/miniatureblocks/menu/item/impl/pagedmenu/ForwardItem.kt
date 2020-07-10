@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 class ForwardItem(private val pagedMenuInventory: PagedMenuInventory) : MenuItem() {
 
     override fun getItemStack(): ItemStack {
-        return ItemBuilder(material = Material.GREEN_STAINED_GLASS_PANE, name = "§7Back").also {
+        return ItemBuilder(material = Material.GREEN_STAINED_GLASS_PANE, name = "§7Forward").also {
             if (pagedMenuInventory.hasNextPage()) {
                 val nextPage = pagedMenuInventory.currentPage + 1
                 val pages = pagedMenuInventory.getPageAmount()
