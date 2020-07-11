@@ -2,6 +2,8 @@ package de.studiocode.miniatureblocks.builderworld
 
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.utils.WorldUtils
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -68,9 +70,9 @@ class BuilderWorld : Listener {
 
         val player = event.player
         if (!from.isValidBuildArea(this) && to.isValidBuildArea(this)) {
-            player.sendTitle("Entering build area", to.getBuildAreaId(this), 5, 15, 5)
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§bEntered build area"))
         } else if (from.isValidBuildArea(this) && !to.isValidBuildArea(this)) {
-            player.sendTitle("Leaving build area", from.getBuildAreaId(this), 5, 15, 5)
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§bLeft build area"))
         }
     }
 
