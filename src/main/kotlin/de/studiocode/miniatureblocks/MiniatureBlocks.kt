@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks
 
 import de.studiocode.miniatureblocks.builderworld.BuilderWorld
+import de.studiocode.miniatureblocks.commands.impl.AutoRotateCommand
 import de.studiocode.miniatureblocks.commands.impl.CreateMiniatureCommand
 import de.studiocode.miniatureblocks.commands.impl.MiniatureWorldCommand
 import de.studiocode.miniatureblocks.commands.impl.MiniaturesCommand
@@ -28,6 +29,7 @@ class MiniatureBlocks : JavaPlugin() {
         getCommand("miniatureworld")!!.setExecutor(MiniatureWorldCommand())
         getCommand("createminiature")!!.setExecutor(CreateMiniatureCommand())
         getCommand("miniatures")!!.setExecutor(MiniaturesCommand())
+        getCommand("autorotate")!!.setExecutor(AutoRotateCommand())
         server.pluginManager.registerEvents(builderWorld, this)
     }
 

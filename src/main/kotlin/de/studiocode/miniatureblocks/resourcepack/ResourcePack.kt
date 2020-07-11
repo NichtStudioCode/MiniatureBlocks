@@ -28,7 +28,7 @@ class ResourcePack : Listener {
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
 
     private val mainModelDataFile = File(itemModelsDir, "bedrock.json")
-    private val mainModelData: MainModelData
+    val mainModelData: MainModelData
 
     init {
         Bukkit.getPluginManager().registerEvents(this, MiniatureBlocks.INSTANCE)

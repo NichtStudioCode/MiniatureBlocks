@@ -26,8 +26,11 @@ class MiniatureItem(private val name: String, customModelData: Int) : MenuItem()
         if (clickType == ClickType.LEFT) {
             (event.whoClicked as Player).inventory.addItem(receivableItem)
         } else if (clickType == ClickType.RIGHT) {
-            MiniatureBlocks.INSTANCE.resourcePack.removeModel(name)
-            MiniatureBlocks.INSTANCE.miniatureManager.removeMiniatureArmorStands(receivableItem)
+            val miniatureBlocks = MiniatureBlocks.INSTANCE
+            val resourcePack = miniatureBlocks.resourcePack
+            val customModel = resourcePack.mainModelData.getCustomModelFromName(name)
+            if (customModel != null) miniatureBlocks.miniatureManager.removeMiniatureArmorStands(customModel)
+            resourcePack.removeModel(name)
         }
         return false
     }

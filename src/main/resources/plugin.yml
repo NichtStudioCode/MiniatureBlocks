@@ -20,3 +20,8 @@ commands:
     usage: /miniatures
     aliases: [m, ms]
     permission: miniatureblocks.miniatures
+  autorotate:
+    description: Turn on/off auto-rotation for a miniature
+    usage: /autorotate <degree per tick>
+    aliases: [ar]
+    permission: miniatureblocks.autorotate

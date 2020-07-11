@@ -55,6 +55,12 @@ class MainModelData(private val file: File) {
 
     fun removeModel(name: String) = customModels.removeIf { it.name == name }
 
+    fun getExactModel(customModelData: Int, name: String): CustomModel? = customModels.find { it.customModelData == customModelData && it.name == name }
+    
+    fun getCustomModelFromCustomModelData(customModelData: Int): CustomModel? = customModels.find { it.customModelData == customModelData }
+    
+    fun getCustomModelFromName(name: String): CustomModel? = customModels.find { it.name == name }
+    
     class CustomModel(val customModelData: Int, val model: String) {
 
         val name = model.split("/")[2]
