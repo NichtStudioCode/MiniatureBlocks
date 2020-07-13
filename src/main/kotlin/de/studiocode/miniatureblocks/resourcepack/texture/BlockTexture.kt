@@ -8,6 +8,8 @@ import org.bukkit.Material
 @Suppress("unused")
 enum class BlockTexture {
 
+    //TODO: missing blocks: sand, gravel, concrete powder
+    
     ACACIA_LOG(Material.ACACIA_LOG, "acacia_log_top", "acacia_log", UP),
     ACACIA_PLANKS(Material.ACACIA_PLANKS),
     ACACIA_WOOD(Material.ACACIA_WOOD, "acacia_log", UP),
