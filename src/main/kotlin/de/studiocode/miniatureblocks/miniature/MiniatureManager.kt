@@ -29,6 +29,8 @@ class MiniatureManager : Listener {
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, MiniatureBlocks.INSTANCE)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(MiniatureBlocks.INSTANCE, this::handleTick, 0, 1)
+        
+        Bukkit.getWorlds().forEach { it.loadedChunks.forEach(this::handleChunkLoad) }
     }
 
     private fun spawnArmorStandMiniature(location: Location, itemStack: ItemStack, customModel: CustomModel) {
@@ -126,11 +128,13 @@ class MiniatureManager : Listener {
     }
 
     @EventHandler
-    fun handleChunkLoad(event: ChunkLoadEvent) {
-        for (miniature in event.chunk.entities
+    fun handleChunkLoad(event: ChunkLoadEvent) = handleChunkLoad(event.chunk)
+    
+    private fun handleChunkLoad(chunk: Chunk) {
+        for (miniature in chunk.entities
                 .filterIsInstance<ArmorStand>()
                 .filter { it.hasMiniatureData() }) {
-            
+
             if (!miniature.isValidMiniature()) {
                 // remove armor stand if this miniature model does no longer exist
                 miniature.remove()
