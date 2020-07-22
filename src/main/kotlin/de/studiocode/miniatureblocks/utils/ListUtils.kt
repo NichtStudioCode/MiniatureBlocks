@@ -15,6 +15,3 @@ fun <E> ArrayList<E>.shift(shift: Int = 1) {
         }
     }
 }
-
-@Suppress("UNCHECKED_CAST")
-fun <E> ArrayList<E>.cloneToArrayList() = this.clone() as ArrayList<E>

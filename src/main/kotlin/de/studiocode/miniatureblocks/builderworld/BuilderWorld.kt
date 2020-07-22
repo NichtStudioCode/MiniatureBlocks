@@ -93,13 +93,5 @@ class BuilderWorld : Listener {
     private fun Location.isBuildWorld(builderWorld: BuilderWorld): Boolean {
         return world == builderWorld.world
     }
-
-    private fun Location.getBuildAreaId(builderWorld: BuilderWorld): String {
-        if (isValidBuildArea(builderWorld)) {
-            val chunk = this.chunk
-            return StringBuilder().append(chunk.x).append(" / ").append(chunk.z).toString()
-        }
-        return "invalid"
-    }
-
+    
 }
