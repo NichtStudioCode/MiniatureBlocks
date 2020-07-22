@@ -4,9 +4,11 @@ import com.google.gson.JsonParser
 import java.io.File
 
 object FileIOUploadUtils {
+
     private const val REQUEST_URL = "https://file.io"
 
-    fun uploadFile(file: File): String? {
+    fun uploadToFileIO(file: File): String? {
+        println("performing upload to file.io")
         try {
             val request = HttpMultipartRequest(REQUEST_URL)
             request.addFormFile("file", file)
@@ -20,4 +22,5 @@ object FileIOUploadUtils {
         }
         return null
     }
+
 }

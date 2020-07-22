@@ -35,8 +35,7 @@ class HttpMultipartRequest(requestUrl: String, private val charset: Charset = Ch
         writer.printlnAndFlush(value)
     }
 
-    fun addFormFile(fieldName: String, file: File) {
-        val fileName = file.name
+    fun addFormFile(fieldName: String = "file", file: File, fileName: String = file.name) {
         writer.println("--$boundary")
         writer.println("Content-Disposition: form-data; name=$fieldName; filename=$fileName")
         writer.println("Content-Type: " + URLConnection.guessContentTypeFromName(fileName))
@@ -52,7 +51,7 @@ class HttpMultipartRequest(requestUrl: String, private val charset: Charset = Ch
     }
 
     fun complete(): List<String> {
-        writer.printlnAndFlush()
+        writer.flush()
         writer.println("--$boundary--")
         writer.close()
 

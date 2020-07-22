@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.forced
 
+import com.google.common.io.BaseEncoding
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bukkit.Bukkit
@@ -15,10 +16,11 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
         ForcedResourcePackManager.INSTANCE.addForcedResourcePack(this)
         Thread {
             player.sendMessage("§7Uploading resource pack, please wait...")
-            val url = resourcePack.upload()
+            val url = resourcePack.downloadUrl
             if (url != null) {
                 player.sendMessage("§7Please accept the custom resource pack, you will be kicked otherwise")
-                player.setResourcePack(url)
+                println("sending custom rp with hash " + BaseEncoding.base16().lowerCase().encode(resourcePack.hash))
+                player.setResourcePack(url, resourcePack.hash)
 
                 kickLater()
             } else {
@@ -30,7 +32,10 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
     fun handleResourcePackStatus(status: Status) {
         if (status == Status.DECLINED) {
             kickPlayer()
-        } else bukkitTask?.cancel()
+        } else {
+            bukkitTask?.cancel()
+            if (status == Status.FAILED_DOWNLOAD) println("${player.name} failed to download the resource pack.")
+        }
     }
 
     private fun kickLater() {

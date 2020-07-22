@@ -5,9 +5,12 @@ import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
 import de.studiocode.miniatureblocks.resourcepack.model.ModelData
+import de.studiocode.miniatureblocks.utils.CustomUploaderUtils
 import de.studiocode.miniatureblocks.utils.FileIOUploadUtils
 import de.studiocode.miniatureblocks.utils.FileUtils
+import de.studiocode.miniatureblocks.utils.HashUtils
 import net.lingala.zip4j.ZipFile
+import org.apache.commons.io.FilenameUtils
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -17,18 +20,25 @@ import java.io.File
 
 class ResourcePack : Listener {
 
+    private val config = MiniatureBlocks.INSTANCE.config
+
     private val zipFile = File("plugins/MiniatureBlocks/ResourcePack.zip")
     private val dir = File("plugins/MiniatureBlocks/ResourcePack/")
     private val assetsDir = File(dir, "assets/")
     private val modelDir = File(assetsDir, "minecraft/models/")
     private val itemModelsDir = File(modelDir, "item/")
     private val moddedItemModelsDir = File(itemModelsDir, "modded/")
-
     private val packMcmeta = File(dir, "pack.mcmeta")
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
-
     private val mainModelDataFile = File(itemModelsDir, "bedrock.json")
     val mainModelData: MainModelData
+
+    var downloadUrl: String? = config.getRPDownloadUrl()
+    get() {
+        return if (config.hasCustomUploader()) field
+        else FileIOUploadUtils.uploadToFileIO(zipFile)
+    }
+    var hash: ByteArray = getZipHash()
 
     init {
         Bukkit.getPluginManager().registerEvents(this, MiniatureBlocks.INSTANCE)
@@ -43,10 +53,27 @@ class ResourcePack : Listener {
         }
 
         mainModelData = MainModelData(mainModelDataFile)
+        
+        if (config.hasCustomUploader() && hasCustomModels() && config.getRPDownloadUrl() == null) uploadToCustom()
     }
 
-    fun upload(): String? {
-        return FileIOUploadUtils.uploadFile(zipFile)
+    private fun uploadToCustom() {
+        val reqUrl = config.getCustomUploaderRequest()
+        val hostUrl = config.getCustomUploaderHost()
+        val key = config.getCustomUploaderKey()
+        
+        if (downloadUrl != null) {
+            // delete previous resource pack
+            val fileName = FilenameUtils.getBaseName(downloadUrl)
+            CustomUploaderUtils.deleteFile(reqUrl, key, fileName)
+        }
+        
+        // upload file
+        val url = CustomUploaderUtils.uploadFile(reqUrl, hostUrl, key, zipFile)
+        if (url != null) {
+            config.setRPDownloadUrl(url)
+            downloadUrl = url
+        }
     }
 
     private fun createZip() {
@@ -54,6 +81,15 @@ class ResourcePack : Listener {
         val zip = ZipFile(zipFile)
         zip.addFolder(assetsDir)
         zip.addFile(packMcmeta)
+
+        hash = getZipHash() // update hash
+        if (config.hasCustomUploader()) uploadToCustom() // upload if custom uploader is set
+    }
+    
+    private fun getZipHash(): ByteArray {
+        return if (zipFile.exists()) {
+            HashUtils.createSha1Hash(zipFile)
+        } else ByteArray(0)
     }
 
     private fun hasCustomModels(): Boolean {
@@ -63,10 +99,6 @@ class ResourcePack : Listener {
     fun hasModel(name: String): Boolean {
         val modelFile = File(moddedItemModelsDir, "$name.json")
         return modelFile.exists()
-    }
-
-    fun hasModelData(customModelData: Int): Boolean {
-        return mainModelData.hasCustomModelData(customModelData)
     }
 
     fun addNewModel(name: String, modelData: ModelData): Int {

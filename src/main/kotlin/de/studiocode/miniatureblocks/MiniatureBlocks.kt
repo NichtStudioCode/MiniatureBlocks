@@ -5,6 +5,7 @@ import de.studiocode.miniatureblocks.commands.impl.AutoRotateCommand
 import de.studiocode.miniatureblocks.commands.impl.CreateMiniatureCommand
 import de.studiocode.miniatureblocks.commands.impl.MiniatureWorldCommand
 import de.studiocode.miniatureblocks.commands.impl.MiniaturesCommand
+import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.inventory.MenuInventoryManager
 import de.studiocode.miniatureblocks.miniature.MiniatureManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
@@ -16,18 +17,20 @@ class MiniatureBlocks : JavaPlugin() {
         lateinit var INSTANCE: MiniatureBlocks
     }
 
+    lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
     lateinit var miniatureManager: MiniatureManager
 
     override fun onEnable() {
         INSTANCE = this
+        config = Config(this)
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack()
         miniatureManager = MiniatureManager()
 
-        getCommand("miniatureworld")!!.setExecutor(MiniatureWorldCommand())
-        getCommand("createminiature")!!.setExecutor(CreateMiniatureCommand())
+        getCommand("miniatureWorld")!!.setExecutor(MiniatureWorldCommand())
+        getCommand("createMiniature")!!.setExecutor(CreateMiniatureCommand())
         getCommand("miniatures")!!.setExecutor(MiniaturesCommand())
         getCommand("autorotate")!!.setExecutor(AutoRotateCommand())
         server.pluginManager.registerEvents(builderWorld, this)
