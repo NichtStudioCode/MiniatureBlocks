@@ -25,6 +25,9 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
                 kickLater()
             } else {
                 player.sendMessage("§cAn error occurred while uploading the resource pack.")
+                if (player.isOp && !MiniatureBlocks.INSTANCE.config.hasCustomUploader()) {
+                    player.sendMessage("§cTo prevent this from happening, you should set a custom uploader in the config.yml file.")
+                }
             }
         }.start()
     }
