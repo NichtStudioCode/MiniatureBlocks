@@ -18,9 +18,9 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import java.io.File
 
-class ResourcePack : Listener {
+class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
 
-    private val config = MiniatureBlocks.INSTANCE.config
+    private val config = plugin.config
 
     private val zipFile = File("plugins/MiniatureBlocks/ResourcePack.zip")
     private val dir = File("plugins/MiniatureBlocks/ResourcePack/")
@@ -41,7 +41,7 @@ class ResourcePack : Listener {
     var hash: ByteArray = getZipHash()
 
     init {
-        Bukkit.getPluginManager().registerEvents(this, MiniatureBlocks.INSTANCE)
+        Bukkit.getPluginManager().registerEvents(this, plugin)
 
         if (!dir.exists()) {
             dir.mkdirs()
@@ -140,7 +140,7 @@ class ResourcePack : Listener {
     @EventHandler
     fun handlePlayerJoin(event: PlayerJoinEvent) {
         if (hasCustomModels()) {
-            Bukkit.getScheduler().runTaskLater(MiniatureBlocks.INSTANCE, Runnable { forcePlayerResourcePack(event.player) }, 5)
+            Bukkit.getScheduler().runTaskLater(plugin, Runnable { forcePlayerResourcePack(event.player) }, 5)
         }
     }
 

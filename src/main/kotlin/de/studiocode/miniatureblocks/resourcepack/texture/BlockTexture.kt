@@ -109,7 +109,7 @@ enum class BlockTexture {
     GOLD_BLOCK(Material.GOLD_BLOCK),
     GOLD_ORE(Material.GOLD_ORE),
     GRANITE(Material.GRANITE),
-    GRASS_BLOCK(Material.GRASS_BLOCK, "lime_wool", "dirt", "grass_block_side"), //lime wool because it is gray otherwise Todo: find alternative
+    GRASS_BLOCK(Material.GRASS_BLOCK, "green_wool", "dirt", "grass_block_side"), //green wool because it is gray otherwise Todo: find alternative
     GRASS_PATH(Material.GRASS_PATH, "grass_path_top", "dirt", "grass_path_side"),
     GRAY_CONCRETE(Material.GRAY_CONCRETE),
     GRAY_GLAZED_TERRACOTTA(Material.GRAY_GLAZED_TERRACOTTA),

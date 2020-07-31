@@ -1,27 +1,5 @@
 name: MiniatureBlocks
 author: StudioCode
-version: '0.3'
+version: '0.4'
 api-version: '1.16'
 main: de.studiocode.miniatureblocks.MiniatureBlocks
-
-commands: 
-  miniatureWorld:
-    description: Teleports you to the world for building miniatures
-    usage: /miniatureWorld
-    aliases: [mw]
-    permission: miniatureblocks.miniatureworld
-  createMiniature:
-    description: Create a new model
-    usage: /createMiniature <name>
-    aliases: [cm]
-    permission: miniatureblocks.createminiature
-  miniatures:
-    description: Open the miniatures inventory
-    usage: /miniatures
-    aliases: [m, ms]
-    permission: miniatureblocks.miniatures
-  autorotate:
-    description: Turn on/off auto-rotation for a miniature
-    usage: /autorotate <degrees per tick>
-    aliases: [ar]
-    permission: miniatureblocks.autorotate

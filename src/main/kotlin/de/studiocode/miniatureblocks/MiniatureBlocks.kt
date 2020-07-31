@@ -1,14 +1,12 @@
 package de.studiocode.miniatureblocks
 
 import de.studiocode.miniatureblocks.builderworld.BuilderWorld
-import de.studiocode.miniatureblocks.commands.impl.AutoRotateCommand
-import de.studiocode.miniatureblocks.commands.impl.CreateMiniatureCommand
-import de.studiocode.miniatureblocks.commands.impl.MiniatureWorldCommand
-import de.studiocode.miniatureblocks.commands.impl.MiniaturesCommand
+import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.inventory.MenuInventoryManager
 import de.studiocode.miniatureblocks.miniature.MiniatureManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
+import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.java.JavaPlugin
 
 class MiniatureBlocks : JavaPlugin() {
@@ -26,14 +24,13 @@ class MiniatureBlocks : JavaPlugin() {
         INSTANCE = this
         config = Config(this)
         builderWorld = BuilderWorld()
-        resourcePack = ResourcePack()
-        miniatureManager = MiniatureManager()
+        resourcePack = ResourcePack(this)
+        miniatureManager = MiniatureManager(this)
+        CommandManager(this)
 
-        getCommand("miniatureWorld")!!.setExecutor(MiniatureWorldCommand())
-        getCommand("createMiniature")!!.setExecutor(CreateMiniatureCommand())
-        getCommand("miniatures")!!.setExecutor(MiniaturesCommand())
-        getCommand("autorotate")!!.setExecutor(AutoRotateCommand())
         server.pluginManager.registerEvents(builderWorld, this)
+
+        Metrics(this, 8307)
     }
 
     override fun onDisable() {

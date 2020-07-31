@@ -17,18 +17,18 @@ import org.bukkit.event.world.ChunkUnloadEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType.*
 
-class MiniatureManager : Listener {
+class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
 
-    private val modelNameKey = NamespacedKey(MiniatureBlocks.INSTANCE, "modelName")
-    private val modelDataKey = NamespacedKey(MiniatureBlocks.INSTANCE, "customModelData")
-    private val rotationKey = NamespacedKey(MiniatureBlocks.INSTANCE, "rotation")
+    private val modelNameKey = NamespacedKey(plugin, "modelName")
+    private val modelDataKey = NamespacedKey(plugin, "customModelData")
+    private val rotationKey = NamespacedKey(plugin, "rotation")
 
     val playerRotationMap = HashMap<Player, Float>()
     private val rotatingArmorStands = HashMap<ArmorStand, Float>()
     
     init {
-        Bukkit.getServer().pluginManager.registerEvents(this, MiniatureBlocks.INSTANCE)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(MiniatureBlocks.INSTANCE, this::handleTick, 0, 1)
+        Bukkit.getServer().pluginManager.registerEvents(this, plugin)
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::handleTick, 0, 1)
         
         Bukkit.getWorlds().forEach { it.loadedChunks.forEach(this::handleChunkLoad) }
     }
@@ -81,7 +81,7 @@ class MiniatureManager : Listener {
         itemStack.amount = 1
         if (itemStack.isMiniatureLike()) {
             event.isCancelled = true
-            val mainModelData = MiniatureBlocks.INSTANCE.resourcePack.mainModelData
+            val mainModelData = plugin.resourcePack.mainModelData
             val customModel = mainModelData.getCustomModelFromCustomModelData(itemStack.itemMeta!!.customModelData)
             if (customModel != null) {
                 spawnArmorStandMiniature(event.blockPlaced.location, itemStack, customModel)
@@ -161,7 +161,7 @@ class MiniatureManager : Listener {
 
     private fun ArmorStand.getCustomModel(): CustomModel? {
         val dataContainer = persistentDataContainer
-        val mainModelData = MiniatureBlocks.INSTANCE.resourcePack.mainModelData
+        val mainModelData = plugin.resourcePack.mainModelData
 
         return if (dataContainer.has(modelDataKey, INTEGER) && dataContainer.has(modelNameKey, STRING)) {
             mainModelData.getExactModel(dataContainer.get(modelDataKey, INTEGER)!!, dataContainer.get(modelNameKey, STRING)!!)

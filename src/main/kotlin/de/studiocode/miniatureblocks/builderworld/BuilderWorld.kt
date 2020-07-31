@@ -93,5 +93,5 @@ class BuilderWorld : Listener {
     private fun Location.isBuildWorld(builderWorld: BuilderWorld): Boolean {
         return world == builderWorld.world
     }
-    
+
 }
