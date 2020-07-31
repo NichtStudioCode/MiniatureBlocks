@@ -1,6 +1,5 @@
 package de.studiocode.miniatureblocks.resourcepack.forced
 
-import com.google.common.io.BaseEncoding
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bukkit.Bukkit
@@ -19,7 +18,6 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
             val url = resourcePack.downloadUrl
             if (url != null) {
                 player.sendMessage("§7Please accept the custom resource pack, you will be kicked otherwise")
-                println("sending custom rp with hash " + BaseEncoding.base16().lowerCase().encode(resourcePack.hash))
                 player.setResourcePack(url, resourcePack.hash)
 
                 kickLater()

@@ -8,7 +8,6 @@ object FileIOUploadUtils {
     private const val REQUEST_URL = "https://file.io"
 
     fun uploadToFileIO(file: File): String? {
-        println("performing upload to file.io")
         try {
             val request = HttpMultipartRequest(REQUEST_URL)
             request.addFormFile("file", file)
