@@ -3,6 +3,8 @@ package de.studiocode.miniatureblocks.resourcepack.model
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import de.studiocode.miniatureblocks.utils.ItemBuilder
+import org.bukkit.Material
 import java.io.File
 
 class MainModelData(private val file: File) {
@@ -65,6 +67,10 @@ class MainModelData(private val file: File) {
 
         val name = model.split("/")[2]
 
+        fun createItemBuilder(): ItemBuilder {
+            return ItemBuilder(Material.BEDROCK, name = "§f$name", customModelData = customModelData)
+        }
+        
     }
 
 }

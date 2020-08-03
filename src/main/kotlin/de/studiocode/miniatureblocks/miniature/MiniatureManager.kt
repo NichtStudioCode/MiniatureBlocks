@@ -2,6 +2,7 @@ package de.studiocode.miniatureblocks.miniature
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
+import de.studiocode.miniatureblocks.utils.getTargetEntity
 import org.bukkit.*
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
@@ -11,6 +12,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.inventory.InventoryCreativeEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.ChunkUnloadEvent
@@ -166,7 +168,24 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
                 .filterIsInstance<ArmorStand>()
                 .forEach { rotatingArmorStands.remove(it) }
     }
-
+    
+    @EventHandler
+    fun handleMiniatureClone(event: InventoryCreativeEvent) {
+        val cloned = event.cursor
+        if (cloned.type == Material.ARMOR_STAND) {
+            
+            val player = event.whoClicked as Player
+            val entity = player.getTargetEntity(8.0)
+            
+            if (entity != null && entity is ArmorStand) {
+                val customModel = entity.getCustomModel()
+                if (customModel != null) {
+                    event.cursor = customModel.createItemBuilder().build()
+                }
+            }
+        }
+    }
+    
     private fun ArmorStand.hasMiniatureData(): Boolean = persistentDataContainer.has(modelNameKey, STRING)
 
     private fun ArmorStand.isValidMiniature(): Boolean = getCustomModel() != null

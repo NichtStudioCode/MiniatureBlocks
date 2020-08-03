@@ -24,7 +24,7 @@ class MiniaturesMenu : PagedMenuInventory("Miniatures") {
         val cutModels = models.subList(fromIndex, if (toIndex > models.size) models.size else toIndex)
 
         val items = ArrayList<MenuItem>()
-        cutModels.forEach { items.add(MiniatureItem(it.name, it.customModelData)) }
+        cutModels.forEach { items.add(MiniatureItem(it)) }
         return items
     }
 
