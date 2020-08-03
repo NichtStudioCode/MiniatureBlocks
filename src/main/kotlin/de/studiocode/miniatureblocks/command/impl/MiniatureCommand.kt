@@ -19,7 +19,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                 .then(literal("autorotate")
                         .then(argument<Float>("degreesPerTick", FloatArgumentType.floatArg())
                                 .executes { handleAutoRotateCommand(it); 0}))
-                .then(literal("rotate")
+                .then(literal("rotation")
                         .then(argument<Float>("degrees", FloatArgumentType.floatArg())
                                 .executes { handleRotateCommand(it); 0 }))
     }
@@ -47,12 +47,16 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val player = getPlayer(context.source)
 
         val degreesPerTick = context.getArgument("degreesPerTick", Float::class.java)
-        MiniatureBlocks.INSTANCE.miniatureManager.playerRotationMap[player] = degreesPerTick
+        MiniatureBlocks.INSTANCE.miniatureManager.playerAutoRotationMap[player] = degreesPerTick
         player.sendMessage("§7Right-click the miniature you want to rotate.")
     }
 
-    private fun handleRotateCommand(it: CommandContext<Any>?) {
-        //TODO
+    private fun handleRotateCommand(context: CommandContext<Any>) {
+        val player = getPlayer(context.source)
+
+        val degreesPerTick = context.getArgument("degrees", Float::class.java)
+        MiniatureBlocks.INSTANCE.miniatureManager.playerRotationMap[player] = degreesPerTick
+        player.sendMessage("§7Right-click the miniature you want to rotate.")
     }
     
 }

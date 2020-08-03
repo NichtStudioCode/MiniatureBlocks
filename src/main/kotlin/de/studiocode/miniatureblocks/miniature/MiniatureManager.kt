@@ -23,6 +23,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private val modelDataKey = NamespacedKey(plugin, "customModelData")
     private val rotationKey = NamespacedKey(plugin, "rotation")
 
+    val playerAutoRotationMap = HashMap<Player, Float>()
     val playerRotationMap = HashMap<Player, Float>()
     private val rotatingArmorStands = HashMap<ArmorStand, Float>()
     
@@ -99,16 +100,29 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
         val player = event.player
         val entity = event.rightClicked
+        
         if (entity is ArmorStand && entity.hasMiniatureData()) {
             event.isCancelled = true
-            if (playerRotationMap.containsKey(player)) {
-                setMiniatureRotation(entity, playerRotationMap[player]!!)
-                playerRotationMap.remove(player)
-            } else {
-                val location = entity.location
-                location.yaw += 45
-                entity.teleport(location)
+            
+            val location = entity.location
+
+            when {
+                playerAutoRotationMap.containsKey(player) -> {
+                    setMiniatureRotation(entity, playerAutoRotationMap[player]!!)
+                    playerAutoRotationMap.remove(player)
+                }
+                
+                playerRotationMap.containsKey(player) -> {
+                    location.yaw = playerRotationMap[player]!!
+                    playerRotationMap.remove(player)
+                }
+                
+                else -> {
+                    location.yaw += 45
+                }
             }
+            
+            entity.teleport(location)
         }
     }
 
