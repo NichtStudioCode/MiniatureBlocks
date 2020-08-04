@@ -42,7 +42,8 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
 
     private fun handleCreateCommand(context: CommandContext<Any>) {
         val player = getPlayer(context.source)
-
+        val name = context.getArgument("name", String::class.java)
+        
         if (name.matches(namePattern)) {
             val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
             if (!resourcePack.hasModel(name)) {
