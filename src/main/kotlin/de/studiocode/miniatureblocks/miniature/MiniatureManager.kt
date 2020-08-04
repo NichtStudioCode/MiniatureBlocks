@@ -25,8 +25,6 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private val modelDataKey = NamespacedKey(plugin, "customModelData")
     private val rotationKey = NamespacedKey(plugin, "rotation")
 
-    val playerAutoRotationMap = HashMap<Player, Float>()
-    val playerRotationMap = HashMap<Player, Float>()
     private val rotatingArmorStands = HashMap<ArmorStand, Float>()
     
     init {
@@ -49,7 +47,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
         dataContainer.set(modelDataKey, INTEGER, customModel.customModelData)
     }
 
-    private fun setMiniatureRotation(armorStand: ArmorStand, rotation: Float) {
+    fun setMiniatureAutoRotate(armorStand: ArmorStand, rotation: Float) {
         val dataContainer = armorStand.persistentDataContainer
         if (rotation != 0f) {
             dataContainer.set(rotationKey, FLOAT, rotation)
@@ -59,6 +57,12 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             rotatingArmorStands.remove(armorStand)
             armorStand.teleport(armorStand.location.also { it.yaw = 0f })
         }
+    }
+    
+    fun rotateMiniature(armorStand: ArmorStand, rotation: Float, add: Boolean = false) {
+        val location = armorStand.location
+        if (add) location.yaw += rotation else location.yaw = rotation
+        armorStand.teleport(location)
     }
 
     fun removeMiniatureArmorStands(customModel: CustomModel) {
@@ -100,31 +104,15 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
 
     @EventHandler
     fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
-        val player = event.player
         val entity = event.rightClicked
         
         if (entity is ArmorStand && entity.hasMiniatureData()) {
             event.isCancelled = true
             
-            val location = entity.location
-
-            when {
-                playerAutoRotationMap.containsKey(player) -> {
-                    setMiniatureRotation(entity, playerAutoRotationMap[player]!!)
-                    playerAutoRotationMap.remove(player)
-                }
-                
-                playerRotationMap.containsKey(player) -> {
-                    location.yaw = playerRotationMap[player]!!
-                    playerRotationMap.remove(player)
-                }
-                
-                else -> {
-                    location.yaw += 45
-                }
+            // don't rotate if miniature is auto-rotating
+            if (!rotatingArmorStands.contains(entity)) {
+                rotateMiniature(entity, 45f, true)
             }
-            
-            entity.teleport(location)
         }
     }
 
@@ -185,6 +173,8 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             }
         }
     }
+
+    fun isArmorStandMiniature(armorStand: ArmorStand): Boolean = armorStand.hasMiniatureData()
     
     private fun ArmorStand.hasMiniatureData(): Boolean = persistentDataContainer.has(modelNameKey, STRING)
 
@@ -200,11 +190,11 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             mainModelData.getExactModel(dataContainer.get(modelDataKey, INTEGER)!!, dataContainer.get(modelNameKey, STRING)!!)
         } else null
     }
-    
+
     private fun ArmorStand.hasRotationData(): Boolean = persistentDataContainer.has(rotationKey, FLOAT)
 
     private fun ArmorStand.getRotationData(): Float = persistentDataContainer.get(rotationKey, FLOAT) ?: 0.0f
-    
+
     private fun ItemStack.isMiniatureLike(): Boolean {
         return type == Material.BEDROCK && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
     }

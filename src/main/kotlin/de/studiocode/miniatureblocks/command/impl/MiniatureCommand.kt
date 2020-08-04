@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
+import de.studiocode.miniatureblocks.utils.getTargetMiniature
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
 
@@ -45,18 +46,26 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
 
     private fun handleAutoRotateCommand(context: CommandContext<Any>) {
         val player = getPlayer(context.source)
-
         val degreesPerTick = context.getArgument("degreesPerTick", Float::class.java)
-        MiniatureBlocks.INSTANCE.miniatureManager.playerAutoRotationMap[player] = degreesPerTick
-        player.sendMessage("§7Right-click the miniature you want to rotate.")
+        
+        val miniature = player.getTargetMiniature()
+        if (miniature != null) {
+            MiniatureBlocks.INSTANCE.miniatureManager.setMiniatureAutoRotate(miniature, degreesPerTick)
+        } else {
+            player.sendMessage("§cPlease look at the miniature you want to rotate and try again.")
+        }
     }
 
     private fun handleRotateCommand(context: CommandContext<Any>) {
         val player = getPlayer(context.source)
+        val degrees = context.getArgument("degrees", Float::class.java)
 
-        val degreesPerTick = context.getArgument("degrees", Float::class.java)
-        MiniatureBlocks.INSTANCE.miniatureManager.playerRotationMap[player] = degreesPerTick
-        player.sendMessage("§7Right-click the miniature you want to rotate.")
+        val miniature = player.getTargetMiniature()
+        if (miniature != null) {
+            MiniatureBlocks.INSTANCE.miniatureManager.rotateMiniature(miniature, degrees)
+        } else {
+            player.sendMessage("§cPlease look at the miniature you want to rotate and try again.")
+        }
     }
     
 }
