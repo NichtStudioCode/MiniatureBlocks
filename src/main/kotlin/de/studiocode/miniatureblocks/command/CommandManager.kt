@@ -5,11 +5,10 @@ import de.studiocode.miniatureblocks.command.impl.MiniatureWorldCommand
 import de.studiocode.miniatureblocks.command.impl.MiniaturesCommand
 import de.studiocode.miniatureblocks.utils.ReflectionUtils
 import org.bukkit.Bukkit
-import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.concurrent.ConcurrentHashMap
 
-class CommandManager(val plugin: JavaPlugin) : Listener {
+class CommandManager(val plugin: JavaPlugin) {
 
     val permissionUpdateEntities = ConcurrentHashMap.newKeySet<Any>()!! // provides a concurrent HashSet
     
