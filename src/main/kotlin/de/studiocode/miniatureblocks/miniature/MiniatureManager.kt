@@ -26,11 +26,11 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private val rotationKey = NamespacedKey(plugin, "rotation")
 
     private val rotatingArmorStands = HashMap<ArmorStand, Float>()
-    
+
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, plugin)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::handleTick, 0, 1)
-        
+
         Bukkit.getWorlds().forEach { it.loadedChunks.forEach(this::handleChunkLoad) }
     }
 
@@ -58,7 +58,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             armorStand.teleport(armorStand.location.also { it.yaw = 0f })
         }
     }
-    
+
     fun rotateMiniature(armorStand: ArmorStand, rotation: Float, add: Boolean = false) {
         val location = armorStand.location
         if (add) location.yaw += rotation else location.yaw = rotation
@@ -75,11 +75,21 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     }
 
     private fun handleTick() {
-        rotatingArmorStands.forEach { (armorStand, rotation) -> 
+        rotatingArmorStands.forEach { (armorStand, rotation) ->
             val location = armorStand.location
             location.yaw += rotation
             armorStand.teleport(location)
         }
+    }
+
+    fun setMiniatureCommand(miniature: ArmorStand, commandType: CommandType, command: String) {
+        val dataContainer = miniature.persistentDataContainer
+        dataContainer.set(commandType.namespacedKey, STRING, command)
+    }
+
+    fun removeMiniatureCommand(miniature: ArmorStand, commandType: CommandType) {
+        val dataContainer = miniature.persistentDataContainer
+        dataContainer.remove(commandType.namespacedKey)
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -105,12 +115,15 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     @EventHandler
     fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
         val entity = event.rightClicked
-        
+
         if (entity is ArmorStand && entity.hasMiniatureData()) {
             event.isCancelled = true
-            
-            // don't rotate if miniature is auto-rotating
-            if (!rotatingArmorStands.contains(entity)) {
+
+            val commandType = CommandType.getCommandType(event)
+            if (entity.hasCommandType(commandType)) {
+                val command = entity.persistentDataContainer.get(commandType.namespacedKey, STRING)!!
+                event.player.chat(command)
+            } else if (!rotatingArmorStands.contains(entity)) {
                 rotateMiniature(entity, 45f, true)
             }
         }
@@ -133,7 +146,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
 
     @EventHandler
     fun handleChunkLoad(event: ChunkLoadEvent) = handleChunkLoad(event.chunk)
-    
+
     private fun handleChunkLoad(chunk: Chunk) {
         for (miniature in chunk.entities
                 .filterIsInstance<ArmorStand>()
@@ -148,7 +161,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             }
         }
     }
-    
+
     @EventHandler
     fun handleChunkUnload(event: ChunkUnloadEvent) {
         // remove armor stands from rotation map when the chunk gets unloaded
@@ -156,15 +169,15 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
                 .filterIsInstance<ArmorStand>()
                 .forEach { rotatingArmorStands.remove(it) }
     }
-    
+
     @EventHandler
     fun handleMiniatureClone(event: InventoryCreativeEvent) {
         val cloned = event.cursor
         if (cloned.type == Material.ARMOR_STAND) {
-            
+
             val player = event.whoClicked as Player
             val entity = player.getTargetEntity(8.0)
-            
+
             if (entity != null && entity is ArmorStand) {
                 val customModel = entity.getCustomModel()
                 if (customModel != null) {
@@ -175,7 +188,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     }
 
     fun isArmorStandMiniature(armorStand: ArmorStand): Boolean = armorStand.hasMiniatureData()
-    
+
     private fun ArmorStand.hasMiniatureData(): Boolean = persistentDataContainer.has(modelNameKey, STRING)
 
     private fun ArmorStand.isValidMiniature(): Boolean = getCustomModel() != null
@@ -195,8 +208,25 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
 
     private fun ArmorStand.getRotationData(): Float = persistentDataContainer.get(rotationKey, FLOAT) ?: 0.0f
 
+    private fun ArmorStand.hasCommandType(commandType: CommandType): Boolean = persistentDataContainer.has(commandType.namespacedKey, STRING)
+
     private fun ItemStack.isMiniatureLike(): Boolean {
         return type == Material.BEDROCK && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
+    }
+
+    enum class CommandType(val namespacedKey: NamespacedKey) {
+
+        SHIFT_RIGHT(NamespacedKey(MiniatureBlocks.INSTANCE, "shiftRightCommand")),
+        RIGHT(NamespacedKey(MiniatureBlocks.INSTANCE, "rightCommand"));
+
+        companion object {
+
+            fun getCommandType(event: PlayerInteractAtEntityEvent): CommandType {
+                return if (event.player.isSneaking) SHIFT_RIGHT else RIGHT
+            }
+
+        }
+
     }
 
 }
