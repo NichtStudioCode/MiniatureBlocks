@@ -7,6 +7,7 @@ import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
 import de.studiocode.miniatureblocks.utils.getTargetMiniature
+import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
 
@@ -38,10 +39,10 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                     val modelData = parser.parse()
                     resourcePack.addNewModel(name, modelData)
 
-                    player.sendMessage("§7A new model has been created.")
-                } else player.sendMessage("§cYou're not in a build area.")
-            } else player.sendMessage("§cA model with that name already exists.")
-        } else player.sendMessage("§cName does not match pattern $namePattern")
+                    player.sendPrefixedMessage("§7A new model has been created.")
+                } else player.sendPrefixedMessage("§cYou're not in a build area.")
+            } else player.sendPrefixedMessage("§cA model with that name already exists.")
+        } else player.sendPrefixedMessage("§cName does not match pattern $namePattern")
     }
 
     private fun handleAutoRotateCommand(context: CommandContext<Any>) {
@@ -52,7 +53,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         if (miniature != null) {
             MiniatureBlocks.INSTANCE.miniatureManager.setMiniatureAutoRotate(miniature, degreesPerTick)
         } else {
-            player.sendMessage("§cPlease look at the miniature you want to rotate and try again.")
+            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
         }
     }
 
@@ -64,7 +65,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         if (miniature != null) {
             MiniatureBlocks.INSTANCE.miniatureManager.rotateMiniature(miniature, degrees)
         } else {
-            player.sendMessage("§cPlease look at the miniature you want to rotate and try again.")
+            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
         }
     }
     

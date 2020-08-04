@@ -2,6 +2,8 @@ package de.studiocode.miniatureblocks.builderworld
 
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.utils.WorldUtils
+import de.studiocode.miniatureblocks.utils.prefix
+import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
@@ -45,11 +47,11 @@ class BuilderWorld : Listener {
                 val material = event.blockPlaced.type
                 if (!BlockTexture.hasMaterial(material)) {
                     event.isCancelled = true
-                    player.sendMessage("§cThis block is not supported in a miniature version. Only full blocks can be placed here.")
+                    player.sendPrefixedMessage("§cThis block is not supported in a miniature version. Only full blocks can be placed here.")
                 }
             } else {
                 event.isCancelled = true
-                player.sendMessage("§cYou can't place blocks here.")
+                player.sendPrefixedMessage("§cYou can't place blocks here.")
             }
         }
     }
@@ -59,7 +61,7 @@ class BuilderWorld : Listener {
         val location = event.block.location
         if (location.isBuildWorld(this) && !location.isValidBuildArea(this)) {
             event.isCancelled = true
-            event.player.sendMessage("§cYou can't break blocks here.")
+            event.player.sendPrefixedMessage("§cYou can't break blocks here.")
         }
     }
 
@@ -70,9 +72,9 @@ class BuilderWorld : Listener {
 
         val player = event.player
         if (!from.isValidBuildArea(this) && to.isValidBuildArea(this)) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§bEntered build area"))
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("$prefix§bEntered build area"))
         } else if (from.isValidBuildArea(this) && !to.isValidBuildArea(this)) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§bLeft build area"))
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("$prefix§bLeft build area"))
         }
     }
 

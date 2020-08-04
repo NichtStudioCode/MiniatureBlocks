@@ -6,6 +6,8 @@ import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 
+const val prefix = "§8[§bMiniatureBlocks§8]§r "
+
 fun Player.openInventory(menuInventory: MenuInventory) {
     menuInventory.viewer = this
 }
@@ -19,4 +21,12 @@ fun Player.getTargetMiniature(): ArmorStand? {
     if (entity is ArmorStand && MiniatureBlocks.INSTANCE.miniatureManager.isArmorStandMiniature(entity))
         return entity
     return null
+}
+
+fun Player.sendPrefixedMessage(message: String) {
+    sendMessage(prefix + message)
+}
+
+fun Player.kickPlayerPrefix(message: String) {
+    kickPlayer(prefix + message)
 }
