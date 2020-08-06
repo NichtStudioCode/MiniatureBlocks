@@ -34,7 +34,7 @@ class MainModelData(private val file: File) {
 
     private fun createJsonObject(): JsonObject {
         val mainObj = JsonObject()
-        mainObj.addProperty("parent", "block/bedrock")
+        mainObj.addProperty("parent", "block/structure_void")
 
         val overrides = JsonArray()
         for (customModel in customModels) {
@@ -68,7 +68,7 @@ class MainModelData(private val file: File) {
         val name = model.split("/")[2]
 
         fun createItemBuilder(): ItemBuilder {
-            return ItemBuilder(Material.BEDROCK, name = "§f$name", customModelData = customModelData)
+            return ItemBuilder(Material.STRUCTURE_VOID, name = "§f$name", customModelData = customModelData)
         }
         
     }

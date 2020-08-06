@@ -31,7 +31,8 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
     private val moddedBlockTexturesDir = File(assetsDir, "minecraft/textures/block/modded/")
     private val packMcmeta = File(dir, "pack.mcmeta")
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
-    private val mainModelDataFile = File(itemModelsDir, "bedrock.json")
+    private val oldMainModelDataFile = File(itemModelsDir, "bedrock.json")
+    private val mainModelDataFile = File(itemModelsDir, "structure_void.json")
     val mainModelData: MainModelData
 
     var downloadUrl: String? = config.getRPDownloadUrl()
@@ -49,6 +50,12 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         if (!packMcmeta.exists()) FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
         if (!modelParent.exists()) FileUtils.extractFile("/resourcepack/parent.json", modelParent)
         extractTextureFiles()
+        
+        if (oldMainModelDataFile.exists() && !mainModelDataFile.exists()) {
+            // server upgraded to this version from version <= 0.5
+            oldMainModelDataFile.copyTo(mainModelDataFile)
+            createZip()
+        }
         
         mainModelData = MainModelData(mainModelDataFile)
         

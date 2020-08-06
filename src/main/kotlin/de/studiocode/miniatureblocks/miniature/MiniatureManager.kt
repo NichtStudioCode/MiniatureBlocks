@@ -225,7 +225,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private fun ArmorStand.hasCommandType(commandType: CommandType): Boolean = persistentDataContainer.has(commandType.namespacedKey, STRING)
 
     private fun ItemStack.isMiniatureLike(): Boolean {
-        return type == Material.BEDROCK && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
+        return type == Material.STRUCTURE_VOID && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000
     }
 
     enum class CommandType(val namespacedKey: NamespacedKey) {
