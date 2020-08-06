@@ -24,11 +24,16 @@ class BuilderWorld : Listener {
         if (WorldUtils.existsWorld(worldName)) {
             world = Bukkit.getWorld(worldName)!!
         } else {
-            val gen = WorldCreator(worldName).generator(BuilderWorldGenerator())
+            val gen = WorldCreator(worldName)
+            gen.type(WorldType.FLAT)
+            gen.generateStructures(false)
+            gen.generator(BuilderWorldGenerator())
+            
             world = gen.createWorld()!!
             world.time = 12 * 1000
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
             world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
+            world.difficulty = Difficulty.PEACEFUL
             world.spawnLocation = Location(world, 0.0, 2.0, 0.0)
         }
     }
