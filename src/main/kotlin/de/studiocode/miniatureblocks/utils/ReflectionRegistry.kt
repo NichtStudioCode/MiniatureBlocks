@@ -29,7 +29,7 @@ object ReflectionRegistry {
     val NMS_ENTITY_PLAYER_CLASS = getNMSClass("EntityPlayer")
     val NMS_PLAYER_LIST_CLASS = getNMSClass("PlayerList")
     val NMS_ENTITY_CLASS = getNMSClass("Entity")
-    val NMS_ENTITY_ARMOR_STAND = getNMSClass("EntityArmorStand")
+    val NMS_ENTITY_ARMOR_STAND_CLASS = getNMSClass("EntityArmorStand")
     
     // CB classes
     val CB_CRAFT_SERVER_CLASS = getCBClass("CraftServer")
@@ -56,7 +56,7 @@ object ReflectionRegistry {
     val COMMAND_DISPATCHER_REGISTER_METHOD = getMethod(CommandDispatcher::class.java, false, "register", LiteralArgumentBuilder::class.java)
     
     // NMS fields
-    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = getField(NMS_ENTITY_ARMOR_STAND, true, "armorItems")
+    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "armorItems")
     
     // objects
     val NMS_DEDICATED_SERVER = CB_CRAFT_SERVER_GET_SERVER_METHOD.invoke(Bukkit.getServer())!!
