@@ -25,6 +25,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private val modelNameKey = NamespacedKey(plugin, "modelName")
     private val modelDataKey = NamespacedKey(plugin, "customModelData")
     private val rotationKey = NamespacedKey(plugin, "rotation")
+    private val noRotateKey = NamespacedKey(plugin, "noRotate")
 
     private val rotatingArmorStands = HashMap<ArmorStand, Float>()
 
@@ -38,16 +39,16 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private fun spawnArmorStandMiniature(location: Location, itemStack: ItemStack, customModel: CustomModel) {
         location.add(0.5, 0.0, 0.5)
         val world = location.world!!
-        
+
         // create EntityArmorStand
         val nmsArmorStand = ReflectionUtils.createNMSEntity(world, location, EntityType.ARMOR_STAND)
-        
+
         // set head item silently
         ReflectionUtils.setArmorStandArmorItems(nmsArmorStand, 3, ReflectionUtils.createNMSItemStackCopy(itemStack))
-        
+
         // get CraftArmorStand
         val armorStand = ReflectionUtils.getBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand
-        
+
         // set other properties & nbt tags
         armorStand.isVisible = false
         armorStand.isCollidable = false
@@ -56,7 +57,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
         val dataContainer = armorStand.persistentDataContainer
         dataContainer.set(modelNameKey, STRING, customModel.name)
         dataContainer.set(modelDataKey, INTEGER, customModel.customModelData)
-        
+
         // add ArmorStand to world
         ReflectionUtils.addNMSEntityToWorld(world, nmsArmorStand)
     }
@@ -88,14 +89,6 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
         }
     }
 
-    private fun handleTick() {
-        rotatingArmorStands.forEach { (armorStand, rotation) ->
-            val location = armorStand.location
-            location.yaw += rotation
-            armorStand.teleport(location)
-        }
-    }
-
     fun setMiniatureCommand(miniature: ArmorStand, commandType: CommandType, command: String) {
         val dataContainer = miniature.persistentDataContainer
         dataContainer.set(commandType.namespacedKey, STRING, command)
@@ -104,6 +97,20 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     fun removeMiniatureCommand(miniature: ArmorStand, commandType: CommandType) {
         val dataContainer = miniature.persistentDataContainer
         dataContainer.remove(commandType.namespacedKey)
+    }
+
+    fun setMiniatureNoRotate(miniature: ArmorStand, noRotate: Boolean) {
+        val byte = if (noRotate) 1.toByte() else 0.toByte()
+        val dataContainer = miniature.persistentDataContainer
+        dataContainer.set(noRotateKey, BYTE, byte)
+    }
+
+    private fun handleTick() {
+        rotatingArmorStands.forEach { (armorStand, rotation) ->
+            val location = armorStand.location
+            location.yaw += rotation
+            armorStand.teleport(location)
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -137,7 +144,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
             if (entity.hasCommandType(commandType)) {
                 val command = entity.persistentDataContainer.get(commandType.namespacedKey, STRING)!!
                 event.player.chat(command)
-            } else if (!rotatingArmorStands.contains(entity)) {
+            } else if (!rotatingArmorStands.contains(entity) && entity.canBeRotated()) {
                 rotateMiniature(entity, 45f, true)
             }
         }
@@ -223,6 +230,10 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private fun ArmorStand.getRotationData(): Float = persistentDataContainer.get(rotationKey, FLOAT) ?: 0.0f
 
     private fun ArmorStand.hasCommandType(commandType: CommandType): Boolean = persistentDataContainer.has(commandType.namespacedKey, STRING)
+
+    private fun ArmorStand.getNoRotate(): Byte = persistentDataContainer.get(noRotateKey, BYTE) ?: 0.toByte()
+    
+    private fun ArmorStand.canBeRotated(): Boolean = getNoRotate() != 1.toByte()
 
     private fun ItemStack.isMiniatureLike(): Boolean {
         return type == Material.STRUCTURE_VOID && itemMeta?.hasCustomModelData()!! && itemMeta?.customModelData!! > 1000000

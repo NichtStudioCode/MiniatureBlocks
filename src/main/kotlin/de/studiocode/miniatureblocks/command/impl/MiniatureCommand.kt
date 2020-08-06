@@ -9,15 +9,18 @@ import de.studiocode.miniatureblocks.miniature.MiniatureManager.CommandType
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
 import de.studiocode.miniatureblocks.utils.getTargetMiniature
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
+import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.Player
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
 
     private val namePattern = "[A-Za-z0-9]*".toRegex()
-
+    private val miniatureManager = MiniatureBlocks.INSTANCE.miniatureManager
+    
     init {
         command = command
                 .then(literal("create")
-                        .then(argument<String>("name", StringArgumentType.string())
+                        .then(argument<String>("name", StringArgumentType.word())
                                 .executes { handleCreateCommand(it); 0 }))
                 .then(literal("autorotate")
                         .then(argument<Float>("degreesPerTick", FloatArgumentType.floatArg())
@@ -38,12 +41,17 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                                         .executes { handleCommandRemoveCommand(CommandType.SHIFT_RIGHT, it); 0 })
                                 .then(literal("right")
                                         .executes { handleCommandRemoveCommand(CommandType.RIGHT, it); 0 })))
+                .then(literal("norotate")
+                        .then(literal("on")
+                                .executes { handleNoRotateCommand(true, it); 0 })
+                        .then(literal("off")
+                                .executes { handleNoRotateCommand(false, it); 0 }))
     }
 
     private fun handleCreateCommand(context: CommandContext<Any>) {
         val player = getPlayer(context.source)
         val name = context.getArgument("name", String::class.java)
-        
+
         if (name.matches(namePattern)) {
             val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
             if (!resourcePack.hasModel(name)) {
@@ -64,11 +72,9 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val player = getPlayer(context.source)
         val degreesPerTick = context.getArgument("degreesPerTick", Float::class.java)
 
-        val miniature = player.getTargetMiniature()
+        val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
-            MiniatureBlocks.INSTANCE.miniatureManager.setMiniatureAutoRotate(miniature, degreesPerTick)
-        } else {
-            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
+            miniatureManager.setMiniatureAutoRotate(miniature, degreesPerTick)
         }
     }
 
@@ -76,11 +82,9 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val player = getPlayer(context.source)
         val degrees = context.getArgument("degrees", Float::class.java)
 
-        val miniature = player.getTargetMiniature()
+        val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
-            MiniatureBlocks.INSTANCE.miniatureManager.rotateMiniature(miniature, degrees)
-        } else {
-            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
+            miniatureManager.rotateMiniature(miniature, degrees)
         }
     }
 
@@ -88,24 +92,38 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val player = getPlayer(context.source)
         val command = context.getArgument("command", String::class.java)
 
-        val miniature = player.getTargetMiniature()
+        val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
-            MiniatureBlocks.INSTANCE.miniatureManager.setMiniatureCommand(miniature, commandType, command)
+            miniatureManager.setMiniatureCommand(miniature, commandType, command)
             player.sendPrefixedMessage("§7The command has been set.")
-        } else {
-            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
         }
     }
 
     private fun handleCommandRemoveCommand(commandType: CommandType, context: CommandContext<Any>) {
         val player = getPlayer(context.source)
 
-        val miniature = player.getTargetMiniature()
+        val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
-            MiniatureBlocks.INSTANCE.miniatureManager.removeMiniatureCommand(miniature, commandType)
+            miniatureManager.removeMiniatureCommand(miniature, commandType)
             player.sendPrefixedMessage("§7The command has been removed.")
-        } else {
-            player.sendPrefixedMessage("§cPlease look at the miniature you want to rotate and try again.")
         }
     }
+
+    private fun handleNoRotateCommand(noRotate: Boolean, context: CommandContext<Any>) {
+        val player = getPlayer(context.source)
+
+        val miniature = getPlayersTargetMiniature(player)
+        if (miniature != null) {
+            miniatureManager.setMiniatureNoRotate(miniature, noRotate)
+            if (noRotate) player.sendPrefixedMessage("§7That miniature can't be rotated anymore now.")
+            else player.sendPrefixedMessage("§7That miniature can now be rotated again.")
+        }
+    }
+
+    private fun getPlayersTargetMiniature(player: Player): ArmorStand? {
+        val miniature = player.getTargetMiniature()
+        if (miniature == null) player.sendPrefixedMessage("§cPlease look at the miniature and try again.")
+        return miniature
+    }
+
 }
