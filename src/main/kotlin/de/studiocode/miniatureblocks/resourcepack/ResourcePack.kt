@@ -28,6 +28,7 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
     private val modelDir = File(assetsDir, "minecraft/models/")
     private val itemModelsDir = File(modelDir, "item/")
     private val moddedItemModelsDir = File(itemModelsDir, "modded/")
+    private val moddedBlockTexturesDir = File(assetsDir, "minecraft/textures/block/modded/")
     private val packMcmeta = File(dir, "pack.mcmeta")
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
     private val mainModelDataFile = File(itemModelsDir, "bedrock.json")
@@ -43,18 +44,22 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
     init {
         Bukkit.getPluginManager().registerEvents(this, plugin)
 
-        if (!dir.exists()) {
-            dir.mkdirs()
-            modelDir.mkdirs()
-            itemModelsDir.mkdirs()
-            moddedItemModelsDir.mkdirs()
-            FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
-            FileUtils.extractFile("/resourcepack/parent.json", modelParent)
-        }
-
+        if (!moddedItemModelsDir.exists()) moddedItemModelsDir.mkdirs()
+        if (!moddedBlockTexturesDir.exists()) moddedBlockTexturesDir.mkdirs()
+        if (!packMcmeta.exists()) FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
+        if (!modelParent.exists()) FileUtils.extractFile("/resourcepack/parent.json", modelParent)
+        extractTextureFiles()
+        
         mainModelData = MainModelData(mainModelDataFile)
         
         if (config.hasCustomUploader() && hasCustomModels() && config.getRPDownloadUrl() == null) uploadToCustom()
+    }
+    
+    private fun extractTextureFiles() {
+        for (fileName in FileUtils.listExtractableFiles("resourcepack/textures/")) {
+            val file = File(moddedBlockTexturesDir, FilenameUtils.getName(fileName))
+            if (!file.exists()) FileUtils.extractFile("/$fileName", file)
+        }
     }
 
     private fun uploadToCustom() {

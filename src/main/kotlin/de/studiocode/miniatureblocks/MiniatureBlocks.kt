@@ -8,6 +8,7 @@ import de.studiocode.miniatureblocks.miniature.MiniatureManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
 
 class MiniatureBlocks : JavaPlugin() {
 
@@ -15,6 +16,7 @@ class MiniatureBlocks : JavaPlugin() {
         lateinit var INSTANCE: MiniatureBlocks
     }
 
+    lateinit var pluginFile: File
     lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
@@ -23,6 +25,7 @@ class MiniatureBlocks : JavaPlugin() {
 
     override fun onEnable() {
         INSTANCE = this
+        pluginFile = file
         config = Config(this)
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack(this)

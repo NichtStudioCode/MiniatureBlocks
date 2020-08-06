@@ -109,7 +109,7 @@ enum class BlockTexture {
     GOLD_BLOCK("GOLD_BLOCK"),
     GOLD_ORE("GOLD_ORE"),
     GRANITE("GRANITE"),
-    GRASS_BLOCK("GRASS_BLOCK", "green_wool", "dirt", "grass_block_side"), //green wool because it is gray otherwise Todo: find alternative
+    GRASS_BLOCK("GRASS_BLOCK", "modded/grass_block_top", "dirt", "grass_block_side"),
     GRASS_PATH("GRASS_PATH", "grass_path_top", "dirt", "grass_path_side"),
     GRAY_CONCRETE("GRAY_CONCRETE"),
     GRAY_GLAZED_TERRACOTTA("GRAY_GLAZED_TERRACOTTA"),
