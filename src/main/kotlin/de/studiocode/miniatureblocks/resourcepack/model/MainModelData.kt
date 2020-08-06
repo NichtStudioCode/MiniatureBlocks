@@ -34,7 +34,10 @@ class MainModelData(private val file: File) {
 
     private fun createJsonObject(): JsonObject {
         val mainObj = JsonObject()
-        mainObj.addProperty("parent", "block/structure_void")
+        mainObj.addProperty("parent", "item/generated")
+        val texturesObj = JsonObject()
+        texturesObj.addProperty("layer0", "item/structure_void")
+        mainObj.add("textures", texturesObj)
 
         val overrides = JsonArray()
         for (customModel in customModels) {
