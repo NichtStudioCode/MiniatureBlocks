@@ -76,7 +76,7 @@ object ReflectionUtils {
     }
 
     fun getPlayerFromEntityPlayer(entityPlayer: Any): Player? {
-        return Bukkit.getOnlinePlayers().find { getEntityPlayer(it) == entityPlayer }
+        return getBukkitEntityFromNMSEntity(entityPlayer) as Player
     }
 
     fun getEntityFromCommandListenerWrapper(commandListenerWrapper: Any): Any? =
