@@ -10,7 +10,7 @@ abstract class PlayerCommand(val name: String, private val permission: String) {
 
     var command: LiteralArgumentBuilder<Any> = literal(name).requires {
         val player = getPlayerFromCommandListenerWrapper(it)
-        return@requires (player != null && player.hasPermission(permission))
+        player?.hasPermission(permission) ?: false
     }
 
     fun literal(name: String): LiteralArgumentBuilder<Any> {
