@@ -38,9 +38,17 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
     private fun spawnArmorStandMiniature(location: Location, itemStack: ItemStack, customModel: CustomModel) {
         location.add(0.5, 0.0, 0.5)
         val world = location.world!!
+        
+        // create EntityArmorStand
         val nmsArmorStand = ReflectionUtils.createNMSEntity(world, location, EntityType.ARMOR_STAND)
+        
+        // set head item silently
+        ReflectionUtils.setArmorStandArmorItems(nmsArmorStand, 3, ReflectionUtils.createNMSItemStackCopy(itemStack))
+        
+        // get CraftArmorStand
         val armorStand = ReflectionUtils.getBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand
-        armorStand.equipment?.helmet = itemStack
+        
+        // set other properties & nbt tags
         armorStand.isVisible = false
         armorStand.isCollidable = false
         armorStand.setGravity(false)
@@ -49,6 +57,7 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
         dataContainer.set(modelNameKey, STRING, customModel.name)
         dataContainer.set(modelDataKey, INTEGER, customModel.customModelData)
         
+        // add ArmorStand to world
         ReflectionUtils.addNMSEntityToWorld(world, nmsArmorStand)
     }
 

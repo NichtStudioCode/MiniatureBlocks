@@ -4,12 +4,14 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getCB
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getCBClass
+import de.studiocode.miniatureblocks.utils.ReflectionUtils.getField
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getMethod
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getNMS
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getNMSClass
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
+import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Consumer
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -27,11 +29,13 @@ object ReflectionRegistry {
     val NMS_ENTITY_PLAYER_CLASS = getNMSClass("EntityPlayer")
     val NMS_PLAYER_LIST_CLASS = getNMSClass("PlayerList")
     val NMS_ENTITY_CLASS = getNMSClass("Entity")
-
+    val NMS_ENTITY_ARMOR_STAND = getNMSClass("EntityArmorStand")
+    
     // CB classes
     val CB_CRAFT_SERVER_CLASS = getCBClass("CraftServer")
     val CB_CRAFT_PLAYER_CLASS = getCBClass("entity.CraftPlayer")
     val CB_CRAFT_WORLD_CLASS = getCBClass("CraftWorld")
+    val CB_CRAFT_ITEM_STACK_CLASS = getCBClass("inventory.CraftItemStack")
 
     // NMS methods
     val NMS_DEDICATED_SERVER_GET_COMMAND_DISPATCHER_METHOD = getMethod(NMS_DEDICATED_SERVER_CLASS, false, "getCommandDispatcher")
@@ -46,9 +50,13 @@ object ReflectionRegistry {
     val CB_CRAFT_PLAYER_GET_HANDLE_METHOD = getMethod(CB_CRAFT_PLAYER_CLASS, false, "getHandle")
     val CB_CRAFT_WORLD_CREATE_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "createEntity", Location::class.java, Class::class.java)
     val CB_CRAFT_WORLD_ADD_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "addEntity", NMS_ENTITY_CLASS, SpawnReason::class.java, Consumer::class.java)
+    val CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD = getMethod(CB_CRAFT_ITEM_STACK_CLASS, false, "asNMSCopy", ItemStack::class.java)
     
     // other methods
     val COMMAND_DISPATCHER_REGISTER_METHOD = getMethod(CommandDispatcher::class.java, false, "register", LiteralArgumentBuilder::class.java)
+    
+    // NMS fields
+    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = getField(NMS_ENTITY_ARMOR_STAND, true, "armorItems")
     
     // objects
     val NMS_DEDICATED_SERVER = CB_CRAFT_SERVER_GET_SERVER_METHOD.invoke(Bukkit.getServer())!!
