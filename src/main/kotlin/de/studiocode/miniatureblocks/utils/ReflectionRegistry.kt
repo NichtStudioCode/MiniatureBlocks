@@ -8,6 +8,9 @@ import de.studiocode.miniatureblocks.utils.ReflectionUtils.getMethod
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getNMS
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getNMSClass
 import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
+import org.bukkit.util.Consumer
 
 @Suppress("MemberVisibilityCanBePrivate")
 object ReflectionRegistry {
@@ -23,10 +26,12 @@ object ReflectionRegistry {
     val NMS_COMMAND_LISTENER_WRAPPER_CLASS = getNMSClass("CommandListenerWrapper")
     val NMS_ENTITY_PLAYER_CLASS = getNMSClass("EntityPlayer")
     val NMS_PLAYER_LIST_CLASS = getNMSClass("PlayerList")
+    val NMS_ENTITY_CLASS = getNMSClass("Entity")
 
     // CB classes
     val CB_CRAFT_SERVER_CLASS = getCBClass("CraftServer")
     val CB_CRAFT_PLAYER_CLASS = getCBClass("entity.CraftPlayer")
+    val CB_CRAFT_WORLD_CLASS = getCBClass("CraftWorld")
 
     // NMS methods
     val NMS_DEDICATED_SERVER_GET_COMMAND_DISPATCHER_METHOD = getMethod(NMS_DEDICATED_SERVER_CLASS, false, "getCommandDispatcher")
@@ -34,10 +39,13 @@ object ReflectionRegistry {
     val NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD = getMethod(NMS_COMMAND_LISTENER_WRAPPER_CLASS, false, "getEntity")
     val NMS_MINECRAFT_SERVER_GET_PLAYER_LIST_METHOD = getMethod(NMS_MINECRAFT_SERVER_CLASS, false, "getPlayerList")
     val NMS_PLAYER_LIST_UPDATE_PERMISSION_LEVEL_METHOD = getMethod(NMS_PLAYER_LIST_CLASS, false, "d", NMS_ENTITY_PLAYER_CLASS)
+    val NMS_ENTITY_GET_BUKKIT_ENTITY_METHOD = getMethod(NMS_ENTITY_CLASS, false, "getBukkitEntity")
     
     // CB methods
     val CB_CRAFT_SERVER_GET_SERVER_METHOD = getMethod(CB_CRAFT_SERVER_CLASS, false, "getServer")
     val CB_CRAFT_PLAYER_GET_HANDLE_METHOD = getMethod(CB_CRAFT_PLAYER_CLASS, false, "getHandle")
+    val CB_CRAFT_WORLD_CREATE_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "createEntity", Location::class.java, Class::class.java)
+    val CB_CRAFT_WORLD_ADD_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "addEntity", NMS_ENTITY_CLASS, SpawnReason::class.java, Consumer::class.java)
     
     // other methods
     val COMMAND_DISPATCHER_REGISTER_METHOD = getMethod(CommandDispatcher::class.java, false, "register", LiteralArgumentBuilder::class.java)

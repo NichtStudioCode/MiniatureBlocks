@@ -2,6 +2,7 @@ package de.studiocode.miniatureblocks.miniature
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
+import de.studiocode.miniatureblocks.utils.ReflectionUtils
 import de.studiocode.miniatureblocks.utils.getTargetEntity
 import org.bukkit.*
 import org.bukkit.entity.ArmorStand
@@ -36,7 +37,9 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
 
     private fun spawnArmorStandMiniature(location: Location, itemStack: ItemStack, customModel: CustomModel) {
         location.add(0.5, 0.0, 0.5)
-        val armorStand = location.world!!.spawnEntity(location, EntityType.ARMOR_STAND) as ArmorStand
+        val world = location.world!!
+        val nmsArmorStand = ReflectionUtils.createNMSEntity(world, location, EntityType.ARMOR_STAND)
+        val armorStand = ReflectionUtils.getBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand
         armorStand.equipment?.helmet = itemStack
         armorStand.isVisible = false
         armorStand.isCollidable = false
@@ -45,6 +48,8 @@ class MiniatureManager(private val plugin: MiniatureBlocks) : Listener {
         val dataContainer = armorStand.persistentDataContainer
         dataContainer.set(modelNameKey, STRING, customModel.name)
         dataContainer.set(modelDataKey, INTEGER, customModel.customModelData)
+        
+        ReflectionUtils.addNMSEntityToWorld(world, nmsArmorStand)
     }
 
     fun setMiniatureAutoRotate(armorStand: ArmorStand, rotation: Float) {
