@@ -10,14 +10,10 @@ class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, 
     init {
         command = command.executes { handleMiniaturesCommand(it); 0 }
     }
-    
+
     private fun handleMiniaturesCommand(context: CommandContext<Any>) {
-        try {
-            val player = getPlayer(context.source)
-            player.openInventory(MiniaturesMenu())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val player = getPlayer(context.source)
+        player.openInventory(MiniaturesMenu())
     }
 
 }

@@ -145,20 +145,16 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
 
     private fun handleAnimationCommand(context: CommandContext<Any>) {
-        try {
-            val player = getPlayer(context.source)
-            val itemStack = player.inventory.itemInMainHand
-            
-            val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
-                val item =  MiniatureArmorStandManager.MiniatureType.newInstance(itemStack)
-                if (item is AnimatedMiniatureItem) item.data
-                else null
-            } else null
-            
-            player.openInventory(AnimationMenu(data))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val player = getPlayer(context.source)
+        val itemStack = player.inventory.itemInMainHand
+
+        val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
+            val item = MiniatureArmorStandManager.MiniatureType.newInstance(itemStack)
+            if (item is AnimatedMiniatureItem) item.data
+            else null
+        } else null
+
+        player.openInventory(AnimationMenu(data))
     }
 
     private fun getPlayersTargetMiniature(player: Player): MiniatureArmorStand? {
