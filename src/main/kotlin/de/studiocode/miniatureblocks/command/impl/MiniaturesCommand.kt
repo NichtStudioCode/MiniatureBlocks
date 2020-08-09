@@ -12,8 +12,12 @@ class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, 
     }
     
     private fun handleMiniaturesCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        player.openInventory(MiniaturesMenu())
+        try {
+            val player = getPlayer(context.source)
+            player.openInventory(MiniaturesMenu())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

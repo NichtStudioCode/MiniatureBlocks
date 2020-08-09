@@ -60,7 +60,9 @@ class MainModelData(private val file: File) {
 
     fun removeModel(name: String) = customModels.removeIf { it.name == name }
 
-    fun getExactModel(customModelData: Int, name: String): CustomModel? = customModels.find { it.customModelData == customModelData && it.name == name }
+    private fun getExactModel(name: String, customModelData: Int): CustomModel? = customModels.find { it.customModelData == customModelData && it.name == name }
+    
+    fun getExactModel(jsonArray: JsonArray) = getExactModel(jsonArray[0].asString, jsonArray[1].asInt)
     
     fun getCustomModelFromCustomModelData(customModelData: Int): CustomModel? = customModels.find { it.customModelData == customModelData }
     
@@ -69,9 +71,15 @@ class MainModelData(private val file: File) {
     class CustomModel(val customModelData: Int, val model: String) {
 
         val name = model.split("/")[2]
-
-        fun createItemBuilder(): ItemBuilder {
-            return ItemBuilder(Material.STRUCTURE_VOID, name = "§f$name", customModelData = customModelData)
+        
+        fun createItemBuilder() = ItemBuilder(Material.STRUCTURE_VOID, displayName = "§f$name", customModelData = customModelData)
+        
+        fun asJsonArray(): JsonArray {
+            val array = JsonArray()
+            array.add(name)
+            array.add(customModelData)
+            
+            return array
         }
         
     }

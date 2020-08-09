@@ -7,12 +7,16 @@ import java.util.stream.IntStream
 import kotlin.math.roundToInt
 
 abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBtn: Int = 48, private val fBtn: Int = 50,
-                                  private val scrollableSlots: IntArray = IntStream.range(0, 45).toArray()) : MenuInventory(title, lines) {
+                                  val scrollableSlots: IntArray = IntStream.range(0, 45).toArray(),
+                                  val infinitePages: Boolean = false) : MenuInventory(title, lines) {
 
     var currentPage = 0
 
     init {
         setPageButtons()
+    }
+    
+    override fun handleInvOpen() { 
         loadPageContent()
     }
 
@@ -44,7 +48,7 @@ abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBt
     }
 
     fun hasNextPage(): Boolean {
-        return getContentSize() > (currentPage + 1) * scrollableSlots.size
+        return infinitePages ||  getContentSize() > (currentPage + 1) * scrollableSlots.size
     }
 
     fun hasPageBefore(): Boolean {

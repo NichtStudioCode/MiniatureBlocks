@@ -113,11 +113,11 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         return modelFile.exists()
     }
 
-    fun addNewModel(name: String, modelData: ModelData): Int {
+    fun addNewModel(name: String, modelData: ModelData, forceResourcePack: Boolean = true): Int {
         val modelFile = File(moddedItemModelsDir, "$name.json")
         modelData.writeToFile(modelFile)
 
-        return addOverride("item/modded/$name")
+        return addOverride("item/modded/$name", forceResourcePack)
     }
 
     fun removeModel(name: String) {
@@ -127,13 +127,13 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         removeOverride(name)
     }
 
-    private fun addOverride(model: String): Int {
+    private fun addOverride(model: String, forceResourcePack: Boolean = true): Int {
         val customModelData = mainModelData.getNextCustomModelData()
         mainModelData.customModels.add(CustomModel(customModelData, model))
         mainModelData.writeToFile()
 
         createZip()
-        forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
+        if (forceResourcePack) forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
         return customModelData
     }
 

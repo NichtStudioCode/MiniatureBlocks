@@ -23,8 +23,12 @@ abstract class MenuInventory(title: String, lines: Int) {
         }
 
 
-    fun handleInvOpen() {
-        //empty
+    open fun handleInvOpen() {
+        // empty
+    }
+    
+    open fun refresh() {
+        // empty
     }
 
     fun setItem(slot: Int, menuItem: MenuItem) {
@@ -67,7 +71,7 @@ abstract class MenuInventory(title: String, lines: Int) {
         val slot = event.slot
         if (menuItems.containsKey(slot)) {
             val menuItem = menuItems[slot]
-            if (menuItem!!.handleClick(event.click, event)) resetItem(slot)
+            if (menuItem!!.handleClick(event.click, event.whoClicked as Player, event)) resetItem(slot)
         }
     }
 

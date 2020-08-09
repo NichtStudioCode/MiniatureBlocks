@@ -1,8 +1,8 @@
 package de.studiocode.miniatureblocks.utils
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_CRAFT_ENTITY_GET_HANDLE_METHOD
 import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD
-import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_CRAFT_PLAYER_GET_HANDLE_METHOD
 import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_CRAFT_WORLD_ADD_ENTITY_METHOD
 import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_CRAFT_WORLD_CREATE_ENTITY_METHOD
 import de.studiocode.miniatureblocks.utils.ReflectionRegistry.CB_PACKAGE_PATH
@@ -74,8 +74,8 @@ object ReflectionUtils {
         ReflectionRegistry.COMMAND_DISPATCHER_REGISTER_METHOD.invoke(ReflectionRegistry.COMMAND_DISPATCHER, builder)
     }
 
-    fun getEntityPlayer(player: Player): Any {
-        return CB_CRAFT_PLAYER_GET_HANDLE_METHOD.invoke(player)
+    fun getNMSEntity(entity: Entity): Any {
+        return CB_CRAFT_ENTITY_GET_HANDLE_METHOD.invoke(entity)
     }
 
     fun getPlayerFromEntityPlayer(entityPlayer: Any): Player? {
@@ -96,7 +96,7 @@ object ReflectionUtils {
     }
 
     fun updatePermissionLevelPlayer(player: Player) {
-        updatePermissionLevel(getEntityPlayer(player))
+        updatePermissionLevel(getNMSEntity(player))
     }
 
     fun createNMSEntity(world: World, location: Location, entityType: EntityType): Any {

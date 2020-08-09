@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.Damageable
 
 class ItemBuilder(var material: Material, var amount: Int = 1, var damage: Int = 0, var customModelData: Int? = null,
-                  var name: String? = null, var lore: ArrayList<String> = ArrayList(),
+                  var displayName: String? = null, var lore: ArrayList<String> = ArrayList(),
                   var enchantments: HashMap<Enchantment, Pair<Int, Boolean>> = HashMap(),
                   var itemFlags: ArrayList<ItemFlag> = ArrayList()) {
 
@@ -27,7 +27,7 @@ class ItemBuilder(var material: Material, var amount: Int = 1, var damage: Int =
     fun build(): ItemStack {
         val itemStack = ItemStack(material, amount)
         val itemMeta = itemStack.itemMeta!!
-        if (name != null) itemMeta.setDisplayName(name)
+        if (displayName != null) itemMeta.setDisplayName(displayName)
         if (itemMeta is Damageable) (itemMeta as Damageable).damage = damage
         if (customModelData != null) itemMeta.setCustomModelData(customModelData)
         itemMeta.lore = lore

@@ -33,6 +33,7 @@ object ReflectionRegistry {
     
     // CB classes
     val CB_CRAFT_SERVER_CLASS = getCBClass("CraftServer")
+    val CB_CRAFT_ENTITY_CLASS = getCBClass("entity.CraftEntity")
     val CB_CRAFT_PLAYER_CLASS = getCBClass("entity.CraftPlayer")
     val CB_CRAFT_WORLD_CLASS = getCBClass("CraftWorld")
     val CB_CRAFT_ITEM_STACK_CLASS = getCBClass("inventory.CraftItemStack")
@@ -47,7 +48,7 @@ object ReflectionRegistry {
     
     // CB methods
     val CB_CRAFT_SERVER_GET_SERVER_METHOD = getMethod(CB_CRAFT_SERVER_CLASS, false, "getServer")
-    val CB_CRAFT_PLAYER_GET_HANDLE_METHOD = getMethod(CB_CRAFT_PLAYER_CLASS, false, "getHandle")
+    val CB_CRAFT_ENTITY_GET_HANDLE_METHOD = getMethod(CB_CRAFT_ENTITY_CLASS, false, "getHandle")
     val CB_CRAFT_WORLD_CREATE_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "createEntity", Location::class.java, Class::class.java)
     val CB_CRAFT_WORLD_ADD_ENTITY_METHOD = getMethod(CB_CRAFT_WORLD_CLASS, false, "addEntity", NMS_ENTITY_CLASS, SpawnReason::class.java, Consumer::class.java)
     val CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD = getMethod(CB_CRAFT_ITEM_STACK_CLASS, false, "asNMSCopy", ItemStack::class.java)

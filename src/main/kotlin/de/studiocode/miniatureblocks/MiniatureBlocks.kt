@@ -4,7 +4,7 @@ import de.studiocode.miniatureblocks.builderworld.BuilderWorld
 import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.inventory.MenuInventoryManager
-import de.studiocode.miniatureblocks.miniature.MiniatureManager
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.java.JavaPlugin
@@ -20,7 +20,7 @@ class MiniatureBlocks : JavaPlugin() {
     lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
-    lateinit var miniatureManager: MiniatureManager
+    lateinit var miniatureManager: MiniatureArmorStandManager
     lateinit var commandManager: CommandManager
 
     override fun onEnable() {
@@ -29,7 +29,7 @@ class MiniatureBlocks : JavaPlugin() {
         config = Config(this)
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack(this)
-        miniatureManager = MiniatureManager(this)
+        miniatureManager = MiniatureArmorStandManager(this)
         commandManager = CommandManager(this)
 
         server.pluginManager.registerEvents(builderWorld, this)
