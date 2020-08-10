@@ -17,7 +17,7 @@ class BackItem(private val pagedMenuInventory: PagedMenuInventory) : MenuItem() 
             if (pagedMenuInventory.hasPageBefore()) {
                 val pageBefore = pagedMenuInventory.currentPage - 1
                 val pages = pagedMenuInventory.getPageAmount()
-                it.addLoreLine("§7Go to page §b$pageBefore§7/§b$pages")
+                it.addLoreLine("§7Go to page §b${pageBefore + 1}" + if (pagedMenuInventory.infinitePages) "" else "§7/§b${pages + 1}")
             } else it.addLoreLine("§7You can't go further back")
         }.build()
     }

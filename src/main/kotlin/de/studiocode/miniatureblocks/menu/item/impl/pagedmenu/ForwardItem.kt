@@ -17,7 +17,7 @@ class ForwardItem(private val pagedMenuInventory: PagedMenuInventory) : MenuItem
             if (pagedMenuInventory.hasNextPage()) {
                 val nextPage = pagedMenuInventory.currentPage + 1
                 val pages = pagedMenuInventory.getPageAmount()
-                it.addLoreLine("§7Go to page §b$nextPage" + if (pagedMenuInventory.infinitePages) "" else "§7/§b$pages")
+                it.addLoreLine("§7Go to page §b${nextPage + 1}" + if (pagedMenuInventory.infinitePages) "" else "§7/§b${pages + 1}")
             } else it.addLoreLine("§7There are no more pages")
         }.build()
     }
