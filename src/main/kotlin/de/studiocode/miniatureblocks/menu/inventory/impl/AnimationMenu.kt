@@ -48,14 +48,18 @@ class AnimationMenu(data: AnimatedMiniatureData? = null) : PagedMenuInventory("C
     }
 
     fun createAnimation() {
-        val models = (0..(frameMap.keys.max() ?: 0)).mapNotNull { frameMap[it]?.model }.toTypedArray()
-        val animationData = AnimatedMiniatureData(tickDelayItem.tickDelay, models)
-        val animationItem = AnimatedMiniatureItem.create(animationData)
-
         val player = viewer!!
-        player.inventory.addItem(animationItem.itemStack)
-        player.closeInventory()
-        player.sendPrefixedMessage("§7Animated item added to inventory")
+        if (frameMap.isNotEmpty()) {
+            val models = (0..(frameMap.keys.max() ?: 0)).mapNotNull { frameMap[it]?.model }.toTypedArray()
+            val animationData = AnimatedMiniatureData(tickDelayItem.tickDelay, models)
+            val animationItem = AnimatedMiniatureItem.create(animationData)
+
+            player.inventory.addItem(animationItem.itemStack)
+            player.closeInventory()
+            player.sendPrefixedMessage("§7Animated item added to inventory.")
+        } else {
+            player.sendPrefixedMessage("§cCan't create animation because it is empty.")
+        }
     }
 
 }
