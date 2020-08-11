@@ -3,13 +3,14 @@ package de.studiocode.miniatureblocks.command
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
+import de.studiocode.miniatureblocks.utils.ReflectionUtils.createPlayerFromCommandListenerWrapper
 import de.studiocode.miniatureblocks.utils.ReflectionUtils.getPlayerFromCommandListenerWrapper
 import org.bukkit.entity.Player
 
 abstract class PlayerCommand(val name: String, private val permission: String) {
 
     var command: LiteralArgumentBuilder<Any> = literal(name).requires {
-        val player = getPlayerFromCommandListenerWrapper(it)
+        val player = createPlayerFromCommandListenerWrapper(it)
         player?.hasPermission(permission) ?: false
     }
 

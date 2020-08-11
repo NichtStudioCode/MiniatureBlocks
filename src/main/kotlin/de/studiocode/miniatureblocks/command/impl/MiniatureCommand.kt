@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.menu.inventory.impl.AnimationMenu
+import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand.CommandType
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
@@ -61,6 +62,8 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                                 .executes { handleSyncCommand(false, it); 0 }))
                 .then(literal("animation")
                         .executes { handleAnimationCommand(it); 0 })
+                .then(literal("move")
+                        .executes { handleMoveCommand(it); 0 })
     }
 
     private fun handleCreateCommand(forceResourcePack: Boolean, context: CommandContext<Any>) {
@@ -155,6 +158,15 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         } else null
 
         player.openInventory(AnimationMenu(data))
+    }
+
+    private fun handleMoveCommand(context: CommandContext<Any>) {
+        val player = getPlayer(context.source)
+
+        val miniature = getPlayersTargetMiniature(player)
+        if (miniature != null) {
+            ArmorStandMoveManager.addToMove(player, miniature.armorStand)
+        }
     }
 
     private fun getPlayersTargetMiniature(player: Player): MiniatureArmorStand? {

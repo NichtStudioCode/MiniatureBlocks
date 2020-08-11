@@ -30,3 +30,9 @@ fun Location.getEntityLookingAt(maxDistance: Double, vararg exclusions: Entity, 
 fun <T : Entity> Location.filterInBoundingBox(entities: List<T>): List<T> {
     return entities.filter { it.boundingBox.contains(x, y, z) }
 }
+
+fun Location.roundCoordinates(digits: Int) {
+    x = MathUtils.roundToDecimalDigits(x, digits)
+    y = MathUtils.roundToDecimalDigits(y, digits)
+    z = MathUtils.roundToDecimalDigits(z, digits)
+}

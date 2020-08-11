@@ -79,12 +79,21 @@ object ReflectionUtils {
     }
 
     fun getPlayerFromEntityPlayer(entityPlayer: Any): Player? {
-        return getBukkitEntityFromNMSEntity(entityPlayer) as Player
+        return Bukkit.getOnlinePlayers().find { getNMSEntity(it) == entityPlayer }
+    }
+    
+    fun createPlayerFromEntityPlayer(entityPlayer: Any): Player? {
+        return createBukkitEntityFromNMSEntity(entityPlayer) as Player
     }
 
     fun getEntityFromCommandListenerWrapper(commandListenerWrapper: Any): Any? =
             NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD.invoke(commandListenerWrapper)
 
+    fun createPlayerFromCommandListenerWrapper(commandListenerWrapper: Any): Player? {
+        val entity = getEntityFromCommandListenerWrapper(commandListenerWrapper)
+        return if (entity != null) createPlayerFromEntityPlayer(entity) else null
+    }
+    
     fun getPlayerFromCommandListenerWrapper(commandListenerWrapper: Any): Player? {
         val entity = getEntityFromCommandListenerWrapper(commandListenerWrapper)
         return if (entity != null) getPlayerFromEntityPlayer(entity) else null
@@ -103,7 +112,7 @@ object ReflectionUtils {
         return CB_CRAFT_WORLD_CREATE_ENTITY_METHOD.invoke(world, location, entityType.entityClass)
     }
 
-    fun getBukkitEntityFromNMSEntity(entity: Any): Entity {
+    fun createBukkitEntityFromNMSEntity(entity: Any): Entity {
         return NMS_ENTITY_GET_BUKKIT_ENTITY_METHOD.invoke(entity) as Entity
     }
 

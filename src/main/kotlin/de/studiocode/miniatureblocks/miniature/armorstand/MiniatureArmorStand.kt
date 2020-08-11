@@ -35,7 +35,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
             ReflectionUtils.setArmorStandArmorItems(nmsArmorStand, 3, ReflectionUtils.createNMSItemStackCopy(itemStack))
 
             // get CraftArmorStand
-            val armorStand = ReflectionUtils.getBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand
+            val armorStand = ReflectionUtils.createBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand
 
             // set other properties & nbt tags
             armorStand.isVisible = false
