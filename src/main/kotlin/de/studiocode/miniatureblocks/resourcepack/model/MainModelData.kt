@@ -60,7 +60,7 @@ class MainModelData(private val file: File) {
 
     fun removeModel(name: String) = customModels.removeIf { it.name == name }
 
-    private fun getExactModel(name: String, customModelData: Int): CustomModel? = customModels.find { it.customModelData == customModelData && it.name == name }
+    fun getExactModel(name: String, customModelData: Int): CustomModel? = customModels.find { it.customModelData == customModelData && it.name == name }
     
     fun getExactModel(jsonArray: JsonArray) = getExactModel(jsonArray[0].asString, jsonArray[1].asInt)
     

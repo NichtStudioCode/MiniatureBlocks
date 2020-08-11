@@ -21,7 +21,6 @@ class MiniatureBlocks : JavaPlugin() {
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
     lateinit var miniatureManager: MiniatureArmorStandManager
-    lateinit var commandManager: CommandManager
 
     override fun onEnable() {
         INSTANCE = this
@@ -30,7 +29,7 @@ class MiniatureBlocks : JavaPlugin() {
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack(this)
         miniatureManager = MiniatureArmorStandManager(this)
-        commandManager = CommandManager(this)
+        CommandManager(this)
 
         server.pluginManager.registerEvents(builderWorld, this)
 
