@@ -1,8 +1,13 @@
 package de.studiocode.miniatureblocks.menu.inventory
 
 import de.studiocode.miniatureblocks.menu.item.MenuItem
-import de.studiocode.miniatureblocks.menu.item.impl.pagedmenu.BackItem
-import de.studiocode.miniatureblocks.menu.item.impl.pagedmenu.ForwardItem
+import de.studiocode.miniatureblocks.utils.ItemBuilder
+import de.studiocode.miniatureblocks.utils.playClickSound
+import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.event.inventory.ClickType
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.inventory.ItemStack
 import java.util.stream.IntStream
 import kotlin.math.roundToInt
 
@@ -15,14 +20,14 @@ abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBt
     init {
         setPageButtons()
     }
-    
-    override fun handleInvOpen() { 
+
+    override fun handleInvOpen() {
         loadPageContent()
     }
 
     private fun setPageButtons() {
-        setItem(bBtn, BackItem(this))
-        setItem(fBtn, ForwardItem(this))
+        setItem(bBtn, BackItem())
+        setItem(fBtn, ForwardItem())
     }
 
     fun updatePageButtons() {
@@ -48,7 +53,7 @@ abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBt
     }
 
     fun hasNextPage(): Boolean {
-        return infinitePages ||  getContentSize() > (currentPage + 1) * scrollableSlots.size
+        return infinitePages || getContentSize() > (currentPage + 1) * scrollableSlots.size
     }
 
     fun hasPageBefore(): Boolean {
@@ -69,6 +74,50 @@ abstract class PagedMenuInventory(title: String, lines: Int = 6, private val bBt
             loadPageContent()
             updatePageButtons()
         }
+    }
+
+    inner class ForwardItem : MenuItem() {
+
+        override fun getItemStack(): ItemStack {
+            return ItemBuilder(material = Material.GREEN_STAINED_GLASS_PANE, displayName = "§7Forward").also {
+                if (hasNextPage()) {
+                    val nextPage = currentPage + 1
+                    val pages = getPageAmount()
+                    it.addLoreLine("§7Go to page §b${nextPage + 1}" + if (infinitePages) "" else "§7/§b${pages + 1}")
+                } else it.addLoreLine("§7There are no more pages")
+            }.build()
+        }
+
+        override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent): Boolean {
+            if (clickType == ClickType.LEFT) {
+                goForward()
+                player.playClickSound()
+            }
+            return false
+        }
+
+    }
+
+    inner class BackItem : MenuItem() {
+
+        override fun getItemStack(): ItemStack {
+            return ItemBuilder(material = Material.RED_STAINED_GLASS_PANE, displayName = "§7Back").also {
+                if (hasPageBefore()) {
+                    val pageBefore = currentPage - 1
+                    val pages = getPageAmount()
+                    it.addLoreLine("§7Go to page §b${pageBefore + 1}" + if (infinitePages) "" else "§7/§b${pages + 1}")
+                } else it.addLoreLine("§7You can't go further back")
+            }.build()
+        }
+
+        override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent): Boolean {
+            if (clickType == ClickType.LEFT) {
+                goBack()
+                player.playClickSound()
+            }
+            return false
+        }
+
     }
 
 }

@@ -1,4 +1,4 @@
-package de.studiocode.miniatureblocks.menu.item.impl.miniaturesmenu
+package de.studiocode.miniatureblocks.menu.item.impl
 
 import de.studiocode.miniatureblocks.menu.inventory.MenuInventory
 import de.studiocode.miniatureblocks.menu.item.MenuItem

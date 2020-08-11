@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.menu.inventory
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.menu.item.MenuItem
 import de.studiocode.miniatureblocks.menu.item.impl.BackgroundItem
-import de.studiocode.miniatureblocks.menu.item.impl.miniaturesmenu.RefreshItem
+import de.studiocode.miniatureblocks.menu.item.impl.RefreshItem
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
 
 abstract class CustomModelsPagedMenu(title: String) : PagedMenuInventory(title) {
@@ -30,6 +30,5 @@ abstract class CustomModelsPagedMenu(title: String) : PagedMenuInventory(title) 
     override fun getContentSize(): Int {
         return MiniatureBlocks.INSTANCE.resourcePack.getModels().size
     }
-
-
+    
 }
