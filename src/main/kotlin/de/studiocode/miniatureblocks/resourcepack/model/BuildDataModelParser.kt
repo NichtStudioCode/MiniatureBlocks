@@ -113,7 +113,7 @@ class BuildDataModelParser(buildData: BuildData) {
         val faces = JsonObject()
 
         for ((side, texture) in cube.textures) {
-            if (!buildBlockData.hasBlock(side)) { // don't add a texture when I can't bee seen
+            if (!buildBlockData.hasBlock(side)) { // don't add a texture when it can't bee seen
                 val faceObj = JsonObject()
                 faceObj.add("uv", UV)
 

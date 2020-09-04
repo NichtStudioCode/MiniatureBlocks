@@ -3,16 +3,16 @@ package de.studiocode.miniatureblocks.utils
 import org.bukkit.Material
 
 fun Material.isSeeTrough(): Boolean {
-    return MaterialUtils.seeTroughMaterials.contains(this)
+    return MaterialUtils.seeThroughMaterials.contains(this)
 }
 
 object MaterialUtils {
 
-    val seeTroughMaterials = ArrayList<Material>()
+    val seeThroughMaterials = ArrayList<Material>()
 
     init {
-        seeTroughMaterials.addAll(Material.values().filter { it.toString().contains("glass", true) })
-        seeTroughMaterials.add(Material.AIR)
+        seeThroughMaterials.addAll(Material.values().filter { it.toString().contains("glass", true) })
+        seeThroughMaterials.add(Material.AIR)
     }
 
 

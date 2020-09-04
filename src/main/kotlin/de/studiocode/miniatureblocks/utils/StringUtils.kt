@@ -5,11 +5,9 @@ object StringUtils {
     private const val ALPHABET = "abcedfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     fun randomString(length: Int, characters: String = ALPHABET): String {
-        val chars = characters.toCharArray()
-        val charLen = chars.size
         val stringBuilder = StringBuilder()
         repeat(length) {
-            stringBuilder.append(characters[MathUtils.randomInt(0, charLen)])
+            stringBuilder.append(characters.random())
         }
         return stringBuilder.toString()
     }
