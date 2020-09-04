@@ -10,7 +10,7 @@ class BuilderWorldGenerator : ChunkGenerator() {
     override fun generateChunkData(world: World, random: Random, x: Int, z: Int, biome: BiomeGrid): ChunkData {
         val chunk = createChunkData(world)
 
-        val isBuildArea: Boolean = x and 1 != 0 && z and 1 != 0 // If the least significant bit is set the number is not even.
+        val isBuildArea: Boolean = x and 1 == 0 && z and 1 == 0 // If the least significant bit is set the number is not even.
 
         chunk.setRegion(0, 0, 0, 16, 1, 16, if (isBuildArea) Material.WHITE_CONCRETE else Material.BLUE_STAINED_GLASS)
 
