@@ -4,7 +4,7 @@ import java.io.File
 import java.security.MessageDigest
 
 object HashUtils {
-    
+
     fun createSha1Hash(file: File): ByteArray {
         val inputStream = file.inputStream()
         val md = MessageDigest.getInstance("SHA1")

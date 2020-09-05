@@ -94,7 +94,7 @@ class BuilderWorld : Listener {
     private fun Location.isValidBuildArea(builderWorld: BuilderWorld): Boolean {
         val chunk = this.chunk
 
-        return world == builderWorld.world && chunk.x % 2 == 0 && chunk.z % 2 == 0 && y > 0 && y < 17
+        return world == builderWorld.world && chunk.x and 1 == 0 && chunk.z and 1 == 0 && y > 0 && y < 17 // If the least significant bit is set the number is not even.
     }
 
     private fun Location.isBuildWorld(builderWorld: BuilderWorld): Boolean {
