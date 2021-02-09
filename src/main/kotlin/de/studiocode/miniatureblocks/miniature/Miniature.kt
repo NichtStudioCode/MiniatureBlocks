@@ -8,7 +8,7 @@ import org.bukkit.persistence.PersistentDataType.BYTE
 abstract class Miniature(dataHolder: PersistentDataHolder) {
     
     companion object {
-
+        
         private val PLUGIN = MiniatureBlocks.INSTANCE
         val TYPE_ID_KEY = NamespacedKey(PLUGIN, "miniatureTypeID")
         

@@ -11,17 +11,17 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
 class MiniatureBlocks : JavaPlugin() {
-
+    
     companion object {
         lateinit var INSTANCE: MiniatureBlocks
     }
-
+    
     lateinit var pluginFile: File
     lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
     lateinit var miniatureManager: MiniatureArmorStandManager
-
+    
     override fun onEnable() {
         INSTANCE = this
         pluginFile = file
@@ -30,12 +30,12 @@ class MiniatureBlocks : JavaPlugin() {
         resourcePack = ResourcePack(this)
         miniatureManager = MiniatureArmorStandManager(this)
         CommandManager(this)
-
+        
         server.pluginManager.registerEvents(builderWorld, this)
-
+        
         Metrics(this, 8307)
     }
-
+    
     override fun onDisable() {
         MenuInventoryManager.INSTANCE.closeAllMenuInventories()
     }

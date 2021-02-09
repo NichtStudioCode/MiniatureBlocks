@@ -8,24 +8,24 @@ import de.studiocode.miniatureblocks.utils.ReflectionUtils.getPlayerFromCommandL
 import org.bukkit.entity.Player
 
 abstract class PlayerCommand(val name: String, private val permission: String) {
-
+    
     var command: LiteralArgumentBuilder<Any> = literal(name).requires {
         val player = createPlayerFromCommandListenerWrapper(it)
         player?.hasPermission(permission) ?: false
     }
-
+    
     fun literal(name: String): LiteralArgumentBuilder<Any> {
         return LiteralArgumentBuilder.literal<Any>(name)
     }
-
+    
     fun <T> argument(name: String, argumentType: ArgumentType<T>): RequiredArgumentBuilder<Any, T> {
         return RequiredArgumentBuilder.argument<Any, T>(name, argumentType)
     }
-
+    
     private fun getPlayerOrNull(source: Any): Player? {
         return getPlayerFromCommandListenerWrapper(source)
     }
-
+    
     fun getPlayer(source: Any): Player = getPlayerOrNull(source)!!
-
+    
 }

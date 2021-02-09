@@ -17,18 +17,19 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.roundToInt
 
 object ArmorStandMoveManager : Listener {
-
+    
     private val armorStands = ConcurrentHashMap<Player, MoveArmorStand>()
-
+    
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, MiniatureBlocks.INSTANCE)
         Bukkit.getScheduler().scheduleSyncRepeatingTask(MiniatureBlocks.INSTANCE, this::handleTick, 0, 1)
     }
-
+    
     fun addToMove(player: Player, armorStand: ArmorStand) {
-        armorStands[player] = MoveArmorStand(armorStand, player.eyeLocation.distance(armorStand.location).roundToInt().toDouble())
+        armorStands[player] =
+            MoveArmorStand(armorStand, player.eyeLocation.distance(armorStand.location).roundToInt().toDouble())
     }
-
+    
     private fun handleTick() {
         for ((player, moveArmorStand) in armorStands) {
             val armorStand = moveArmorStand.armorStand
@@ -37,7 +38,7 @@ object ArmorStandMoveManager : Listener {
             }
         }
     }
-
+    
     @EventHandler
     fun handleMoveEvent(event: PlayerMoveEvent) {
         val player = event.player
@@ -55,7 +56,7 @@ object ArmorStandMoveManager : Listener {
         location.pitch = armorStand.location.pitch
         armorStand.teleport(location)
     }
-
+    
     @EventHandler
     fun handleSlotChange(event: PlayerItemHeldEvent) {
         val player = event.player
@@ -63,12 +64,14 @@ object ArmorStandMoveManager : Listener {
             val moveArmorStand = armorStands[player]!!
             moveArmorStand.distance += getSlotDistance(event.previousSlot, event.newSlot) * 0.25
             if (moveArmorStand.distance < 0) moveArmorStand.distance = 0.0
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent("§7Distance: §b${moveArmorStand.distance} §7Right-click to stop moving"))
+            player.spigot().sendMessage(
+                ChatMessageType.ACTION_BAR,
+                TextComponent("§7Distance: §b${moveArmorStand.distance} §7Right-click to stop moving")
+            )
             updateArmorStandLocation(player, moveArmorStand)
         }
     }
-
+    
     @EventHandler
     fun handleInteract(event: PlayerInteractEvent) {
         val action = event.action
@@ -96,8 +99,8 @@ object ArmorStandMoveManager : Listener {
         
         return previousSlot - newSlot
     }
-
-
+    
+    
     class MoveArmorStand(val armorStand: ArmorStand, var distance: Double)
-
+    
 }

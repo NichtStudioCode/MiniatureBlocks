@@ -6,9 +6,9 @@ import de.studiocode.miniatureblocks.menu.item.impl.MiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
 
 class MiniaturesMenu : CustomModelsPagedMenu("Miniatures") {
-
+    
     override fun convertToMenuItems(cutModels: List<MainModelData.CustomModel>): List<MenuItem> {
         return cutModels.map { MiniatureItem(it) }
     }
-
+    
 }

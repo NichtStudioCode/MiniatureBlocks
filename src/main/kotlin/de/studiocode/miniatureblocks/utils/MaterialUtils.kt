@@ -7,13 +7,13 @@ fun Material.isSeeTrough(): Boolean {
 }
 
 object MaterialUtils {
-
+    
     val seeThroughMaterials = ArrayList<Material>()
-
+    
     init {
         seeThroughMaterials.addAll(Material.values().filter { it.toString().contains("glass", true) })
         seeThroughMaterials.add(Material.AIR)
     }
-
-
+    
+    
 }

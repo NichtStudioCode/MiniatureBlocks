@@ -10,9 +10,9 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent.Status
 import org.bukkit.scheduler.BukkitTask
 
 class ForcedResourcePack(val player: Player, private val resourcePack: ResourcePack) {
-
+    
     private var bukkitTask: BukkitTask? = null
-
+    
     fun force() {
         ForcedResourcePackManager.INSTANCE.addForcedResourcePack(this)
         Thread {
@@ -21,7 +21,7 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
             if (url != null) {
                 player.sendPrefixedMessage("§7Please accept the custom resource pack, you will be kicked otherwise.")
                 player.setResourcePack(url, resourcePack.hash)
-
+                
                 kickLater()
             } else {
                 player.sendPrefixedMessage("§cAn error occurred while uploading the resource pack.")
@@ -31,7 +31,7 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
             }
         }.start()
     }
-
+    
     fun handleResourcePackStatus(status: Status) {
         if (status == Status.DECLINED) {
             kickPlayer()
@@ -40,19 +40,19 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
             if (status == Status.FAILED_DOWNLOAD) println("${player.name} failed to download the resource pack.")
         }
     }
-
+    
     private fun kickLater() {
         bukkitTask = Bukkit.getScheduler().runTaskLater(MiniatureBlocks.INSTANCE, this::kickPlayer, 20 * 5)
     }
-
+    
     private fun kickPlayer() {
         player.kickPlayerPrefix("§cPlease accept the custom resource pack")
-
+        
         remove()
     }
-
+    
     private fun remove() {
         ForcedResourcePackManager.INSTANCE.removeForcedResourcePack(this)
     }
-
+    
 }

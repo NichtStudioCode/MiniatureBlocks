@@ -5,7 +5,7 @@ import java.io.File
 import java.io.IOException
 
 object CustomUploaderUtils {
-
+    
     fun uploadFile(reqUrl: String, hostUrl: String, key: String, file: File, fileName: String = file.name): String? {
         try {
             val request = HttpMultipartRequest(reqUrl)
@@ -24,7 +24,7 @@ object CustomUploaderUtils {
         }
         return null
     }
-
+    
     fun deleteFile(reqUrl: String, key: String, fileName: String): Boolean {
         try {
             val request = HttpMultipartRequest(reqUrl)
@@ -42,5 +42,5 @@ object CustomUploaderUtils {
         }
         return false
     }
-
+    
 }

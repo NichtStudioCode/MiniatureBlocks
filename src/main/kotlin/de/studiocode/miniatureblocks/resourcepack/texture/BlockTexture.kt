@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 @Suppress("unused")
 enum class BlockTexture {
-
+    
     ACACIA_LOG("ACACIA_LOG", "acacia_log_top", "acacia_log", UP),
     ACACIA_PLANKS("ACACIA_PLANKS"),
     ACACIA_WOOD("ACACIA_WOOD", "acacia_log", UP),
@@ -49,7 +49,15 @@ enum class BlockTexture {
     BROWN_TERRACOTTA("BROWN_TERRACOTTA"),
     BROWN_WOOL("BROWN_WOOL"),
     BUBBLE_CORAL_BLOCK("BUBBLE_CORAL_BLOCK"),
-    CARTOGRAPHY_TABLE("CARTOGRAPHY_TABLE", "cartography_table_top", "dark_oak_planks", "cartography_table_side1", "cartography_table_side3", "cartography_table_side3", "cartography_table_side2"),
+    CARTOGRAPHY_TABLE(
+        "CARTOGRAPHY_TABLE",
+        "cartography_table_top",
+        "dark_oak_planks",
+        "cartography_table_side1",
+        "cartography_table_side3",
+        "cartography_table_side3",
+        "cartography_table_side2"
+    ),
     CARVED_PUMPKIN("CARVED_PUMPKIN", "pumpkin_top", "pumpkin_top", "carved_pumpkin", "pumpkin_side"),
     CHISELED_NETHER_BRICKS("CHISELED_NETHER_BRICKS"),
     CHISELED_POLISHED_BLACKSTONE("CHISELED_POLISHED_BLACKSTONE"),
@@ -101,7 +109,15 @@ enum class BlockTexture {
     END_STONE_BRICKS("END_STONE_BRICKS"),
     FARMLAND("FARMLAND", "farmland_moist", "dirt", "dirt"),
     FIRE_CORAL_BLOCK("FIRE_CORAL_BLOCK"),
-    FLETCHING_TABLE("FLETCHING_TABLE", "fletching_table_top", "birch_planks", "fletching_table_front", "fletching_table_front", "fletching_table_side", "fletching_table_side"),
+    FLETCHING_TABLE(
+        "FLETCHING_TABLE",
+        "fletching_table_top",
+        "birch_planks",
+        "fletching_table_front",
+        "fletching_table_front",
+        "fletching_table_side",
+        "fletching_table_side"
+    ),
     FURNACE("FURNACE", "furnace_top", "furnace_top", "furnace_front", "furnace_side"),
     GILDED_BLACKSTONE("GILDED_BLACKSTONE"),
     GLASS("GLASS"),
@@ -234,7 +250,15 @@ enum class BlockTexture {
     SHROOMLIGHT("SHROOMLIGHT"),
     SHULKER_BOX("SHULKER_BOX"),
     SLIME_BLOCK("SLIME_BLOCK"),
-    SMITHING_TABLE("SMITHING_TABLE", "smithing_table_top", "smithing_table_bottom", "smithing_table_front", "smithing_table_front", "smithing_table_side", "smithing_table_side"),
+    SMITHING_TABLE(
+        "SMITHING_TABLE",
+        "smithing_table_top",
+        "smithing_table_bottom",
+        "smithing_table_front",
+        "smithing_table_front",
+        "smithing_table_side",
+        "smithing_table_side"
+    ),
     SMOKER("SMOKER", true, true, true),
     SMOOTH_QUARTZ("SMOOTH_QUARTZ"),
     SMOOTH_RED_SANDSTONE("SMOOTH_RED_SANDSTONE"),
@@ -319,9 +343,11 @@ enum class BlockTexture {
     val textureRight: String
     val textureLeft: String
     val defaultRotation: Direction
-
-    constructor(material: String, textureTop: String, textureBottom: String, textureFront: String, textureBack: String,
-                textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH) {
+    
+    constructor(
+        material: String, textureTop: String, textureBottom: String, textureFront: String, textureBack: String,
+        textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH
+    ) {
         this.material = findMaterialByName(material)
         this.textureTop = "block/$textureTop"
         this.textureBottom = "block/$textureBottom"
@@ -331,37 +357,68 @@ enum class BlockTexture {
         this.textureLeft = "block/$textureLeft"
         this.defaultRotation = defaultRotation
     }
-
-    constructor(material: String, textureTop: String, textureBottom: String, textureFront: String, textureSide: String, defaultRotation: Direction = NORTH) :
-            this(material, textureTop, textureBottom, textureFront, textureSide, textureSide, textureSide, defaultRotation)
-
-    constructor(material: String, textureTop: String, textureBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
-            this(material, textureTop, textureBottom, textureSide, textureSide, defaultRotation)
-
+    
+    constructor(
+        material: String,
+        textureTop: String,
+        textureBottom: String,
+        textureFront: String,
+        textureSide: String,
+        defaultRotation: Direction = NORTH
+    ) :
+        this(
+            material,
+            textureTop,
+            textureBottom,
+            textureFront,
+            textureSide,
+            textureSide,
+            textureSide,
+            defaultRotation
+        )
+    
+    constructor(
+        material: String,
+        textureTop: String,
+        textureBottom: String,
+        textureSide: String,
+        defaultRotation: Direction = NORTH
+    ) :
+        this(material, textureTop, textureBottom, textureSide, textureSide, defaultRotation)
+    
     constructor(material: String, textureTopBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
-            this(material, textureTopBottom, textureTopBottom, textureSide, defaultRotation)
-
-    constructor(material: String, texture: String, defaultRotation: Direction = NORTH) : this(material, texture, texture, defaultRotation)
-
-    constructor(material: String, defaultRotation: Direction = NORTH) : this(material, material.toLowerCase(), defaultRotation)
-
+        this(material, textureTopBottom, textureTopBottom, textureSide, defaultRotation)
+    
+    constructor(material: String, texture: String, defaultRotation: Direction = NORTH) : this(
+        material,
+        texture,
+        texture,
+        defaultRotation
+    )
+    
+    constructor(material: String, defaultRotation: Direction = NORTH) : this(
+        material,
+        material.toLowerCase(),
+        defaultRotation
+    )
+    
     constructor(material: String, top: Boolean, bottom: Boolean, front: Boolean, defaultRotation: Direction = NORTH) {
         this.material = findMaterialByName(material)
-
+        
         val texture = "block/" + material.toLowerCase()
-
+        
         textureTop = texture + if (top) "_top" else ""
         textureBottom = texture + if (bottom) "_bottom" else if (top) "_top" else ""
         textureFront = texture + if (front) "_front" else "_side"
-
+        
         val textureSide = texture + "_side"
         textureBack = textureSide
         textureRight = textureSide
         textureLeft = textureSide
-
+        
         this.defaultRotation = defaultRotation
     }
-
+    
     fun getAllTextures(): Array<String> {
         return arrayOf(textureTop, textureBottom, textureFront, textureBack, textureLeft, textureRight)
     }
@@ -369,18 +426,18 @@ enum class BlockTexture {
     private fun findMaterialByName(name: String): Material? {
         return Material.values().find { it.name == name }
     }
-
+    
     companion object {
-
+        
         fun hasMaterial(material: Material): Boolean {
             return values().any { it.material == material }
         }
-
+        
         fun getFromMaterial(material: Material): BlockTexture {
             return values().first { it.material == material }
         }
-
+        
     }
-
+    
 }
 

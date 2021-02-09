@@ -6,24 +6,24 @@ import org.bukkit.entity.Entity
 
 fun Location.getEntityLookingAt(maxDistance: Double, vararg exclusions: Entity, stepSize: Double = 0.25): Entity? {
     val entities = (world?.entities ?: emptyList())
-            .filter { !exclusions.contains(it) }
-
+        .filter { !exclusions.contains(it) }
+    
     val location = this.clone()
     val vector = location.direction.multiply(stepSize)
-
+    
     var distance = 0.0
     while (distance <= maxDistance) {
-
+        
         location.add(vector)
-
+        
         if (location.block.type == Material.AIR) {
             val entity = location.filterInBoundingBox(entities).firstOrNull()
             if (entity != null) return entity
         } else return null
-
+        
         distance += stepSize
     }
-
+    
     return null
 }
 

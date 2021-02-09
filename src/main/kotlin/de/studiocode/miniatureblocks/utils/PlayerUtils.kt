@@ -20,7 +20,7 @@ fun Player.getTargetEntity(maxDistance: Double, stepSize: Double = 0.25): Entity
 
 fun Player.getTargetMiniature(): MiniatureArmorStand? {
     val entity = getTargetEntity(8.0)
-    if (entity is ArmorStand) 
+    if (entity is ArmorStand)
         return entity.getMiniature()
     return null
 }

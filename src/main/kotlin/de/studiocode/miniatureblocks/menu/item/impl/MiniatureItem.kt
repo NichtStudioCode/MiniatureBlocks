@@ -10,17 +10,17 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class MiniatureItem(private val customModel: CustomModel) : MenuItem() {
-
+    
     private val receivableItem = NormalMiniatureItem.create(customModel)
     private val menuItemStack = customModel.createItemBuilder().also {
         it.addLoreLine("§7Left-click to obtain miniature")
         it.addLoreLine("§7Right-click to delete miniature")
     }.build()
-
+    
     override fun getItemStack(): ItemStack {
         return menuItemStack
     }
-
+    
     override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent): Boolean {
         if (clickType == ClickType.LEFT) {
             (event.whoClicked as Player).inventory.addItem(receivableItem.itemStack)
@@ -32,5 +32,5 @@ class MiniatureItem(private val customModel: CustomModel) : MenuItem() {
         }
         return false
     }
-
+    
 }

@@ -14,24 +14,24 @@ object AnimatedMiniatureDataType : PersistentDataType<String, AnimatedMiniatureD
     private val MAIN_MODEL_DATA = MiniatureBlocks.INSTANCE.resourcePack.mainModelData
     private const val TICK_DELAY_KEY = "tickDelay"
     private const val MODELS_KEY = "models"
-
+    
     override fun getPrimitiveType() = String::class.java
-
+    
     override fun getComplexType() = AnimatedMiniatureData::class.java
-
+    
     override fun toPrimitive(complex: AnimatedMiniatureData, context: PersistentDataAdapterContext): String {
         if (!complex.isValid()) throw IllegalArgumentException("Miniature data is invalid")
-
+        
         val jsonObject = JsonObject()
         jsonObject.addProperty(TICK_DELAY_KEY, complex.tickDelay)
         val modelsArray = JsonArray()
         complex.models!!
-                .map(CustomModel::asJsonArray)
-                .forEach(modelsArray::add)
+            .map(CustomModel::asJsonArray)
+            .forEach(modelsArray::add)
         jsonObject.add(MODELS_KEY, modelsArray)
         return jsonObject.toString()
     }
-
+    
     override fun fromPrimitive(primitive: String, context: PersistentDataAdapterContext): AnimatedMiniatureData {
         val jsonObject = JsonParser().parse(primitive).asJsonObject
         val tickDelay = jsonObject.get(TICK_DELAY_KEY).asInt
@@ -41,5 +41,5 @@ object AnimatedMiniatureDataType : PersistentDataType<String, AnimatedMiniatureD
             AnimatedMiniatureData(tickDelay, models.toTypedArray())
         } else AnimatedMiniatureData(tickDelay, null)
     }
-
+    
 }

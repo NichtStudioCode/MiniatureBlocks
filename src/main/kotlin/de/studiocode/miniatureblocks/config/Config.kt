@@ -24,16 +24,20 @@ class Config(private val plugin: JavaPlugin) {
     
     fun hasCustomUploader(): Boolean = hasCustomUploaderRequest() && hasCustomUploaderHost() && hasCustomUploaderKey()
     
-    private fun hasCustomUploaderRequest(): Boolean = config.isSet(CUSTOM_UPLOADER_REQUEST_URL) && config.getString(CUSTOM_UPLOADER_REQUEST_URL)?.isNotEmpty() ?: false
+    private fun hasCustomUploaderRequest(): Boolean =
+        config.isSet(CUSTOM_UPLOADER_REQUEST_URL) && config.getString(CUSTOM_UPLOADER_REQUEST_URL)
+            ?.isNotEmpty() ?: false
     
     fun getCustomUploaderRequest(): String = config.getString(CUSTOM_UPLOADER_REQUEST_URL) ?: ""
-
-    private fun hasCustomUploaderHost(): Boolean = config.isSet(CUSTOM_UPLOADER_HOST_URL) && config.getString(CUSTOM_UPLOADER_HOST_URL)?.isNotEmpty() ?: false
-
+    
+    private fun hasCustomUploaderHost(): Boolean =
+        config.isSet(CUSTOM_UPLOADER_HOST_URL) && config.getString(CUSTOM_UPLOADER_HOST_URL)?.isNotEmpty() ?: false
+    
     fun getCustomUploaderHost(): String = config.getString(CUSTOM_UPLOADER_HOST_URL) ?: ""
     
-    private fun hasCustomUploaderKey(): Boolean = config.isSet(CUSTOM_UPLOADER_KEY) && config.getString(CUSTOM_UPLOADER_KEY)?.isNotEmpty() ?: false
-
+    private fun hasCustomUploaderKey(): Boolean =
+        config.isSet(CUSTOM_UPLOADER_KEY) && config.getString(CUSTOM_UPLOADER_KEY)?.isNotEmpty() ?: false
+    
     fun getCustomUploaderKey(): String = config.getString(CUSTOM_UPLOADER_KEY) ?: ""
     
     fun getRPDownloadUrl(): String? = config.getString(RP_DOWNLOAD_URL)
