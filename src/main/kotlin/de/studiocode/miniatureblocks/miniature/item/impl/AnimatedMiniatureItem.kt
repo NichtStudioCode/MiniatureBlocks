@@ -17,9 +17,8 @@ class AnimatedMiniatureItem(itemStack: ItemStack) : MiniatureItem(itemStack) {
         
         fun create(data: AnimatedMiniatureData): AnimatedMiniatureItem {
             if (data.isValid()) {
-                val itemBuilder = data.models!![0].createItemBuilder().also {
-                    it.displayName = "§7[Animated] ${it.displayName}"
-                }
+                val itemBuilder = data.models!![0].createItemBuilder()
+                    .setDisplayName("§7[Animated] ${data.models[0].name}")
                 
                 val itemStack = createItemStack(itemBuilder, ANIMATED)
                 { it.set(DATA_KEY, AnimatedMiniatureDataType, data) }
@@ -30,11 +29,7 @@ class AnimatedMiniatureItem(itemStack: ItemStack) : MiniatureItem(itemStack) {
         
     }
     
-    val data: AnimatedMiniatureData?
-    
-    init {
-        data = dataContainer.get(DATA_KEY, AnimatedMiniatureDataType)
-    }
+    val data: AnimatedMiniatureData? = dataContainer.get(DATA_KEY, AnimatedMiniatureDataType)
     
     override fun isValid() = data != null && data.isValid()
     

@@ -4,6 +4,7 @@ import de.studiocode.miniatureblocks.MiniatureBlocks
 import net.lingala.zip4j.ZipFile
 import java.io.File
 import java.io.FileOutputStream
+import java.net.URL
 
 object FileUtils {
     
@@ -22,5 +23,20 @@ object FileUtils {
             .filter { it.startsWith(path) }
     }
     
+    fun mergeZips(out: File, vararg zipFiles: File) {
+        val tempDir = File("temp" + StringUtils.randomString(10)).apply { mkdirs() }
+        for (file in zipFiles) {
+            val zip = ZipFile(file)
+            zip.extractAll(tempDir.absolutePath)
+        }
+        
+        val zip = ZipFile(out)
+        tempDir.listFiles()!!.forEach { if (it.isFile) zip.addFile(it) else zip.addFolder(it) }
+        tempDir.deleteRecursively()
+    }
+    
     
 }
+
+fun File.downloadFrom(url: URL) =
+    url.openStream().use { inStream -> outputStream().use { outStream -> inStream.copyTo(outStream) } }

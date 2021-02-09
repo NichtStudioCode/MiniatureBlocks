@@ -3,7 +3,6 @@ package de.studiocode.miniatureblocks
 import de.studiocode.miniatureblocks.builderworld.BuilderWorld
 import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
-import de.studiocode.miniatureblocks.menu.inventory.MenuInventoryManager
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
@@ -36,8 +35,5 @@ class MiniatureBlocks : JavaPlugin() {
         Metrics(this, 8307)
     }
     
-    override fun onDisable() {
-        MenuInventoryManager.INSTANCE.closeAllMenuInventories()
-    }
 }
 

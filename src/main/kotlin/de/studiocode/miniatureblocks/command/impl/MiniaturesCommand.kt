@@ -2,8 +2,7 @@ package de.studiocode.miniatureblocks.command.impl
 
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.command.PlayerCommand
-import de.studiocode.miniatureblocks.menu.inventory.impl.MiniaturesMenu
-import de.studiocode.miniatureblocks.utils.openInventory
+import de.studiocode.miniatureblocks.menu.MiniaturesMenu
 
 class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, permission) {
     
@@ -12,8 +11,12 @@ class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, 
     }
     
     private fun handleMiniaturesCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        player.openInventory(MiniaturesMenu())
+        try {
+            val player = getPlayer(context.source)
+            MiniaturesMenu(player).openWindow()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
     
 }

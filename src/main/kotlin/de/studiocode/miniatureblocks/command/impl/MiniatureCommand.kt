@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
-import de.studiocode.miniatureblocks.menu.inventory.impl.AnimationMenu
+import de.studiocode.miniatureblocks.menu.AnimationMenu
 import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand.CommandType
@@ -15,7 +15,6 @@ import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniature
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
 import de.studiocode.miniatureblocks.utils.getTargetMiniature
-import de.studiocode.miniatureblocks.utils.openInventory
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import org.bukkit.entity.Player
 
@@ -170,16 +169,20 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleAnimationCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val itemStack = player.inventory.itemInMainHand
-        
-        val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
-            val item = MiniatureArmorStandManager.MiniatureType.newInstance(itemStack)
-            if (item is AnimatedMiniatureItem) item.data
-            else null
-        } else null
-        
-        player.openInventory(AnimationMenu(data))
+        try {
+            val player = getPlayer(context.source)
+            val itemStack = player.inventory.itemInMainHand
+            
+            val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
+                val item = MiniatureArmorStandManager.MiniatureType.newInstance(itemStack)
+                if (item is AnimatedMiniatureItem) item.data
+                else null
+            } else null
+            
+            AnimationMenu(player, data).openWindow()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
     
     private fun handleMoveCommand(context: CommandContext<Any>) {

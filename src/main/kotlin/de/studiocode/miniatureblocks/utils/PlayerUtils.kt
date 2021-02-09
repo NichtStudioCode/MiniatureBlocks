@@ -1,6 +1,5 @@
 package de.studiocode.miniatureblocks.utils
 
-import de.studiocode.miniatureblocks.menu.inventory.MenuInventory
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.getMiniature
 import org.bukkit.Sound
@@ -9,10 +8,6 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 
 const val PREFIX = "§8[§bMiniatureBlocks§8]§r "
-
-fun Player.openInventory(menuInventory: MenuInventory) {
-    menuInventory.viewer = this
-}
 
 fun Player.getTargetEntity(maxDistance: Double, stepSize: Double = 0.25): Entity? {
     return eyeLocation.getEntityLookingAt(maxDistance, this, stepSize = stepSize)

@@ -22,18 +22,13 @@ class NormalMiniatureItem(itemStack: ItemStack) : MiniatureItem(itemStack) {
             if (data.isValid()) {
                 val itemStack = createItemStack(data.model!!.createItemBuilder(), NORMAL)
                 { it.set(DATA_KEY, NormalMiniatureDataType, data) }
-                
                 return NormalMiniatureItem(itemStack)
             } else throw IllegalArgumentException("Invalid miniature data")
         }
         
     }
     
-    val data: NormalMiniatureData?
-    
-    init {
-        data = dataContainer.get(DATA_KEY, NormalMiniatureDataType)
-    }
+    val data: NormalMiniatureData? = dataContainer.get(DATA_KEY, NormalMiniatureDataType)
     
     override fun isValid() = data != null && data.isValid()
     
