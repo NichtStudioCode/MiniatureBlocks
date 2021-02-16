@@ -11,6 +11,7 @@ import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
 import de.studiocode.miniatureblocks.utils.getTargetEntity
+import de.studiocode.miniatureblocks.utils.runTaskTimer
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import org.bukkit.*
 import org.bukkit.entity.ArmorStand
@@ -42,7 +43,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, plugin)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::handleTick, 0, 1)
+        runTaskTimer(0, 1, this::handleTick)
         
         Bukkit.getWorlds().forEach { it.loadedChunks.forEach(this::handleChunkLoad) }
     }

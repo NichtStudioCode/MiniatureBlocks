@@ -75,7 +75,7 @@
         <dependency>
             <groupId>com.github.NichtStudioCode</groupId>
             <artifactId>InvUI</artifactId>
-            <version>bd625c3adb</version>
+            <version>b87177fe83</version>
         </dependency>
     </dependencies>
 

@@ -3,8 +3,8 @@ package de.studiocode.miniatureblocks.resourcepack.forced
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import de.studiocode.miniatureblocks.utils.kickPlayerPrefix
+import de.studiocode.miniatureblocks.utils.runTaskLater
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerResourcePackStatusEvent.Status
 import org.bukkit.scheduler.BukkitTask
@@ -42,7 +42,7 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
     }
     
     private fun kickLater() {
-        bukkitTask = Bukkit.getScheduler().runTaskLater(MiniatureBlocks.INSTANCE, this::kickPlayer, 20 * 5)
+        bukkitTask = runTaskLater(20 * 5, this::kickPlayer)
     }
     
     private fun kickPlayer() {

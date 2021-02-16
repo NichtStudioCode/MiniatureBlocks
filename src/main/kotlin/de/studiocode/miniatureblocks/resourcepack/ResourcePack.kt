@@ -95,7 +95,7 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         val mbRP = File("plugins/MiniatureBlocks/MiniatureBlocks.zip")
         
         // use InvUI ResourcePack as base
-        invUIRP.downloadFrom(URL(ForceResourcePack.getInstance().resourcePackUrl))
+        invUIRP.downloadFrom(URL(ForceResourcePack.LIGHT_RESOURCE_PACK_URL))
         
         // create MiniatureBlocks ResourcePack
         val zip = ZipFile(mbRP)
@@ -166,7 +166,7 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
     
     @EventHandler
     fun handlePlayerJoin(event: PlayerJoinEvent) {
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable { forcePlayerResourcePack(event.player) }, 5)
+        runTaskLater(5) { forcePlayerResourcePack(event.player) }
     }
     
     private fun forcePlayerResourcePack(vararg players: Player) {

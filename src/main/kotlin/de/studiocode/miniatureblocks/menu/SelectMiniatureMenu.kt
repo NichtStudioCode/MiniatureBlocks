@@ -2,20 +2,22 @@ package de.studiocode.miniatureblocks.menu
 
 import de.studiocode.invui.gui.builder.GUIBuilder
 import de.studiocode.invui.gui.builder.GUIType
-import de.studiocode.invui.gui.builder.Marker
 import de.studiocode.invui.gui.impl.SimpleGUI
 import de.studiocode.invui.gui.impl.SimplePagedItemsGUI
 import de.studiocode.invui.item.Item
+import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.invui.item.impl.BaseItem
 import de.studiocode.invui.item.impl.SimpleItem
 import de.studiocode.invui.resourcepack.Icon
 import de.studiocode.invui.window.impl.merged.split.AnvilSplitWindow
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import org.bukkit.Material
+import de.studiocode.miniatureblocks.utils.runTaskLater
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.scheduler.BukkitTask
 
 open class SelectMiniatureMenu(private val player: Player, private val itemProvider: (CustomModel, Boolean) -> Item) {
     
@@ -27,16 +29,8 @@ open class SelectMiniatureMenu(private val player: Player, private val itemProvi
             "| x x x x x x x |" +
             "| x x x x x x x |" +
             "3 r - < - > - - 4")
-        .setMarker('x', Marker.ITEM_LIST_SLOT)
-        .setIngredient('1', Icon.LIGHT_CORNER_TOP_RIGHT.item)
-        .setIngredient('3', Icon.LIGHT_CORNER_BOTTOM_LEFT.item)
-        .setIngredient('4', Icon.LIGHT_CORNER_BOTTOM_RIGHT.item)
-        .setIngredient('-', Icon.LIGHT_HORIZONTAL_LINE.item)
-        .setIngredient('|', Icon.LIGHT_VERTICAL_LINE.item)
-        .setIngredient('<', PageBackItem())
-        .setIngredient('>', PageForwardItem())
-        .setIngredient('s', SearchItem(true))
-        .setIngredient('r', RefreshItem())
+        .addIngredient('s', SearchItem(true))
+        .addIngredient('r', RefreshItem())
         .setItems(getMiniatureItems(true))
         .build() as SimplePagedItemsGUI
     
@@ -46,12 +40,8 @@ open class SelectMiniatureMenu(private val player: Player, private val itemProvi
             "x x x x x x x x x" +
             "x x x x x x x x x" +
             "# r # < # > # # s")
-        .setMarker('x', Marker.ITEM_LIST_SLOT)
-        .setIngredient('#', Icon.BACKGROUND.item)
-        .setIngredient('<', PageBackItem())
-        .setIngredient('>', PageForwardItem())
-        .setIngredient('s', SearchItem(false))
-        .setIngredient('r', RefreshItem())
+        .addIngredient('s', SearchItem(false))
+        .addIngredient('r', RefreshItem())
         .setItems(getMiniatureItems(false))
         .build() as SimplePagedItemsGUI
     
@@ -99,11 +89,31 @@ open class SelectMiniatureMenu(private val player: Player, private val itemProvi
         
     }
     
-    private inner class RefreshItem : SimpleItem(Icon.MaterialIcon.NORMAL.getItemBuilder(Material.TOTEM_OF_UNDYING)
-        .setDisplayName("§7Refresh miniatures")) {
+    private inner class RefreshItem : BaseItem() {
         
-        override fun handleClick(clickType: ClickType?, player: Player?, event: InventoryClickEvent?) {
-            if (clickType == ClickType.LEFT) refreshItems(lastFilter)
+        private val builder = Icon.REFRESH.itemBuilder.setDisplayName("§7Refresh miniatures")
+        private val animatedBuilder = Icon.REFRESH_ANIMATED.itemBuilder.setDisplayName("§7Refresh miniatures")
+        
+        private var task: BukkitTask? = null
+            set(value) {
+                if (task != null && value != null) task!!.cancel()
+                field = value
+            }
+        
+        private var animated = false
+            set(value) {
+                field = value
+                notifyWindows()
+                if (value) task = runTaskLater(40) { animated = false }
+            }
+        
+        override fun getItemBuilder(): ItemBuilder = if (animated) animatedBuilder else builder
+        
+        override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
+            if (clickType == ClickType.LEFT) {
+                refreshItems(lastFilter)
+                animated = true
+            }
         }
         
     }

@@ -3,12 +3,11 @@ package de.studiocode.miniatureblocks.menu
 import de.studiocode.invui.gui.SlotElement
 import de.studiocode.invui.gui.SlotElement.ItemSlotElement
 import de.studiocode.invui.gui.impl.PagedGUI
+import de.studiocode.invui.gui.structure.Structure
+import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.invui.item.impl.BaseItem
 import de.studiocode.invui.item.impl.SimpleItem
-import de.studiocode.invui.item.itembuilder.ItemBuilder
 import de.studiocode.invui.resourcepack.Icon
-import de.studiocode.invui.resourcepack.Icon.MaterialIcon
-import de.studiocode.invui.util.SlotUtils
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.miniature.data.impl.AnimatedMiniatureData
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
@@ -22,7 +21,17 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 
 class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
-    PagedGUI(9, 6, true, *SlotUtils.getSlotsRect(0, 0, 9, 5, 9).toIntArray()) {
+    PagedGUI(9, 6, true, STRUCTURE) {
+    
+    companion object {
+        private val STRUCTURE = Structure("" +
+            "x x x x x x x x x" +
+            "x x x x x x x x x" +
+            "x x x x x x x x x" +
+            "x x x x x x x x x" +
+            "x x x x x x x x x" +
+            "# # # < . > # # .")
+    }
     
     private val tickDelayItem = TickDelayItem()
     private val frameMap = HashMap<Int, AnimationFrameItem>()
@@ -38,8 +47,6 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
     }
     
     init {
-        fill(45, size, Icon.BACKGROUND.item, true)
-        
         if (data != null && data.isValid()) {
             tickDelayItem.tickDelay = data.tickDelay
             for ((index, model) in data.models!!.withIndex()) {
@@ -49,9 +56,6 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
         
         setItem(49, tickDelayItem)
         setItem(53, CreateAnimationItem())
-        
-        addControlItem(48, PageBackItem())
-        addControlItem(50, PageForwardItem())
         
         update()
     }
@@ -111,7 +115,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
             }
         
         override fun getItemBuilder(): ItemBuilder {
-            return MaterialIcon.NORMAL.getItemBuilder(Material.LEVER)
+            return Icon.HORIZONTAL_DOTS.itemBuilder
                 .setDisplayName("§7Tick delay: §b$tickDelay")
                 .addLoreLines("§7Left-click to increase", "§7Right-click to decrease")
         }
@@ -149,7 +153,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
         
     }
     
-    private class SelectMiniatureItem(private val model: CustomModel, private val selectHandler: () -> Unit) :
+    private class SelectMiniatureItem(model: CustomModel, private val selectHandler: () -> Unit) :
         SimpleItem(model.createItemBuilder().addLoreLines("§7Use this miniature as the frame")) {
         
         override fun handleClick(clickType: ClickType?, player: Player?, event: InventoryClickEvent?) {

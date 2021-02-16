@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks.miniature.armorstand
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
+import de.studiocode.miniatureblocks.utils.runTaskTimer
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -22,7 +23,7 @@ object ArmorStandMoveManager : Listener {
     
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, MiniatureBlocks.INSTANCE)
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(MiniatureBlocks.INSTANCE, this::handleTick, 0, 1)
+        runTaskTimer(0, 1, this::handleTick)
     }
     
     fun addToMove(player: Player, armorStand: ArmorStand) {
