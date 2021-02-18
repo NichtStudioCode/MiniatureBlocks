@@ -15,3 +15,7 @@ object MathUtils {
     }
     
 }
+
+fun Int.isEven() = this and 1 == 0
+
+fun Int.isUneven() = this and 1 == 1

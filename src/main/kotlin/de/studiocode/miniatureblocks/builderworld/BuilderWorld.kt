@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.builderworld
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.utils.PREFIX
 import de.studiocode.miniatureblocks.utils.WorldUtils
+import de.studiocode.miniatureblocks.utils.isEven
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
@@ -94,7 +95,7 @@ class BuilderWorld : Listener {
     private fun Location.isValidBuildArea(builderWorld: BuilderWorld): Boolean {
         val chunk = this.chunk
         
-        return world == builderWorld.world && chunk.x and 1 == 0 && chunk.z and 1 == 0 && y > 0 && y < 17 // If the least significant bit is set the number is not even.
+        return world == builderWorld.world && chunk.x.isEven() && chunk.z.isEven() && y > 0 && y < 17 // If the least significant bit is set the number is not even.
     }
     
     private fun Location.isBuildWorld(builderWorld: BuilderWorld): Boolean {
