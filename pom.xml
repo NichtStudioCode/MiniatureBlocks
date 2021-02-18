@@ -6,7 +6,7 @@
 
     <groupId>de.studiocode</groupId>
     <artifactId>MiniatureBlocks</artifactId>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
 
     <properties>
         <kotlin.version>1.4.30</kotlin.version>
