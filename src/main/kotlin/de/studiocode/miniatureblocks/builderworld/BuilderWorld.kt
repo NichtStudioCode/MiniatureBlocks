@@ -53,7 +53,7 @@ class BuilderWorld : Listener {
                 val material = event.blockPlaced.type
                 if (!BlockTexture.hasMaterial(material)) {
                     event.isCancelled = true
-                    player.sendPrefixedMessage("§cThis block is not supported in a miniature version. Only full blocks can be placed here.")
+                    player.sendPrefixedMessage("§cThis block is not supported in a miniature version.")
                 }
             } else {
                 event.isCancelled = true

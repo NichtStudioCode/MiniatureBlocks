@@ -1,16 +1,18 @@
 package de.studiocode.miniatureblocks.builderworld
 
-import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction
+import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.utils.advance
+import de.studiocode.miniatureblocks.utils.isGlass
 import de.studiocode.miniatureblocks.utils.isSeeTrough
 import org.bukkit.Axis
 import org.bukkit.Chunk
-import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
-import org.bukkit.block.data.Directional
-import org.bukkit.block.data.Orientable
 
 class BuildData(chunk: Chunk) {
     
+    val size = 16
     val data = ArrayList<BuildBlockData>()
     
     init {
@@ -18,35 +20,27 @@ class BuildData(chunk: Chunk) {
             for (y in 1..16) {
                 for (z in 0..15) {
                     val block = chunk.getBlock(x, y, z)
-                    val blockData = block.blockData
-                    val type = block.type
-                    if (type != Material.AIR) {
-                        val blockUp = if (y + 1 != 17) !chunk.getBlock(x, y + 1, z).type.isSeeTrough() else false
-                        val blockDown = if (y - 1 != 0) !chunk.getBlock(x, y - 1, z).type.isSeeTrough() else false
-                        
-                        val blockSouth = if (z + 1 != 16) !chunk.getBlock(x, y, z + 1).type.isSeeTrough() else false
-                        val blockNorth = if (z - 1 != -1) !chunk.getBlock(x, y, z - 1).type.isSeeTrough() else false
-                        
-                        val blockEast = if (x + 1 != 16) !chunk.getBlock(x + 1, y, z).type.isSeeTrough() else false
-                        val blockWest = if (x - 1 != -1) !chunk.getBlock(x - 1, y, z).type.isSeeTrough() else false
-                        
-                        
-                        val buildBlockData = BuildBlockData(
-                            x,
-                            y,
-                            z,
-                            type,
-                            blockUp,
-                            blockDown,
-                            blockSouth,
-                            blockNorth,
-                            blockEast,
-                            blockWest
-                        )
-                        
-                        if (blockData is Directional) buildBlockData.facing = blockData.facing
-                        if (blockData is Orientable) buildBlockData.axis = blockData.axis
-                        
+                    val material = block.type
+                    if (BlockTexture.has(material)) { // remove all blocks that have no miniature version
+                        val blockedSides = ArrayList<Direction>()
+                        if (!material.isSeeTrough() || material.isGlass()) { // only check for neighbors if it is a full opaque block or glass
+                            for (direction in Direction.values()) {
+                                val location = block.location.clone()
+                                location.advance(direction)
+                                if (location.chunk == chunk && location.y > 0) { // is it still in the building area
+                                    val neighborMaterial = location.block.type
+                                    if (material.isGlass()) {
+                                        // don't render glass side if glass blocks of the same glass type are side by side
+                                        if (material == neighborMaterial) blockedSides.add(direction)
+                                    } else if (!neighborMaterial.isSeeTrough()) {
+                                        // mark side as blocked if it isn't visible
+                                        if (!neighborMaterial.isSeeTrough()) blockedSides.add(direction)
+                                    }
+                                }
+                            }
+                        }
+    
+                        val buildBlockData = BuildBlockData(x, y, z, block, blockedSides)
                         if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
                     }
                 }
@@ -54,26 +48,15 @@ class BuildData(chunk: Chunk) {
         }
     }
     
-    class BuildBlockData(
-        val x: Int, val y: Int, val z: Int, val material: Material,
-        private val blockUp: Boolean = false, private val blockDown: Boolean = false,
-        private val blockSouth: Boolean = false, private val blockNorth: Boolean = false,
-        private val blockEast: Boolean = false, private val blockWest: Boolean = false
-    ) {
+    class BuildBlockData(val x: Int, val y: Int, val z: Int, val block: Block, private val blockedSides: List<Direction>) {
         
         var facing: BlockFace? = null
         var axis: Axis? = null
         
-        fun isSurroundedByBlocks(): Boolean = blockUp && blockDown && blockSouth && blockNorth && blockEast && blockWest
+        fun isSurroundedByBlocks(): Boolean = blockedSides.size == 6
         
-        fun hasBlock(side: Direction): Boolean = when (side) {
-            Direction.NORTH -> blockNorth
-            Direction.EAST -> blockEast
-            Direction.SOUTH -> blockSouth
-            Direction.WEST -> blockWest
-            Direction.UP -> blockUp
-            Direction.DOWN -> blockDown
-        }
+        fun isSideVisible(side: Direction) = !blockedSides.contains(side)
         
     }
+    
 }

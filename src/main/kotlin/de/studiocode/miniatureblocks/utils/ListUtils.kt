@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.utils
 
 import kotlin.math.absoluteValue
 
-fun <E> ArrayList<E>.shift(shift: Int = 1) {
+fun <E> MutableList<E>.shift(shift: Int = 1) {
     val shiftRight = shift > 0
     
     repeat(shift.absoluteValue) {

@@ -13,14 +13,14 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandMan
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.BuildDataModelParser
+import de.studiocode.miniatureblocks.resourcepack.model.parser.MiniatureModel
 import de.studiocode.miniatureblocks.utils.getTargetMiniature
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import org.bukkit.entity.Player
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
     
-    private val namePattern = "[A-Za-z0-9]*".toRegex()
+    private val namePattern = "[a-z0-9]*".toRegex()
     
     init {
         command = command
@@ -88,23 +88,26 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleCreateCommand(forceResourcePack: Boolean, context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val name = context.getArgument("name", String::class.java)
-        
-        if (name.matches(namePattern)) {
-            val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
-            if (!resourcePack.hasModel(name)) {
-                val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
-                if (builderWorld.isPlayerInValidBuildArea(player)) {
-                    val buildData = builderWorld.getBuildData(player)
-                    val parser = BuildDataModelParser(buildData)
-                    val modelData = parser.parse()
-                    resourcePack.addNewModel(name, modelData, forceResourcePack)
-                    
-                    player.sendPrefixedMessage("§7A new model has been created.")
-                } else player.sendPrefixedMessage("§cYou're not in a build area.")
-            } else player.sendPrefixedMessage("§cA model with that name already exists.")
-        } else player.sendPrefixedMessage("§cName does not match pattern $namePattern")
+        try {
+            val player = getPlayer(context.source)
+            val name = context.getArgument("name", String::class.java)
+            
+            if (name.matches(namePattern)) {
+                val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
+                if (!resourcePack.hasModel(name)) {
+                    val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
+                    if (builderWorld.isPlayerInValidBuildArea(player)) {
+                        val buildData = builderWorld.getBuildData(player)
+                        val modelData = MiniatureModel(buildData).modelData
+                        resourcePack.addNewModel(name, modelData, forceResourcePack)
+                        
+                        player.sendPrefixedMessage("§7A new model has been created.")
+                    } else player.sendPrefixedMessage("§cYou're not in a build area.")
+                } else player.sendPrefixedMessage("§cA model with that name already exists.")
+            } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
     
     private fun handleAutoRotateCommand(context: CommandContext<Any>) {

@@ -1,8 +1,8 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
-import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction.NORTH
-import de.studiocode.miniatureblocks.resourcepack.model.Cube.Direction.UP
+import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction
+import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction.NORTH
+import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction.UP
 import org.bukkit.Material
 
 @Suppress("unused")
@@ -49,15 +49,7 @@ enum class BlockTexture {
     BROWN_TERRACOTTA("BROWN_TERRACOTTA"),
     BROWN_WOOL("BROWN_WOOL"),
     BUBBLE_CORAL_BLOCK("BUBBLE_CORAL_BLOCK"),
-    CARTOGRAPHY_TABLE(
-        "CARTOGRAPHY_TABLE",
-        "cartography_table_top",
-        "dark_oak_planks",
-        "cartography_table_side1",
-        "cartography_table_side3",
-        "cartography_table_side3",
-        "cartography_table_side2"
-    ),
+    CARTOGRAPHY_TABLE("CARTOGRAPHY_TABLE", "cartography_table_top", "dark_oak_planks", "cartography_table_side1", "cartography_table_side3", "cartography_table_side3", "cartography_table_side2"),
     CARVED_PUMPKIN("CARVED_PUMPKIN", "pumpkin_top", "pumpkin_top", "carved_pumpkin", "pumpkin_side"),
     CHISELED_NETHER_BRICKS("CHISELED_NETHER_BRICKS"),
     CHISELED_POLISHED_BLACKSTONE("CHISELED_POLISHED_BLACKSTONE"),
@@ -109,15 +101,7 @@ enum class BlockTexture {
     END_STONE_BRICKS("END_STONE_BRICKS"),
     FARMLAND("FARMLAND", "farmland_moist", "dirt", "dirt"),
     FIRE_CORAL_BLOCK("FIRE_CORAL_BLOCK"),
-    FLETCHING_TABLE(
-        "FLETCHING_TABLE",
-        "fletching_table_top",
-        "birch_planks",
-        "fletching_table_front",
-        "fletching_table_front",
-        "fletching_table_side",
-        "fletching_table_side"
-    ),
+    FLETCHING_TABLE("FLETCHING_TABLE", "fletching_table_top", "birch_planks", "fletching_table_front", "fletching_table_front", "fletching_table_side", "fletching_table_side"),
     FURNACE("FURNACE", "furnace_top", "furnace_top", "furnace_front", "furnace_side"),
     GILDED_BLACKSTONE("GILDED_BLACKSTONE"),
     GLASS("GLASS"),
@@ -229,7 +213,7 @@ enum class BlockTexture {
     PURPLE_WOOL("PURPLE_WOOL"),
     PURPUR_BLOCK("PURPUR_BLOCK"),
     PURPUR_PILLAR("PURPUR_PILLAR", "purpur_pillar_top", "purpur_pillar", UP),
-    QUARTZ_BLOCK("QUARTZ_BLOCK"),
+    QUARTZ_BLOCK("QUARTZ_BLOCK", "quartz_block_top"),
     QUARTZ_BRICKS("QUARTZ_BRICKS"),
     QUARTZ_PILLAR("QUARTZ_PILLAR", "quartz_pillar_top", "quartz_pillar", UP),
     REDSTONE_BLOCK("REDSTONE_BLOCK"),
@@ -250,32 +234,23 @@ enum class BlockTexture {
     SHROOMLIGHT("SHROOMLIGHT"),
     SHULKER_BOX("SHULKER_BOX"),
     SLIME_BLOCK("SLIME_BLOCK"),
-    SMITHING_TABLE(
-        "SMITHING_TABLE",
-        "smithing_table_top",
-        "smithing_table_bottom",
-        "smithing_table_front",
-        "smithing_table_front",
-        "smithing_table_side",
-        "smithing_table_side"
-    ),
+    SMITHING_TABLE("SMITHING_TABLE", "smithing_table_top", "smithing_table_bottom", "smithing_table_front", "smithing_table_front", "smithing_table_side", "smithing_table_side"),
     SMOKER("SMOKER", true, true, true),
-    SMOOTH_QUARTZ("SMOOTH_QUARTZ"),
-    SMOOTH_RED_SANDSTONE("SMOOTH_RED_SANDSTONE"),
-    SMOOTH_SANDSTONE("SMOOTH_SANDSTONE"),
+    SMOOTH_QUARTZ("SMOOTH_QUARTZ", "quartz_block_bottom"),
+    SMOOTH_RED_SANDSTONE("SMOOTH_RED_SANDSTONE", "red_sandstone_top"),
+    SMOOTH_SANDSTONE("SMOOTH_SANDSTONE", "sandstone_top"),
     SMOOTH_STONE("SMOOTH_STONE"),
-    SNOW_BLOCK("SNOW_BLOCK"),
+    SNOW_BLOCK("SNOW_BLOCK", "snow"),
     SOUL_SAND("SOUL_SAND"),
     SOUL_SOIL("SOUL_SOIL"),
     SPAWNER("SPAWNER"),
     SPONGE("SPONGE"),
     SPRUCE_LOG("SPRUCE_LOG", "spruce_log_top", "spruce_log", UP),
     SPRUCE_PLANKS("SPRUCE_PLANKS"),
-    SPRUCE_WOOD("SPRUCE_WOOD", "spruce_og", UP),
+    SPRUCE_WOOD("SPRUCE_WOOD", "spruce_log", UP),
     STICKY_PISTON("STICKY_PISTON", "piston_top_sticky", "piston_bottom", "piston_side", UP),
     STONE("STONE"),
     STONE_BRICKS("STONE_BRICKS"),
-    STONE_SLAB("STONE_SLAB"),
     STRIPPED_ACACIA_LOG("STRIPPED_ACACIA_LOG", "stripped_acacia_log_top", "stripped_acacia_log", UP),
     STRIPPED_ACACIA_WOOD("STRIPPED_ACACIA_WOOD", "stripped_acacia_log", UP),
     STRIPPED_BIRCH_LOG("STRIPPED_BIRCH_LOG", "stripped_birch_log_top", "stripped_birch_log", UP),
@@ -333,7 +308,47 @@ enum class BlockTexture {
     RED_CONCRETE_POWDER("RED_CONCRETE_POWDER"),
     BLACK_CONCRETE_POWDER("BLACK_CONCRETE_POWDER"),
     SAND("SAND"),
-    GRAVEL("GRAVEL");
+    GRAVEL("GRAVEL"),
+    OAK_SLAB("OAK_SLAB", "oak_planks"),
+    SPRUCE_SLAB("SPRUCE_SLAB", "spruce_planks"),
+    BIRCH_SLAB("BIRCH_SLAB", "birch_planks"),
+    JUNGLE_SLAB("JUNGLE_SLAB", "jungle_planks"),
+    ACACIA_SLAB("ACACIA_SLAB", "acacia_planks"),
+    DARK_OAK_SLAB("DARK_OAK_SLAB", "dark_oak_planks"),
+    CRIMSON_SLAB("CRIMSON_SLAB", "crimson_planks"),
+    WARPED_SLAB("WARPED_SLAB", "warped_planks"),
+    STONE_SLAB("STONE_SLAB", "stone"),
+    SMOOTH_STONE_SLAB("SMOOTH_STONE_SLAB", "smooth_stone", "smooth_stone_slab_side"),
+    SANDSTONE_SLAB("SANDSTONE_SLAB", "sandstone_top", "sandstone_bottom", "sandstone"),
+    CUT_SANDSTONE_SLAB("CUT_SANDSTONE_SLAB", "sandstone_top", "cut_sandstone"),
+    SMOOTH_SANDSTONE_SLAB("SMOOTH_SANDSTONE_SLAB", "sandstone_top"),
+    RED_SANDSTONE_SLAB("RED_SANDSTONE_SLAB", "red_sandstone_top", "red_sandstone_bottom", "red_sandstone"),
+    CUT_RED_SANDSTONE_SLAB("CUT_RED_SANDSTONE_SLAB", "red_sandstone_top", "cut_red_sandstone"),
+    SMOOTH_RED_SANDSTONE_SLAB("SMOOTH_RED_SANDSTONE_SLAB", "red_sandstone_top"),
+    PETRIFIED_OAK_SLAB("PETRIFIED_OAK_SLAB", "oak_planks"),
+    COBBLESTONE_SLAB("COBBLESTONE_SLAB", "cobblestone"),
+    BRICK_SLAB("BRICK_SLAB", "bricks"),
+    STONE_BRICK_SLAB("STONE_BRICK_SLAB", "stone_bricks"),
+    NETHER_BRICK_SLAB("NETHER_BRICK_SLAB", "nether_bricks"),
+    QUARTZ_SLAB("QUARTZ_SLAB", "quartz_block_top"),
+    SMOOTH_QUARTZ_SLAB("SMOOTH_QUARTZ_SLAB", "quartz_block_bottom"),
+    PURPUR_SLAB("PURPUR_SLAB", "purpur_block"),
+    PRISMARINE_SLAB("PRISMARINE_SLAB", "prismarine"),
+    PRISMARINE_BRICK_SLAB("PRISMARINE_BRICK_SLAB", "prismarine_bricks"),
+    DARK_PRISMARINE_SLAB("DARK_PRISMARINE_SLAB", "dark_prismarine"),
+    POLISHED_GRANITE_SLAB("POLISHED_GRANITE_SLAB", "polished_granite"),
+    POLISHED_DIORITE_SLAB("POLISHED_DIORITE_SLAB", "polished_diorite"),
+    POLISHED_ANDESITE_SLAB("POLISHED_ANDESITE_SLAB", "polished_andesite"),
+    POLISHED_BLACKSTONE_SLAB("POLISHED_BLACKSTONE_SLAB", "polished_blackstone"),
+    POLISHED_BLACKSTONE_BRICK_SLAB("POLISHED_BLACKSTONE_BRICK_SLAB", "polished_blackstone_bricks"),
+    MOSSY_STONE_BRICK_SLAB("MOSSY_STONE_BRICK_SLAB", "mossy_stone_bricks"),
+    MOSSY_COBBLESTONE_SLAB("MOSSY_COBBLESTONE_SLAB", "mossy_cobblestone"),
+    END_STONE_BRICK_SLAB("END_STONE_BRICK_SLAB", "end_stone"),
+    GRANITE_SLAB("GRANITE_SLAB", "granite"),
+    ANDESITE_SLAB("ANDESITE_SLAB", "andesite"),
+    RED_NETHER_BRICK_SLAB("RED_NETHER_BRICK_SLAB", "nether_bricks"),
+    DIORITE_SLAB("DIORITE_SLAB", "diorite"),
+    BLACKSTONE_SLAB("BLACKSTONE_SLAB", "blackstone_top", "blackstone");
     
     val material: Material?
     val textureTop: String
@@ -344,10 +359,9 @@ enum class BlockTexture {
     val textureLeft: String
     val defaultRotation: Direction
     
-    constructor(
-        material: String, textureTop: String, textureBottom: String, textureFront: String, textureBack: String,
-        textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH
-    ) {
+    constructor(material: String, textureTop: String, textureBottom: String, textureFront: String, textureBack: String,
+                textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH) {
+        
         this.material = findMaterialByName(material)
         this.textureTop = "block/$textureTop"
         this.textureBottom = "block/$textureBottom"
@@ -358,49 +372,20 @@ enum class BlockTexture {
         this.defaultRotation = defaultRotation
     }
     
-    constructor(
-        material: String,
-        textureTop: String,
-        textureBottom: String,
-        textureFront: String,
-        textureSide: String,
-        defaultRotation: Direction = NORTH
-    ) :
-        this(
-            material,
-            textureTop,
-            textureBottom,
-            textureFront,
-            textureSide,
-            textureSide,
-            textureSide,
-            defaultRotation
-        )
+    constructor(material: String, textureTop: String, textureBottom: String, textureFront: String, textureSide: String, defaultRotation: Direction = NORTH) :
+        this(material, textureTop, textureBottom, textureFront, textureSide, textureSide, textureSide, defaultRotation)
     
-    constructor(
-        material: String,
-        textureTop: String,
-        textureBottom: String,
-        textureSide: String,
-        defaultRotation: Direction = NORTH
-    ) :
+    constructor(material: String, textureTop: String, textureBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
         this(material, textureTop, textureBottom, textureSide, textureSide, defaultRotation)
     
     constructor(material: String, textureTopBottom: String, textureSide: String, defaultRotation: Direction = NORTH) :
         this(material, textureTopBottom, textureTopBottom, textureSide, defaultRotation)
     
-    constructor(material: String, texture: String, defaultRotation: Direction = NORTH) : this(
-        material,
-        texture,
-        texture,
-        defaultRotation
-    )
+    constructor(material: String, texture: String, defaultRotation: Direction = NORTH) :
+        this(material, texture, texture, defaultRotation)
     
-    constructor(material: String, defaultRotation: Direction = NORTH) : this(
-        material,
-        material.toLowerCase(),
-        defaultRotation
-    )
+    constructor(material: String, defaultRotation: Direction = NORTH) :
+        this(material, material.toLowerCase(), defaultRotation)
     
     constructor(material: String, top: Boolean, bottom: Boolean, front: Boolean, defaultRotation: Direction = NORTH) {
         this.material = findMaterialByName(material)
@@ -433,9 +418,11 @@ enum class BlockTexture {
             return values().any { it.material == material }
         }
         
-        fun getFromMaterial(material: Material): BlockTexture {
+        fun of(material: Material): BlockTexture {
             return values().first { it.material == material }
         }
+        
+        fun has(material: Material): Boolean = values().any { material == it.material }
         
     }
     
