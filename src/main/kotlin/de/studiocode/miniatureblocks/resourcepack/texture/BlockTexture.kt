@@ -343,7 +343,7 @@ enum class BlockTexture {
     POLISHED_BLACKSTONE_BRICK_SLAB("POLISHED_BLACKSTONE_BRICK_SLAB", "polished_blackstone_bricks"),
     MOSSY_STONE_BRICK_SLAB("MOSSY_STONE_BRICK_SLAB", "mossy_stone_bricks"),
     MOSSY_COBBLESTONE_SLAB("MOSSY_COBBLESTONE_SLAB", "mossy_cobblestone"),
-    END_STONE_BRICK_SLAB("END_STONE_BRICK_SLAB", "end_stone"),
+    END_STONE_BRICK_SLAB("END_STONE_BRICK_SLAB", "end_stone_bricks"),
     GRANITE_SLAB("GRANITE_SLAB", "granite"),
     ANDESITE_SLAB("ANDESITE_SLAB", "andesite"),
     RED_NETHER_BRICK_SLAB("RED_NETHER_BRICK_SLAB", "nether_bricks"),

@@ -40,7 +40,7 @@ class BuildData(chunk: Chunk) {
                             }
                         }
     
-                        val buildBlockData = BuildBlockData(x, y, z, block, blockedSides)
+                        val buildBlockData = BuildBlockData(x, y - 1, z, block, blockedSides)
                         if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
                     }
                 }

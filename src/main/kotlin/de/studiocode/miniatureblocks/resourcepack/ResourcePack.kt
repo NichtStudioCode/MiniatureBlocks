@@ -47,7 +47,7 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         if (!moddedItemModelsDir.exists()) moddedItemModelsDir.mkdirs()
         if (!moddedBlockTexturesDir.exists()) moddedBlockTexturesDir.mkdirs()
         if (!packMcmeta.exists()) FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
-        if (!modelParent.exists()) FileUtils.extractFile("/resourcepack/parent.json", modelParent)
+        FileUtils.extractFile("/resourcepack/parent.json", modelParent)
         extractTextureFiles()
         
         if (oldMainModelDataFile.exists() && !mainModelDataFile.exists()) {
