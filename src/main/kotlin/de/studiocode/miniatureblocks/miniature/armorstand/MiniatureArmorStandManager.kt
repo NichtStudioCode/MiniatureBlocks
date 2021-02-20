@@ -15,6 +15,7 @@ import de.studiocode.miniatureblocks.utils.runTaskTimer
 import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
 import org.bukkit.*
 import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -132,6 +133,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
         updateOldArmorStands(chunk)
         
         chunk.entities
+            .filterValidCoordinates()
             .filterIsInstance<ArmorStand>()
             .filter { it.hasMiniatureData() }
             .forEach { armorStand ->
@@ -151,6 +153,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
         val mainModelData = MiniatureBlocks.INSTANCE.resourcePack.mainModelData
         
         chunk.entities
+            .filterValidCoordinates()
             .filterIsInstance<ArmorStand>()
             .filter { it.hasOldMiniatureData() }
             .forEach { oldArmorStand ->
@@ -251,5 +254,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
         }
         
     }
+    
+    private fun Array<Entity>.filterValidCoordinates() = filter { it.location.y < 500 }
     
 }

@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.miniature.armorstand
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.Miniature
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType
+import de.studiocode.miniatureblocks.miniature.data.types.FloatArrayDataType
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
 import de.studiocode.miniatureblocks.utils.ReflectionUtils
 import org.bukkit.Location
@@ -14,6 +15,8 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.persistence.PersistentDataType.BYTE
+import kotlin.math.max
+import kotlin.math.min
 
 abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armorStand) {
     
@@ -22,6 +25,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
         private val PLUGIN = MiniatureBlocks.INSTANCE
         val ROTATION_KEY = NamespacedKey(PLUGIN, "rotation")
         val NO_ROTATE_KEY = NamespacedKey(PLUGIN, "noRotate")
+        val BOUNCE_KEY = NamespacedKey(PLUGIN, "bounce")
         
         fun spawnArmorStandSilently(
             location: Location, itemStack: ItemStack, miniatureType: MiniatureType,
@@ -59,16 +63,28 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
     }
     
     private val commands = HashMap<CommandType, String>()
-    private var degreesPerTick = 0f
+    
+    // rotation
     private var noRotate = false
+    private var degreesPerTick = 0f
+    
+    // bounce
+    private var defaultHeight = armorStand.location.y.toFloat()
+    private var maxHeight = 0f
+    private var bounceSpeed = 0f
+    private var heightModifier = 0f
+    private var bounceUp = true
     
     init {
-        loadData()
-    }
-    
-    private fun loadData() {
         degreesPerTick = dataContainer.get(ROTATION_KEY, PersistentDataType.FLOAT) ?: 0.0f
         noRotate = (dataContainer.get(NO_ROTATE_KEY, BYTE) ?: 0.toByte()) == 1.toByte()
+        
+        val bounceData = dataContainer.get(BOUNCE_KEY, FloatArrayDataType)
+        if (bounceData != null) {
+            defaultHeight = bounceData[0]
+            maxHeight = bounceData[1]
+            bounceSpeed = bounceData[2]
+        }
         
         for (commandType in CommandType.values()) {
             val command = dataContainer.get(commandType.namespacedKey, PersistentDataType.STRING)
@@ -77,15 +93,27 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
     }
     
     open fun handleTick() {
-        handleAutoRotation()
+        if (degreesPerTick != 0f || bounceSpeed != 0f) handleAutoMovement()
     }
     
-    private fun handleAutoRotation() {
-        if (degreesPerTick != 0f) {
-            val location = armorStand.location
-            location.yaw += degreesPerTick
-            armorStand.teleport(location)
+    private fun handleAutoMovement() {
+        val location = armorStand.location
+        
+        location.yaw += if (degreesPerTick != 0f) degreesPerTick else 0f
+        
+        if (bounceSpeed != 0f && maxHeight != 0f) {
+            val distance = min(maxHeight - heightModifier, heightModifier)
+            val bounceModifier = max(distance / maxHeight, 0.1f)
+            val bounce = bounceModifier * bounceSpeed
+            
+            if (bounceUp) heightModifier += bounce
+            else heightModifier -= bounce
+            if ((heightModifier < 0 && !bounceUp) || (heightModifier > maxHeight && bounceUp)) bounceUp = !bounceUp
+            
+            location.y = (defaultHeight + heightModifier).toDouble()
         }
+        
+        armorStand.teleport(location)
     }
     
     fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
@@ -117,8 +145,24 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
         }
     }
     
-    fun resetAutoRotate() {
+    fun resetMovement() {
         if (degreesPerTick != 0f) rotate(0f)
+        heightModifier = 0f
+    }
+    
+    fun setBounce(maxHeight: Float, speed: Float) {
+        if (speed != 0f) {
+            val bounceData = floatArrayOf(defaultHeight, maxHeight, speed)
+            dataContainer.set(BOUNCE_KEY, FloatArrayDataType, bounceData)
+            
+            this.maxHeight = maxHeight
+            bounceSpeed = speed
+        } else {
+            dataContainer.remove(BOUNCE_KEY)
+            this.maxHeight = 0f
+            bounceSpeed = 0f
+            heightModifier = 0f
+        }
     }
     
     fun setCommand(commandType: CommandType, command: String) {

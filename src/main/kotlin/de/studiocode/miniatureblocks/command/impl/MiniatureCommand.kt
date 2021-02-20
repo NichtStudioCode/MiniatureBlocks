@@ -45,6 +45,13 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                         .executes { handleRotateCommand(it); 0 })
             )
             .then(
+                literal("bounce")
+                    .then(argument<Float>("maxHeight", FloatArgumentType.floatArg())
+                        .then(argument<Float>("speed", FloatArgumentType.floatArg())
+                            .executes { handleBounceCommand(it); 0})
+                    )
+            )
+            .then(
                 literal("command")
                     .then(
                         literal("set")
@@ -124,6 +131,14 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         getPlayersTargetMiniature(player)?.rotate(degrees)
     }
     
+    private fun handleBounceCommand(context: CommandContext<Any>) {
+        val player = getPlayer(context.source)
+        val maxHeight = context.getArgument("maxHeight", Float::class.java)
+        val bounceSpeed = context.getArgument("speed", Float::class.java)
+        
+        getPlayersTargetMiniature(player)?.setBounce(maxHeight, bounceSpeed)
+    }
+    
     private fun handleCommandAddCommand(commandType: CommandType, context: CommandContext<Any>) {
         val player = getPlayer(context.source)
         val command = context.getArgument("command", String::class.java)
@@ -162,7 +177,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val miniatureManager = MiniatureBlocks.INSTANCE.miniatureManager
         if (autoRotate) {
             miniatureManager.loadedMiniatures.values
-                .forEach(MiniatureArmorStand::resetAutoRotate)
+                .forEach(MiniatureArmorStand::resetMovement)
         } else {
             miniatureManager.loadedMiniatures.values
                 .filterIsInstance<AnimatedMiniatureArmorStand>()
