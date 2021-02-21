@@ -2,9 +2,9 @@ package de.studiocode.miniatureblocks.resourcepack.forced
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
-import de.studiocode.miniatureblocks.utils.kickPlayerPrefix
-import de.studiocode.miniatureblocks.utils.runTaskLater
-import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
+import de.studiocode.miniatureblocks.util.kickPlayerPrefix
+import de.studiocode.miniatureblocks.util.runTaskLater
+import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerResourcePackStatusEvent.Status
 import org.bukkit.scheduler.BukkitTask

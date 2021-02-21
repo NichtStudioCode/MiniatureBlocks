@@ -10,9 +10,9 @@ import de.studiocode.miniatureblocks.miniature.item.MiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import de.studiocode.miniatureblocks.utils.getTargetEntity
-import de.studiocode.miniatureblocks.utils.runTaskTimer
-import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
+import de.studiocode.miniatureblocks.util.getTargetEntity
+import de.studiocode.miniatureblocks.util.runTaskTimer
+import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.*
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity

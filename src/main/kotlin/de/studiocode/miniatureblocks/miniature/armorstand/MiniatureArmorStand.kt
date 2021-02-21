@@ -5,7 +5,7 @@ import de.studiocode.miniatureblocks.miniature.Miniature
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType
 import de.studiocode.miniatureblocks.miniature.data.types.FloatArrayDataType
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import de.studiocode.miniatureblocks.utils.ReflectionUtils
+import de.studiocode.miniatureblocks.util.ReflectionUtils
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.ArmorStand

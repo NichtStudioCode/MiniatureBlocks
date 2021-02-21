@@ -13,9 +13,9 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandMan
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.parser.MiniatureModel
-import de.studiocode.miniatureblocks.utils.getTargetMiniature
-import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
+import de.studiocode.miniatureblocks.resourcepack.model.MiniatureModel
+import de.studiocode.miniatureblocks.util.getTargetMiniature
+import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.entity.Player
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
@@ -105,7 +105,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                     val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
                     if (builderWorld.isPlayerInValidBuildArea(player)) {
                         val buildData = builderWorld.getBuildData(player)
-                        val modelData = MiniatureModel(buildData).modelData
+                        val modelData = MiniatureModel(buildData).modelDataObj
                         resourcePack.addNewModel(name, modelData, forceResourcePack)
                         
                         player.sendPrefixedMessage("§7A new model has been created.")

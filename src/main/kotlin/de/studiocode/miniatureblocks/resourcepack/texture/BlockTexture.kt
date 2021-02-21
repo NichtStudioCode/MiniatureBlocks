@@ -1,8 +1,8 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
-import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction.NORTH
-import de.studiocode.miniatureblocks.resourcepack.model.parser.Direction.UP
+import de.studiocode.miniatureblocks.resourcepack.model.Direction
+import de.studiocode.miniatureblocks.resourcepack.model.Direction.NORTH
+import de.studiocode.miniatureblocks.resourcepack.model.Direction.UP
 import org.bukkit.Material
 
 @Suppress("unused")

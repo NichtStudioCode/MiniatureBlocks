@@ -13,7 +13,7 @@ import de.studiocode.invui.window.impl.merged.split.AnvilSplitWindow
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import de.studiocode.miniatureblocks.utils.runTaskLater
+import de.studiocode.miniatureblocks.util.runTaskLater
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent

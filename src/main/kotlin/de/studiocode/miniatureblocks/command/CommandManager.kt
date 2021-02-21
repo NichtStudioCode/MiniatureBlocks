@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.command
 import de.studiocode.miniatureblocks.command.impl.MiniatureCommand
 import de.studiocode.miniatureblocks.command.impl.MiniatureWorldCommand
 import de.studiocode.miniatureblocks.command.impl.MiniaturesCommand
-import de.studiocode.miniatureblocks.utils.ReflectionUtils
+import de.studiocode.miniatureblocks.util.ReflectionUtils
 import org.bukkit.plugin.java.JavaPlugin
 
 class CommandManager(val plugin: JavaPlugin) {

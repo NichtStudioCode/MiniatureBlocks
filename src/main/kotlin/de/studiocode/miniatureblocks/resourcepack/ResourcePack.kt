@@ -1,12 +1,12 @@
 package de.studiocode.miniatureblocks.resourcepack
 
+import com.google.gson.JsonObject
 import de.studiocode.invui.resourcepack.ForceResourcePack
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData
-import de.studiocode.miniatureblocks.utils.*
+import de.studiocode.miniatureblocks.util.*
 import net.lingala.zip4j.ZipFile
 import org.apache.commons.io.FilenameUtils
 import org.bukkit.Bukkit
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import java.io.File
 import java.net.URL
 
-class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
+class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     private val config = plugin.config
     
@@ -128,9 +128,9 @@ class ResourcePack(private val plugin: MiniatureBlocks) : Listener {
         return modelFile.exists()
     }
     
-    fun addNewModel(name: String, modelData: ModelData, forceResourcePack: Boolean = true): Int {
+    fun addNewModel(name: String, modelDataObj: JsonObject, forceResourcePack: Boolean = true): Int {
         val modelFile = File(moddedItemModelsDir, "$name.json")
-        modelData.writeToFile(modelFile)
+        modelDataObj.writeToFile(modelFile)
         
         return addOverride("item/modded/$name", forceResourcePack)
     }

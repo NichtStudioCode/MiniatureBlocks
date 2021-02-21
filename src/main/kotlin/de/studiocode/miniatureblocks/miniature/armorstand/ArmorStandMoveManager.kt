@@ -1,7 +1,7 @@
 package de.studiocode.miniatureblocks.miniature.armorstand
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
-import de.studiocode.miniatureblocks.utils.runTaskTimer
+import de.studiocode.miniatureblocks.util.runTaskTimer
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit

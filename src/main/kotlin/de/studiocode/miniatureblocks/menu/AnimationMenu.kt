@@ -12,9 +12,9 @@ import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.miniature.data.impl.AnimatedMiniatureData
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
-import de.studiocode.miniatureblocks.utils.playBurpSound
-import de.studiocode.miniatureblocks.utils.playClickSound
-import de.studiocode.miniatureblocks.utils.sendPrefixedMessage
+import de.studiocode.miniatureblocks.util.playBurpSound
+import de.studiocode.miniatureblocks.util.playClickSound
+import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
