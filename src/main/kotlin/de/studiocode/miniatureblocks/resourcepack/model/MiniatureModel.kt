@@ -10,7 +10,7 @@ import de.studiocode.miniatureblocks.util.addAll
 
 class MiniatureModel(data: BuildData) {
     
-    private val stepSize = data.size / 16
+    private val stepSize = 16.0 / data.size
     private val dataList = data.data
     
     val modelDataObj = JsonObject()
@@ -33,7 +33,6 @@ class MiniatureModel(data: BuildData) {
     private fun createConstructs() {
         for (data in dataList) {
             val part = PartManager.getConstructOf(data.block)
-            part.applyRotation()
             
             parts[data] = part
         }
@@ -81,7 +80,7 @@ class MiniatureModel(data: BuildData) {
                     val texture = element.textures[direction]!!
                     
                     val face = JsonObject()
-                    face.add("uv", JsonArray().apply { addAll(texture.uv) })
+                    face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
                     face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
                     face.addProperty("rotation", texture.rotation * 90)
                     

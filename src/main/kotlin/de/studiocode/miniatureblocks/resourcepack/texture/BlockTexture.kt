@@ -348,7 +348,43 @@ enum class BlockTexture {
     ANDESITE_SLAB("ANDESITE_SLAB", "andesite"),
     RED_NETHER_BRICK_SLAB("RED_NETHER_BRICK_SLAB", "nether_bricks"),
     DIORITE_SLAB("DIORITE_SLAB", "diorite"),
-    BLACKSTONE_SLAB("BLACKSTONE_SLAB", "blackstone_top", "blackstone");
+    BLACKSTONE_SLAB("BLACKSTONE_SLAB", "blackstone_top", "blackstone"),
+    ACACIA_STAIRS("ACACIA_STAIRS", "acacia_planks"),
+    ANDESITE_STAIRS("ANDESITE_STAIRS", "andesite"),
+    BIRCH_STAIRS("BIRCH_STAIRS", "birch_planks"),
+    BLACKSTONE_STAIRS("BLACKSTONE_STAIRS", "blackstone_top", "blackstone"),
+    BRICK_STAIRS("BRICK_STAIRS", "bricks"),
+    COBBLESTONE_STAIRS("COBBLESTONE_STAIRS", "cobblestone"),
+    CRIMSON_STAIRS("CRIMSON_STAIRS", "crimson_planks"),
+    DARK_OAK_STAIRS("DARK_OAK_STAIRS", "dark_oak_planks"),
+    DARK_PRISMARINE_STAIRS("DARK_PRISMARINE_STAIRS", "dark_prismarine"),
+    DIORITE_STAIRS("DIORITE_STAIRS", "diorite"),
+    END_STONE_BRICK_STAIRS("END_STONE_BRICK_STAIRS", "end_stone_bricks"),
+    GRANITE_STAIRS("GRANITE_STAIRS", "granite"),
+    JUNGLE_STAIRS("JUNGLE_STAIRS", "jungle_planks"),
+    MOSSY_COBBLESTONE_STAIRS("MOSSY_COBBLESTONE_STAIRS", "mossy_cobblestone"),
+    MOSSY_STONE_BRICK_STAIRS("MOSSY_STONE_BRICK_STAIRS", "mossy_stone_bricks"),
+    NETHER_BRICK_STAIRS("NETHER_BRICK_STAIRS", "nether_bricks"),
+    OAK_STAIRS("OAK_STAIRS", "oak_planks"),
+    POLISHED_ANDESITE_STAIRS("POLISHED_ANDESITE_STAIRS", "polished_andesite"),
+    POLISHED_BLACKSTONE_BRICK_STAIRS("POLISHED_BLACKSTONE_BRICK_STAIRS", "polished_blackstone_bricks"),
+    POLISHED_BLACKSTONE_STAIRS("POLISHED_BLACKSTONE_STAIRS", "polished_blackstone"),
+    POLISHED_DIORITE_STAIRS("POLISHED_DIORITE_STAIRS", "polished_diorite"),
+    POLISHED_GRANITE_STAIRS("POLISHED_GRANITE_STAIRS", "polished_granite"),
+    PRISMARINE_BRICK_STAIRS("PRISMARINE_BRICK_STAIRS", "prismarine_bricks"),
+    PRISMARINE_STAIRS("PRISMARINE_STAIRS", "prismarine"),
+    PURPUR_STAIRS("PURPUR_STAIRS", "purpur_block"),
+    QUARTZ_STAIRS("QUARTZ_STAIRS", "quartz_block_top"),
+    RED_NETHER_BRICK_STAIRS("RED_NETHER_BRICK_STAIRS", "red_nether_bricks"),
+    RED_SANDSTONE_STAIRS("RED_SANDSTONE_STAIRS", "red_sandstone_top", "red_sandstone_bottom", "red_sandstone"),
+    SANDSTONE_STAIRS("SANDSTONE_STAIRS", "sandstone_top", "sandstone_bottom", "sandstone"),
+    SMOOTH_QUARTZ_STAIRS("SMOOTH_QUARTZ_STAIRS", "quartz_block_bottom"),
+    SMOOTH_RED_SANDSTONE_STAIRS("SMOOTH_RED_SANDSTONE_STAIRS", "red_sandstone_top"),
+    SMOOTH_SANDSTONE_STAIRS("SMOOTH_SANDSTONE_STAIRS", "sandstone_top"),
+    SPRUCE_STAIRS("SPRUCE_STAIRS", "spruce_planks"),
+    STONE_BRICK_STAIRS("STONE_BRICK_STAIRS", "stone_bricks"),
+    STONE_STAIRS("STONE_STAIRS", "stone"),
+    WARPED_STAIRS("WARPED_STAIRS", "warped_planks");
     
     val material: Material?
     val textureTop: String
@@ -414,15 +450,11 @@ enum class BlockTexture {
     
     companion object {
         
-        fun hasMaterial(material: Material): Boolean {
-            return values().any { it.material == material }
-        }
+        fun has(material: Material) = values().any { it.material == material }
         
         fun of(material: Material): BlockTexture {
             return values().first { it.material == material }
         }
-        
-        fun has(material: Material): Boolean = values().any { material == it.material }
         
     }
     

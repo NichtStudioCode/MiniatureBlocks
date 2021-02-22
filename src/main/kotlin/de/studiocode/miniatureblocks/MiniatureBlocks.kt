@@ -1,16 +1,18 @@
 package de.studiocode.miniatureblocks
 
-import de.studiocode.miniatureblocks.builderworld.BuilderWorld
+import de.studiocode.invui.InvUI
+import de.studiocode.miniatureblocks.build.BuilderWorld
 import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.Menus
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-class MiniatureBlocks : JavaPlugin() {
+class MiniatureBlocks : JavaPlugin(), Listener {
     
     companion object {
         lateinit var INSTANCE: MiniatureBlocks
@@ -33,6 +35,7 @@ class MiniatureBlocks : JavaPlugin() {
         
         server.pluginManager.registerEvents(builderWorld, this)
         
+        InvUI.getInstance().plugin = this
         Menus.registerGlobalIngredients()
         
         Metrics(this, 8307)
