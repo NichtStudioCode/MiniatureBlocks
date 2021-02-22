@@ -48,9 +48,6 @@ class Texture {
                 }
             }
             
-            // fixme
-            
-            // it works don't question it
             var nx = -1
             var ny = -1
             if (direction == Direction.WEST || direction == Direction.SOUTH) {
