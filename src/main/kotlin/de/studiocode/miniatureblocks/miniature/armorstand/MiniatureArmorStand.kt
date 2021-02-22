@@ -124,7 +124,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
         if (command != null) {
             event.player.chat(command)
         } else if (degreesPerTick == 0f && !noRotate) {
-            rotate(45f, true)
+            rotate(30f, true)
         }
     }
     
