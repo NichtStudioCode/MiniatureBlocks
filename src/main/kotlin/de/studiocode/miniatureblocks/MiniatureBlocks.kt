@@ -6,6 +6,7 @@ import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.Menus
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
+import de.studiocode.miniatureblocks.region.RegionManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
 import org.bukkit.event.Listener
@@ -23,6 +24,7 @@ class MiniatureBlocks : JavaPlugin(), Listener {
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
     lateinit var miniatureManager: MiniatureArmorStandManager
+    lateinit var regionManager: RegionManager
     
     override fun onEnable() {
         INSTANCE = this
@@ -31,6 +33,7 @@ class MiniatureBlocks : JavaPlugin(), Listener {
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack(this)
         miniatureManager = MiniatureArmorStandManager(this)
+        regionManager = RegionManager(this)
         CommandManager(this)
         
         server.pluginManager.registerEvents(builderWorld, this)

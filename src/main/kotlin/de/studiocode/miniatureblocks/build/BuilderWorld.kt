@@ -88,10 +88,6 @@ class BuilderWorld : Listener {
         return player.location.isValidBuildArea(this)
     }
     
-    fun getBuildData(player: Player): BuildData {
-        return BuildData(player.location.chunk)
-    }
-    
     private fun Location.isValidBuildArea(builderWorld: BuilderWorld): Boolean {
         val chunk = this.chunk
         

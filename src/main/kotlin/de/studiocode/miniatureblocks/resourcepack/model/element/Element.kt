@@ -106,9 +106,9 @@ open class Element(fromPos: DoubleArray, toPos: DoubleArray, vararg textures: Te
     
     private fun getPosInMiniature(pos: DoubleArray, x: Int, y: Int, z: Int, stepSize: Double): DoubleArray {
         val posInMiniature = DoubleArray(3)
-        posInMiniature[0] = (pos[0] + 0.5) * stepSize + x
-        posInMiniature[1] = (pos[1] + 0.5) * stepSize + y
-        posInMiniature[2] = (pos[2] + 0.5) * stepSize + z
+        posInMiniature[0] = (pos[0] + 0.5) * stepSize + x * stepSize
+        posInMiniature[1] = (pos[1] + 0.5) * stepSize + y * stepSize
+        posInMiniature[2] = (pos[2] + 0.5) * stepSize + z * stepSize
         return posInMiniature
     }
     

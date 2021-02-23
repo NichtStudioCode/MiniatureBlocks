@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.FloatArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
+import de.studiocode.miniatureblocks.build.BuildData
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.menu.AnimationMenu
 import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
@@ -14,8 +15,11 @@ import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.model.MiniatureModel
+import de.studiocode.miniatureblocks.util.getArgument
+import de.studiocode.miniatureblocks.util.getPlayer
 import de.studiocode.miniatureblocks.util.getTargetMiniature
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage
+import org.bukkit.Location
 import org.bukkit.entity.Player
 
 class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, permission) {
@@ -25,14 +29,33 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     init {
         command = command
             .then(
-                literal("create")
-                    .then(argument<String>("name", StringArgumentType.word())
-                        .executes { handleCreateCommand(true, it); 0 })
+                literal("selection")
+                    .then(
+                        literal("marker")
+                            .executes { handleGiveMarkerCommand(it); 0 }
+                    )
+                    .then(
+                        literal("pos1")
+                            .executes { handleSetPosCommand(true, it); 0 }
+                    )
+                    .then(
+                        literal("pos2")
+                            .executes { handleSetPosCommand(false, it); 0 }
+                    )
+                    .then(
+                        literal("clear")
+                            .executes { handleClearSelectionCommand(it); 0 }
+                    )
             )
             .then(
-                literal("createsilently")
+                literal("create")
                     .then(argument<String>("name", StringArgumentType.word())
-                        .executes { handleCreateCommand(false, it); 0 })
+                        .executes { handleCreateCommand(true, it); 0 }
+                        .then(
+                            literal("silent")
+                                .executes { handleCreateCommand(false, it); 0 }
+                        )
+                    )
             )
             .then(
                 literal("autorotate")
@@ -48,7 +71,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                 literal("bounce")
                     .then(argument<Float>("maxHeight", FloatArgumentType.floatArg())
                         .then(argument<Float>("speed", FloatArgumentType.floatArg())
-                            .executes { handleBounceCommand(it); 0})
+                            .executes { handleBounceCommand(it); 0 })
                     )
             )
             .then(
@@ -94,22 +117,73 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                 .executes { handleMoveCommand(it); 0 })
     }
     
+    private fun handleGiveMarkerCommand(context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            MiniatureBlocks.INSTANCE.regionManager.giveMarker(player)
+            player.sendPrefixedMessage("§7The marker has been added to your inventory. " +
+                "Left-click to select the first and right-click to select the second position.")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
+    private fun handleSetPosCommand(first: Boolean, context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            MiniatureBlocks.INSTANCE.regionManager.markPosition(first, player, player.location)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
+    private fun handleClearSelectionCommand(context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            MiniatureBlocks.INSTANCE.regionManager.regions.remove(player.uniqueId)
+            player.sendPrefixedMessage("§7Your selection has been cleared successfully.")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
     private fun handleCreateCommand(forceResourcePack: Boolean, context: CommandContext<Any>) {
         try {
-            val player = getPlayer(context.source)
-            val name = context.getArgument("name", String::class.java)
+            val player = context.getPlayer()
+            val name = context.getArgument<String>("name")
             
             if (name.matches(namePattern)) {
                 val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
                 if (!resourcePack.hasModel(name)) {
                     val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
-                    if (builderWorld.isPlayerInValidBuildArea(player)) {
-                        val buildData = builderWorld.getBuildData(player)
+                    val regionManager = MiniatureBlocks.INSTANCE.regionManager
+                    
+                    var min: Location? = null
+                    var max: Location? = null
+    
+                    when {
+                        builderWorld.isPlayerInValidBuildArea(player) -> {
+                            min = player.location.chunk.getBlock(0, 1, 0).location
+                            max = player.location.chunk.getBlock(15, 16, 15).location
+                        }
+                        
+                        regionManager.hasValidRegion(player) -> {
+                            regionManager.take(player) {
+                                min = it.getFirst()
+                                max = it.getSecond()
+                            }
+                        }
+                        
+                        else -> player.sendPrefixedMessage("§cYou have no selected region.")
+                    }
+                    
+                    if (min != null && max != null) {
+                        val buildData = BuildData(min!!, max!!)
                         val modelData = MiniatureModel(buildData).modelDataObj
                         resourcePack.addNewModel(name, modelData, forceResourcePack)
                         
                         player.sendPrefixedMessage("§7A new model has been created.")
-                    } else player.sendPrefixedMessage("§cYou're not in a build area.")
+                    }
                 } else player.sendPrefixedMessage("§cA model with that name already exists.")
             } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
         } catch (e: Exception) {
@@ -118,30 +192,30 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleAutoRotateCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val degreesPerTick = context.getArgument("degreesPerTick", Float::class.java)
+        val player = context.getPlayer()
+        val degreesPerTick = context.getArgument<Float>("degreesPerTick")
         
         getPlayersTargetMiniature(player)?.setAutoRotate(degreesPerTick)
     }
     
     private fun handleRotateCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val degrees = context.getArgument("degrees", Float::class.java)
+        val player = context.getPlayer()
+        val degrees = context.getArgument<Float>("degrees")
         
         getPlayersTargetMiniature(player)?.rotate(degrees)
     }
     
     private fun handleBounceCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val maxHeight = context.getArgument("maxHeight", Float::class.java)
-        val bounceSpeed = context.getArgument("speed", Float::class.java)
+        val player = context.getPlayer()
+        val maxHeight = context.getArgument<Float>("maxHeight")
+        val bounceSpeed = context.getArgument<Float>("speed")
         
         getPlayersTargetMiniature(player)?.setBounce(maxHeight, bounceSpeed)
     }
     
     private fun handleCommandAddCommand(commandType: CommandType, context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
-        val command = context.getArgument("command", String::class.java)
+        val player = context.getPlayer()
+        val command = context.getArgument<String>("command")
         
         val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
@@ -151,7 +225,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleCommandRemoveCommand(commandType: CommandType, context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
+        val player = context.getPlayer()
         
         val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
@@ -161,7 +235,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleNoRotateCommand(noRotate: Boolean, context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
+        val player = context.getPlayer()
         
         val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
@@ -172,7 +246,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleSyncCommand(autoRotate: Boolean, context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
+        val player = context.getPlayer()
         
         val miniatureManager = MiniatureBlocks.INSTANCE.miniatureManager
         if (autoRotate) {
@@ -188,7 +262,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     
     private fun handleAnimationCommand(context: CommandContext<Any>) {
         try {
-            val player = getPlayer(context.source)
+            val player = context.getPlayer()
             val itemStack = player.inventory.itemInMainHand
             
             val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
@@ -204,7 +278,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     }
     
     private fun handleMoveCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
+        val player = context.getPlayer()
         
         val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {

@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.storage.PermanentStorage
+import de.studiocode.miniatureblocks.util.getPlayer
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -19,7 +20,7 @@ class MiniatureWorldCommand(name: String, permission: String) : PlayerCommand(na
     }
     
     private fun handleMiniatureWorldCommand(context: CommandContext<Any>) {
-        val player = getPlayer(context.source)
+        val player = context.getPlayer()
         
         val builderWorld = MiniatureBlocks.INSTANCE.builderWorld.world
         if (builderWorld == player.location.world) {

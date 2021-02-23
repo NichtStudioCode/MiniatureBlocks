@@ -5,7 +5,7 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.advance
 import de.studiocode.miniatureblocks.util.isGlass
 import de.studiocode.miniatureblocks.util.isSeeTrough
-import org.bukkit.Chunk
+import org.bukkit.Location
 import org.bukkit.block.Block
 
 class BuildData {
@@ -18,20 +18,22 @@ class BuildData {
         this.size = size
     }
     
-    constructor(chunk: Chunk) {
+    constructor(min: Location, max: Location) {
         val data = ArrayList<BuildBlockData>()
         
-        getAvailableCoordinates().forEach { (x, y, z) ->
-            val block = chunk.getBlock(x, y, z)
+        val locations = getAllLocations(min, max)
+        
+        locations.forEach { location ->
+            val block = location.block
             val material = block.type
             if (BlockTexture.has(material)) { // remove all blocks that have no miniature version
                 val blockedSides = ArrayList<Direction>()
                 if (!material.isSeeTrough() || material.isGlass()) { // only check for neighbors if it is a full opaque block or glass
                     for (direction in Direction.values()) {
-                        val location = block.location.clone()
-                        location.advance(direction)
-                        if (location.chunk == chunk && location.y > 0) { // is it still in the building area
-                            val neighborMaterial = location.block.type
+                        val clonedLocation = block.location.clone()
+                        clonedLocation.advance(direction)
+                        if (locations.contains(clonedLocation)) { // is it still in the building area
+                            val neighborMaterial = clonedLocation.block.type
                             if (material.isGlass()) {
                                 // don't render glass side if glass blocks of the same glass type are side by side
                                 if (material == neighborMaterial) blockedSides.add(direction)
@@ -43,29 +45,30 @@ class BuildData {
                     }
                 }
                 
-                val buildBlockData = BuildBlockData(x, y - 1, z, block, blockedSides)
+                val x = location.blockX - min.blockX
+                val y = location.blockY - min.blockY
+                val z = location.blockZ - min.blockZ
+                
+                val buildBlockData = BuildBlockData(x, y, z, block, blockedSides)
                 if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
             }
         }
         
         this.data = data
-        this.size = 16
+        this.size = max.blockX - min.blockX + 1
     }
     
-    companion object {
-        
-        private fun getAvailableCoordinates(): List<Triple<Int, Int, Int>> {
-            val coordinates = ArrayList<Triple<Int, Int, Int>>()
-            for (x in 0..15) {
-                for (y in 1..16) {
-                    for (z in 0..15) {
-                        coordinates += Triple(x, y, z)
-                    }
+    private fun getAllLocations(min: Location, max: Location): List<Location> {
+        val locations = ArrayList<Location>()
+        for (x in min.blockX..max.blockX) {
+            for (y in min.blockY..max.blockY) {
+                for (z in min.blockZ..max.blockZ) {
+                    locations += Location(min.world, x.toDouble(), y.toDouble(), z.toDouble())
                 }
             }
-            return coordinates
         }
         
+        return locations
     }
     
     class BuildBlockData(val x: Int, val y: Int, val z: Int, val block: Block, private val blockedSides: List<Direction>) {

@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.command.impl
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.menu.MiniaturesMenu
+import de.studiocode.miniatureblocks.util.getPlayer
 
 class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, permission) {
     
@@ -12,7 +13,7 @@ class MiniaturesCommand(name: String, permission: String) : PlayerCommand(name, 
     
     private fun handleMiniaturesCommand(context: CommandContext<Any>) {
         try {
-            val player = getPlayer(context.source)
+            val player = context.getPlayer()
             MiniaturesMenu(player).openWindow()
         } catch (e: Exception) {
             e.printStackTrace()
