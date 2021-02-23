@@ -28,7 +28,7 @@ class Region(player: Player) {
                 if (lineLocations == null) {
                     lineLocations = HashMap()
                     pos1!!.getBoxOutline(pos2!!, true).forEach { lineLocations!![it] = false }
-                    cubePos1!!.getBoxOutline(cubePos2!!, false).forEach { lineLocations!![it] = true }
+                    cubePos1!!.getBoxOutline(cubePos2!!, true).forEach { lineLocations!![it] = true }
                 }
                 
                 lineLocations?.forEach { (location, green) ->
@@ -55,9 +55,9 @@ class Region(player: Player) {
             val minX = min(pos1.x, pos2.x)
             val minY = min(pos1.y, pos2.y)
             val minZ = min(pos1.z, pos2.z)
-            val maxX = max(pos1.x, pos2.x) + 1
-            val maxY = max(pos1.y, pos2.y) + 1
-            val maxZ = max(pos1.z, pos2.z) + 1
+            val maxX = max(pos1.x, pos2.x)
+            val maxY = max(pos1.y, pos2.y)
+            val maxZ = max(pos1.z, pos2.z)
             
             val size = doubleArrayOf(maxX - minX, maxY - minY, maxZ - minZ).sortedDescending()[0]
             

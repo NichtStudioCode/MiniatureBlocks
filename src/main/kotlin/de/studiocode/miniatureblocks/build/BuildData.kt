@@ -43,18 +43,18 @@ class BuildData {
                         }
                     }
                 }
-                
-                val x = location.blockX - min.blockX
-                val y = location.blockY - min.blockY
-                val z = location.blockZ - min.blockZ
-                
-                val buildBlockData = BuildBlockData(x, y, z, block, blockedSides)
-                if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
             }
+            
+            val x = location.blockX - min.blockX
+            val y = location.blockY - min.blockY
+            val z = location.blockZ - min.blockZ
+            
+            val buildBlockData = BuildBlockData(x, y, z, block, blockedSides)
+            if (!buildBlockData.isSurroundedByBlocks()) data.add(buildBlockData)
         }
         
         this.data = data
-        this.size = max.blockX - min.blockX
+        this.size = max.blockX - min.blockX + 1
     }
     
     private fun getAllLocations(min: Location, max: Location): List<Location> {
