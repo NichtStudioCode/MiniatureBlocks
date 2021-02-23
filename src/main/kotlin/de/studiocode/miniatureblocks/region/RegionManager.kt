@@ -23,12 +23,7 @@ class RegionManager(plugin: JavaPlugin) : Listener {
     
     init {
         Bukkit.getPluginManager().registerEvents(this, plugin)
-        runTaskTimer(0, 4) {
-            Bukkit.getOnlinePlayers()
-                .filter { regions.containsKey(it.uniqueId) }
-                .filter { marker.isSimilar(it.inventory.itemInMainHand) || marker.isSimilar(it.inventory.itemInOffHand) }
-                .forEach { regions[it.uniqueId]?.drawOutline() }
-        }
+        runTaskTimer(0, 4) { regions.values.forEach(Region::drawOutline) }
     }
     
     @EventHandler

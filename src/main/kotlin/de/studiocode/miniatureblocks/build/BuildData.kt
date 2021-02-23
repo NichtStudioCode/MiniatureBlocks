@@ -54,7 +54,7 @@ class BuildData {
         }
         
         this.data = data
-        this.size = max.blockX - min.blockX + 1
+        this.size = max.blockX - min.blockX
     }
     
     private fun getAllLocations(min: Location, max: Location): List<Location> {

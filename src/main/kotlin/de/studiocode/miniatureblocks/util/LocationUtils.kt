@@ -51,15 +51,15 @@ fun Location.advance(direction: Direction, step: Double = 1.0) {
     }
 }
 
-fun Location.getBoxOutline(other: Location, stepSize: Double = 0.5): List<Location> {
+fun Location.getBoxOutline(other: Location, correct: Boolean, stepSize: Double = 0.5): List<Location> {
     val locations = ArrayList<Location>()
     
     val minX = min(x, other.x)
-    val maxX = max(x, other.x)
     val minY = min(y, other.y)
-    val maxY = max(y, other.y)
     val minZ = min(z, other.z)
-    val maxZ = max(z, other.z)
+    val maxX = max(x, other.x) + if (correct) 1 else 0
+    val maxY = max(y, other.y) + if (correct) 1 else 0
+    val maxZ = max(z, other.z) + if (correct) 1 else 0
     
     // lines in x direction
     var x = minX
