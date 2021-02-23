@@ -22,25 +22,24 @@ class BuildData {
         val data = ArrayList<BuildBlockData>()
         
         val locations = getAllLocations(min, max)
+            .filter { BlockTexture.has(it.block.type) } // remove all blocks that have no miniature version
         
         locations.forEach { location ->
             val block = location.block
             val material = block.type
-            if (BlockTexture.has(material)) { // remove all blocks that have no miniature version
-                val blockedSides = ArrayList<Direction>()
-                if (!material.isSeeTrough() || material.isGlass()) { // only check for neighbors if it is a full opaque block or glass
-                    for (direction in Direction.values()) {
-                        val clonedLocation = block.location.clone()
-                        clonedLocation.advance(direction)
-                        if (locations.contains(clonedLocation)) { // is it still in the building area
-                            val neighborMaterial = clonedLocation.block.type
-                            if (material.isGlass()) {
-                                // don't render glass side if glass blocks of the same glass type are side by side
-                                if (material == neighborMaterial) blockedSides.add(direction)
-                            } else if (!neighborMaterial.isSeeTrough()) {
-                                // mark side as blocked if it isn't visible
-                                if (!neighborMaterial.isSeeTrough()) blockedSides.add(direction)
-                            }
+            val blockedSides = ArrayList<Direction>()
+            if (!material.isSeeTrough() || material.isGlass()) { // only check for neighbors if it is a full opaque block or glass
+                for (direction in Direction.values()) {
+                    val clonedLocation = block.location.clone()
+                    clonedLocation.advance(direction)
+                    if (locations.contains(clonedLocation)) { // is it still in the building area
+                        val neighborMaterial = clonedLocation.block.type
+                        if (material.isGlass()) {
+                            // don't render glass side if glass blocks of the same glass type are side by side
+                            if (material == neighborMaterial) blockedSides.add(direction)
+                        } else if (!neighborMaterial.isSeeTrough()) {
+                            // mark side as blocked if it isn't visible
+                            if (!neighborMaterial.isSeeTrough()) blockedSides.add(direction)
                         }
                     }
                 }
