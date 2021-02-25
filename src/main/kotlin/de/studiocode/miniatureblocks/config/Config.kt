@@ -9,7 +9,6 @@ class Config(private val plugin: JavaPlugin) {
         const val CUSTOM_UPLOADER_REQUEST_URL = "custom-uploader-request"
         const val CUSTOM_UPLOADER_HOST_URL = "custom-uploader-host"
         const val CUSTOM_UPLOADER_KEY = "custom-uploader-key"
-        const val RP_DOWNLOAD_URL = "rp-download-url"
         
     }
     
@@ -39,13 +38,6 @@ class Config(private val plugin: JavaPlugin) {
         config.isSet(CUSTOM_UPLOADER_KEY) && config.getString(CUSTOM_UPLOADER_KEY)?.isNotEmpty() ?: false
     
     fun getCustomUploaderKey(): String = config.getString(CUSTOM_UPLOADER_KEY) ?: ""
-    
-    fun getRPDownloadUrl(): String? = config.getString(RP_DOWNLOAD_URL)
-    
-    fun setRPDownloadUrl(rpDownloadUrl: String) {
-        config.set(RP_DOWNLOAD_URL, rpDownloadUrl)
-        save()
-    }
     
     private fun save() = plugin.saveConfig()
     

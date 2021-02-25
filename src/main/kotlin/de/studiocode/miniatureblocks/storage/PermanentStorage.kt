@@ -30,7 +30,11 @@ object PermanentStorage {
     }
     
     inline fun <reified T> retrieve(alternative: T, key: String): T {
-        return builder.fromJson(mainObj.get(key), object: TypeToken<T>() {}.type) ?: alternative
+        return retrieveOrNull(key) ?: alternative
+    }
+    
+    inline fun <reified T> retrieveOrNull(key: String): T? {
+        return builder.fromJson(mainObj.get(key), object : TypeToken<T>() {}.type)
     }
     
 }

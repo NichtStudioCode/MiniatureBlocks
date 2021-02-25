@@ -6,6 +6,7 @@ import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
 import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
+import de.studiocode.miniatureblocks.storage.PermanentStorage
 import de.studiocode.miniatureblocks.util.*
 import net.lingala.zip4j.ZipFile
 import org.apache.commons.io.FilenameUtils
@@ -34,7 +35,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     private val mainModelDataFile = File(itemModelsDir, "structure_void.json")
     val mainModelData: MainModelData
     
-    var downloadUrl: String? = config.getRPDownloadUrl()
+    var downloadUrl: String? = PermanentStorage.retrieveOrNull("rp-download-url")
         get() {
             return if (config.hasCustomUploader()) field
             else FileIOUploadUtils.uploadToFileIO(zipFile)
@@ -58,7 +59,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         
         mainModelData = MainModelData(mainModelDataFile)
         
-        if (config.hasCustomUploader() && hasCustomModels() && config.getRPDownloadUrl() == null) uploadToCustom()
+        if (config.hasCustomUploader() && hasCustomModels() && PermanentStorage.retrieveOrNull<String>("rp-download-url") == "") uploadToCustom()
     }
     
     private fun extractTextureFiles() {
@@ -83,7 +84,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         // upload file
         val url = CustomUploaderUtils.uploadFile(reqUrl, hostUrl, key, zipFile)
         if (url != null) {
-            config.setRPDownloadUrl(url)
+            PermanentStorage.store("rp-download-url", url)
             downloadUrl = url
         }
     }
