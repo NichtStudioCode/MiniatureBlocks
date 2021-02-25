@@ -12,6 +12,7 @@
         <kotlin.version>1.4.30</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <shadePath>de.studiocode.miniatureblocks.lib</shadePath>
     </properties>
 
     <repositories>
@@ -114,7 +115,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.4</version>
                 <configuration>
                     <outputFile>${dir}/${project.artifactId}-${project.version}-shaded.jar</outputFile>
                 </configuration>
@@ -133,7 +134,19 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>de.studiocode</shadedPattern>
+                                    <shadedPattern>${shadePath}.org.bstats</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>de.studiocode.invui</pattern>
+                                    <shadedPattern>${shadePath}.de.studiocode.invui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>de.studiocode.inventoryaccess</pattern>
+                                    <shadedPattern>${shadePath}.de.studiocode.inventoryaccess</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>xyz.xenondevs.particle</pattern>
+                                    <shadedPattern>${shadePath}.xyz.xenondevs.particle</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
