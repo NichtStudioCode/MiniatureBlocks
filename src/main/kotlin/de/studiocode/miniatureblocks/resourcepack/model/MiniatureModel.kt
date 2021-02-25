@@ -3,21 +3,17 @@ package de.studiocode.miniatureblocks.resourcepack.model
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import de.studiocode.miniatureblocks.build.BuildData
-import de.studiocode.miniatureblocks.build.BuildData.BuildBlockData
-import de.studiocode.miniatureblocks.resourcepack.model.part.Part
-import de.studiocode.miniatureblocks.resourcepack.model.part.PartManager
 import de.studiocode.miniatureblocks.util.addAll
 
-class MiniatureModel(data: BuildData) {
+class MiniatureModel(buildData: BuildData) {
     
-    private val stepSize = 16.0 / data.size
-    private val dataList = data.data
+    private val stepSize = 16.0 / buildData.size
     
     val modelDataObj = JsonObject()
     private val elementArray = JsonArray()
     private val texturesObj = JsonObject()
     
-    private val parts = HashMap<BuildBlockData, Part>()
+    private val parts = buildData.data
     private val textureMap = HashMap<String, Int>()
     
     init {
@@ -25,17 +21,8 @@ class MiniatureModel(data: BuildData) {
         modelDataObj.add("textures", texturesObj)
         modelDataObj.add("elements", elementArray)
         
-        createConstructs()
         parseTextures()
         parseElements()
-    }
-    
-    private fun createConstructs() {
-        for (data in dataList) {
-            val part = PartManager.getConstructOf(data.block)
-            
-            parts[data] = part
-        }
     }
     
     private fun parseTextures() {

@@ -4,7 +4,6 @@ import com.mojang.brigadier.arguments.FloatArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
-import de.studiocode.miniatureblocks.build.BuildData
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.menu.AnimationMenu
 import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
@@ -14,7 +13,7 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandMan
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.MiniatureModel
+import de.studiocode.miniatureblocks.resourcepack.MiniatureCreator
 import de.studiocode.miniatureblocks.util.getArgument
 import de.studiocode.miniatureblocks.util.getPlayer
 import de.studiocode.miniatureblocks.util.getTargetMiniature
@@ -151,39 +150,38 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         try {
             val player = context.getPlayer()
             val name = context.getArgument<String>("name")
-            
             if (name.matches(namePattern)) {
                 val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
                 if (!resourcePack.hasModel(name)) {
-                    val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
-                    val regionManager = MiniatureBlocks.INSTANCE.regionManager
-                    
-                    var min: Location? = null
-                    var max: Location? = null
-    
-                    when {
-                        builderWorld.isPlayerInValidBuildArea(player) -> {
-                            min = player.location.chunk.getBlock(0, 1, 0).location
-                            max = player.location.chunk.getBlock(15, 16, 15).location
+                    if (!MiniatureCreator.isBusy()) {
+                        val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
+                        val regionManager = MiniatureBlocks.INSTANCE.regionManager
+                        
+                        var min: Location? = null
+                        var max: Location? = null
+                        
+                        when {
+                            builderWorld.isPlayerInValidBuildArea(player) -> {
+                                min = player.location.chunk.getBlock(0, 1, 0).location
+                                max = player.location.chunk.getBlock(15, 16, 15).location
+                            }
+                            
+                            regionManager.hasValidRegion(player) -> {
+                                regionManager.take(player) {
+                                    min = it.getFirst()
+                                    max = it.getSecond()
+                                }
+                            }
+                            
+                            else -> player.sendPrefixedMessage("§cYou have no selected region.")
                         }
                         
-                        regionManager.hasValidRegion(player) -> {
-                            regionManager.take(player) {
-                                min = it.getFirst()
-                                max = it.getSecond()
+                        if (min != null && max != null) {
+                            MiniatureCreator.submitCreationRequest(name, forceResourcePack, min!!, max!!) {
+                                player.sendPrefixedMessage("§7A new model has been created.")
                             }
                         }
-                        
-                        else -> player.sendPrefixedMessage("§cYou have no selected region.")
-                    }
-                    
-                    if (min != null && max != null) {
-                        val buildData = BuildData(min!!, max!!)
-                        val modelData = MiniatureModel(buildData).modelDataObj
-                        resourcePack.addNewModel(name, modelData, forceResourcePack)
-                        
-                        player.sendPrefixedMessage("§7A new model has been created.")
-                    }
+                    } else player.sendPrefixedMessage("§cAnother miniature is already being created, please wait.")
                 } else player.sendPrefixedMessage("§cA model with that name already exists.")
             } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
         } catch (e: Exception) {
