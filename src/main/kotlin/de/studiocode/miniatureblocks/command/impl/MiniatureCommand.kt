@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.command.PlayerCommand
 import de.studiocode.miniatureblocks.menu.AnimationMenu
+import de.studiocode.miniatureblocks.menu.TexturesMenu
 import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand.CommandType
@@ -13,7 +14,7 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandMan
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.MiniatureCreator
+import de.studiocode.miniatureblocks.resourcepack.RPTaskManager
 import de.studiocode.miniatureblocks.util.getArgument
 import de.studiocode.miniatureblocks.util.getPlayer
 import de.studiocode.miniatureblocks.util.getTargetMiniature
@@ -27,93 +28,67 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
     
     init {
         command = command
-            .then(
-                literal("selection")
-                    .then(
-                        literal("marker")
-                            .executes { handleGiveMarkerCommand(it); 0 }
-                    )
-                    .then(
-                        literal("pos1")
-                            .executes { handleSetPosCommand(true, it); 0 }
-                    )
-                    .then(
-                        literal("pos2")
-                            .executes { handleSetPosCommand(false, it); 0 }
-                    )
-                    .then(
-                        literal("clear")
-                            .executes { handleClearSelectionCommand(it); 0 }
-                    )
-            )
-            .then(
-                literal("create")
-                    .then(argument<String>("name", StringArgumentType.word())
-                        .executes { handleCreateCommand(true, it); 0 }
-                        .then(
-                            literal("silent")
-                                .executes { handleCreateCommand(false, it); 0 }
-                        )
-                    )
-            )
-            .then(
-                literal("autorotate")
-                    .then(argument<Float>("degreesPerTick", FloatArgumentType.floatArg())
-                        .executes { handleAutoRotateCommand(it); 0 })
-            )
-            .then(
-                literal("rotation")
-                    .then(argument<Float>("degrees", FloatArgumentType.floatArg())
-                        .executes { handleRotateCommand(it); 0 })
-            )
-            .then(
-                literal("bounce")
-                    .then(argument<Float>("maxHeight", FloatArgumentType.floatArg())
-                        .then(argument<Float>("speed", FloatArgumentType.floatArg())
-                            .executes { handleBounceCommand(it); 0 })
-                    )
-            )
-            .then(
-                literal("command")
-                    .then(
-                        literal("set")
-                            .then(
-                                literal("shift-right")
-                                    .then(argument("command", StringArgumentType.greedyString())
-                                        .executes { handleCommandAddCommand(CommandType.SHIFT_RIGHT, it); 0 })
-                            )
-                            .then(
-                                literal("right")
-                                    .then(argument("command", StringArgumentType.greedyString())
-                                        .executes { handleCommandAddCommand(CommandType.RIGHT, it); 0 })
-                            )
-                    )
-                    .then(
-                        literal("remove")
-                            .then(literal("shift-right")
-                                .executes { handleCommandRemoveCommand(CommandType.SHIFT_RIGHT, it); 0 })
-                            .then(literal("right")
-                                .executes { handleCommandRemoveCommand(CommandType.RIGHT, it); 0 })
-                    )
-            )
-            .then(
-                literal("norotate")
-                    .then(literal("on")
-                        .executes { handleNoRotateCommand(true, it); 0 })
-                    .then(literal("off")
-                        .executes { handleNoRotateCommand(false, it); 0 })
-            )
-            .then(
-                literal("sync")
-                    .then(literal("autorotate")
-                        .executes { handleSyncCommand(true, it); 0 })
-                    .then(literal("animation")
-                        .executes { handleSyncCommand(false, it); 0 })
-            )
+            .then(literal("selection")
+                .then(literal("marker")
+                    .executes { handleGiveMarkerCommand(it); 0 })
+                .then(literal("pos1")
+                    .executes { handleSetPosCommand(true, it); 0 })
+                .then(literal("pos2")
+                    .executes { handleSetPosCommand(false, it); 0 })
+                .then(literal("clear")
+                    .executes { handleClearSelectionCommand(it); 0 }))
+            .then(literal("create")
+                .then(argument<String>("name", StringArgumentType.word())
+                    .executes { handleCreateCommand(true, it); 0 }
+                    .then(literal("silent")
+                        .executes { handleCreateCommand(false, it); 0 })))
+            .then(literal("autorotate")
+                .then(argument<Float>("degreesPerTick", FloatArgumentType.floatArg())
+                    .executes { handleAutoRotateCommand(it); 0 }))
+            .then(literal("rotation")
+                .then(argument<Float>("degrees", FloatArgumentType.floatArg())
+                    .executes { handleRotateCommand(it); 0 }))
+            .then(literal("bounce")
+                .then(argument<Float>("maxHeight", FloatArgumentType.floatArg())
+                    .then(argument<Float>("speed", FloatArgumentType.floatArg())
+                        .executes { handleBounceCommand(it); 0 })))
+            .then(literal("command")
+                .then(literal("set")
+                    .then(literal("shift-right")
+                        .then(argument("command", StringArgumentType.greedyString())
+                            .executes { handleCommandAddCommand(CommandType.SHIFT_RIGHT, it); 0 }))
+                    .then(literal("right")
+                        .then(argument("command", StringArgumentType.greedyString())
+                            .executes { handleCommandAddCommand(CommandType.RIGHT, it); 0 })))
+                .then(literal("remove")
+                    .then(literal("shift-right")
+                        .executes { handleCommandRemoveCommand(CommandType.SHIFT_RIGHT, it); 0 })
+                    .then(literal("right")
+                        .executes { handleCommandRemoveCommand(CommandType.RIGHT, it); 0 })))
+            .then(literal("norotate")
+                .then(literal("on")
+                    .executes { handleNoRotateCommand(true, it); 0 })
+                .then(literal("off")
+                    .executes { handleNoRotateCommand(false, it); 0 }))
+            .then(literal("sync")
+                .then(literal("autorotate")
+                    .executes { handleSyncCommand(true, it); 0 })
+                .then(literal("animation")
+                    .executes { handleSyncCommand(false, it); 0 }))
             .then(literal("animation")
                 .executes { handleAnimationCommand(it); 0 })
             .then(literal("move")
                 .executes { handleMoveCommand(it); 0 })
+            .then(literal("textures")
+                .executes { handleTexturesCommand(it); 0 }
+                .then(literal("add")
+                    .then(argument("name", StringArgumentType.string())
+                        .then(argument("url", StringArgumentType.greedyString())
+                            .executes { handleAddTextureCommand(it); 0 })))
+                .then(literal("remove")
+                    .then(argument("name", StringArgumentType.greedyString())
+                        .executes { handleRemoveTextureCommand(it); 0 }))
+            )
     }
     
     private fun handleGiveMarkerCommand(context: CommandContext<Any>) {
@@ -153,7 +128,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
             if (name.matches(namePattern)) {
                 val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
                 if (!resourcePack.hasModel(name)) {
-                    if (!MiniatureCreator.isBusy()) {
+                    if (!RPTaskManager.isBusy()) {
                         val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
                         val regionManager = MiniatureBlocks.INSTANCE.regionManager
                         
@@ -177,11 +152,11 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                         }
                         
                         if (min != null && max != null) {
-                            MiniatureCreator.submitCreationRequest(name, forceResourcePack, min!!, max!!) {
+                            RPTaskManager.submitMiniatureCreationRequest(name, forceResourcePack, min!!, max!!) {
                                 player.sendPrefixedMessage("§7A new model has been created.")
                             }
                         }
-                    } else player.sendPrefixedMessage("§cAnother miniature is already being created, please wait.")
+                    } else player.sendPrefixedMessage("§cMiniatureBlocks is busy, try again later.")
                 } else player.sendPrefixedMessage("§cA model with that name already exists.")
             } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
         } catch (e: Exception) {
@@ -281,6 +256,47 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         val miniature = getPlayersTargetMiniature(player)
         if (miniature != null) {
             ArmorStandMoveManager.addToMove(player, miniature.armorStand)
+        }
+    }
+    
+    private fun handleTexturesCommand(context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            
+            TexturesMenu(player).openWindow()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
+    private fun handleAddTextureCommand(context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            val name = context.getArgument<String>("name")
+            val url = context.getArgument<String>("url")
+            
+            if (name.matches(namePattern)) {
+                if (!RPTaskManager.isBusy()) {
+                    RPTaskManager.submitTextureDownloadRequest(player, name, url)
+                } else player.sendPrefixedMessage("§cMiniatureBlocks is busy, try again later.")
+            } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    
+    private fun handleRemoveTextureCommand(context: CommandContext<Any>) {
+        try {
+            val player = context.getPlayer()
+            val name = context.getArgument<String>("name")
+            
+            if (name.matches(namePattern)) {
+                if (!RPTaskManager.isBusy()) {
+                    RPTaskManager.submitTextureRemovalRequest(player, name)
+                } else player.sendPrefixedMessage("§cMiniatureBlocks is busy, try again later.")
+            } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
     

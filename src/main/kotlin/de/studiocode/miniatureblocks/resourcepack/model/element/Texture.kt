@@ -32,7 +32,7 @@ class Texture {
             
             val axisHor: Int // horizontal axis
             val axisVert: Int // vertical axis
-    
+            
             when (direction.axis) {
                 Axis.X -> { // west or east
                     axisHor = 2 // z

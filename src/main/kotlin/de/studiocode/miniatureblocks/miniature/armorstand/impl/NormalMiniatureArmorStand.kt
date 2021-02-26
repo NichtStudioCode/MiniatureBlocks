@@ -5,7 +5,7 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType.NORMAL
 import de.studiocode.miniatureblocks.miniature.data.types.NormalMiniatureDataType
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
+import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.ArmorStand

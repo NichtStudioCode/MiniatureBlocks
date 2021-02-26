@@ -3,14 +3,14 @@ package de.studiocode.miniatureblocks.menu
 import de.studiocode.invui.item.impl.SimpleItem
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
+import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 
 class MiniaturesMenu(player: Player) : SelectMiniatureMenu(player, { model, obtainable -> TakeMiniatureItem(model, obtainable) }) {
     
-    private class TakeMiniatureItem(val customModel: MainModelData.CustomModel, private val obtainable: Boolean = false) : SimpleItem(
+    private class TakeMiniatureItem(val customModel: CustomModel, private val obtainable: Boolean = false) : SimpleItem(
         customModel.createItemBuilder().apply {
             if (obtainable) addLoreLines("§7Left-click to obtain this miniature", "§cRight-click to delete this miniature")
         }) {

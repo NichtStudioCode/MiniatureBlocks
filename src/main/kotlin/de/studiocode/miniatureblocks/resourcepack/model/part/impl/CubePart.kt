@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
+import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
@@ -28,12 +29,12 @@ class CubePart(block: Block) : Part() {
     
     inner class CubeElement : Element(
         doubleArrayOf(0.0, 0.0, 0.0), doubleArrayOf(1.0, 1.0, 1.0),
-        Texture(uv, blockTexture.textureFront),
-        Texture(uv, blockTexture.textureRight),
-        Texture(uv, blockTexture.textureBack),
-        Texture(uv, blockTexture.textureLeft),
-        Texture(uv, blockTexture.textureTop),
-        Texture(uv, blockTexture.textureBottom),
+        Texture(uv, blockTexture.getTexture(NORTH)),
+        Texture(uv, blockTexture.getTexture(EAST)),
+        Texture(uv, blockTexture.getTexture(SOUTH)),
+        Texture(uv, blockTexture.getTexture(WEST)),
+        Texture(uv, blockTexture.getTexture(UP)),
+        Texture(uv, blockTexture.getTexture(DOWN)),
     )
     
 }

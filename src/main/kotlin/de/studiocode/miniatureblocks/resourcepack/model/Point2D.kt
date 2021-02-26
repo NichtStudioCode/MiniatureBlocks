@@ -13,7 +13,7 @@ class Point2D(var x: Double, var y: Double) {
             y = -y
         } else if (x < 0 && y > 0) { // top left
             x = -x
-        } else if (y == 0.0 ) { // on x axis
+        } else if (y == 0.0) { // on x axis
             y = -x
             x = 0.0
         } else if (x == 0.0) { // on y axis

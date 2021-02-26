@@ -18,6 +18,10 @@ object Menus {
         Structure.addGlobalIngredient('2', Icon.LIGHT_CORNER_TOP_RIGHT.item)
         Structure.addGlobalIngredient('3', Icon.LIGHT_CORNER_BOTTOM_LEFT.item)
         Structure.addGlobalIngredient('4', Icon.LIGHT_CORNER_BOTTOM_RIGHT.item)
+        Structure.addGlobalIngredient('5', Icon.LIGHT_VERTICAL_RIGHT.item)
+        Structure.addGlobalIngredient('6', Icon.LIGHT_VERTICAL_LEFT.item)
+        Structure.addGlobalIngredient('7', Icon.LIGHT_HORIZONTAL_UP.item)
+        Structure.addGlobalIngredient('8', Icon.LIGHT_HORIZONTAL_DOWN.item)
     }
     
     class PageBackItem : PageItem(false, {

@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.element.impl
 
+import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
@@ -8,10 +9,10 @@ open class TexturedElement(fromPos: DoubleArray, toPos: DoubleArray, blockTextur
     Element(
         fromPos,
         toPos,
-        Texture(blockTexture.textureFront),
-        Texture(blockTexture.textureRight),
-        Texture(blockTexture.textureBack),
-        Texture(blockTexture.textureLeft),
-        Texture(blockTexture.textureTop),
-        Texture(blockTexture.textureBottom)
+        Texture(blockTexture.getTexture(NORTH)),
+        Texture(blockTexture.getTexture(EAST)),
+        Texture(blockTexture.getTexture(SOUTH)),
+        Texture(blockTexture.getTexture(WEST)),
+        Texture(blockTexture.getTexture(UP)),
+        Texture(blockTexture.getTexture(DOWN))
     )

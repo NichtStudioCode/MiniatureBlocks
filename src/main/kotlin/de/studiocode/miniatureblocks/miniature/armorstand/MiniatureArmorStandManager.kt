@@ -9,7 +9,7 @@ import de.studiocode.miniatureblocks.miniature.data.impl.NormalMiniatureData
 import de.studiocode.miniatureblocks.miniature.item.MiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.MainModelData.CustomModel
+import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
 import de.studiocode.miniatureblocks.util.getTargetEntity
 import de.studiocode.miniatureblocks.util.runTaskTimer
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage

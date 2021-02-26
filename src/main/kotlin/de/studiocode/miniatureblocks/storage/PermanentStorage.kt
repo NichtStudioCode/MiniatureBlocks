@@ -5,9 +5,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
-import de.studiocode.miniatureblocks.storage.serialization.LocationDeserializer
-import de.studiocode.miniatureblocks.storage.serialization.LocationSerializer
-import de.studiocode.miniatureblocks.storage.serialization.UUIDTypeAdapter
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.storage.serialization.*
 import org.bukkit.Location
 import java.io.File
 import java.util.*
@@ -19,6 +18,8 @@ object PermanentStorage {
         .registerTypeAdapter(UUID::class.java, UUIDTypeAdapter)
         .registerTypeAdapter(Location::class.java, LocationSerializer)
         .registerTypeAdapter(Location::class.java, LocationDeserializer)
+        .registerTypeAdapter(BlockTexture::class.java, BlockTextureSerializer)
+        .registerTypeAdapter(BlockTexture::class.java, BlockTextureDeserializer)
         .create()
     
     private val file = File("plugins/MiniatureBlocks/storage.json").apply { parentFile.mkdirs() }
