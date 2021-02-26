@@ -28,17 +28,12 @@ import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.ChunkUnloadEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataHolder
-import org.bukkit.persistence.PersistentDataType.*
 
 fun ArmorStand.getMiniature(): MiniatureArmorStand? = MiniatureBlocks.INSTANCE.miniatureManager.loadedMiniatures[this]
 
 fun PersistentDataHolder.hasMiniatureData() = Miniature.hasTypeId(this)
 
 class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
-    
-    private val oldModelNameKey = NamespacedKey(plugin, "modelName")
-    private val oldModelDataKey = NamespacedKey(plugin, "customModelData")
-    private val oldRotationKey = NamespacedKey(plugin, "rotation")
     
     val loadedMiniatures = HashMap<ArmorStand, MiniatureArmorStand>()
     
@@ -130,8 +125,6 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     fun handleChunkLoad(event: ChunkLoadEvent) = handleChunkLoad(event.chunk)
     
     private fun handleChunkLoad(chunk: Chunk) {
-        updateOldArmorStands(chunk)
-        
         chunk.entities
             .filterValidCoordinates()
             .filterIsInstance<ArmorStand>()
@@ -148,44 +141,6 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
                 }
             }
     }
-    
-    private fun updateOldArmorStands(chunk: Chunk) {
-        val mainModelData = MiniatureBlocks.INSTANCE.resourcePack.mainModelData
-        
-        chunk.entities
-            .filterValidCoordinates()
-            .filterIsInstance<ArmorStand>()
-            .filter { it.hasOldMiniatureData() }
-            .forEach { oldArmorStand ->
-                val dataContainer = oldArmorStand.persistentDataContainer
-                val name = dataContainer.get(oldModelNameKey, STRING)
-                val customModelData = dataContainer.get(oldModelDataKey, INTEGER)
-                
-                if (name != null && customModelData != null) {
-                    val model = mainModelData.getExactModel(name, customModelData)
-                    if (model != null) {
-                        val data = NormalMiniatureData(model)
-                        
-                        // spawn new version of armor stand
-                        val newArmorStand =
-                            NormalMiniatureArmorStand.spawn(oldArmorStand.location, NormalMiniatureItem.create(data))
-                        
-                        // set rotation if exists
-                        val rotation = dataContainer.get(oldRotationKey, FLOAT)
-                        if (rotation != null) newArmorStand.setAutoRotate(rotation)
-                        
-                        // set commands if there are any
-                        for (commandType in MiniatureArmorStand.CommandType.values()) {
-                            val command = dataContainer.get(commandType.namespacedKey, STRING)
-                            if (command != null) newArmorStand.setCommand(commandType, command)
-                        }
-                    }
-                }
-                oldArmorStand.remove()
-            }
-    }
-    
-    private fun ArmorStand.hasOldMiniatureData(): Boolean = this.persistentDataContainer.has(oldModelNameKey, STRING)
     
     @EventHandler
     fun handleChunkUnload(event: ChunkUnloadEvent) {

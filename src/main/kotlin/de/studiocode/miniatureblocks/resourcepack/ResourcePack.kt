@@ -64,7 +64,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         createTextureModelFiles()
         
         if (oldMainModelDataFile.exists() && !mainModelDataFile.exists()) {
-            // server upgraded to this version from version <= 0.5
+            // server upgraded to this version from version >= 0.6 version <= 0.8
             oldMainModelDataFile.copyTo(mainModelDataFile)
         }
         createZip()
