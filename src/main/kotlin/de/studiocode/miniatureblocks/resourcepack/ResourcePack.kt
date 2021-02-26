@@ -38,8 +38,8 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     private val packMcmeta = File(dir, "pack.mcmeta")
     private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
     private val textureModelParent = File(itemModelsDir, "textureitem.json")
-    private val oldMainModelDataFile = File(itemModelsDir, "bedrock.json")
-    private val mainModelDataFile = File(itemModelsDir, "structure_void.json")
+    private val oldMainModelDataFile = File(itemModelsDir, "structure_void.json")
+    private val mainModelDataFile = File(itemModelsDir, "black_stained_glass.json")
     private val textureModelDataFile = File(itemModelsDir, "dandelion.json")
     val textureModelData = TextureItemModelData(textureModelDataFile)
     val mainModelData: MainModelData
