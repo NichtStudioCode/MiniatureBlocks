@@ -19,6 +19,8 @@ class MiniatureBlocks : JavaPlugin(), Listener {
         lateinit var INSTANCE: MiniatureBlocks
     }
     
+    val disableHandlers = ArrayList<() -> Unit>()
+    
     lateinit var pluginFile: File
     lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
@@ -42,6 +44,10 @@ class MiniatureBlocks : JavaPlugin(), Listener {
         Menus.registerGlobalIngredients()
         
         Metrics(this, 8307)
+    }
+    
+    override fun onDisable() {
+        disableHandlers.forEach { it() }
     }
     
 }

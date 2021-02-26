@@ -3,9 +3,15 @@ package de.studiocode.miniatureblocks.util
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_CRAFT_ENTITY_GET_HANDLE_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_CRAFT_SERVER_SYNC_COMMANDS_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_CRAFT_WORLD_ADD_ENTITY_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_CRAFT_WORLD_CREATE_ENTITY_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.CB_PACKAGE_PATH
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_DISPATCHER
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_DISPATCHER_ROOT_NODE
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_ARGUMENTS_FIELD
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_CHILDREN_FIELD
+import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_LITERALS_FIELD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_DEDICATED_SERVER
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD
@@ -25,7 +31,7 @@ import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 object ReflectionUtils {
     
     fun getNMS(): String {
@@ -70,8 +76,22 @@ object ReflectionUtils {
         return field
     }
     
-    fun registerCommand(builder: LiteralArgumentBuilder<*>) {
-        ReflectionRegistry.COMMAND_DISPATCHER_REGISTER_METHOD.invoke(ReflectionRegistry.COMMAND_DISPATCHER, builder)
+    fun registerCommand(builder: LiteralArgumentBuilder<Any>) {
+        COMMAND_DISPATCHER.register(builder)
+    }
+    
+    fun syncCommands() {
+        CB_CRAFT_SERVER_SYNC_COMMANDS_METHOD.invoke(Bukkit.getServer())
+    }
+    
+    fun unregisterCommand(name: String) {
+        val children = COMMAND_NODE_CHILDREN_FIELD.get(COMMAND_DISPATCHER_ROOT_NODE) as MutableMap<String, *>
+        val literals = COMMAND_NODE_LITERALS_FIELD.get(COMMAND_DISPATCHER_ROOT_NODE) as MutableMap<String, *>
+        val arguments = COMMAND_NODE_ARGUMENTS_FIELD.get(COMMAND_DISPATCHER_ROOT_NODE) as MutableMap<String, *>
+        
+        children.remove(name)
+        literals.remove(name)
+        arguments.remove(name)
     }
     
     fun getNMSEntity(entity: Entity): Any {
@@ -82,7 +102,7 @@ object ReflectionUtils {
         return Bukkit.getOnlinePlayers().find { getNMSEntity(it) == entityPlayer }
     }
     
-    fun createPlayerFromEntityPlayer(entityPlayer: Any): Player? {
+    fun createPlayerFromEntityPlayer(entityPlayer: Any): Player {
         return createBukkitEntityFromNMSEntity(entityPlayer) as Player
     }
     
@@ -117,19 +137,13 @@ object ReflectionUtils {
     }
     
     fun addNMSEntityToWorld(world: World, entity: Any): Entity {
-        return CB_CRAFT_WORLD_ADD_ENTITY_METHOD.invoke(
-            world,
-            entity,
-            CreatureSpawnEvent.SpawnReason.CUSTOM,
-            null
-        ) as Entity
+        return CB_CRAFT_WORLD_ADD_ENTITY_METHOD.invoke(world, entity, CreatureSpawnEvent.SpawnReason.CUSTOM, null) as Entity
     }
     
     fun createNMSItemStackCopy(itemStack: ItemStack): Any {
         return CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD.invoke(null, itemStack)
     }
     
-    @Suppress("UNCHECKED_CAST")
     fun setArmorStandArmorItems(entityArmorStand: Any, index: Int, nmsItemStack: Any) {
         (NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD.get(entityArmorStand) as MutableList<Any>)[index] = nmsItemStack
     }
