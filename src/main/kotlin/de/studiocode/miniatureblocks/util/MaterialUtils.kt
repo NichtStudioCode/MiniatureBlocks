@@ -1,30 +1,11 @@
 package de.studiocode.miniatureblocks.util
 
-import de.studiocode.miniatureblocks.resourcepack.model.part.impl.CubePart
-import de.studiocode.miniatureblocks.resourcepack.model.part.impl.SlabPart
-import de.studiocode.miniatureblocks.resourcepack.model.part.impl.StairPart
-import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bukkit.Material
 import org.bukkit.Material.AIR
-import org.bukkit.block.Block
-import org.bukkit.block.data.type.Slab
 
 fun Material.isSeeTrough() = MaterialUtils.seeThroughMaterials.contains(this)
 
 fun Material.isGlass() = MaterialUtils.glassMaterials.contains(this)
-
-fun Block.isSlab(acceptDoubleSlabs: Boolean) = type.name.endsWith("slab", true)
-    && if (acceptDoubleSlabs) true else (blockData as Slab).type != Slab.Type.DOUBLE
-
-fun Block.isStair() = type.name.endsWith("stairs", true)
-
-fun Block.createPart() = when {
-    isStair() -> StairPart(this)
-    isSlab(false) -> SlabPart(this)
-    BlockTexture.has(this.type) -> CubePart(this)
-    
-    else -> throw UnsupportedOperationException("Block type is not supported")
-}
 
 object MaterialUtils {
     

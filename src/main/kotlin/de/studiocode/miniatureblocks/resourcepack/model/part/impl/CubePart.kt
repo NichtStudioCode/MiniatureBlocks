@@ -1,19 +1,19 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
+import de.studiocode.miniatureblocks.build.concurrent.DirectionalBlockData
+import de.studiocode.miniatureblocks.build.concurrent.OrientableBlockData
+import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
-import org.bukkit.block.Block
-import org.bukkit.block.data.Directional
-import org.bukkit.block.data.Orientable
 
-class CubePart(block: Block) : Part() {
+class CubePart(data: ThreadSafeBlockData) : Part() {
     
     private val uv = doubleArrayOf(0.0, 0.0, 1.0, 1.0)
-    private val blockTexture = BlockTexture.of(block.type)
+    private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = listOf(CubeElement())
     override val rotatable = false
@@ -21,9 +21,8 @@ class CubePart(block: Block) : Part() {
     init {
         addRotation(blockTexture.defaultRotation)
         
-        val data = block.blockData
-        if (data is Directional) addRotation(Direction.of(data.facing))
-        else if (data is Orientable) addRotation(Direction.of(data.axis))
+        if (data is DirectionalBlockData) addRotation(Direction.of(data.facing))
+        else if (data is OrientableBlockData) addRotation(Direction.of(data.axis))
         applyRotation()
     }
     
