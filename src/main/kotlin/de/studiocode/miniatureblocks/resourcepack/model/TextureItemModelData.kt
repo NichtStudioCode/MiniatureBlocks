@@ -12,7 +12,7 @@ class TextureItemModelData(file: File) : ModelData(file, Material.DANDELION) {
         val mainObj = super.createJsonObject()
         mainObj.addProperty("parent", "item/generated")
         val texturesObj = JsonObject()
-        texturesObj.addProperty("layer0", "item/dandelion")
+        texturesObj.addProperty("layer0", "block/dandelion")
         mainObj.add("textures", texturesObj)
         return mainObj
     }

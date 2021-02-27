@@ -13,7 +13,7 @@ class Texture {
     
     constructor(uv: DoubleArray, textureLocation: String, rotation: Int = 0) {
         Preconditions.checkArgument(uv.size == 4, "uv size has to be 4")
-        this.uv = uv.map { it - 0.5 }.toDoubleArray() // center
+        this.uv = uv
         this.textureLocation = textureLocation
         this.rotation = rotation
     }
@@ -27,8 +27,8 @@ class Texture {
     fun getUvInMiniature(element: Element, direction: Direction): DoubleArray {
         val uv: DoubleArray
         if (this.uv == null) {
-            val fromPos = element.fromPos
-            val toPos = element.toPos
+            val fromPos = element.fromPos.map { it - 0.5 }
+            val toPos = element.toPos.map { it - 0.5 }
             
             val axisHor: Int // horizontal axis
             val axisVert: Int // vertical axis
@@ -60,7 +60,7 @@ class Texture {
             val x = doubleArrayOf(fromPos[axisHor] * nx, toPos[axisHor] * nx).sorted()
             val y = doubleArrayOf(fromPos[axisVert] * ny, toPos[axisVert] * ny).sorted()
             
-            uv = doubleArrayOf(x[0], y[0], x[1], y[1])
+            uv = doubleArrayOf(x[0], y[0], x[1], y[1]).map { it + 0.5 }.toDoubleArray()
         } else uv = this.uv
         
         return normalizeUv(uv)
@@ -68,10 +68,10 @@ class Texture {
     
     private fun normalizeUv(uv: DoubleArray): DoubleArray {
         val normalizedUv = DoubleArray(4)
-        normalizedUv[0] = (uv[0] + 0.5) * 16
-        normalizedUv[1] = (uv[1] + 0.5) * 16
-        normalizedUv[2] = (uv[2] + 0.5) * 16
-        normalizedUv[3] = (uv[3] + 0.5) * 16
+        normalizedUv[0] = uv[0] * 16
+        normalizedUv[1] = uv[1] * 16
+        normalizedUv[2] = uv[2] * 16
+        normalizedUv[3] = uv[3] * 16
         return normalizedUv
     }
     

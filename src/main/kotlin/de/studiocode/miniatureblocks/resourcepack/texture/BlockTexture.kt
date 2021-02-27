@@ -24,6 +24,7 @@ class BlockTexture {
                 textureRight: String, textureLeft: String, defaultRotation: Direction = NORTH, prependBlock: Boolean = true) {
         
         this.material = findMaterialByName(material)
+        if (this.material == null) println("Couldn't find a material for $material")
         this.defaultRotation = defaultRotation
         
         val textureUp = (if (prependBlock) "block/" else "") + textureTop
@@ -95,6 +96,7 @@ class BlockTexture {
     companion object {
         
         private val blockTextures: EnumMap<Material, BlockTexture> = EnumMap(Material::class.java)
+        
         @Suppress("ReplaceWithEnumMap")
         private val textureOverrides = PermanentStorage.retrieve(HashMap<Material, BlockTexture>(), "textureOverrides")
         
@@ -533,7 +535,59 @@ class BlockTexture {
                 BlockTexture("SPRUCE_STAIRS", "spruce_planks"),
                 BlockTexture("STONE_BRICK_STAIRS", "stone_bricks"),
                 BlockTexture("STONE_STAIRS", "stone"),
-                BlockTexture("WARPED_STAIRS", "warped_planks"))
+                BlockTexture("WARPED_STAIRS", "warped_planks"),
+                BlockTexture("OAK_SAPLING"),
+                BlockTexture("SPRUCE_SAPLING"),
+                BlockTexture("BIRCH_SAPLING"),
+                BlockTexture("JUNGLE_SAPLING"),
+                BlockTexture("ACACIA_SAPLING"),
+                BlockTexture("DARK_OAK_SAPLING"),
+                BlockTexture("GRASS", "modded/grass"),
+                BlockTexture("FERN", "modded/fern"),
+                BlockTexture("DEAD_BUSH"),
+                BlockTexture("SEAGRASS"),
+                BlockTexture("DANDELION"),
+                BlockTexture("POPPY"),
+                BlockTexture("BLUE_ORCHID"),
+                BlockTexture("ALLIUM"),
+                BlockTexture("AZURE_BLUET"),
+                BlockTexture("RED_TULIP"),
+                BlockTexture("ORANGE_TULIP"),
+                BlockTexture("WHITE_TULIP"),
+                BlockTexture("OXEYE_DAISY"),
+                BlockTexture("CORNFLOWER"),
+                BlockTexture("LILY_OF_THE_VALLEY"),
+                BlockTexture("WITHER_ROSE"),
+                BlockTexture("CRIMSON_FUNGUS"),
+                BlockTexture("WARPED_FUNGUS"),
+                BlockTexture("BROWN_MUSHROOM"),
+                BlockTexture("RED_MUSHROOM"),
+                BlockTexture("CRIMSON_ROOTS"),
+                BlockTexture("WARPED_ROOTS"),
+                BlockTexture("NETHER_SPROUTS"),
+                BlockTexture("TUBE_CORAL"),
+                BlockTexture("BRAIN_CORAL"),
+                BlockTexture("BUBBLE_CORAL"),
+                BlockTexture("FIRE_CORAL"),
+                BlockTexture("TUBE_CORAL_FAN"),
+                BlockTexture("BRAIN_CORAL_FAN"),
+                BlockTexture("BUBBLE_CORAL_FAN"),
+                BlockTexture("FIRE_CORAL_FAN"),
+                BlockTexture("DEAD_TUBE_CORAL"),
+                BlockTexture("DEAD_BRAIN_CORAL"),
+                BlockTexture("DEAD_BUBBLE_CORAL"),
+                BlockTexture("DEAD_FIRE_CORAL"),
+                BlockTexture("DEAD_TUBE_CORAL_FAN"),
+                BlockTexture("DEAD_BRAIN_CORAL_FAN"),
+                BlockTexture("DEAD_BUBBLE_CORAL_FAN"),
+                BlockTexture("DEAD_FIRE_CORAL_FAN"),
+                BlockTexture("ACACIA_LEAVES", "modded/acacia_leaves"),
+                BlockTexture("BIRCH_LEAVES", "modded/birch_leaves"),
+                BlockTexture("DARK_OAK_LEAVES", "modded/dark_oak_leaves"),
+                BlockTexture("JUNGLE_LEAVES", "modded/jungle_leaves"),
+                BlockTexture("OAK_LEAVES", "modded/oak_leaves"),
+                BlockTexture("SPRUCE_LEAVES", "modded/spruce_leaves")
+            )
         }
         
     }
