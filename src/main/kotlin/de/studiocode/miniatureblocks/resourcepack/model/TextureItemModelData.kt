@@ -23,7 +23,7 @@ class TextureItemModelData(file: File) : ModelData(file, Material.DANDELION) {
     }
     
     fun getTextureLocation(customModel: CustomModel): String {
-        val modelFile = File(MiniatureBlocks.INSTANCE.resourcePack.modelsDir,  customModel.model + ".json")
+        val modelFile = File(MiniatureBlocks.INSTANCE.resourcePack.modelsDir, customModel.model + ".json")
         return JsonParser()
             .parse(modelFile.readText()).asJsonObject
             .get("textures").asJsonObject

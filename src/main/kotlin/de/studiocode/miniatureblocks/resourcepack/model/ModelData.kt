@@ -24,7 +24,7 @@ open class ModelData(val file: File, val material: Material) {
                         ?.asJsonObject
                         ?.get("custom_model_data")
                         ?.asInt ?: 0
-    
+                    
                     val model = customModelObj.get("model")?.asString ?: ""
                     customModels.add(CustomModel(customModelData, model))
                 }

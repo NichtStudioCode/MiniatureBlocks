@@ -17,7 +17,7 @@ object MaterialUtils {
     
     init {
         glassMaterials.addAll(Material.values().filter { it.name.contains("glass", true) })
-        crossMaterials.addAll(Material.values().filter { it.name.contains("sapling", true)  || it.name.contains("coral", true) })
+        crossMaterials.addAll(Material.values().filter { it.name.contains("sapling", true) || it.name.contains("coral", true) })
         crossMaterials.addAll(listOf(
             GRASS, FERN, DEAD_BUSH, SEAGRASS, DANDELION, POPPY, BLUE_ORCHID, ALLIUM, AZURE_BLUET, RED_TULIP, ORANGE_TULIP,
             WHITE_TULIP, OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY, WITHER_ROSE, CRIMSON_FUNGUS, WARPED_FUNGUS,

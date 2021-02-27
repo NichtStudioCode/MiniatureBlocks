@@ -24,7 +24,7 @@ object RPTaskManager {
                     val buildData = BuildDataCreator(min, max).createData()
                     val modelData = MiniatureModel(buildData).modelDataObj
                     MiniatureBlocks.INSTANCE.resourcePack.addNewModel(name, modelData, forceResourcePack)
-    
+                    
                     runAfter()
                 } catch (e: Exception) {
                     e.printStackTrace()
