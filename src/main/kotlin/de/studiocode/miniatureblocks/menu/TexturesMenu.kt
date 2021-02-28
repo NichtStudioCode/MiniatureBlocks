@@ -175,7 +175,10 @@ class TexturesMenu(val player: Player) {
         
     }
     
-    inner class ChooseTextureMenu : SearchMenu(player, "Choose Texture", false, { it.setItem(0, BackItem()) }) {
+    inner class ChooseTextureMenu : SearchMenu(player, "Choose Texture", false, { gui, main ->
+        if (main) gui.setItem(0, BackItem())
+        gui.background = Icon.BACKGROUND.itemBuilder
+    }) {
         
         var material: Material = Material.STONE
         

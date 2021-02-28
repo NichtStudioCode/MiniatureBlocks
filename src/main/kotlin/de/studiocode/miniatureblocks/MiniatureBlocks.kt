@@ -1,6 +1,5 @@
 package de.studiocode.miniatureblocks
 
-import de.studiocode.invui.InvUI
 import de.studiocode.miniatureblocks.build.BuilderWorld
 import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
@@ -39,7 +38,6 @@ class MiniatureBlocks : JavaPlugin() {
         
         server.pluginManager.registerEvents(builderWorld, this)
         
-        InvUI.getInstance().plugin = this
         Menus.registerGlobalIngredients()
         
         Metrics(this, 8307)

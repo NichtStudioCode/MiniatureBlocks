@@ -18,7 +18,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.scheduler.BukkitTask
 
-abstract class SearchMenu(val player: Player, private val title: String, refreshItem: Boolean, modifier: (GUI) -> Unit = {}) {
+abstract class SearchMenu(val player: Player, private val title: String, refreshItem: Boolean, modifier: (GUI, Boolean) -> Unit = { _, _ -> }) {
     
     private val listGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 6)
         .setStructure("" +
@@ -29,21 +29,20 @@ abstract class SearchMenu(val player: Player, private val title: String, refresh
             "| x x x x x x x |" +
             "3 - - < - > - - 4")
         .addIngredient('s', SearchItem(true))
-        .addIngredient('r', RefreshItem())
         .build() as SimplePagedItemsGUI)
         .apply { if (refreshItem) setItem(46, RefreshItem()) }
-        .also(modifier)
+        .also { modifier(it, true) }
     
     private val previewGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 4)
         .setStructure("" +
             "x x x x x x x x x" +
             "x x x x x x x x x" +
             "x x x x x x x x x" +
-            "# r # < # > # # s")
+            "# # # < # > # # s")
         .addIngredient('s', SearchItem(false))
-        .addIngredient('r', RefreshItem())
         .build() as SimplePagedItemsGUI)
         .apply { if (refreshItem) setItem(28, RefreshItem()) }
+        .also { modifier(it, false) }
     
     private val searchGUI = SimpleGUI(3, 1)
         .apply {
