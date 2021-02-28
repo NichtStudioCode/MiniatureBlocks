@@ -1,7 +1,9 @@
 package de.studiocode.miniatureblocks.util
 
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
+import com.google.gson.reflect.TypeToken
 import java.io.File
 
 fun JsonElement.writeToFile(file: File) =
@@ -38,4 +40,9 @@ fun JsonArray.getAllStrings(): List<String> {
     val strings = ArrayList<String>()
     forEach { if (it.isString()) strings.add(it.asString) }
     return strings
+}
+
+inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
+    if (jsonElement == null) return null
+    return fromJson(jsonElement, object : TypeToken<T>() {}.type)
 }
