@@ -9,11 +9,10 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandMan
 import de.studiocode.miniatureblocks.region.RegionManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bstats.bukkit.Metrics
-import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-class MiniatureBlocks : JavaPlugin(), Listener {
+class MiniatureBlocks : JavaPlugin() {
     
     companion object {
         lateinit var INSTANCE: MiniatureBlocks

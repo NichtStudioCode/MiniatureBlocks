@@ -27,8 +27,8 @@ class Texture {
     fun getUvInMiniature(element: Element, direction: Direction): DoubleArray {
         val uv: DoubleArray
         if (this.uv == null) {
-            val fromPos = element.fromPos.map { it - 0.5 }
-            val toPos = element.toPos.map { it - 0.5 }
+            val fromPos = element.fromPos.toDoubleArray().map { it - 0.5 }
+            val toPos = element.toPos.toDoubleArray().map { it - 0.5 }
             
             val axisHor: Int // horizontal axis
             val axisVert: Int // vertical axis

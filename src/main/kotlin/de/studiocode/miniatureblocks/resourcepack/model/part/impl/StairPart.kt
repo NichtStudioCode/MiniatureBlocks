@@ -7,6 +7,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.impl.SlabElement
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.block.data.type.Stairs.Shape.*
 
 class StairPart(data: StairBlockData) : Part() {
@@ -47,15 +48,15 @@ class StairPart(data: StairBlockData) : Part() {
     }
     
     private fun createStraightStairElement(): Element {
-        val fromPos = doubleArrayOf(0.0, 0.5, 0.0)
-        val toPos = doubleArrayOf(1.0, 1.0, 0.5)
+        val fromPos = Point3D(0.0, 0.5, 0.0)
+        val toPos = Point3D(1.0, 1.0, 0.5)
         
         return TexturedElement(fromPos, toPos, blockTexture)
     }
     
     private fun createOuterStairElement(): Element {
-        val fromPos = doubleArrayOf(0.0, 0.5, 0.0)
-        val toPos = doubleArrayOf(0.5, 1.0, 0.5)
+        val fromPos = Point3D(0.0, 0.5, 0.0)
+        val toPos = Point3D(0.5, 1.0, 0.5)
         
         return TexturedElement(fromPos, toPos, blockTexture)
     }

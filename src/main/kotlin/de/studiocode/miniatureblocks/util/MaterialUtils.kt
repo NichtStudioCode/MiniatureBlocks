@@ -29,6 +29,7 @@ object MaterialUtils {
         seeThroughMaterials.addAll(crossMaterials)
         seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("slab", true) })
         seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("stairs", true) })
+        seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("trapdoor", true) })
     }
     
     

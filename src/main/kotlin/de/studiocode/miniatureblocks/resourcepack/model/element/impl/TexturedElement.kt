@@ -4,8 +4,9 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.point.Point3D
 
-open class TexturedElement(fromPos: DoubleArray, toPos: DoubleArray, blockTexture: BlockTexture) :
+open class TexturedElement(fromPos: Point3D, toPos: Point3D, blockTexture: BlockTexture) :
     Element(
         fromPos,
         toPos,

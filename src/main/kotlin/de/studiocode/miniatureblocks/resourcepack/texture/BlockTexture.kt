@@ -586,8 +586,16 @@ class BlockTexture {
                 BlockTexture("DARK_OAK_LEAVES", "modded/dark_oak_leaves"),
                 BlockTexture("JUNGLE_LEAVES", "modded/jungle_leaves"),
                 BlockTexture("OAK_LEAVES", "modded/oak_leaves"),
-                BlockTexture("SPRUCE_LEAVES", "modded/spruce_leaves")
-            )
+                BlockTexture("SPRUCE_LEAVES", "modded/spruce_leaves"),
+                BlockTexture("OAK_TRAPDOOR"),
+                BlockTexture("SPRUCE_TRAPDOOR"),
+                BlockTexture("BIRCH_TRAPDOOR"),
+                BlockTexture("JUNGLE_TRAPDOOR"),
+                BlockTexture("ACACIA_TRAPDOOR"),
+                BlockTexture("DARK_OAK_TRAPDOOR"),
+                BlockTexture("CRIMSON_TRAPDOOR"),
+                BlockTexture("WARPED_TRAPDOOR"),
+                BlockTexture("IRON_TRAPDOOR"))
         }
         
     }

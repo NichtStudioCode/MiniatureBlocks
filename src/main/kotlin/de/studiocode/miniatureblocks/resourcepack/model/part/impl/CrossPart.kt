@@ -5,6 +5,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Axis
 
 class CrossPart(data: ThreadSafeBlockData) : Part() {
@@ -15,7 +16,7 @@ class CrossPart(data: ThreadSafeBlockData) : Part() {
     override val rotatable = false
     
     private inner class CrossElement1 :
-        Element(doubleArrayOf(0.078125, 0.0, 0.0), doubleArrayOf(1.328125, 1.0, 0.0), texture) {
+        Element(Point3D(0.078125, 0.0, 0.0), Point3D(1.328125, 1.0, 0.0), texture) {
         
         init {
             setRotation(-45f, Axis.Y, 0.0, 0.0, 0.0)
@@ -23,7 +24,7 @@ class CrossPart(data: ThreadSafeBlockData) : Part() {
     }
     
     private inner class CrossElement2 :
-        Element(doubleArrayOf(-0.328125, 0.0, 0.0), doubleArrayOf(0.921875, 1.0, 0.0), texture) {
+        Element(Point3D(-0.328125, 0.0, 0.0), Point3D(0.921875, 1.0, 0.0), texture) {
         
         init {
             setRotation(45f, Axis.Y, 1.0, 0.0, 0.0)

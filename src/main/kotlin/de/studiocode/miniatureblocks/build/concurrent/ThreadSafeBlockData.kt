@@ -8,6 +8,7 @@ import org.bukkit.block.data.Orientable
 import org.bukkit.block.data.type.Slab
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Stairs
+import org.bukkit.block.data.type.TrapDoor
 
 open class ThreadSafeBlockData(val material: Material)
 
@@ -28,10 +29,16 @@ class StairBlockData(material: Material, blockData: Stairs) : DirectionalBlockDa
     val shape = blockData.shape
 }
 
+class TrapdoorBlockData(material: Material, blockData: TrapDoor) : DirectionalBlockData(material, blockData) {
+    val top = blockData.half == Half.TOP
+    val open = blockData.isOpen
+}
+
 fun BlockData.toThreadSafeBlockData(material: Material) =
     when (this) {
         is Stairs -> StairBlockData(material, this)
         is Slab -> SlabBlockData(material, this)
+        is TrapDoor -> TrapdoorBlockData(material, this)
         is Directional -> DirectionalBlockData(material, this)
         is Orientable -> OrientableBlockData(material, this)
         else -> ThreadSafeBlockData(material)

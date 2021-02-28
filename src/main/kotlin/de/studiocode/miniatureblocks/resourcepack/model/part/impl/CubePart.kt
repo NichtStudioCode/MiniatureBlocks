@@ -9,6 +9,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.point.Point3D
 
 class CubePart(data: ThreadSafeBlockData) : Part() {
     
@@ -27,7 +28,7 @@ class CubePart(data: ThreadSafeBlockData) : Part() {
     }
     
     inner class CubeElement : Element(
-        doubleArrayOf(0.0, 0.0, 0.0), doubleArrayOf(1.0, 1.0, 1.0),
+        Point3D(0.0, 0.0, 0.0), Point3D(1.0, 1.0, 1.0),
         Texture(uv, blockTexture.getTexture(NORTH)),
         Texture(uv, blockTexture.getTexture(EAST)),
         Texture(uv, blockTexture.getTexture(SOUTH)),

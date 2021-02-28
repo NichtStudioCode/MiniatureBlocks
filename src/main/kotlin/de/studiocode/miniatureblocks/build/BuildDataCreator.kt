@@ -9,9 +9,9 @@ import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.isGlass
 import de.studiocode.miniatureblocks.util.isSeeTrough
+import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.World
 import java.util.concurrent.*
 
 class BuildDataCreator(min: Location, max: Location) {
@@ -110,7 +110,7 @@ class BuildDataCreator(min: Location, max: Location) {
                                 val x = point.x - minX
                                 val y = point.y - minY
                                 val z = point.z - minZ
-                                this.data[BuildBlockData(x, y, z, blockedSides)] = part
+                                this.data[BuildBlockData(x.toInt(), y.toInt(), z.toInt(), blockedSides)] = part
                             }
                         }
                     }
@@ -139,41 +139,9 @@ class BuildDataCreator(min: Location, max: Location) {
     }
     
     private fun isInRange(point: Point3D): Boolean {
-        return point.x in minX..maxX
-            && point.y in minY..maxY
-            && point.z in minZ..maxZ
-    }
-    
-    class Point3D(val x: Int, val y: Int, val z: Int) {
-        
-        fun getBlock(world: World) = world.getBlockAt(x, y, z)
-        
-        fun advance(direction: Direction, step: Int): Point3D {
-            return when (direction) {
-                Direction.NORTH -> Point3D(x, y, z - step)
-                Direction.EAST -> Point3D(x + step, y, z)
-                Direction.SOUTH -> Point3D(x, y, z + step)
-                Direction.WEST -> Point3D(x - step, y, z)
-                Direction.UP -> Point3D(x, y + step, z)
-                Direction.DOWN -> Point3D(x, y - step, z)
-            }
-        }
-        
-        override fun toString(): String {
-            return "Point3D($x | $y | $z)"
-        }
-        
-        override fun equals(other: Any?): Boolean {
-            return if (other is Point3D) x == other.x && y == other.y && z == other.z else this === other
-        }
-        
-        override fun hashCode(): Int {
-            var result = 3
-            result = 31 * result + x xor (x ushr 32)
-            result = 31 * result + y xor (y ushr 32)
-            result = 31 * result + z xor (z ushr 32)
-            return result
-        }
+        return point.x.toInt() in minX..maxX
+            && point.y.toInt() in minY..maxY
+            && point.z.toInt() in minZ..maxZ
     }
     
 }

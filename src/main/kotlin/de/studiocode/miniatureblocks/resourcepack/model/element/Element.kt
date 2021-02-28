@@ -2,14 +2,14 @@ package de.studiocode.miniatureblocks.resourcepack.model.element
 
 import com.google.common.base.Preconditions
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.Point2D
+import de.studiocode.miniatureblocks.util.point.Point3D
 import de.studiocode.miniatureblocks.util.shift
 import org.bukkit.Axis
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg textures: Texture) {
+open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Texture) {
     
     private var rotation: Float = 0f
     private var rotationAxis: Axis = Axis.Y
@@ -18,8 +18,6 @@ open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg text
     val textures: EnumMap<Direction, Texture> = EnumMap(Direction::class.java)
     
     init {
-        Preconditions.checkArgument(fromPos.size == 3, "fromPos size has to be 3")
-        Preconditions.checkArgument(toPos.size == 3, "toPos size has to be 3")
         Preconditions.checkArgument(textures.size == 6 || textures.size == 1, "textures size has to be 6 or 1")
         
         if (textures.size == 6) {
@@ -45,18 +43,18 @@ open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg text
         val fromPos = this.fromPos.mapToOrigin(origin)
         val toPos = this.toPos.mapToOrigin(origin)
         
-        val start = Point2D(fromPos[2], fromPos[0])
-        val end = Point2D(toPos[2], toPos[0])
+        val start = fromPos.to2D(Axis.Y)
+        val end = toPos.to2D(Axis.Y)
         
         repeat(rotation) {
             start.rotateClockwise()
             end.rotateClockwise()
         }
         
-        fromPos[2] = min(start.x, end.x)
-        fromPos[0] = min(start.y, end.y)
-        toPos[2] = max(start.x, end.x)
-        toPos[0] = max(start.y, end.y)
+        fromPos.z = min(start.x, end.x)
+        fromPos.x = min(start.y, end.y)
+        toPos.z = max(start.x, end.x)
+        toPos.x = max(start.y, end.y)
         
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
@@ -67,30 +65,52 @@ open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg text
         val fromPos = this.fromPos.mapToOrigin(origin)
         val toPos = this.toPos.mapToOrigin(origin)
         
-        val start = Point2D(fromPos[2], fromPos[1])
-        val end = Point2D(toPos[2], toPos[1])
+        val start = fromPos.to2D(Axis.X)
+        val end = toPos.to2D(Axis.X)
         
         repeat(rotation) {
             start.rotateClockwise()
             end.rotateClockwise()
         }
         
-        fromPos[2] = min(start.x, end.x)
-        fromPos[1] = min(start.y, end.y)
-        toPos[2] = max(start.x, end.x)
-        toPos[1] = max(start.y, end.y)
+        fromPos.z = min(start.x, end.x)
+        fromPos.y = min(start.y, end.y)
+        toPos.z = max(start.x, end.x)
+        toPos.y = max(start.y, end.y)
         
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
     }
     
-    private fun DoubleArray.mapToOrigin(origin: DoubleArray) =
-        doubleArrayOf(get(0) - origin[0], get(1) - origin[1], get(2) - origin[2])
+    fun rotatePosAroundZAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
+        if (rotation < 1) return
+        val fromPos = this.fromPos.mapToOrigin(origin)
+        val toPos = this.toPos.mapToOrigin(origin)
+        
+        val start = fromPos.to2D(Axis.Z)
+        val end = fromPos.to2D(Axis.Z)
+        
+        repeat(rotation) {
+            start.rotateClockwise()
+            end.rotateClockwise()
+        }
+        
+        fromPos.x = min(start.x, end.x)
+        fromPos.y = min(start.y, end.y)
+        toPos.x = max(start.x, end.x)
+        toPos.y = max(start.y, end.y)
+        
+        this.fromPos = fromPos.mapFromOrigin(origin)
+        this.toPos = toPos.mapFromOrigin(origin)
+    }
     
-    private fun DoubleArray.mapFromOrigin(origin: DoubleArray) =
-        doubleArrayOf(get(0) + origin[0], get(1) + origin[1], get(2) + origin[2])
+    private fun Point3D.mapToOrigin(origin: DoubleArray) =
+        Point3D(x - origin[0], y - origin[1], z - origin[2])
     
-    open fun rotateTexturesAroundYAxis(rotation: Int) {
+    private fun Point3D.mapFromOrigin(origin: DoubleArray) =
+        Point3D(x + origin[0], y + origin[1], z + origin[2])
+    
+    fun rotateTexturesAroundYAxis(rotation: Int) {
         if (rotation < 1) return
         
         // shift all sides that aren't on the Y axis
@@ -101,7 +121,7 @@ open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg text
         textures[Direction.DOWN]!!.rotation -= rotation // down texture rotates in the opposite direction
     }
     
-    open fun rotateTexturesAroundXAxis(rotation: Int) {
+    fun rotateTexturesAroundXAxis(rotation: Int) {
         if (rotation < 1) return
         
         // rotate current front texture -180° (I don't understand why but that's right I guess)
@@ -133,11 +153,11 @@ open class Element(var fromPos: DoubleArray, var toPos: DoubleArray, vararg text
     
     fun getToPosInMiniature(x: Int, y: Int, z: Int, stepSize: Double) = getPosInMiniature(toPos, x, y, z, stepSize)
     
-    private fun getPosInMiniature(pos: DoubleArray, x: Int, y: Int, z: Int, stepSize: Double): DoubleArray {
+    private fun getPosInMiniature(pos: Point3D, x: Int, y: Int, z: Int, stepSize: Double): DoubleArray {
         val posInMiniature = DoubleArray(3)
-        posInMiniature[0] = pos[0] * stepSize + x * stepSize
-        posInMiniature[1] = pos[1] * stepSize + y * stepSize
-        posInMiniature[2] = pos[2] * stepSize + z * stepSize
+        posInMiniature[0] = pos.x * stepSize + x * stepSize
+        posInMiniature[1] = pos.y * stepSize + y * stepSize
+        posInMiniature[2] = pos.z * stepSize + z * stepSize
         return posInMiniature
     }
     
