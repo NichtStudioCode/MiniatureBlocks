@@ -32,6 +32,7 @@ class MiniatureModel(buildData: BuildData) {
             .flatMap { it.elements }
             .flatMap { it.textures.values }
             .map { it.textureLocation }
+            .filter { it.isNotBlank() }
             .forEach {
                 if (!textureMap.containsKey(it)) {
                     textureMap[it] = id
@@ -75,13 +76,14 @@ class MiniatureModel(buildData: BuildData) {
                     if (!blockData.isSideVisible(direction)) continue
                     
                     val texture = element.textures[direction]!!
-                    
-                    val face = JsonObject()
-                    face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
-                    face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
-                    face.addProperty("rotation", texture.rotation * 90)
-                    
-                    faces.add(direction.modelDataName, face)
+                    if (texture.textureLocation != "") {
+                        val face = JsonObject()
+                        face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
+                        face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
+                        face.addProperty("rotation", texture.rotation * 90)
+    
+                        faces.add(direction.modelDataName, face)
+                    }
                 }
                 elementObj.add("faces", faces)
                 

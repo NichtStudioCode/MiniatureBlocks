@@ -7,12 +7,12 @@ import org.bukkit.Axis
 
 class Texture {
     
-    private val uv: DoubleArray?
+    private val uv: UV?
     val textureLocation: String
     var rotation by RotationValue()
     
-    constructor(uv: DoubleArray, textureLocation: String, rotation: Int = 0) {
-        Preconditions.checkArgument(uv.size == 4, "uv size has to be 4")
+    constructor(uv: UV, textureLocation: String, rotation: Int = 0) {
+        Preconditions.checkArgument(rotation > -4 && rotation < 4, "Illegal rotation")
         this.uv = uv
         this.textureLocation = textureLocation
         this.rotation = rotation
@@ -61,7 +61,7 @@ class Texture {
             val y = doubleArrayOf(fromPos[axisVert] * ny, toPos[axisVert] * ny).sorted()
             
             uv = doubleArrayOf(x[0], y[0], x[1], y[1]).map { it + 0.5 }.toDoubleArray()
-        } else uv = this.uv
+        } else uv = this.uv.doubleArray
         
         return normalizeUv(uv)
     }
@@ -73,6 +73,29 @@ class Texture {
         normalizedUv[2] = uv[2] * 16
         normalizedUv[3] = uv[3] * 16
         return normalizedUv
+    }
+    
+    class UV(var fromX: Double, var fromY: Double, var toX: Double, var toY: Double) : Cloneable {
+    
+        val doubleArray: DoubleArray
+        get() = doubleArrayOf(fromX, fromY, toX, toY)
+        
+        fun flip(x: Boolean) {
+            if (x) {
+                val temp = fromX
+                fromX = toX
+                toX = temp
+            } else {
+                val temp = fromY
+                fromY = toY
+                toY = temp
+            }
+        }
+    
+        public override fun clone(): UV {
+            return super.clone() as UV
+        }
+        
     }
     
 }

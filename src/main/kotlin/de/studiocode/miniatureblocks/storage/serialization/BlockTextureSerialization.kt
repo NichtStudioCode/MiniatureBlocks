@@ -10,7 +10,7 @@ import java.lang.reflect.Type
 object BlockTextureSerializer : JsonSerializer<BlockTexture> {
     
     override fun serialize(src: BlockTexture, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        return if (src.defaultRotation == Direction.NORTH) {
+        return if (src.defaultRotation == Direction.NORTH && src.textures.size == 6) {
             if (src.textures.all { "block/" + (src.material?.name ?: "").toLowerCase() == it }) {
                 serializeToDefault(src)
             } else if (src.textures.isNotEmpty() && src.textures.all { it == src.textures[0] }) {

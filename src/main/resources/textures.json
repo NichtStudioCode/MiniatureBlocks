@@ -1605,6 +1605,69 @@
         "block/sandstone_top",
         "block/sandstone_bottom"
       ]
+    },
+    {
+      "material": "IRON_DOOR",
+      "textures": [
+        "block/iron_door_bottom",
+        "block/iron_door_top"
+      ]
+    },
+    {
+      "material": "OAK_DOOR",
+      "textures": [
+        "block/oak_door_bottom",
+        "block/oak_door_top"
+      ]
+    },
+    {
+      "material": "SPRUCE_DOOR",
+      "textures": [
+        "block/spruce_door_bottom",
+        "block/spruce_door_top"
+      ]
+    },
+    {
+      "material": "BIRCH_DOOR",
+      "textures": [
+        "block/birch_door_bottom",
+        "block/birch_door_top"
+      ]
+    },
+    {
+      "material": "JUNGLE_DOOR",
+      "textures": [
+        "block/jungle_door_bottom",
+        "block/jungle_door_top"
+      ]
+    },
+    {
+      "material": "ACACIA_DOOR",
+      "textures": [
+        "block/acacia_door_bottom",
+        "block/acacia_door_top"
+      ]
+    },
+    {
+      "material": "DARK_OAK_DOOR",
+      "textures": [
+        "block/dark_oak_door_bottom",
+        "block/dark_oak_door_top"
+      ]
+    },
+    {
+      "material": "DARK_OAK_DOOR",
+      "textures": [
+        "block/crimson_door_bottom",
+        "block/crimson_door_top"
+      ]
+    },
+    {
+      "material": "DARK_OAK_DOOR",
+      "textures": [
+        "block/warped_door_bottom",
+        "block/warped_door_top"
+      ]
     }
   ]
 }

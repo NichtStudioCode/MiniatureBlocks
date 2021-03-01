@@ -1,7 +1,10 @@
 package de.studiocode.miniatureblocks.util
 
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bukkit.Material
 import org.bukkit.Material.AIR
+
+fun Material.hasSixTextures() = BlockTexture.has(this) && BlockTexture.of(this).textures.size == 6
 
 fun Material.isSeeTrough() = MaterialUtils.seeThroughMaterials.contains(this)
 
@@ -27,9 +30,13 @@ object MaterialUtils {
         seeThroughMaterials.add(AIR)
         seeThroughMaterials.addAll(glassMaterials)
         seeThroughMaterials.addAll(crossMaterials)
-        seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("slab", true) })
-        seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("stairs", true) })
-        seeThroughMaterials.addAll(Material.values().filter { it.name.endsWith("trapdoor", true) })
+        seeThroughMaterials.addAll(Material.values().filter {
+            val name = it.name
+            name.endsWith("SLAB")
+                || name.endsWith("STAIRS")
+                || name.endsWith("TRAPDOOR")
+                || name.endsWith("DOOR")
+        })
     }
     
     private fun listOfMaterials(vararg names: String) =

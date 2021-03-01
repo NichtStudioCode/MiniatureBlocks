@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
+import com.google.common.base.Preconditions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -20,11 +21,15 @@ class BlockTexture(materialName: String, val textures: Array<String>, val defaul
     
     constructor(material: String) : this(material, Array<String>(6) { "block/${material.toLowerCase()}" })
     
-    fun getTexture(direction: Direction) = textures[direction.ordinal]
+    fun getTexture(direction: Direction): String {
+        Preconditions.checkState(textures.size == 6,
+            "This block does not have 6 textures, indicating that direction shouldn't be used to retrieve them.")
+        return textures[direction.ordinal]
+    }
     
-    fun copyOfChange(directions: List<Direction>, textureName: String): BlockTexture {
+    fun copyOfChange(affectedIndices: List<Int>, textureName: String): BlockTexture {
         val texturesCopy = textures.copyOf()
-        directions.forEach { direction -> texturesCopy[direction.ordinal] = textureName }
+        affectedIndices.forEach { index -> texturesCopy[index] = textureName }
         return BlockTexture(material?.name ?: "", texturesCopy, defaultRotation)
     }
     

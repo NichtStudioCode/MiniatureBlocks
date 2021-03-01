@@ -2,6 +2,7 @@ package de.studiocode.miniatureblocks.menu
 
 import de.studiocode.invui.gui.builder.GUIBuilder
 import de.studiocode.invui.gui.builder.GUIType
+import de.studiocode.invui.gui.impl.SimplePagedItemsGUI
 import de.studiocode.invui.item.Item
 import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.invui.item.impl.BaseItem
@@ -11,9 +12,9 @@ import de.studiocode.invui.resourcepack.Icon
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.hasSixTextures
 import de.studiocode.miniatureblocks.util.searchFor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -25,12 +26,12 @@ import kotlin.collections.HashMap
 
 class TexturesMenu(val player: Player) {
     
+    private var material = Material.STONE
+    private var textureIndices = listOf(0)
+    
     private val materialMenu = MaterialMenu()
     private val directionMenu = DirectionMenu()
     private val texturesMenu = ChooseTextureMenu()
-    
-    private var material = Material.STONE
-    private var directions = listOf(NORTH)
     
     private var currentMenu = 0
     
@@ -60,8 +61,8 @@ class TexturesMenu(val player: Player) {
         directionMenu.openWindow()
     }
     
-    private fun handleDirectionChoose(directions: List<Direction>) {
-        this.directions = directions
+    private fun handleDirectionChoose(indices: List<Int>) {
+        this.textureIndices = indices
         currentMenu = 2
         texturesMenu.openWindow()
     }
@@ -69,7 +70,7 @@ class TexturesMenu(val player: Player) {
     private fun handleTextureChoose(model: CustomModel) {
         currentMenu = 1
         BlockTexture.overrideTextureLocations(material) {
-            it.copyOfChange(directions, MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getTextureLocation(model))
+            it.copyOfChange(textureIndices, MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getTextureLocation(model))
         }
         directionMenu.openWindow()
     }
@@ -109,8 +110,9 @@ class TexturesMenu(val player: Player) {
     inner class DirectionMenu {
         
         private val directionItems = ArrayList<Item>()
+        private var listItems: List<Item> = ArrayList()
         
-        private val gui = GUIBuilder(GUIType.NORMAL, 9, 5)
+        private val cubeGui = GUIBuilder(GUIType.NORMAL, 9, 5)
             .setStructure("" +
                 "b - - - - - - - 2" +
                 "| # # # # e # x |" +
@@ -119,18 +121,38 @@ class TexturesMenu(val player: Player) {
                 "3 - - - - - - - 4")
             .addIngredient('b', BackItem())
             .addIngredient('m', CurrentMaterialItem())
-            .addIngredient('n', DirectionItem(NORTH).also(directionItems::add))
-            .addIngredient('e', DirectionItem(EAST).also(directionItems::add))
-            .addIngredient('s', DirectionItem(SOUTH).also(directionItems::add))
-            .addIngredient('w', DirectionItem(WEST).also(directionItems::add))
-            .addIngredient('u', DirectionItem(UP).also(directionItems::add))
-            .addIngredient('d', DirectionItem(DOWN).also(directionItems::add))
+            .addIngredient('n', TextureItem(0).also(directionItems::add))
+            .addIngredient('e', TextureItem(1).also(directionItems::add))
+            .addIngredient('s', TextureItem(2).also(directionItems::add))
+            .addIngredient('w', TextureItem(3).also(directionItems::add))
+            .addIngredient('u', TextureItem(4).also(directionItems::add))
+            .addIngredient('d', TextureItem(5).also(directionItems::add))
             .addIngredient('*', AllDirectionsItem())
             .addIngredient('x', ClearOverridesItem())
             .build()
         
+        private val miscGui = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 5)
+            .setStructure("" +
+                "b - - - - - - - 2" +
+                "| # # # x x x x |" +
+                "| # m # x x x x |" +
+                "| # # # < c > * |" +
+                "3 - - - - - - - 4")
+            .addIngredient('b', BackItem())
+            .addIngredient('m', CurrentMaterialItem())
+            .addIngredient('*', AllDirectionsItem())
+            .addIngredient('c', ClearOverridesItem())
+            .build() as SimplePagedItemsGUI)
+            .apply { background = Icon.BACKGROUND.itemBuilder }
+        
         fun openWindow() {
-            SimpleWindow(player, "Choose side", gui, true, true).show()
+            if (material.hasSixTextures()) {
+                SimpleWindow(player, "Choose side", cubeGui, true, true).show()
+            } else {
+                listItems = BlockTexture.of(material).textures.indices.map { TextureItem(it) }
+                miscGui.setItems(listItems)
+                SimpleWindow(player, "Choose texture", miscGui, true, true).show()
+            }
         }
         
         inner class CurrentMaterialItem : SupplierItem({
@@ -146,30 +168,30 @@ class TexturesMenu(val player: Player) {
             override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
                 if (clickType == ClickType.LEFT && BlockTexture.hasOverrides(material)) {
                     BlockTexture.removeTextureLocationOverride(material)
-                    directionItems.forEach(Item::notifyWindows)
+                    (directionItems + listItems).forEach(Item::notifyWindows)
                     notifyWindows()
                 }
             }
             
         }
         
-        inner class DirectionItem(private val direction: Direction) : BaseItem() {
+        inner class TextureItem(private val index: Int) : BaseItem() {
             
             override fun getItemBuilder(): ItemBuilder {
-                val textureLocation = BlockTexture.of(material).getTexture(direction)
+                val textureLocation = BlockTexture.of(material).textures[index]
                 val model = MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getModelByTextureLocation(textureLocation)
-                return (model?.createItemBuilder()
-                    ?: Icon.CHECKBOX.itemBuilder).setDisplayName("§7Texture: ${direction.name}")
+                val name = if (material.hasSixTextures()) "§7Texture ${Direction.values()[index].name}" else "§7Texture ${1 + index}"
+                return (model?.createItemBuilder() ?: Icon.CHECKBOX.itemBuilder).setDisplayName(name)
             }
             
             override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
-                if (clickType == ClickType.LEFT) handleDirectionChoose(listOf(direction))
+                if (clickType == ClickType.LEFT) handleDirectionChoose(listOf(index))
             }
         }
         
         inner class AllDirectionsItem : SimpleItem(Icon.HORIZONTAL_DOTS.itemBuilder.setDisplayName("§7All sides")) {
             override fun handleClick(clickType: ClickType?, player: Player?, event: InventoryClickEvent?) {
-                if (clickType == ClickType.LEFT) handleDirectionChoose(Direction.values().toList())
+                if (clickType == ClickType.LEFT) handleDirectionChoose((BlockTexture.of(material).textures.indices).toList())
             }
         }
         

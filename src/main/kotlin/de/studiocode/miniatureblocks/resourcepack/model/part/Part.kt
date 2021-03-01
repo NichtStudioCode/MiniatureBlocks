@@ -1,9 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part
 
-import de.studiocode.miniatureblocks.build.concurrent.SlabBlockData
-import de.studiocode.miniatureblocks.build.concurrent.StairBlockData
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
-import de.studiocode.miniatureblocks.build.concurrent.TrapdoorBlockData
+import de.studiocode.miniatureblocks.build.concurrent.*
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
@@ -73,6 +70,7 @@ abstract class Part {
                 data is StairBlockData -> StairPart(data)
                 data is SlabBlockData -> SlabPart(data)
                 data is TrapdoorBlockData -> TrapdoorPart(data)
+                data is DoorBlockData -> DoorPart(data)
                 data.material.isCrossMaterial() -> CrossPart(data)
                 else -> CubePart(data)
             }

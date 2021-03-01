@@ -10,7 +10,7 @@ import org.bukkit.Axis
 
 class CrossPart(data: ThreadSafeBlockData) : Part() {
     
-    private val texture = Texture(doubleArrayOf(0.0, 0.0, 1.0, 1.0), BlockTexture.of(data.material).textures[0])
+    private val texture = Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), BlockTexture.of(data.material).textures[0])
     
     override val elements = listOf(CrossElement1(), CrossElement2())
     override val rotatable = false

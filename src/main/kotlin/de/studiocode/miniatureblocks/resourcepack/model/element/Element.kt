@@ -124,7 +124,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     fun rotateTexturesAroundXAxis(rotation: Int) {
         if (rotation < 1) return
         
-        // rotate current front texture -180° (I don't understand why but that's right I guess)
+        // rotate current front texture -180°
         textures[Direction.NORTH]!!.rotation -= 2
         
         // shift all sides that aren't on the X axis
@@ -134,7 +134,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         textures[Direction.WEST]!!.rotation += rotation
         textures[Direction.EAST]!!.rotation -= rotation // east texture rotates in the opposite direction
         
-        // rotate new front texture +180° (I don't understand why but that's right I guess)
+        // rotate new front texture +180°
         textures[Direction.NORTH]!!.rotation += 2
     }
     

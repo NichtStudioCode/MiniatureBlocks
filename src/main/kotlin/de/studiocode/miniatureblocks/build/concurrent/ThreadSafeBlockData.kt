@@ -5,6 +5,7 @@ import org.bukkit.block.data.Bisected.Half
 import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.Directional
 import org.bukkit.block.data.Orientable
+import org.bukkit.block.data.type.Door
 import org.bukkit.block.data.type.Slab
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Stairs
@@ -34,11 +35,18 @@ class TrapdoorBlockData(material: Material, blockData: TrapDoor) : DirectionalBl
     val open = blockData.isOpen
 }
 
+class DoorBlockData(material: Material, blockData: Door) : DirectionalBlockData(material, blockData) {
+    val top = blockData.half == Half.TOP
+    val open = blockData.isOpen
+    val hinge = blockData.hinge
+}
+
 fun BlockData.toThreadSafeBlockData(material: Material) =
     when (this) {
         is Stairs -> StairBlockData(material, this)
         is Slab -> SlabBlockData(material, this)
         is TrapDoor -> TrapdoorBlockData(material, this)
+        is Door -> DoorBlockData(material, this)
         is Directional -> DirectionalBlockData(material, this)
         is Orientable -> OrientableBlockData(material, this)
         else -> ThreadSafeBlockData(material)

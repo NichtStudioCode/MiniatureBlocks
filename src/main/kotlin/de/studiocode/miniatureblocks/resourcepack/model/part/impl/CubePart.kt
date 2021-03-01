@@ -13,7 +13,7 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 
 class CubePart(data: ThreadSafeBlockData) : Part() {
     
-    private val uv = doubleArrayOf(0.0, 0.0, 1.0, 1.0)
+    private val uv = Texture.UV(0.0, 0.0, 1.0, 1.0)
     private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = listOf(CubeElement())

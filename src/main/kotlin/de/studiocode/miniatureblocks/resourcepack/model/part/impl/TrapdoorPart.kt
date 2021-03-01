@@ -43,12 +43,12 @@ class TrapdoorPart(data: TrapdoorBlockData) : Part() {
         val toPos = Point3D(1.0, trapdoorHeight, 1.0)
         
         return Element(fromPos, toPos,
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.NORTH)),
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.EAST)),
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.SOUTH)),
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.WEST)),
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, 1.0), blockTexture.getTexture(Direction.UP), 2),
-            Texture(doubleArrayOf(0.0, 0.0, 1.0, 1.0), blockTexture.getTexture(Direction.DOWN), 4)
+            Texture(Texture.UV(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.NORTH)),
+            Texture(Texture.UV(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.EAST)),
+            Texture(Texture.UV(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.SOUTH)),
+            Texture(Texture.UV(0.0, 0.0, 1.0, trapdoorHeight), blockTexture.getTexture(Direction.WEST)),
+            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), blockTexture.getTexture(Direction.UP), 2),
+            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), blockTexture.getTexture(Direction.DOWN), 4)
         )
     }
     
