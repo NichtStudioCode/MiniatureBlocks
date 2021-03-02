@@ -9,26 +9,26 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.block.data.type.Door.Hinge
 
+private const val DOOR_WIDTH = 3.0 / 16.0
+private const val HALF_DOOR_WIDTH = DOOR_WIDTH / 2
+
 class DoorPart(data: DoorBlockData) : Part() {
     
     private val textureLocations = BlockTexture.of(data.material).textures
     private val textureLocation = textureLocations[if (data.top) 1 else 0]
     
-    private val doorWidth = 0.1875
-    private val halfDoorWidth = doorWidth / 2
-    
     private val frontUV = Texture.UV(0.0, 0.0, 1.0, 1.0)
     private val backUV = frontUV.clone()
-    private val rightUV = Texture.UV(0.0, 0.0, doorWidth, 1.0)
+    private val rightUV = Texture.UV(0.0, 0.0, DOOR_WIDTH, 1.0)
     private val leftUV = rightUV.clone()
-    private val topBotUV = Texture.UV(1 - doorWidth, 0.0, 1.0, 1.0)
+    private val topBotUV = Texture.UV(1 - DOOR_WIDTH, 0.0, 1.0, 1.0)
     
     override val elements = ArrayList<Element>()
     override val rotatable = true
     
     init {
         val element = Element(
-            Point3D(0.0, 0.0, 1 - doorWidth), Point3D(1.0, 1.0, 1.0),
+            Point3D(0.0, 0.0, 1 - DOOR_WIDTH), Point3D(1.0, 1.0, 1.0),
             Texture(backUV, textureLocation),
             Texture(rightUV, textureLocation),
             Texture(frontUV, textureLocation),
@@ -51,10 +51,10 @@ class DoorPart(data: DoorBlockData) : Part() {
             element.textures[Direction.DOWN]!!.rotation +=2
             
             if (data.hinge == Hinge.RIGHT) {
-                element.rotatePosAroundYAxis(1, doubleArrayOf(1 - halfDoorWidth, 0.0, 1 - halfDoorWidth))
+                element.rotatePosAroundYAxis(1, doubleArrayOf(1 - HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
                 element.rotateTexturesAroundYAxis(1)
             } else {
-                element.rotatePosAroundYAxis(3, doubleArrayOf(halfDoorWidth, 0.0, 1 - halfDoorWidth))
+                element.rotatePosAroundYAxis(3, doubleArrayOf(HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
                 element.rotateTexturesAroundYAxis(3)
             }
         } else {

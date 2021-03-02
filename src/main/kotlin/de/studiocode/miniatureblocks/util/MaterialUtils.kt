@@ -32,7 +32,8 @@ object MaterialUtils {
         seeThroughMaterials.addAll(crossMaterials)
         seeThroughMaterials.addAll(Material.values().filter {
             val name = it.name
-            name.endsWith("SLAB")
+            name.endsWith("LEAVES")
+                || name.endsWith("SLAB")
                 || name.endsWith("STAIRS")
                 || name.endsWith("TRAPDOOR")
                 || name.endsWith("DOOR")

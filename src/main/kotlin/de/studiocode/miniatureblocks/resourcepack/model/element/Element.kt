@@ -110,6 +110,10 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     private fun Point3D.mapFromOrigin(origin: DoubleArray) =
         Point3D(x + origin[0], y + origin[1], z + origin[2])
     
+    fun addTextureRotation(rotation: Int, vararg directions: Direction) {
+        directions.forEach { textures[it]!!.rotation += rotation }
+    }
+    
     fun rotateTexturesAroundYAxis(rotation: Int) {
         if (rotation < 1) return
         
