@@ -33,13 +33,17 @@ object RPTaskManager {
         }
     }
     
-    fun submitTextureDownloadRequest(player: Player, name: String, url: String) {
+    fun submitTextureDownloadRequest(player: Player, name: String, url: String, frameTime: Int) {
         if (isBusy()) return
         
         if (currentTask?.isDone != false) {
-            currentTask = executorService.submit {
-                MiniatureBlocks.INSTANCE.resourcePack.downloadTexture(name, url)
-                player.sendPrefixedMessage("§7The texture §b$name§7 has been downloaded.")
+            try {
+                currentTask = executorService.submit {
+                    MiniatureBlocks.INSTANCE.resourcePack.downloadTexture(name, url, frameTime)
+                    player.sendPrefixedMessage("§7The texture §b$name§7 has been downloaded.")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -48,9 +52,13 @@ object RPTaskManager {
         if (isBusy()) return
         
         if (currentTask?.isDone != false) {
-            currentTask = executorService.submit {
-                MiniatureBlocks.INSTANCE.resourcePack.deleteTexture(name)
-                player.sendPrefixedMessage("§7The texture §b$name§7 has been deleted successfully.")
+            try {
+                currentTask = executorService.submit {
+                    MiniatureBlocks.INSTANCE.resourcePack.deleteTexture(name)
+                    player.sendPrefixedMessage("§7The texture §b$name§7 has been deleted successfully.")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

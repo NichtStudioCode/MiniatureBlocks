@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks.command.impl
 
 import com.mojang.brigadier.arguments.FloatArgumentType
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import de.studiocode.miniatureblocks.MiniatureBlocks
@@ -84,11 +85,15 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                 .then(literal("add")
                     .then(argument("name", StringArgumentType.string())
                         .then(argument("url", StringArgumentType.greedyString())
-                            .executes { handleAddTextureCommand(it); 0 })))
+                            .executes { handleAddTextureCommand(false, it); 0 })))
+                .then(literal("addanimated")
+                    .then(argument("name", StringArgumentType.string())
+                        .then(argument("frameTime", IntegerArgumentType.integer())
+                            .then(argument("url", StringArgumentType.greedyString())
+                                .executes { handleAddTextureCommand(true, it); 0 }))))
                 .then(literal("remove")
                     .then(argument("name", StringArgumentType.greedyString())
-                        .executes { handleRemoveTextureCommand(it); 0 }))
-            )
+                        .executes { handleRemoveTextureCommand(it); 0 })))
     }
     
     private fun handleGiveMarkerCommand(context: CommandContext<Any>) {
@@ -269,15 +274,16 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
         }
     }
     
-    private fun handleAddTextureCommand(context: CommandContext<Any>) {
+    private fun handleAddTextureCommand(animated: Boolean, context: CommandContext<Any>) {
         try {
             val player = context.getPlayer()
             val name = context.getArgument<String>("name")
             val url = context.getArgument<String>("url")
+            val frameTime = if (animated) context.getArgument("frameTime") else 0
             
             if (name.matches(namePattern)) {
                 if (!RPTaskManager.isBusy()) {
-                    RPTaskManager.submitTextureDownloadRequest(player, name, url)
+                    RPTaskManager.submitTextureDownloadRequest(player, name, url, frameTime)
                 } else player.sendPrefixedMessage("§cMiniatureBlocks is busy, try again later.")
             } else player.sendPrefixedMessage("§cName does not match pattern $namePattern. Only lowercase letters and numbers are allowed!")
         } catch (e: Exception) {

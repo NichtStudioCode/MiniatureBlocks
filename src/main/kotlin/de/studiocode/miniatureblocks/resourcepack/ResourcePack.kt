@@ -80,13 +80,21 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         textureModelData.writeToFile()
     }
     
-    fun downloadTexture(name: String, url: String) {
+    fun downloadTexture(name: String, url: String, frameTime: Int) {
         val path = "block/$name"
-        val file = File(texturesDir, "$path.png")
+        val image = File(texturesDir, "$path.png")
         URL(url).openStream().use { inStream ->
-            file.outputStream().use { outStream ->
+            image.outputStream().use { outStream ->
                 inStream.copyTo(outStream)
             }
+        }
+        if (frameTime > 0) {
+            val mcmFile = File(image.parentFile, image.name + ".mcmeta")
+            mcmFile.writeText(JsonObject().apply { 
+                add("animation", JsonObject().apply { 
+                    addProperty("frametime", frameTime)
+                })
+            }.toString())
         }
         
         addTextureLocation(path)
@@ -99,7 +107,9 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     fun deleteTexture(name: String) {
         val texturePath = "block/$name"
         val image = File(texturesDir, "block/$name.png")
+        val mcmFile = File(image.parentFile, image.name + ".mcmeta")
         if (image.exists()) image.delete()
+        if (mcmFile.exists()) mcmFile.delete()
         
         val modelPath = "item/textureitem/$name"
         val modelFile = File(modelsDir, "$modelPath.json")
