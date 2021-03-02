@@ -63,7 +63,9 @@ object ReflectionUtils {
     }
     
     fun getMethod(clazz: Class<*>, declared: Boolean, methodName: String, vararg args: Class<*>): Method {
-        return if (declared) clazz.getDeclaredMethod(methodName, *args) else clazz.getMethod(methodName, *args)
+        val method = if (declared) clazz.getDeclaredMethod(methodName, *args) else clazz.getMethod(methodName, *args)
+        if (declared) method.isAccessible = true
+        return method
     }
     
     fun getConstructor(clazz: Class<*>, declared: Boolean, vararg args: Class<*>): Constructor<*> {
