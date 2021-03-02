@@ -214,50 +214,6 @@
     "BLACK_CONCRETE_POWDER",
     "SAND",
     "GRAVEL",
-    "OAK_SAPLING",
-    "SPRUCE_SAPLING",
-    "BIRCH_SAPLING",
-    "JUNGLE_SAPLING",
-    "ACACIA_SAPLING",
-    "DARK_OAK_SAPLING",
-    "DEAD_BUSH",
-    "SEAGRASS",
-    "DANDELION",
-    "POPPY",
-    "BLUE_ORCHID",
-    "ALLIUM",
-    "AZURE_BLUET",
-    "RED_TULIP",
-    "ORANGE_TULIP",
-    "WHITE_TULIP",
-    "OXEYE_DAISY",
-    "CORNFLOWER",
-    "LILY_OF_THE_VALLEY",
-    "WITHER_ROSE",
-    "CRIMSON_FUNGUS",
-    "WARPED_FUNGUS",
-    "BROWN_MUSHROOM",
-    "RED_MUSHROOM",
-    "CRIMSON_ROOTS",
-    "WARPED_ROOTS",
-    "NETHER_SPROUTS",
-    "TUBE_CORAL",
-    "BRAIN_CORAL",
-    "BUBBLE_CORAL",
-    "FIRE_CORAL",
-    "TUBE_CORAL_FAN",
-    "BRAIN_CORAL_FAN",
-    "BUBBLE_CORAL_FAN",
-    "FIRE_CORAL_FAN",
-    "DEAD_TUBE_CORAL",
-    "DEAD_BRAIN_CORAL",
-    "DEAD_BUBBLE_CORAL",
-    "DEAD_FIRE_CORAL",
-    "DEAD_TUBE_CORAL_FAN",
-    "DEAD_BRAIN_CORAL_FAN",
-    "DEAD_BUBBLE_CORAL_FAN",
-    "DEAD_FIRE_CORAL_FAN",
-    "COBWEB",
     "OAK_TRAPDOOR",
     "SPRUCE_TRAPDOOR",
     "BIRCH_TRAPDOOR",
@@ -1604,6 +1560,398 @@
         "block/sandstone",
         "block/sandstone_top",
         "block/sandstone_bottom"
+      ]
+    },
+    {
+      "material": "OAK_SAPLING",
+      "textures": [
+        "block/oak_sapling",
+        "block/oak_sapling"
+      ]
+    },
+    {
+      "material": "SPRUCE_SAPLING",
+      "textures": [
+        "block/spruce_sapling",
+        "block/spruce_sapling"
+      ]
+    },
+    {
+      "material": "BIRCH_SAPLING",
+      "textures": [
+        "block/birch_sapling",
+        "block/birch_sapling"
+      ]
+    },
+    {
+      "material": "JUNGLE_SAPLING",
+      "textures": [
+        "block/jungle_sapling",
+        "block/jungle_sapling"
+      ]
+    },
+    {
+      "material": "ACACIA_SAPLING",
+      "textures": [
+        "block/acacia_sapling",
+        "block/acacia_sapling"
+      ]
+    },
+    {
+      "material": "DARK_OAK_SAPLING",
+      "textures": [
+        "block/dark_oak_sapling",
+        "block/dark_oak_sapling"
+      ]
+    },
+    {
+      "material": "COBWEB",
+      "textures": [
+        "block/cobweb",
+        "block/cobweb"
+      ]
+    },
+    {
+      "material": "GRASS",
+      "textures": [
+        "block/modded/grass",
+        "block/modded/grass"
+      ]
+    },
+    {
+      "material": "FERN",
+      "textures": [
+        "block/modded/fern",
+        "block/modded/fern"
+      ]
+    },
+    {
+      "material": "DEAD_BUSH",
+      "textures": [
+        "block/dead_bush",
+        "block/dead_bush"
+      ]
+    },
+    {
+      "material": "SEAGRASS",
+      "textures": [
+        "block/seagrass",
+        "block/seagrass"
+      ]
+    },
+    {
+      "material": "DANDELION",
+      "textures": [
+        "block/dandelion",
+        "block/dandelion"
+      ]
+    },
+    {
+      "material": "POPPY",
+      "textures": [
+        "block/poppy",
+        "block/poppy"
+      ]
+    },
+    {
+      "material": "BLUE_ORCHID",
+      "textures": [
+        "block/blue_orchid",
+        "block/blue_orchid"
+      ]
+    },
+    {
+      "material": "ALLIUM",
+      "textures": [
+        "block/allium",
+        "block/allium"
+      ]
+    },
+    {
+      "material": "AZURE_BLUET",
+      "textures": [
+        "block/azure_bluet",
+        "block/azure_bluet"
+      ]
+    },
+    {
+      "material": "RED_TULIP",
+      "textures": [
+        "block/red_tulip",
+        "block/red_tulip"
+      ]
+    },
+    {
+      "material": "ORANGE_TULIP",
+      "textures": [
+        "block/orange_tulip",
+        "block/orange_tulip"
+      ]
+    },
+    {
+      "material": "WHITE_TULIP",
+      "textures": [
+        "block/white_tulip",
+        "block/white_tulip"
+      ]
+    },
+    {
+      "material": "OXEYE_DAISY",
+      "textures": [
+        "block/oxeye_daisy",
+        "block/oxeye_daisy"
+      ]
+    },
+    {
+      "material": "CORNFLOWER",
+      "textures": [
+        "block/cornflower",
+        "block/cornflower"
+      ]
+    },
+    {
+      "material": "LILY_OF_THE_VALLEY",
+      "textures": [
+        "block/lily_of_the_valley",
+        "block/lily_of_the_valley"
+      ]
+    },
+    {
+      "material": "WITHER_ROSE",
+      "textures": [
+        "block/wither_rose",
+        "block/wither_rose"
+      ]
+    },
+    {
+      "material": "BROWN_MUSHROOM",
+      "textures": [
+        "block/brown_mushroom",
+        "block/brown_mushroom"
+      ]
+    },
+    {
+      "material": "RED_MUSHROOM",
+      "textures": [
+        "block/red_mushroom",
+        "block/red_mushroom"
+      ]
+    },
+    {
+      "material": "CRIMSON_FUNGUS",
+      "textures": [
+        "block/crimson_fungus",
+        "block/crimson_fungus"
+      ]
+    },
+    {
+      "material": "WARPED_FUNGUS",
+      "textures": [
+        "block/warped_fungus",
+        "block/warped_fungus"
+      ]
+    },
+    {
+      "material": "CRIMSON_ROOTS",
+      "textures": [
+        "block/crimson_roots",
+        "block/crimson_roots"
+      ]
+    },
+    {
+      "material": "WARPED_ROOTS",
+      "textures": [
+        "block/warped_roots",
+        "block/warped_roots"
+      ]
+    },
+    {
+      "material": "NETHER_SPROUTS",
+      "textures": [
+        "block/nether_sprouts",
+        "block/nether_sprouts"
+      ]
+    },
+    {
+      "material": "DEAD_TUBE_CORAL_BLOCK",
+      "textures": [
+        "block/dead_tube_coral_block",
+        "block/dead_tube_coral_block"
+      ]
+    },
+    {
+      "material": "DEAD_BRAIN_CORAL_BLOCK",
+      "textures": [
+        "block/dead_brain_coral_block",
+        "block/dead_brain_coral_block"
+      ]
+    },
+    {
+      "material": "DEAD_BUBBLE_CORAL_BLOCK",
+      "textures": [
+        "block/dead_bubble_coral_block",
+        "block/dead_bubble_coral_block"
+      ]
+    },
+    {
+      "material": "DEAD_FIRE_CORAL_BLOCK",
+      "textures": [
+        "block/dead_fire_coral_block",
+        "block/dead_fire_coral_block"
+      ]
+    },
+    {
+      "material": "DEAD_HORN_CORAL_BLOCK",
+      "textures": [
+        "block/dead_horn_coral_block",
+        "block/dead_horn_coral_block"
+      ]
+    },
+    {
+      "material": "TUBE_CORAL_BLOCK",
+      "textures": [
+        "block/tube_coral_block",
+        "block/tube_coral_block"
+      ]
+    },
+    {
+      "material": "BRAIN_CORAL_BLOCK",
+      "textures": [
+        "block/brain_coral_block",
+        "block/brain_coral_block"
+      ]
+    },
+    {
+      "material": "BUBBLE_CORAL_BLOCK",
+      "textures": [
+        "block/bubble_coral_block",
+        "block/bubble_coral_block"
+      ]
+    },
+    {
+      "material": "FIRE_CORAL_BLOCK",
+      "textures": [
+        "block/fire_coral_block",
+        "block/fire_coral_block"
+      ]
+    },
+    {
+      "material": "HORN_CORAL_BLOCK",
+      "textures": [
+        "block/horn_coral_block",
+        "block/horn_coral_block"
+      ]
+    },
+    {
+      "material": "TUBE_CORAL",
+      "textures": [
+        "block/tube_coral",
+        "block/tube_coral"
+      ]
+    },
+    {
+      "material": "BRAIN_CORAL",
+      "textures": [
+        "block/brain_coral",
+        "block/brain_coral"
+      ]
+    },
+    {
+      "material": "BUBBLE_CORAL",
+      "textures": [
+        "block/bubble_coral",
+        "block/bubble_coral"
+      ]
+    },
+    {
+      "material": "FIRE_CORAL",
+      "textures": [
+        "block/fire_coral",
+        "block/fire_coral"
+      ]
+    },
+    {
+      "material": "DEAD_BRAIN_CORAL",
+      "textures": [
+        "block/dead_brain_coral",
+        "block/dead_brain_coral"
+      ]
+    },
+    {
+      "material": "DEAD_BUBBLE_CORAL",
+      "textures": [
+        "block/dead_bubble_coral",
+        "block/dead_bubble_coral"
+      ]
+    },
+    {
+      "material": "DEAD_FIRE_CORAL",
+      "textures": [
+        "block/dead_fire_coral",
+        "block/dead_fire_coral"
+      ]
+    },
+    {
+      "material": "DEAD_TUBE_CORAL",
+      "textures": [
+        "block/dead_tube_coral",
+        "block/dead_tube_coral"
+      ]
+    },
+    {
+      "material": "TUBE_CORAL_FAN",
+      "textures": [
+        "block/tube_coral_fan",
+        "block/tube_coral_fan"
+      ]
+    },
+    {
+      "material": "BRAIN_CORAL_FAN",
+      "textures": [
+        "block/brain_coral_fan",
+        "block/brain_coral_fan"
+      ]
+    },
+    {
+      "material": "BUBBLE_CORAL_FAN",
+      "textures": [
+        "block/bubble_coral_fan",
+        "block/bubble_coral_fan"
+      ]
+    },
+    {
+      "material": "FIRE_CORAL_FAN",
+      "textures": [
+        "block/fire_coral_fan",
+        "block/fire_coral_fan"
+      ]
+    },
+    {
+      "material": "DEAD_TUBE_CORAL_FAN",
+      "textures": [
+        "block/dead_tube_coral_fan",
+        "block/dead_tube_coral_fan"
+      ]
+    },
+    {
+      "material": "DEAD_BRAIN_CORAL_FAN",
+      "textures": [
+        "block/dead_brain_coral_fan",
+        "block/dead_brain_coral_fan"
+      ]
+    },
+    {
+      "material": "DEAD_BUBBLE_CORAL_FAN",
+      "textures": [
+        "block/dead_bubble_coral_fan",
+        "block/dead_bubble_coral_fan"
+      ]
+    },
+    {
+      "material": "DEAD_FIRE_CORAL_FAN",
+      "textures": [
+        "block/dead_fire_coral_fan",
+        "block/dead_fire_coral_fan"
       ]
     },
     {
