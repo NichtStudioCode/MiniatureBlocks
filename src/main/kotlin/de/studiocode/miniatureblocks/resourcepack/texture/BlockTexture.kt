@@ -89,12 +89,10 @@ class BlockTexture(materialName: String, val textures: Array<String>, val defaul
         }
         
         fun removeTextureLocation(location: String): Boolean {
-            if (!defaultTextureLocations.contains(location)) {
-                if (customTextureLocations.remove(location)) {
-                    PermanentStorage.store("customTextures", customTextureLocations)
-                    textureLocations.remove(location)
-                    return true
-                }
+            if (!defaultTextureLocations.contains(location) && customTextureLocations.remove(location)) {
+                PermanentStorage.store("customTextures", customTextureLocations)
+                textureLocations.remove(location)
+                return true
             }
             return false
         }

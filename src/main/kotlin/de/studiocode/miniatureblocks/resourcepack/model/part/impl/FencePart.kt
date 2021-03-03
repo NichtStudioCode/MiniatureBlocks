@@ -43,13 +43,13 @@ class FencePart(data: FenceBlockData) : Part() {
         val pointB = Point3D(0.5 + HALF_FENCE_BEAM_WIDTH, 0.0, 0.5 - HALF_FENCE_POST_WIDTH)
         return listOf(
             TexturedElement(
-                pointA.clone().apply { y = 6.0 / 16.0 },
-                pointB.clone().apply { y = 9.0 / 16.0 },
+                pointA.copy().apply { y = 6.0 / 16.0 },
+                pointB.copy().apply { y = 9.0 / 16.0 },
                 blockTexture
             ),
             TexturedElement(
-                pointA.clone().apply { y = 12.0 / 16.0 },
-                pointB.clone().apply { y = 15.0 / 16.0 },
+                pointA.copy().apply { y = 12.0 / 16.0 },
+                pointB.copy().apply { y = 15.0 / 16.0 },
                 blockTexture
             )
         )

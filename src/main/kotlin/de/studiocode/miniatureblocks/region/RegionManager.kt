@@ -29,11 +29,12 @@ class RegionManager(plugin: JavaPlugin) : Listener {
     @EventHandler
     fun handleBlockClick(event: PlayerInteractEvent) {
         val action = event.action
-        if (action == LEFT_CLICK_BLOCK || action == RIGHT_CLICK_BLOCK) {
-            if (marker.isSimilar(event.item) && event.player.hasPermission("miniatureBlocks.miniature")) {
-                event.isCancelled = true
-                markPosition(action == LEFT_CLICK_BLOCK, event.player, event.clickedBlock!!.location)
-            }
+        if ((action == LEFT_CLICK_BLOCK || action == RIGHT_CLICK_BLOCK)
+            && marker.isSimilar(event.item)
+            && event.player.hasPermission("miniatureBlocks.miniature")) {
+            
+            event.isCancelled = true
+            markPosition(action == LEFT_CLICK_BLOCK, event.player, event.clickedBlock!!.location)
         }
     }
     
