@@ -2159,14 +2159,14 @@
       ]
     },
     {
-      "material": "DARK_OAK_DOOR",
+      "material": "CRIMSON_DOOR",
       "textures": [
         "block/crimson_door_bottom",
         "block/crimson_door_top"
       ]
     },
     {
-      "material": "DARK_OAK_DOOR",
+      "material": "WARPED_DOOR",
       "textures": [
         "block/warped_door_bottom",
         "block/warped_door_top"
