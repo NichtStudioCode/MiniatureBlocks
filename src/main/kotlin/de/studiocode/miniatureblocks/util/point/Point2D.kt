@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.util.point
 
 import java.lang.Double.doubleToLongBits
 
-class Point2D(var x: Double, var y: Double) {
+class Point2D(var x: Double, var y: Double) : Cloneable {
     
     fun rotateClockwise() {
         if (x == 0.0 && y == 0.0) return
@@ -43,6 +43,10 @@ class Point2D(var x: Double, var y: Double) {
         result = (31 * result + doubleToLongBits(x) xor doubleToLongBits(x) ushr 32).toInt()
         result = (31 * result + doubleToLongBits(y) xor doubleToLongBits(y) ushr 32).toInt()
         return result
+    }
+    
+    public override fun clone(): Point2D {
+        return super.clone() as Point2D
     }
     
 }

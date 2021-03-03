@@ -43,6 +43,7 @@ object MaterialUtils {
                 || name.endsWith("DOOR")
                 || name.endsWith("CARPET")
                 || name.endsWith("PRESSURE_PLATE")
+                || name.endsWith("FENCE")
         })
     }
     

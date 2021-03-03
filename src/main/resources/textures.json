@@ -664,6 +664,42 @@
     {
       "material": "HEAVY_WEIGHTED_PRESSURE_PLATE",
       "texture": "block/iron_block"
+    },
+    {
+      "material": "OAK_FENCE",
+      "texture": "block/oak_planks"
+    },
+    {
+      "material": "SPRUCE_FENCE",
+      "texture": "block/spruce_planks"
+    },
+    {
+      "material": "BIRCH_FENCE",
+      "texture": "block/birch_planks"
+    },
+    {
+      "material": "JUNGLE_FENCE",
+      "texture": "block/jungle_planks"
+    },
+    {
+      "material": "ACACIA_FENCE",
+      "texture": "block/acacia_planks"
+    },
+    {
+      "material": "DARK_OAK_FENCE",
+      "texture": "block/dark_oak_planks"
+    },
+    {
+      "material": "CRIMSON_FENCE",
+      "texture": "block/crimson_planks"
+    },
+    {
+      "material": "WARPED_FENCE",
+      "texture": "block/warped_planks"
+    },
+    {
+      "material": "NETHER_BRICK_FENCE",
+      "texture": "block/nether_bricks"
     }
   ],
   "custom": [

@@ -73,6 +73,7 @@ abstract class Part {
                 data is SlabBlockData -> SlabPart(data)
                 data is TrapdoorBlockData -> TrapdoorPart(data)
                 data is DoorBlockData -> DoorPart(data)
+                data is FenceBlockData -> FencePart(data)
                 data.material.isCrossMaterial() -> CrossPart(data)
                 data.material.isCarpet() -> CarpetPart(data)
                 data.material.isPressurePlate() -> PressurePlatePart(data)

@@ -5,7 +5,7 @@ import org.bukkit.Axis
 import org.bukkit.Axis.*
 import org.bukkit.World
 
-class Point3D(var x: Double, var y: Double, var z: Double) {
+class Point3D(var x: Double, var y: Double, var z: Double) : Cloneable {
     
     constructor(x: Int, y: Int, z: Int) : this(x.toDouble(), y.toDouble(), z.toDouble())
     
@@ -47,6 +47,10 @@ class Point3D(var x: Double, var y: Double, var z: Double) {
         result = (31 * result + java.lang.Double.doubleToLongBits(y) xor java.lang.Double.doubleToLongBits(y) ushr 32).toInt()
         result = (31 * result + java.lang.Double.doubleToLongBits(z) xor java.lang.Double.doubleToLongBits(z) ushr 32).toInt()
         return result
+    }
+    
+    public override fun clone(): Point3D {
+        return super.clone() as Point3D
     }
     
 }
