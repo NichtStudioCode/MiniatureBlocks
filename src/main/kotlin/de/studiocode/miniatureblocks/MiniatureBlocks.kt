@@ -7,7 +7,9 @@ import de.studiocode.miniatureblocks.menu.Menus
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
 import de.studiocode.miniatureblocks.region.RegionManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bstats.bukkit.Metrics
+import org.bstats.bukkit.Metrics.SingleLineChart
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -40,11 +42,23 @@ class MiniatureBlocks : JavaPlugin() {
         
         Menus.registerGlobalIngredients()
         
-        Metrics(this, 8307)
+        setupMetrics()
     }
     
     override fun onDisable() {
         disableHandlers.forEach { it() }
+    }
+    
+    private fun setupMetrics() {
+        val metrics = Metrics(this, 8307)
+        
+        metrics.addCustomChart(SingleLineChart("miniatureAmount") {
+            resourcePack.mainModelData.customModels.size
+        })
+        
+        metrics.addCustomChart(SingleLineChart("textureOverrides") {
+            BlockTexture.textureOverrides.size
+        })
     }
     
 }

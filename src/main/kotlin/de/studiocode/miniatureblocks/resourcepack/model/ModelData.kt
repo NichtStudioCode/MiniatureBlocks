@@ -11,8 +11,8 @@ open class ModelData(val file: File, val material: Material) {
     
     val customModels = ArrayList<CustomModel>()
     
-    protected var mainObj: JsonObject = JsonObject()
-    protected var overrides: JsonArray = JsonArray()
+    private var mainObj: JsonObject = JsonObject()
+    private var overrides: JsonArray = JsonArray()
     
     init {
         if (file.exists()) {

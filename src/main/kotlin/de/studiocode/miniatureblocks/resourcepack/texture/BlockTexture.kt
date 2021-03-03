@@ -55,10 +55,10 @@ class BlockTexture(materialName: String, val textures: Array<String>, val defaul
     
     companion object {
         
-        val blockTextures: EnumMap<Material, BlockTexture> = EnumMap(Material::class.java)
+        private val blockTextures: EnumMap<Material, BlockTexture> = EnumMap(Material::class.java)
         
         @Suppress("ReplaceWithEnumMap")
-        private val textureOverrides = PermanentStorage.retrieve(HashMap<Material, BlockTexture>(), "textureOverrides")
+        val textureOverrides = PermanentStorage.retrieve(HashMap<Material, BlockTexture>(), "textureOverrides")
         
         private val defaultTextureLocations: HashSet<String>
         private val customTextureLocations: ArrayList<String>
