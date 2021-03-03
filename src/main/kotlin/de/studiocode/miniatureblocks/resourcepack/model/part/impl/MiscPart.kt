@@ -1,0 +1,36 @@
+package de.studiocode.miniatureblocks.resourcepack.model.part.impl
+
+import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.resourcepack.model.element.Element
+import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
+import de.studiocode.miniatureblocks.resourcepack.model.part.Part
+import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.point.Point3D
+import org.bukkit.Material
+
+private val ELEMENT_CREATORS = hashMapOf(
+    Material.GRASS_PATH to ::createGrassPathElement
+)
+
+val MISC_MATERIALS = ArrayList(ELEMENT_CREATORS.keys)
+
+private fun createElement(material: Material) =
+    ELEMENT_CREATORS[material]!!(BlockTexture.of(material))
+
+private fun createGrassPathElement(texture: BlockTexture): Element {
+    return TexturedElement(
+        Point3D(0.0, 0.0, 0.0), Point3D(1.0, 15.0 / 16.0, 1.0),
+        texture
+    )
+}
+
+class MiscPart(data: ThreadSafeBlockData) : Part() {
+    
+    override val elements = ArrayList<Element>()
+    override val rotatable = true
+    
+    init {
+        elements += createElement(data.material)
+    }
+    
+}

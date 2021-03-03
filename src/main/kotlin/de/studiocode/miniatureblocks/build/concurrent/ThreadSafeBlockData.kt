@@ -43,6 +43,10 @@ class FenceBlockData(material: Material, blockData: Fence): ThreadSafeBlockData(
     val faces: Set<BlockFace> = HashSet(blockData.faces)
 }
 
+class DaylightDetectorData(material: Material, blockData: DaylightDetector) : ThreadSafeBlockData(material) {
+    val inverted = blockData.isInverted
+}
+
 fun BlockData.toThreadSafeBlockData(material: Material) =
     when (this) {
         is Stairs -> StairBlockData(material, this)
@@ -50,6 +54,7 @@ fun BlockData.toThreadSafeBlockData(material: Material) =
         is TrapDoor -> TrapdoorBlockData(material, this)
         is Door -> DoorBlockData(material, this)
         is Fence -> FenceBlockData(material, this)
+        is DaylightDetector -> DaylightDetectorData(material, this)
         is Directional -> DirectionalBlockData(material, this)
         is Orientable -> OrientableBlockData(material, this)
         else -> ThreadSafeBlockData(material)

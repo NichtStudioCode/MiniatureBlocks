@@ -2103,6 +2103,13 @@
       ]
     },
     {
+      "material": "SUGAR_CANE",
+      "textures": [
+        "block/sugar_cane",
+        "block/sugar_cane"
+      ]
+    },
+    {
       "material": "IRON_DOOR",
       "textures": [
         "block/iron_door_bottom",
@@ -2163,6 +2170,18 @@
       "textures": [
         "block/warped_door_bottom",
         "block/warped_door_top"
+      ]
+    },
+    {
+      "material": "DAYLIGHT_DETECTOR",
+      "textures": [
+        "block/daylight_detector_side",
+        "block/daylight_detector_side",
+        "block/daylight_detector_side",
+        "block/daylight_detector_side",
+        "block/daylight_detector_top",
+        "block/daylight_detector_side",
+        "block/daylight_detector_inverted_top"
       ]
     }
   ]

@@ -7,6 +7,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
 import de.studiocode.miniatureblocks.util.isCarpet
 import de.studiocode.miniatureblocks.util.isCrossMaterial
+import de.studiocode.miniatureblocks.util.isMiscMaterial
 import de.studiocode.miniatureblocks.util.isPressurePlate
 
 abstract class Part {
@@ -74,9 +75,11 @@ abstract class Part {
                 data is TrapdoorBlockData -> TrapdoorPart(data)
                 data is DoorBlockData -> DoorPart(data)
                 data is FenceBlockData -> FencePart(data)
+                data is DaylightDetectorData -> DaylightDetectorPart(data)
                 data.material.isCrossMaterial() -> CrossPart(data)
                 data.material.isCarpet() -> CarpetPart(data)
                 data.material.isPressurePlate() -> PressurePlatePart(data)
+                data.material.isMiscMaterial() -> MiscPart(data)
                 else -> CubePart(data)
             }
         
