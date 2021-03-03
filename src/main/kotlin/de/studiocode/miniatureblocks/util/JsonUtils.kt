@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.util
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
 import com.google.gson.reflect.TypeToken
 import java.io.File
 
@@ -10,37 +11,34 @@ fun JsonElement.writeToFile(file: File) =
     file.writeText(toString())
 
 fun JsonElement.isString() =
-    isJsonPrimitive && asJsonPrimitive.isString
+    this is JsonPrimitive && isString
 
 fun JsonElement.isBoolean() =
-    isJsonPrimitive && asJsonPrimitive.isBoolean
+    this is JsonPrimitive && isBoolean
 
 fun JsonElement.isNumber() =
-    isJsonPrimitive && asJsonPrimitive.isNumber
+    this is JsonPrimitive && isNumber
 
 fun JsonArray.addAll(vararg numbers: Number) =
-    numbers.forEach { add(it) }
+    numbers.forEach(this::add)
 
 fun JsonArray.addAll(vararg booleans: Boolean) =
-    booleans.forEach { add(it) }
+    booleans.forEach(this::add)
 
 fun JsonArray.addAll(vararg chars: Char) =
-    chars.forEach { add(it) }
+    chars.forEach(this::add)
 
 fun JsonArray.addAll(vararg elements: JsonElement) =
-    elements.forEach { add(it) }
+    elements.forEach(this::add)
 
 fun JsonArray.addAll(doubleArray: DoubleArray) =
-    doubleArray.forEach { add(it) }
+    doubleArray.forEach(this::add)
 
 fun JsonArray.addAll(stringArray: Array<String>) =
-    stringArray.forEach { add(it) }
+    stringArray.forEach(this::add)
 
-fun JsonArray.getAllStrings(): List<String> {
-    val strings = ArrayList<String>()
-    forEach { if (it.isString()) strings.add(it.asString) }
-    return strings
-}
+fun JsonArray.getAllStrings() =
+    filter(JsonElement::isString).map { it.asString }
 
 inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
     if (jsonElement == null) return null

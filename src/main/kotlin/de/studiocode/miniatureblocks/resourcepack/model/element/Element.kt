@@ -175,4 +175,6 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         } else null
     }
     
+    fun hasTextures() = textures.any { (_, texture) -> texture.textureLocation.isNotBlank() }
+    
 }

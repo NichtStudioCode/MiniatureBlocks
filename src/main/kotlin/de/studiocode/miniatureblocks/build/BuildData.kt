@@ -1,14 +1,6 @@
 package de.studiocode.miniatureblocks.build
 
-import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
+import de.studiocode.miniatureblocks.util.point.Point3D
 
-class BuildData(val data: Map<BuildBlockData, Part>, val size: Int) {
-    
-    class BuildBlockData(val x: Int, val y: Int, val z: Int, private val blockedSides: List<Direction>) {
-        
-        fun isSideVisible(side: Direction) = !blockedSides.contains(side)
-        
-    }
-    
-}
+class BuildData(val data: Map<Point3D, Part>, val size: Int)

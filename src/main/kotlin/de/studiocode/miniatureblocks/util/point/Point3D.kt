@@ -11,7 +11,7 @@ class Point3D(var x: Double, var y: Double, var z: Double) : Cloneable {
     
     fun getBlock(world: World) = world.getBlockAt(x.toInt(), y.toInt(), z.toInt())
     
-    fun advance(direction: Direction, step: Int) = advance(direction, step.toDouble())
+    fun advance(direction: Direction, step: Int = 1) = advance(direction, step.toDouble())
     
     fun advance(direction: Direction, step: Double): Point3D {
         return when (direction) {

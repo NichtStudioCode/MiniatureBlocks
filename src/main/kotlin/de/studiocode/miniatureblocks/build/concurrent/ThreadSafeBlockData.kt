@@ -39,7 +39,7 @@ class DoorBlockData(material: Material, blockData: Door) : DirectionalBlockData(
     val hinge = blockData.hinge
 }
 
-class FenceBlockData(material: Material, blockData: Fence): ThreadSafeBlockData(material) {
+class FenceBlockData(material: Material, blockData: Fence) : ThreadSafeBlockData(material) {
     val faces: Set<BlockFace> = HashSet(blockData.faces)
 }
 
@@ -48,14 +48,16 @@ class DaylightDetectorData(material: Material, blockData: DaylightDetector) : Th
 }
 
 fun BlockData.toThreadSafeBlockData(material: Material) =
-    when (this) {
-        is Stairs -> StairBlockData(material, this)
-        is Slab -> SlabBlockData(material, this)
-        is TrapDoor -> TrapdoorBlockData(material, this)
-        is Door -> DoorBlockData(material, this)
-        is Fence -> FenceBlockData(material, this)
-        is DaylightDetector -> DaylightDetectorData(material, this)
-        is Directional -> DirectionalBlockData(material, this)
-        is Orientable -> OrientableBlockData(material, this)
+    when {
+        isSlab() -> SlabBlockData(material, this as Slab)
+        this is Stairs -> StairBlockData(material, this)
+        this is TrapDoor -> TrapdoorBlockData(material, this)
+        this is Door -> DoorBlockData(material, this)
+        this is Fence -> FenceBlockData(material, this)
+        this is DaylightDetector -> DaylightDetectorData(material, this)
+        this is Directional -> DirectionalBlockData(material, this)
+        this is Orientable -> OrientableBlockData(material, this)
         else -> ThreadSafeBlockData(material)
     }
+
+fun BlockData.isSlab() = this is Slab && this.type != Type.DOUBLE

@@ -47,48 +47,48 @@ class MiniatureModel(buildData: BuildData) {
     }
     
     private fun parseElements() {
-        for ((blockData, part) in parts) {
-            for (element in part.elements) {
-                val elementObj = JsonObject()
-                
-                // Position
-                val from = JsonArray()
-                from.addAll(element.getFromPosInMiniature(blockData.x, blockData.y, blockData.z, stepSize))
-                elementObj.add("from", from)
-                
-                val to = JsonArray()
-                to.addAll(element.getToPosInMiniature(blockData.x, blockData.y, blockData.z, stepSize))
-                elementObj.add("to", to)
-                
-                // Rotation
-                val rotationData = element.getRotationData(blockData.x, blockData.y, blockData.z, stepSize)
-                if (rotationData != null) {
-                    val rotation = JsonObject()
-                    rotation.addProperty("angle", rotationData.first)
-                    rotation.addProperty("axis", rotationData.second)
-                    rotation.add("origin", JsonArray().apply { addAll(rotationData.third) })
-                    elementObj.add("rotation", rotation)
-                }
-                
-                // Faces
-                val faces = JsonObject()
-                for (direction in Direction.values()) {
-                    if (!blockData.isSideVisible(direction)) continue
+        parts.forEach { (point, part) ->
+            part.elements
+                .filter { it.hasTextures() }
+                .forEach { element ->
+                    val elementObj = JsonObject()
                     
-                    val texture = element.textures[direction]!!
-                    if (texture.textureLocation != "") {
-                        val face = JsonObject()
-                        face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
-                        face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
-                        face.addProperty("rotation", texture.rotation * 90)
-    
-                        faces.add(direction.modelDataName, face)
+                    // Position
+                    val from = JsonArray()
+                    from.addAll(element.getFromPosInMiniature(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize))
+                    elementObj.add("from", from)
+                    
+                    val to = JsonArray()
+                    to.addAll(element.getToPosInMiniature(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize))
+                    elementObj.add("to", to)
+                    
+                    // Rotation
+                    val rotationData = element.getRotationData(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize)
+                    if (rotationData != null) {
+                        val rotation = JsonObject()
+                        rotation.addProperty("angle", rotationData.first)
+                        rotation.addProperty("axis", rotationData.second)
+                        rotation.add("origin", JsonArray().apply { addAll(rotationData.third) })
+                        elementObj.add("rotation", rotation)
                     }
+                    
+                    // Faces
+                    val faces = JsonObject()
+                    Direction.values().forEach { direction ->
+                        val texture = element.textures[direction]!!
+                        if (texture.textureLocation.isNotBlank()) {
+                            val face = JsonObject()
+                            face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
+                            face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
+                            face.addProperty("rotation", texture.rotation * 90)
+                            
+                            faces.add(direction.modelDataName, face)
+                        }
+                    }
+                    elementObj.add("faces", faces)
+                    
+                    elementArray.add(elementObj)
                 }
-                elementObj.add("faces", faces)
-                
-                elementArray.add(elementObj)
-            }
         }
     }
     
