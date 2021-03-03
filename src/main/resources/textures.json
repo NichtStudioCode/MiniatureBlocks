@@ -552,6 +552,118 @@
     {
       "material": "SPRUCE_LEAVES",
       "texture": "block/modded/spruce_leaves"
+    },
+    {
+      "material": "WHITE_CARPET",
+      "texture": "block/white_wool"
+    },
+    {
+      "material": "ORANGE_CARPET",
+      "texture": "block/orange_wool"
+    },
+    {
+      "material": "MAGENTA_CARPET",
+      "texture": "block/magenta_wool"
+    },
+    {
+      "material": "LIGHT_BLUE_CARPET",
+      "texture": "block/light_blue_wool"
+    },
+    {
+      "material": "YELLOW_CARPET",
+      "texture": "block/yellow_wool"
+    },
+    {
+      "material": "LIME_CARPET",
+      "texture": "block/lime_wool"
+    },
+    {
+      "material": "PINK_CARPET",
+      "texture": "block/pink_wool"
+    },
+    {
+      "material": "GRAY_CARPET",
+      "texture": "block/gray_wool"
+    },
+    {
+      "material": "LIGHT_GRAY_CARPET",
+      "texture": "block/light_gray_wool"
+    },
+    {
+      "material": "CYAN_CARPET",
+      "texture": "block/cyan_wool"
+    },
+    {
+      "material": "PURPLE_CARPET",
+      "texture": "block/purple_wool"
+    },
+    {
+      "material": "BLUE_CARPET",
+      "texture": "block/blue_wool"
+    },
+    {
+      "material": "BROWN_CARPET",
+      "texture": "block/brown_wool"
+    },
+    {
+      "material": "GREEN_CARPET",
+      "texture": "block/green_wool"
+    },
+    {
+      "material": "RED_CARPET",
+      "texture": "block/red_wool"
+    },
+    {
+      "material": "BLACK_CARPET",
+      "texture": "block/black_wool"
+    },
+    {
+      "material": "STONE_PRESSURE_PLATE",
+      "texture": "block/stone"
+    },
+    {
+      "material": "OAK_PRESSURE_PLATE",
+      "texture": "block/oak_planks"
+    },
+    {
+      "material": "SPRUCE_PRESSURE_PLATE",
+      "texture": "block/spruce_planks"
+    },
+    {
+      "material": "BIRCH_PRESSURE_PLATE",
+      "texture": "block/birch_planks"
+    },
+    {
+      "material": "JUNGLE_PRESSURE_PLATE",
+      "texture": "block/jungle_planks"
+    },
+    {
+      "material": "ACACIA_PRESSURE_PLATE",
+      "texture": "block/acacia_planks"
+    },
+    {
+      "material": "DARK_OAK_PRESSURE_PLATE",
+      "texture": "block/dark_oak_planks"
+    },
+    {
+      "material": "CRIMSON_PRESSURE_PLATE",
+      "texture": "block/crimson_planks"
+    },
+    {
+      "material": "WARPED_PRESSURE_PLATE",
+      "texture": "block/warped_planks"
+    },
+    {
+      "material": "POLISHED_BLACKSTONE_PRESSURE_PLATE",
+      "texture": "block/polished_blackstone"
+    },
+    {
+      "material": "LIGHT_WEIGHTED_PRESSURE_PLATE",
+      "texture": "block/gold_block"
+    },
+    {
+      "material": "HEAVY_WEIGHTED_PRESSURE_PLATE",
+      "texture": "block/iron_block"
     }
   ],
   "custom": [

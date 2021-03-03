@@ -12,6 +12,10 @@ fun Material.isGlass() = MaterialUtils.glassMaterials.contains(this)
 
 fun Material.isCrossMaterial() = MaterialUtils.crossMaterials.contains(this)
 
+fun Material.isCarpet() = name.endsWith("CARPET")
+
+fun Material.isPressurePlate() = name.endsWith("PRESSURE_PLATE")
+
 object MaterialUtils {
     
     val glassMaterials = ArrayList<Material>()
@@ -37,6 +41,8 @@ object MaterialUtils {
                 || name.endsWith("STAIRS")
                 || name.endsWith("TRAPDOOR")
                 || name.endsWith("DOOR")
+                || name.endsWith("CARPET")
+                || name.endsWith("PRESSURE_PLATE")
         })
     }
     
