@@ -5,10 +5,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
-import de.studiocode.miniatureblocks.util.isCarpet
-import de.studiocode.miniatureblocks.util.isCrossMaterial
-import de.studiocode.miniatureblocks.util.isMiscMaterial
-import de.studiocode.miniatureblocks.util.isPressurePlate
+import de.studiocode.miniatureblocks.util.*
 
 abstract class Part {
     
@@ -79,6 +76,7 @@ abstract class Part {
                 data.material.isCrossMaterial() -> CrossPart(data)
                 data.material.isCarpet() -> CarpetPart(data)
                 data.material.isPressurePlate() -> PressurePlatePart(data)
+                data.material.isPot() -> PotPart(data)
                 data.material.isMiscMaterial() -> MiscPart(data)
                 else -> CubePart(data)
             }

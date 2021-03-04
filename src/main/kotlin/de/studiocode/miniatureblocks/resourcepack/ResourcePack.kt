@@ -40,8 +40,9 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     private val textureModelParent = File(itemModelsDir, "textureitem.json")
     private val oldMainModelDataFile = File(itemModelsDir, "structure_void.json")
     private val mainModelDataFile = File(itemModelsDir, "black_stained_glass.json")
-    private val textureModelDataFile = File(itemModelsDir, "dandelion.json")
-    val textureModelData = TextureItemModelData(textureModelDataFile)
+    private val oldTextureModelDataFile = File(itemModelsDir, "dandelion.json")
+    private val textureModelDataFile = File(itemModelsDir, "white_stained_glass.json")
+    val textureModelData: TextureItemModelData
     val mainModelData: MainModelData
     
     var downloadUrl: String? = PermanentStorage.retrieveOrNull("rp-download-url")
@@ -60,16 +61,23 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         if (!packMcmeta.exists()) FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
         FileUtils.extractFile("/resourcepack/parent.json", modelParent)
         FileUtils.extractFile("/resourcepack/textureitem.json", textureModelParent)
-        extractTextureFiles()
-        createTextureModelFiles()
         
         if (oldMainModelDataFile.exists() && !mainModelDataFile.exists()) {
             // server upgraded to this version from version >= 0.6 version <= 0.8
             oldMainModelDataFile.copyTo(mainModelDataFile)
         }
-        createZip()
-        
+        if (oldTextureModelDataFile.exists() && !textureModelDataFile.exists()) {
+            // server upgraded to this version from version 0.9
+            oldTextureModelDataFile.copyTo(textureModelDataFile)
+        }
+    
+        textureModelData = TextureItemModelData(textureModelDataFile)
         mainModelData = MainModelData(mainModelDataFile)
+        
+        extractTextureFiles()
+        createTextureModelFiles()
+        
+        createZip()
         
         if (config.hasCustomUploader() && hasCustomModels() && PermanentStorage.retrieveOrNull<String>("rp-download-url") == "") uploadToCustom()
         

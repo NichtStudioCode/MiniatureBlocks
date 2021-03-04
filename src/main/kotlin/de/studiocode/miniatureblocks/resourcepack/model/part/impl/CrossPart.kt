@@ -8,9 +8,9 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Axis
 
-class CrossPart(data: ThreadSafeBlockData) : Part() {
+class CrossPart(private val textures: Array<String>) : Part() {
     
-    private val blockTexture = BlockTexture.of(data.material)
+    constructor(data: ThreadSafeBlockData) : this(BlockTexture.of(data.material).textures)
     
     override val elements = listOf(CrossElement1(), CrossElement2())
     override val rotatable = false
@@ -18,7 +18,7 @@ class CrossPart(data: ThreadSafeBlockData) : Part() {
     private inner class CrossElement1 :
         Element(
             Point3D(0.078125, 0.0, 0.0), Point3D(1.328125, 1.0, 0.0),
-            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), blockTexture.textures[0])
+            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), textures[0])
         ) {
         
         init {
@@ -29,7 +29,7 @@ class CrossPart(data: ThreadSafeBlockData) : Part() {
     private inner class CrossElement2 :
         Element(
             Point3D(-0.328125, 0.0, 0.0), Point3D(0.921875, 1.0, 0.0),
-            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), blockTexture.textures[1])
+            Texture(Texture.UV(0.0, 0.0, 1.0, 1.0), textures[1])
         ) {
         
         init {

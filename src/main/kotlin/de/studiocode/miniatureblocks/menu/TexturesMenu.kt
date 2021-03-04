@@ -99,7 +99,12 @@ class TexturesMenu(val player: Player) {
                 .map { MaterialItem(it) }
         }
         
-        inner class MaterialItem(private val material: Material) : SimpleItem(ItemBuilder(material)) {
+        inner class MaterialItem(private val material: Material) :
+            SimpleItem(
+                if (material.isItem) ItemBuilder(material)
+                else ItemBuilder(Material.BARRIER).setDisplayName("§r(No item) ${material.name}")
+            ) {
+            
             override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
                 if (clickType == ClickType.LEFT) handleMaterialChoose(material)
             }
@@ -156,7 +161,8 @@ class TexturesMenu(val player: Player) {
         }
         
         inner class CurrentMaterialItem : SupplierItem({
-            ItemBuilder(material).setDisplayName("§7Current material")
+            if (material.isItem) ItemBuilder(material).setDisplayName("§7Current material")
+            else Icon.BACKGROUND.itemBuilder
         })
         
         inner class ClearOverridesItem : BaseItem() {

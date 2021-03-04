@@ -32,6 +32,34 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         }
     }
     
+    fun scaleCentred(scale: Double) {
+        val sizeX = toPos.x - fromPos.x
+        val sizeY = toPos.y - fromPos.y
+        val sizeZ = toPos.z - fromPos.z
+        
+        val takeX = sizeX - (sizeX * scale)
+        val takeY = sizeY - (sizeY * scale)
+        val takeZ = sizeZ - (sizeZ * scale)
+        
+        fromPos.x = fromPos.x + (takeX / 2)
+        fromPos.y = fromPos.y + (takeY / 2)
+        fromPos.z = fromPos.z + (takeZ / 2)
+        
+        toPos.x = toPos.x - (takeX / 2)
+        toPos.y = toPos.y - (takeY / 2)
+        toPos.z = toPos.z - (takeZ / 2)
+    }
+    
+    fun move(x: Double, y: Double, z: Double) {
+        fromPos.x += x
+        fromPos.y += y
+        fromPos.z += z
+        
+        toPos.x += x
+        toPos.y += y
+        toPos.z += z
+    }
+    
     fun setRotation(rotation: Float, axis: Axis, vararg origin: Double) {
         this.rotation = rotation
         this.rotationAxis = axis
@@ -176,5 +204,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     }
     
     fun hasTextures() = textures.any { (_, texture) -> texture.textureLocation.isNotBlank() }
+    
+    fun hasRotation() = rotation != 0f
     
 }

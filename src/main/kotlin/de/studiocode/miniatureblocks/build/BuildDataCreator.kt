@@ -9,6 +9,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
+import de.studiocode.miniatureblocks.util.isGlass
 import de.studiocode.miniatureblocks.util.isTranslucent
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Location
@@ -131,23 +132,28 @@ class BuildDataCreator(min: Location, max: Location) {
                     
                     if (neighborMaterial.isTranslucent()) {
                         // don't render glass side if glass blocks of the same glass type are side by side
-                        if (material == neighborMaterial) {
+                        if (material.isGlass() && material == neighborMaterial) {
                             part.elements.forEach { element -> element.textures[direction] = EMPTY_TEXTURE }
                         } else return@forEach // otherwise render the side
                     }
                     
-                    val neighborElements: List<Pair<Element, Point3D>> =
-                        part.elements
-                            .filter { it != part }
-                            .map { it to Point3D(0, 0, 0) } +
-                            neighborPart.elements
-                                .map { it to Point3D(direction.stepX, direction.stepY, direction.stepZ) }
+                    val neighborElements = neighborPart.elements
+                        .map { it to Point3D(direction.stepX, direction.stepY, direction.stepZ) }
                     
-                    part.elements.forEach { element ->
-                        if (isSideBlocked(element, direction, neighborElements)) {
-                            element.textures[direction] = EMPTY_TEXTURE
+                    part.elements
+                        .filter { !it.hasRotation() } // ignore elements with rotation
+                        .forEach { element ->
+                            
+                            val surroundingElements = neighborElements +
+                                part.elements
+                                    .filter { !it.hasRotation() && it != element } // ignore elements with rotation and the same element
+                                    .map { it to Point3D(0, 0, 0) }
+                            
+                            
+                            if (isSideBlocked(element, direction, surroundingElements)) {
+                                element.textures[direction] = EMPTY_TEXTURE
+                            }
                         }
-                    }
                 }
             }
         }

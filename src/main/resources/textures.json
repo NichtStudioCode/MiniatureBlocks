@@ -2183,6 +2183,279 @@
         "block/daylight_detector_side",
         "block/daylight_detector_inverted_top"
       ]
+    },
+    {
+      "material": "FLOWER_POT",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt"
+      ]
+    },
+    {
+      "material": "POTTED_OAK_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/oak_sapling",
+        "block/oak_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_SPRUCE_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/spruce_sapling",
+        "block/spruce_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_BIRCH_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/birch_sapling",
+        "block/birch_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_JUNGLE_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/jungle_sapling",
+        "block/jungle_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_ACACIA_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/acacia_sapling",
+        "block/acacia_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_DARK_OAK_SAPLING",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/dark_oak_sapling",
+        "block/dark_oak_sapling"
+      ]
+    },
+    {
+      "material": "POTTED_FERN",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/modded/fern",
+        "block/modded/fern"
+      ]
+    },
+    {
+      "material": "POTTED_DANDELION",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/dandelion",
+        "block/dandelion"
+      ]
+    },
+    {
+      "material": "POTTED_POPPY",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/poppy",
+        "block/poppy"
+      ]
+    },
+    {
+      "material": "POTTED_BLUE_ORCHID",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/blue_orchid",
+        "block/blue_orchid"
+      ]
+    },
+    {
+      "material": "POTTED_ALLIUM",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/allium",
+        "block/allium"
+      ]
+    },
+    {
+      "material": "POTTED_AZURE_BLUET",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/azure_bluet",
+        "block/azure_bluet"
+      ]
+    },
+    {
+      "material": "POTTED_RED_TULIP",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/red_tulip",
+        "block/red_tulip"
+      ]
+    },
+    {
+      "material": "POTTED_ORANGE_TULIP",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/orange_tulip",
+        "block/orange_tulip"
+      ]
+    },
+    {
+      "material": "POTTED_WHITE_TULIP",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/white_tulip",
+        "block/white_tulip"
+      ]
+    },
+    {
+      "material": "POTTED_PINK_TULIP",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/pink_tulip",
+        "block/pink_tulip"
+      ]
+    },
+    {
+      "material": "POTTED_OXEYE_DAISY",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/oxeye_daisy",
+        "block/oxeye_daisy"
+      ]
+    },
+    {
+      "material": "POTTED_CORNFLOWER",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/cornflower",
+        "block/cornflower"
+      ]
+    },
+    {
+      "material": "POTTED_LILY_OF_THE_VALLEY",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/lily_of_the_valley",
+        "block/lily_of_the_valley"
+      ]
+    },
+    {
+      "material": "POTTED_WITHER_ROSE",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/wither_rose",
+        "block/wither_rose"
+      ]
+    },
+    {
+      "material": "POTTED_RED_MUSHROOM",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/red_mushroom",
+        "block/red_mushroom"
+      ]
+    },
+    {
+      "material": "POTTED_BROWN_MUSHROOM",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/brown_mushroom",
+        "block/brown_mushroom"
+      ]
+    },
+    {
+      "material": "POTTED_DEAD_BUSH",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/dead_bush",
+        "block/dead_bush"
+      ]
+    },
+    {
+      "material": "POTTED_CACTUS",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_top"
+      ]
+    },
+    {
+      "material": "POTTED_CRIMSON_FUNGUS",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/crimson_fungus",
+        "block/crimson_fungus"
+      ]
+    },
+    {
+      "material": "POTTED_WARPED_FUNGUS",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/warped_fungus",
+        "block/warped_fungus"
+      ]
+    },
+    {
+      "material": "POTTED_CRIMSON_ROOTS",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/crimson_roots_pot",
+        "block/crimson_roots_pot"
+      ]
+    },
+    {
+      "material": "POTTED_WARPED_ROOTS",
+      "textures": [
+        "block/flower_pot",
+        "block/dirt",
+        "block/warped_roots_pot",
+        "block/warped_roots_pot"
+      ]
+    },
+    {
+      "material": "CACTUS",
+      "textures": [
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_side",
+        "block/cactus_top",
+        "block/cactus_bottom"
+      ]
     }
   ]
 }

@@ -6,7 +6,7 @@ import de.studiocode.miniatureblocks.MiniatureBlocks
 import org.bukkit.Material
 import java.io.File
 
-class TextureItemModelData(file: File) : ModelData(file, Material.DANDELION) {
+class TextureItemModelData(file: File) : ModelData(file, Material.WHITE_STAINED_GLASS) {
     
     override fun createJsonObject(): JsonObject {
         val mainObj = super.createJsonObject()
