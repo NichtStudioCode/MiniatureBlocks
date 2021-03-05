@@ -2456,6 +2456,25 @@
         "block/cactus_top",
         "block/cactus_bottom"
       ]
+    },
+    {
+      "material": "LADDER",
+      "textures": [
+        "block/ladder"
+      ]
+    },
+    {
+      "material": "VINE",
+      "textures": [
+        "block/modded/vine"
+      ]
+    },
+    {
+      "material": "LILY_PAD",
+      "rotation": "UP",
+      "textures": [
+        "block/modded/lily_pad"
+      ]
     }
   ]
 }

@@ -1,10 +1,10 @@
 package de.studiocode.miniatureblocks.build.concurrent
 
 import org.bukkit.Material
-import org.bukkit.block.BlockFace
 import org.bukkit.block.data.Bisected.Half
 import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.Directional
+import org.bukkit.block.data.MultipleFacing
 import org.bukkit.block.data.Orientable
 import org.bukkit.block.data.type.*
 import org.bukkit.block.data.type.Slab.Type
@@ -17,6 +17,10 @@ open class DirectionalBlockData(material: Material, blockData: Directional) : Th
 
 class OrientableBlockData(material: Material, blockData: Orientable) : ThreadSafeBlockData(material) {
     val axis = blockData.axis
+}
+
+open class MultipleFacingBlockData(material: Material, blockData: MultipleFacing) : ThreadSafeBlockData(material) {
+    val faces = HashSet(blockData.faces)
 }
 
 class SlabBlockData(material: Material, blockData: Slab) : ThreadSafeBlockData(material) {
@@ -39,9 +43,7 @@ class DoorBlockData(material: Material, blockData: Door) : DirectionalBlockData(
     val hinge = blockData.hinge
 }
 
-class FenceBlockData(material: Material, blockData: Fence) : ThreadSafeBlockData(material) {
-    val faces: Set<BlockFace> = HashSet(blockData.faces)
-}
+class FenceBlockData(material: Material, blockData: Fence) : MultipleFacingBlockData(material, blockData)
 
 class DaylightDetectorData(material: Material, blockData: DaylightDetector) : ThreadSafeBlockData(material) {
     val inverted = blockData.isInverted
@@ -57,6 +59,7 @@ fun BlockData.toThreadSafeBlockData(material: Material) =
         this is DaylightDetector -> DaylightDetectorData(material, this)
         this is Directional -> DirectionalBlockData(material, this)
         this is Orientable -> OrientableBlockData(material, this)
+        this is MultipleFacing -> MultipleFacingBlockData(material, this)
         else -> ThreadSafeBlockData(material)
     }
 

@@ -12,6 +12,8 @@ fun Material.isGlass() = MaterialUtils.glassMaterials.contains(this)
 
 fun Material.isCrossMaterial() = MaterialUtils.crossMaterials.contains(this)
 
+fun Material.isFlat() = MaterialUtils.flatMaterials.contains(this)
+
 fun Material.isMiscMaterial() = MISC_MATERIALS.contains(this)
 
 fun Material.isCarpet() = name.endsWith("CARPET")
@@ -25,9 +27,11 @@ object MaterialUtils {
     val translucentMaterials = ArrayList<Material>()
     val glassMaterials = ArrayList<Material>()
     val crossMaterials = ArrayList<Material>()
+    val flatMaterials = ArrayList<Material>()
     
     init {
         glassMaterials.addAll(Material.values().filter { it.name.contains("glass", true) })
+        flatMaterials.addAll(listOfMaterials("LADDER", "VINE", "LILY_PAD"))
         crossMaterials.addAll(Material.values().filter {
             (it.name.endsWith("SAPLING") && !it.name.startsWith("POTTED")) || it.name.contains("coral", true)
         })
@@ -40,6 +44,7 @@ object MaterialUtils {
         
         translucentMaterials.addAll(glassMaterials)
         translucentMaterials.addAll(crossMaterials)
+        translucentMaterials.addAll(flatMaterials)
         translucentMaterials.addAll(
             Material.values().filter {
                 val name = it.name

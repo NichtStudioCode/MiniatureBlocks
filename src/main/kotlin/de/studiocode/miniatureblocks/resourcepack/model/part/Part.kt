@@ -77,6 +77,7 @@ abstract class Part {
                 data.material.isCarpet() -> CarpetPart(data)
                 data.material.isPressurePlate() -> PressurePlatePart(data)
                 data.material.isPot() -> PotPart(data)
+                data.material.isFlat() -> FlatPart(data)
                 data.material.isMiscMaterial() -> MiscPart(data)
                 else -> CubePart(data)
             }

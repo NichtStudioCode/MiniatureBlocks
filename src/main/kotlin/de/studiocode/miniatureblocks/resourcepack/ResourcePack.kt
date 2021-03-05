@@ -146,10 +146,9 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     }
     
     private fun extractTextureFiles() {
-        // extract MiniatureBlocks stuff
         for (fileName in FileUtils.listExtractableFiles("resourcepack/textures/")) {
             val file = File(moddedBlockTexturesDir, FilenameUtils.getName(fileName))
-            if (!file.exists()) FileUtils.extractFile("/$fileName", file)
+            FileUtils.extractFile("/$fileName", file)
         }
     }
     
