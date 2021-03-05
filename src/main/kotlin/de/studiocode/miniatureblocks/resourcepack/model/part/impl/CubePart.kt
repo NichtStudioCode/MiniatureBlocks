@@ -17,14 +17,13 @@ class CubePart(data: ThreadSafeBlockData) : Part() {
     private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = listOf(CubeElement())
-    override val rotatable = false
     
     init {
-        addRotation(blockTexture.defaultRotation)
+        addTextureRotation(blockTexture.defaultRotation)
         
-        if (data is DirectionalBlockData) addRotation(Direction.of(data.facing))
-        else if (data is OrientableBlockData) addRotation(Direction.of(data.axis))
-        applyRotation()
+        if (data is DirectionalBlockData) addTextureRotation(Direction.of(data.facing))
+        else if (data is OrientableBlockData) addTextureRotation(Direction.of(data.axis))
+        applyModifications()
     }
     
     inner class CubeElement : Element(

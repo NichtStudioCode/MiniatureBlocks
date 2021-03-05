@@ -21,7 +21,6 @@ class TrapdoorPart(data: TrapdoorBlockData) : Part() {
     private val top = data.top
     
     override val elements: List<Element>
-    override val rotatable = true
     
     init {
         val element = createTrapdoorElement()
@@ -40,7 +39,7 @@ class TrapdoorPart(data: TrapdoorBlockData) : Part() {
         }
         
         addRotation(facing)
-        applyRotation()
+        applyModifications()
     }
     
     private fun createTrapdoorElement(): Element {

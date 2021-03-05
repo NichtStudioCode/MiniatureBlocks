@@ -13,7 +13,6 @@ class CrossPart(private val textures: Array<String>) : Part() {
     constructor(data: ThreadSafeBlockData) : this(BlockTexture.of(data.material).textures)
     
     override val elements = listOf(CrossElement1(), CrossElement2())
-    override val rotatable = false
     
     private inner class CrossElement1 :
         Element(

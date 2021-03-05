@@ -18,13 +18,12 @@ class DoorPart(data: DoorBlockData) : Part() {
     private val textureLocation = textureLocations[if (data.top) 1 else 0]
     
     private val frontUV = Texture.UV(0.0, 0.0, 1.0, 1.0)
-    private val backUV = frontUV.clone()
+    private val backUV = frontUV.copy()
     private val rightUV = Texture.UV(0.0, 0.0, DOOR_WIDTH, 1.0)
-    private val leftUV = rightUV.clone()
+    private val leftUV = rightUV.copy()
     private val topBotUV = Texture.UV(1 - DOOR_WIDTH, 0.0, 1.0, 1.0)
     
     override val elements = ArrayList<Element>()
-    override val rotatable = true
     
     init {
         val element = Element(
@@ -63,7 +62,7 @@ class DoorPart(data: DoorBlockData) : Part() {
         
         val direction = Direction.of(data.facing)
         addRotation(direction)
-        applyRotation()
+        applyModifications()
     }
     
 }

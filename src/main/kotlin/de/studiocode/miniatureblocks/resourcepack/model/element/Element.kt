@@ -32,7 +32,13 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         }
     }
     
+    fun freezeUV() {
+        textures.forEach { (direction, texture) ->  texture.freezeDynamicUV(this, direction) }
+    }
+    
     fun scaleCentred(scale: Double) {
+        if (scale == 1.0) return
+        
         val sizeX = toPos.x - fromPos.x
         val sizeY = toPos.y - fromPos.y
         val sizeZ = toPos.z - fromPos.z
@@ -51,6 +57,8 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     }
     
     fun move(x: Double, y: Double, z: Double) {
+        if (x == 0.0 && y == 0.0 && z == 0.0) return
+        
         fromPos.x += x
         fromPos.y += y
         fromPos.z += z

@@ -16,7 +16,6 @@ class FencePart(data: FenceBlockData) : Part() {
     private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = ArrayList<Element>()
-    override val rotatable = true
     
     init {
         elements += createFencePostElement()

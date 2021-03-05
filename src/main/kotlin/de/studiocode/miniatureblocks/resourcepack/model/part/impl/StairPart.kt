@@ -13,8 +13,6 @@ import org.bukkit.block.data.type.Stairs.Shape.*
 class StairPart(data: StairBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
-    
-    override val rotatable = true
     override val elements = ArrayList<Element>()
     
     init {
@@ -44,7 +42,7 @@ class StairPart(data: StairBlockData) : Part() {
         addPosRotation(0, yRot)
         if (top) addPosRotation(2, 2)
         
-        applyRotation()
+        applyModifications()
     }
     
     private fun createStraightStairElement(): Element {

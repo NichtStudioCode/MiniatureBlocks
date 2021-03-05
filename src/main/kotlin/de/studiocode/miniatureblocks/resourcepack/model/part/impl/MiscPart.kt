@@ -36,7 +36,6 @@ private fun createCactusElement(texture: BlockTexture): Element {
 class MiscPart(data: ThreadSafeBlockData) : Part() {
     
     override val elements = ArrayList<Element>()
-    override val rotatable = true
     
     init {
         elements += createElement(data.material)

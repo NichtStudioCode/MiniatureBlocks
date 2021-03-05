@@ -5,9 +5,9 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import org.bukkit.Axis
 
-class Texture {
+class Texture : Cloneable {
     
-    private val uv: UV?
+    private var uv: UV?
     val textureLocation: String
     var rotation by RotationValue()
     
@@ -24,46 +24,53 @@ class Texture {
         uv = null
     }
     
+    fun freezeDynamicUV(element: Element, direction: Direction) {
+        val uv = getDynamicUV(element, direction)
+        this.uv = UV(uv[0], uv[1], uv[2], uv[3])
+    }
+    
     fun getUvInMiniature(element: Element, direction: Direction): DoubleArray {
-        val uv: DoubleArray
-        if (this.uv == null) {
-            val fromPos = element.fromPos.toDoubleArray().map { it - 0.5 }
-            val toPos = element.toPos.toDoubleArray().map { it - 0.5 }
-            
-            val axisHor: Int // horizontal axis
-            val axisVert: Int // vertical axis
-            
-            when (direction.axis) {
-                Axis.X -> { // west or east
-                    axisHor = 2 // z
-                    axisVert = 1 // y
-                }
-                Axis.Y -> { // up or down
-                    axisHor = 0 // x
-                    axisVert = 2 // z
-                }
-                else -> { // north or south
-                    axisHor = 0 // x
-                    axisVert = 1 // y
-                }
-            }
-            
-            var nx = -1
-            var ny = -1
-            if (direction == Direction.WEST || direction == Direction.SOUTH) {
-                nx = 1
-            } else if (direction == Direction.UP) {
-                ny = 1
-                nx = 1
-            }
-            
-            val x = doubleArrayOf(fromPos[axisHor] * nx, toPos[axisHor] * nx).sorted()
-            val y = doubleArrayOf(fromPos[axisVert] * ny, toPos[axisVert] * ny).sorted()
-            
-            uv = doubleArrayOf(x[0], y[0], x[1], y[1]).map { it + 0.5 }.toDoubleArray()
-        } else uv = this.uv.doubleArray
+        val uv: DoubleArray = if (this.uv == null) getDynamicUV(element, direction)
+        else this.uv!!.doubleArray
         
         return normalizeUv(uv)
+    }
+    
+    private fun getDynamicUV(element: Element, direction: Direction): DoubleArray {
+        val fromPos = element.fromPos.toDoubleArray().map { it - 0.5 }
+        val toPos = element.toPos.toDoubleArray().map { it - 0.5 }
+        
+        val axisHor: Int // horizontal axis
+        val axisVert: Int // vertical axis
+        
+        when (direction.axis) {
+            Axis.X -> { // west or east
+                axisHor = 2 // z
+                axisVert = 1 // y
+            }
+            Axis.Y -> { // up or down
+                axisHor = 0 // x
+                axisVert = 2 // z
+            }
+            else -> { // north or south
+                axisHor = 0 // x
+                axisVert = 1 // y
+            }
+        }
+        
+        var nx = -1
+        var ny = -1
+        if (direction == Direction.WEST || direction == Direction.SOUTH) {
+            nx = 1
+        } else if (direction == Direction.UP) {
+            ny = 1
+            nx = 1
+        }
+        
+        val x = doubleArrayOf(fromPos[axisHor] * nx, toPos[axisHor] * nx).sorted()
+        val y = doubleArrayOf(fromPos[axisVert] * ny, toPos[axisVert] * ny).sorted()
+        
+        return doubleArrayOf(x[0], y[0], x[1], y[1]).map { it + 0.5 }.toDoubleArray()
     }
     
     private fun normalizeUv(uv: DoubleArray): DoubleArray {
@@ -75,10 +82,16 @@ class Texture {
         return normalizedUv
     }
     
-    class UV(var fromX: Double, var fromY: Double, var toX: Double, var toY: Double) : Cloneable {
+    public override fun clone(): Texture {
+        return (super.clone() as Texture).apply {
+            uv = uv?.copy()
+        }
+    }
     
+    data class UV(var fromX: Double, var fromY: Double, var toX: Double, var toY: Double) {
+        
         val doubleArray: DoubleArray
-        get() = doubleArrayOf(fromX, fromY, toX, toY)
+            get() = doubleArrayOf(fromX, fromY, toX, toY)
         
         fun flip(x: Boolean) {
             if (x) {
@@ -90,10 +103,6 @@ class Texture {
                 fromY = toY
                 toY = temp
             }
-        }
-    
-        public override fun clone(): UV {
-            return super.clone() as UV
         }
         
     }

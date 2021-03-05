@@ -11,7 +11,6 @@ class DaylightDetectorPart(data: DaylightDetectorData) : Part() {
     
     private val textures = BlockTexture.of(data.material).textures
     
-    override val rotatable = false
     override val elements: List<Element> = listOf(
         Element(
             Point3D(0.0, 0.0, 0.0), Point3D(1.0, 6.0 / 16.0, 1.0),

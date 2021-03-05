@@ -14,7 +14,6 @@ class CarpetPart(data: ThreadSafeBlockData) : Part() {
     private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = listOf(createCarpetElement())
-    override val rotatable = false
     
     private fun createCarpetElement(): Element {
         return TexturedElement(

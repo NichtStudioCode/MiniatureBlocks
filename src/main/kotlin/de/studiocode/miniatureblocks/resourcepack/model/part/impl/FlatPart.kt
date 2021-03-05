@@ -18,7 +18,6 @@ class FlatPart(data: ThreadSafeBlockData) : Part() {
     private val textures = blockTexture.textures
     
     override val elements = ArrayList<Element>()
-    override val rotatable = true
     
     init {
         if (data is MultipleFacingBlockData) {
@@ -36,7 +35,7 @@ class FlatPart(data: ThreadSafeBlockData) : Part() {
         }
         
         addRotation(blockTexture.defaultRotation)
-        applyRotation()
+        applyModifications()
     }
     
     private fun createFlatElement(inverted: Boolean) =

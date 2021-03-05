@@ -22,7 +22,6 @@ class PotPart(data: ThreadSafeBlockData) : Part() {
     private val dirtTexture = textures[1]
     
     override val elements = ArrayList<Element>()
-    override val rotatable = false
     
     init {
         elements += createEmptyPotElements()

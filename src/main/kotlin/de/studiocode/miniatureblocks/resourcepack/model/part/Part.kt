@@ -10,12 +10,20 @@ import de.studiocode.miniatureblocks.util.*
 abstract class Part {
     
     abstract val elements: List<Element>
-    abstract val rotatable: Boolean
     
     private var posRotX by RotationValue()
     private var posRotY by RotationValue()
     private var texRotX by RotationValue()
     private var texRotY by RotationValue()
+    private var moveX = 0.0
+    private var moveY = 0.0
+    private var moveZ = 0.0
+    
+    fun addMove(x: Double, y: Double, z: Double) {
+        moveX += x
+        moveY += y
+        moveZ += z
+    }
     
     fun addRotation(direction: Direction) {
         addRotation(direction.xRot, direction.yRot)
@@ -44,23 +52,22 @@ abstract class Part {
         texRotY += y
     }
     
-    fun applyRotation() {
-        if (posRotX == 0 && posRotY == 0 && texRotX == 0 && texRotY == 0) return
-        
+    fun applyModifications() {
         elements.forEach {
             it.rotateTexturesAroundXAxis(texRotX)
             it.rotateTexturesAroundYAxis(texRotY)
-            
-            if (rotatable) {
-                it.rotatePosAroundXAxis(posRotX)
-                it.rotatePosAroundYAxis(posRotY)
-            }
+            it.rotatePosAroundXAxis(posRotX)
+            it.rotatePosAroundYAxis(posRotY)
+            it.move(moveX, moveY, moveZ)
         }
         
         posRotX = 0
         posRotY = 0
         texRotX = 0
         texRotY = 0
+        moveX = 0.0
+        moveY = 0.0
+        moveZ = 0.0
     }
     
     companion object {
@@ -72,6 +79,7 @@ abstract class Part {
                 data is TrapdoorBlockData -> TrapdoorPart(data)
                 data is DoorBlockData -> DoorPart(data)
                 data is FenceBlockData -> FencePart(data)
+                data is GateBlockData -> GatePart(data)
                 data is DaylightDetectorData -> DaylightDetectorPart(data)
                 data.material.isCrossMaterial() -> CrossPart(data)
                 data.material.isCarpet() -> CarpetPart(data)

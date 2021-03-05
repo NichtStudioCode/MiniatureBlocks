@@ -14,7 +14,6 @@ class PressurePlatePart(data: ThreadSafeBlockData) : Part() {
     private val blockTexture = BlockTexture.of(data.material)
     
     override val elements = listOf(createPressurePlateElement())
-    override val rotatable = false
     
     private fun createPressurePlateElement(): Element {
         return TexturedElement(

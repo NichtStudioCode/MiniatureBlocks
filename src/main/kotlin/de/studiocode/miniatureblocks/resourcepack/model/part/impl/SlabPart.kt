@@ -11,11 +11,10 @@ class SlabPart(data: SlabBlockData) : Part() {
     private val top = data.top
     
     override val elements = listOf(SlabElement(blockTexture))
-    override val rotatable = true
     
     init {
         if (top) addPosRotation(2, 0)
-        applyRotation()
+        applyModifications()
     }
     
 }
