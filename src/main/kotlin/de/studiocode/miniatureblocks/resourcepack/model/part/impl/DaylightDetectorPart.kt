@@ -1,13 +1,13 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.DaylightDetectorData
+import de.studiocode.miniatureblocks.build.concurrent.DaylightDetectorBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 
-class DaylightDetectorPart(data: DaylightDetectorData) : Part() {
+class DaylightDetectorPart(data: DaylightDetectorBlockData) : Part() {
     
     private val textures = BlockTexture.of(data.material).textures
     

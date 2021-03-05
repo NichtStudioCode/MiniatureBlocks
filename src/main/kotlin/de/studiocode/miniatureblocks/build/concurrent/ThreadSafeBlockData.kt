@@ -1,11 +1,8 @@
 package de.studiocode.miniatureblocks.build.concurrent
 
 import org.bukkit.Material
+import org.bukkit.block.data.*
 import org.bukkit.block.data.Bisected.Half
-import org.bukkit.block.data.BlockData
-import org.bukkit.block.data.Directional
-import org.bukkit.block.data.MultipleFacing
-import org.bukkit.block.data.Orientable
 import org.bukkit.block.data.type.*
 import org.bukkit.block.data.type.Slab.Type
 
@@ -50,19 +47,30 @@ class GateBlockData(material: Material, blockData: Gate) : DirectionalBlockData(
     val open = blockData.isOpen
 }
 
-class DaylightDetectorData(material: Material, blockData: DaylightDetector) : ThreadSafeBlockData(material) {
+class DaylightDetectorBlockData(material: Material, blockData: DaylightDetector) : ThreadSafeBlockData(material) {
     val inverted = blockData.isInverted
+}
+
+class SnowBlockData(material: Material, blockData: Snow) : ThreadSafeBlockData(material) {
+    val layers = blockData.layers
+    val maximumLayers = blockData.maximumLayers
+}
+
+class SnowableBlockData(material: Material, blockData: Snowable) : ThreadSafeBlockData(material) {
+    val snowy = blockData.isSnowy
 }
 
 fun BlockData.toThreadSafeBlockData(material: Material) =
     when {
         isSlab() -> SlabBlockData(material, this as Slab)
+        isSnow() -> SnowBlockData(material, this as Snow)
         this is Stairs -> StairBlockData(material, this)
         this is TrapDoor -> TrapdoorBlockData(material, this)
         this is Door -> DoorBlockData(material, this)
         this is Fence -> FenceBlockData(material, this)
         this is Gate -> GateBlockData(material, this)
-        this is DaylightDetector -> DaylightDetectorData(material, this)
+        this is DaylightDetector -> DaylightDetectorBlockData(material, this)
+        this is Snowable -> SnowableBlockData(material, this)
         this is Directional -> DirectionalBlockData(material, this)
         this is Orientable -> OrientableBlockData(material, this)
         this is MultipleFacing -> MultipleFacingBlockData(material, this)
@@ -70,3 +78,5 @@ fun BlockData.toThreadSafeBlockData(material: Material) =
     }
 
 fun BlockData.isSlab() = this is Slab && this.type != Type.DOUBLE
+
+fun BlockData.isSnow() = this is Snow && this.layers < this.maximumLayers

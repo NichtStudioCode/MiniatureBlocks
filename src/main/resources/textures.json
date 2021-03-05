@@ -222,7 +222,8 @@
     "DARK_OAK_TRAPDOOR",
     "CRIMSON_TRAPDOOR",
     "WARPED_TRAPDOOR",
-    "IRON_TRAPDOOR"
+    "IRON_TRAPDOOR",
+    "SNOW"
   ],
   "delegate": [
     {
@@ -1071,6 +1072,12 @@
         "block/grass_block_side",
         "block/grass_block_side",
         "block/modded/grass_block_top",
+        "block/dirt",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_top",
         "block/dirt"
       ]
     },
@@ -1206,6 +1213,12 @@
         "block/mycelium_side",
         "block/mycelium_side",
         "block/mycelium_top",
+        "block/dirt",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_top",
         "block/dirt"
       ]
     },
@@ -1253,6 +1266,12 @@
         "block/podzol_side",
         "block/podzol_side",
         "block/podzol_top",
+        "block/dirt",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_snow",
+        "block/grass_block_top",
         "block/dirt"
       ]
     },
