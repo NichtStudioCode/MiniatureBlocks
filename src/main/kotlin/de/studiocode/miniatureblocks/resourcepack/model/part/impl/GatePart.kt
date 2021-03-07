@@ -15,16 +15,12 @@ private const val BOTTOM_SPACE = 5.0 / 16.0
 private const val HORIZONTAL_BEAM_HEIGHT = 3.0 / 16.0
 private const val HORIZONTAL_BEAM_LENGTH = 4.0 / 16.0
 
-private const val VERTICAL_BEAM_HEIGHT = 9.0 / 16.0
-
 private val LEFT_ROT_ORIGIN = doubleArrayOf(HALF_GATE_WIDTH, 0.0, 0.5)
 private val RIGHT_ROT_ORIGIN = doubleArrayOf(1 - HALF_GATE_WIDTH, 0.0, 0.5)
 
 class GatePart(data: GateBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
-    private val textures = blockTexture.textures
-    
     override val elements = ArrayList<Element>()
     
     init {

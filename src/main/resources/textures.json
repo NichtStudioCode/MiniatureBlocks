@@ -733,6 +733,46 @@
     {
       "material": "WARPED_FENCE_GATE",
       "texture": "block/warped_planks"
+    },
+    {
+      "material": "STONE_BUTTON",
+      "texture": "block/stone"
+    },
+    {
+      "material": "OAK_BUTTON",
+      "texture": "block/oak_planks"
+    },
+    {
+      "material": "SPRUCE_BUTTON",
+      "texture": "block/spruce_planks"
+    },
+    {
+      "material": "BIRCH_BUTTON",
+      "texture": "block/birch_planks"
+    },
+    {
+      "material": "JUNGLE_BUTTON",
+      "texture": "block/jungle_planks"
+    },
+    {
+      "material": "ACACIA_BUTTON",
+      "texture": "block/acacia_planks"
+    },
+    {
+      "material": "DARK_OAK_BUTTON",
+      "texture": "block/dark_oak_planks"
+    },
+    {
+      "material": "CRIMSON_BUTTON",
+      "texture": "block/crimson_planks"
+    },
+    {
+      "material": "WARPED_BUTTON",
+      "texture": "block/warped_planks"
+    },
+    {
+      "material": "POLISHED_BLACKSTONE_BUTTON",
+      "texture": "block/polished_blackstone"
     }
   ],
   "custom": [

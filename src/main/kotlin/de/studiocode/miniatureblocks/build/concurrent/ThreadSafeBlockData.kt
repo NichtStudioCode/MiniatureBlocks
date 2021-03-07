@@ -60,6 +60,10 @@ class SnowableBlockData(material: Material, blockData: Snowable) : ThreadSafeBlo
     val snowy = blockData.isSnowy
 }
 
+class SwitchBlockData(material: Material, blockData: Switch) : DirectionalBlockData(material, blockData) {
+    val attachedFace = blockData.attachedFace
+}
+
 fun BlockData.toThreadSafeBlockData(material: Material) =
     when {
         isSlab() -> SlabBlockData(material, this as Slab)
@@ -69,6 +73,7 @@ fun BlockData.toThreadSafeBlockData(material: Material) =
         this is Door -> DoorBlockData(material, this)
         this is Fence -> FenceBlockData(material, this)
         this is Gate -> GateBlockData(material, this)
+        this is Switch -> SwitchBlockData(material, this)
         this is DaylightDetector -> DaylightDetectorBlockData(material, this)
         this is Snowable -> SnowableBlockData(material, this)
         this is Directional -> DirectionalBlockData(material, this)
