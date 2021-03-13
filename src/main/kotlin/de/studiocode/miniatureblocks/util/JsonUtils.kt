@@ -1,11 +1,9 @@
 package de.studiocode.miniatureblocks.util
 
-import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
-import com.google.gson.JsonPrimitive
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import java.io.File
+import kotlin.reflect.KProperty
 
 fun JsonElement.writeToFile(file: File) =
     file.writeText(toString())
@@ -44,3 +42,33 @@ inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
     if (jsonElement == null) return null
     return fromJson(jsonElement, object : TypeToken<T>() {}.type)
 }
+
+open class MemberAccessor<T>(
+    private val jsonObject: JsonObject,
+    private val memberName: String,
+    private val toType: (JsonElement) -> T,
+    private val fromType: (T) -> JsonElement
+) {
+    
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T? {
+        val element = jsonObject.get(memberName)
+        return if (element != null) toType(element) else null
+    }
+    
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+        if (value != null) {
+            jsonObject.add(memberName, fromType(value))
+        } else {
+            jsonObject.remove(memberName)
+        }
+    }
+    
+}
+
+class IntAccessor(jsonObject: JsonObject, memberName: String) :
+    MemberAccessor<Int>(
+        jsonObject,
+        memberName,
+        { it.asInt },
+        { JsonPrimitive(it) }
+    )

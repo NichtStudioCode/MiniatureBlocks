@@ -1,22 +1,23 @@
-package de.studiocode.miniatureblocks.resourcepack.model
+package de.studiocode.miniatureblocks.resourcepack.file
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bukkit.Material
-import java.io.File
 
-open class ModelData(val file: File, val material: Material) {
+abstract class ModelFile(val material: Material, resourcePack: ResourcePack, path: String) : RPFile(resourcePack, path) {
     
-    val customModels = ArrayList<CustomModel>()
+    val customModels: ArrayList<CustomModel> by lazy { getCustomModelsFromFile() }
     
-    private var mainObj: JsonObject = JsonObject()
+    protected var mainObj: JsonObject = JsonObject()
     private var overrides: JsonArray = JsonArray()
     
-    init {
-        if (file.exists()) {
-            mainObj = JsonParser().parse(file.inputStream().reader()).asJsonObject
+    private fun getCustomModelsFromFile(): ArrayList<CustomModel> {
+        val customModels = ArrayList<CustomModel>()
+        if (exists()) {
+            mainObj = JsonParser().parse(inputStream().reader()).asJsonObject
             if (mainObj.has("overrides")) {
                 overrides = mainObj.get("overrides").asJsonArray
                 for (customModelObj in overrides.map { it.asJsonObject }) {
@@ -30,14 +31,16 @@ open class ModelData(val file: File, val material: Material) {
                 }
             }
         }
+        
+        return customModels
     }
     
     fun writeToFile() {
-        mainObj = createJsonObject()
-        file.writeText(mainObj.toString())
+        writeToJsonObject()
+        writeText(mainObj.toString())
     }
     
-    protected open fun createJsonObject(): JsonObject {
+    protected open fun writeToJsonObject() {
         mainObj = JsonObject()
         overrides = JsonArray()
         
@@ -51,13 +54,13 @@ open class ModelData(val file: File, val material: Material) {
             overrides.add(customModelObj)
         }
         mainObj.add("overrides", overrides)
-        
-        return mainObj
     }
+    
+    fun hasModel(name: String) = customModels.any { it.name == name }
     
     fun hasCustomModelData(customModelData: Int): Boolean = customModels.any { it.customModelData == customModelData }
     
-    fun getNextCustomModelData(): Int = (customModels.map { it.customModelData }.max() ?: 1000000) + 1
+    fun getNextCustomModelData(): Int = (customModels.map { it.customModelData }.maxOrNull() ?: 0) + 1
     
     fun removeModel(name: String) = customModels.removeIf { it.name == name }
     
@@ -73,7 +76,7 @@ open class ModelData(val file: File, val material: Material) {
     
     inner class CustomModel(val customModelData: Int, val model: String) {
         
-        val name = model.split("/")[2]
+        val name = model.substringAfterLast("/")
         
         fun createItemBuilder(): ItemBuilder =
             ItemBuilder(material).setDisplayName("§f$name").setCustomModelData(customModelData)

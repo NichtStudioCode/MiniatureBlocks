@@ -11,7 +11,7 @@ import de.studiocode.invui.resourcepack.Icon
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.miniature.data.impl.AnimatedMiniatureData
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
+import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.util.playBurpSound
 import de.studiocode.miniatureblocks.util.playClickSound
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage

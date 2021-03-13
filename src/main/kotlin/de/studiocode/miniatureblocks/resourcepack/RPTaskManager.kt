@@ -23,7 +23,7 @@ object RPTaskManager {
                 try {
                     val buildData = BuildDataCreator(min, max).createData()
                     val modelData = MiniatureModel(buildData).modelDataObj
-                    MiniatureBlocks.INSTANCE.resourcePack.addNewModel(name, modelData, forceResourcePack)
+                    MiniatureBlocks.INSTANCE.resourcePack.addMiniature(name, modelData, forceResourcePack)
                     
                     runAfter()
                 } catch (e: Exception) {
@@ -37,13 +37,13 @@ object RPTaskManager {
         if (isBusy()) return
         
         if (currentTask?.isDone != false) {
-            try {
-                currentTask = executorService.submit {
+            currentTask = executorService.submit {
+                try {
                     MiniatureBlocks.INSTANCE.resourcePack.downloadTexture(name, url, frameTime)
                     player.sendPrefixedMessage("§7The texture §b$name§7 has been downloaded.")
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }
@@ -52,13 +52,13 @@ object RPTaskManager {
         if (isBusy()) return
         
         if (currentTask?.isDone != false) {
-            try {
-                currentTask = executorService.submit {
+            currentTask = executorService.submit {
+                try {
                     MiniatureBlocks.INSTANCE.resourcePack.deleteTexture(name)
                     player.sendPrefixedMessage("§7The texture §b$name§7 has been deleted successfully.")
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }

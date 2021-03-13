@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.menu
 import de.studiocode.invui.item.impl.SimpleItem
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
+import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -25,7 +25,7 @@ class MiniaturesMenu(player: Player) : SelectMiniatureMenu(player, { model, obta
                     val miniatureBlocks = MiniatureBlocks.INSTANCE
                     val resourcePack = miniatureBlocks.resourcePack
                     miniatureBlocks.miniatureManager.removeMiniatureArmorStands(customModel)
-                    resourcePack.removeModel(customModel.name)
+                    resourcePack.removeMiniature(customModel.name)
                 }
             }
         }

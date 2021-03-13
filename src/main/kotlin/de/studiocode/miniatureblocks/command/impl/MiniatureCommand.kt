@@ -132,7 +132,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
             val name = context.getArgument<String>("name")
             if (name.matches(namePattern)) {
                 val resourcePack = MiniatureBlocks.INSTANCE.resourcePack
-                if (!resourcePack.hasModel(name)) {
+                if (!resourcePack.mainModelData.hasModel(name)) {
                     if (!RPTaskManager.isBusy()) {
                         val builderWorld = MiniatureBlocks.INSTANCE.builderWorld
                         val regionManager = MiniatureBlocks.INSTANCE.regionManager

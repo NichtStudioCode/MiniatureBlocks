@@ -11,8 +11,8 @@ import de.studiocode.invui.item.impl.SupplierItem
 import de.studiocode.invui.resourcepack.Icon
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.MiniatureBlocks
+import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.hasSixTextures
 import de.studiocode.miniatureblocks.util.searchFor

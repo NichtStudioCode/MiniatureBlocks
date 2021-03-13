@@ -5,7 +5,7 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType.ANIMATED
 import de.studiocode.miniatureblocks.miniature.data.types.AnimatedMiniatureDataType
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
+import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.util.ReflectionUtils
 import org.bukkit.Location
 import org.bukkit.NamespacedKey

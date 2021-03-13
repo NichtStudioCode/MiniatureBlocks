@@ -3,10 +3,10 @@ package de.studiocode.miniatureblocks.resourcepack
 import com.google.gson.JsonObject
 import de.studiocode.invui.resourcepack.ForceResourcePack
 import de.studiocode.miniatureblocks.MiniatureBlocks
+import de.studiocode.miniatureblocks.resourcepack.file.DirectoryFile
+import de.studiocode.miniatureblocks.resourcepack.file.MainModelDataFile
+import de.studiocode.miniatureblocks.resourcepack.file.TextureModelDataFile
 import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
-import de.studiocode.miniatureblocks.resourcepack.model.MainModelData
-import de.studiocode.miniatureblocks.resourcepack.model.ModelData.CustomModel
-import de.studiocode.miniatureblocks.resourcepack.model.TextureItemModelData
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.storage.PermanentStorage
 import de.studiocode.miniatureblocks.util.*
@@ -20,158 +20,149 @@ import org.bukkit.event.player.PlayerJoinEvent
 import java.io.File
 import java.net.URL
 
-// TODO: rewrite
 class ResourcePack(plugin: MiniatureBlocks) : Listener {
+    
+    val main = File("plugins/MiniatureBlocks/ResourcePack/")
+    val models = DirectoryFile(this, "assets/minecraft/models/")
+    private val moddedItemModels = DirectoryFile(this, "assets/minecraft/models/item/modded")
+    private val textureItemModels = DirectoryFile(this, "assets/minecraft/models/item/textureitem")
+    private val textures = DirectoryFile(this, "assets/minecraft/textures/")
+    
+    val mainModelData: MainModelDataFile
+    val textureModelData: TextureModelDataFile
     
     private val config = plugin.config
     
-    private val zipFile = File("plugins/MiniatureBlocks/ResourcePack.zip")
-    private val dir = File("plugins/MiniatureBlocks/ResourcePack/")
-    private val assetsDir = File(dir, "assets/")
-    private val minecraftDir = File(assetsDir, "minecraft/")
-    val modelsDir = File(minecraftDir, "models/")
-    private val itemModelsDir = File(modelsDir, "item/")
-    private val moddedItemModelsDir = File(itemModelsDir, "modded/")
-    private val texturesDir = File(minecraftDir, "textures/")
-    private val moddedBlockTexturesDir = File(texturesDir, "block/modded/")
-    private val textureItemsDir = File(itemModelsDir, "textureitem")
-    private val packMcmeta = File(dir, "pack.mcmeta")
-    private val modelParent = File(itemModelsDir, "miniatureblocksmain.json")
-    private val textureModelParent = File(itemModelsDir, "textureitem.json")
-    private val oldMainModelDataFile = File(itemModelsDir, "structure_void.json")
-    private val mainModelDataFile = File(itemModelsDir, "black_stained_glass.json")
-    private val oldTextureModelDataFile = File(itemModelsDir, "dandelion.json")
-    private val textureModelDataFile = File(itemModelsDir, "white_stained_glass.json")
-    val textureModelData: TextureItemModelData
-    val mainModelData: MainModelData
+    private val zipFile = File(main.parentFile, "ResourcePack.zip")
+    var hash = ByteArray(0)
     
-    var downloadUrl: String? = PermanentStorage.retrieveOrNull("rp-download-url")
+    private val lastUploadUrl: String?
+        get() = PermanentStorage.retrieveOrNull<String>("rp-download-url")
+    
+    val downloadUrl: String?
         get() {
-            return if (config.hasCustomUploader()) field
-            else FileIOUploadUtils.uploadToFileIO(zipFile)
+            return if (config.hasCustomUploader()) {
+                if (lastUploadUrl == null) uploadToCustom()
+                lastUploadUrl
+            } else uploadToDefault()
         }
-    var hash: ByteArray = getZipHash()
     
     init {
-        Bukkit.getPluginManager().registerEvents(this, plugin)
+        Bukkit.getServer().pluginManager.registerEvents(this, plugin)
         
-        if (!moddedItemModelsDir.exists()) moddedItemModelsDir.mkdirs()
-        if (!moddedBlockTexturesDir.exists()) moddedBlockTexturesDir.mkdirs()
-        if (!textureItemsDir.exists()) textureItemsDir.mkdirs()
-        if (!packMcmeta.exists()) FileUtils.extractFile("/resourcepack/pack.mcmeta", packMcmeta)
-        FileUtils.extractFile("/resourcepack/parent.json", modelParent)
-        FileUtils.extractFile("/resourcepack/textureitem.json", textureModelParent)
+        updateOldFiles()
+        mainModelData = MainModelDataFile(this)
+        textureModelData = TextureModelDataFile(this)
         
-        if (oldMainModelDataFile.exists() && !mainModelDataFile.exists()) {
-            // server upgraded to this version from version >= 0.6 version <= 0.8
-            oldMainModelDataFile.copyTo(mainModelDataFile)
-        }
-        if (oldTextureModelDataFile.exists() && !textureModelDataFile.exists()) {
-            // server upgraded to this version from version 0.9
-            oldTextureModelDataFile.copyTo(textureModelDataFile)
-        }
-    
-        textureModelData = TextureItemModelData(textureModelDataFile)
-        mainModelData = MainModelData(mainModelDataFile)
-        
-        extractTextureFiles()
+        extractDefaults()
         createTextureModelFiles()
-        
-        createZip()
-        
-        if (config.hasCustomUploader() && hasCustomModels() && PermanentStorage.retrieveOrNull<String>("rp-download-url") == "") uploadToCustom()
-        
+        packZip()
     }
+    
+    private fun updateOldFiles() {
+        val oldMainModelData = File(main, "assets/minecraft/models/item/structure_void.json")
+        val oldTextureModelData = File(main, "assets/minecraft/models/item/dandelion.json")
+        val newMainModelData = File(main, "assets/minecraft/models/item/black_stained_glass.json")
+        val newTextureModelData = File(main, "assets/minecraft/models/item/white_stained_glass.json")
+        
+        if (oldMainModelData.exists() && !newMainModelData.exists()) {
+            // server upgraded to this version from version >= 0.6 version <= 0.8
+            oldMainModelData.copyTo(mainModelData)
+        }
+        
+        if (oldTextureModelData.exists() && !newTextureModelData.exists()) {
+            // server upgraded to this version from version 0.9
+            oldTextureModelData.copyTo(textureModelData)
+        }
+    }
+    
+    private fun extractDefaults() = FileUtils.extractFiles("resourcepack/", main)
     
     private fun createTextureModelFiles() {
         BlockTexture.textureLocations.forEach(this::addTextureLocation)
         textureModelData.writeToFile()
     }
     
-    fun downloadTexture(name: String, url: String, frameTime: Int) {
+    fun downloadTexture(name: String, url: String, frametime: Int) {
         val path = "block/$name"
-        val image = File(texturesDir, "$path.png")
+        val texture = textures.getTexture("$path.png")
         URL(url).openStream().use { inStream ->
-            image.outputStream().use { outStream ->
+            texture.outputStream().use { outStream ->
                 inStream.copyTo(outStream)
             }
         }
-        if (frameTime > 0) {
-            val mcmFile = File(image.parentFile, image.name + ".mcmeta")
-            mcmFile.writeText(JsonObject().apply { 
-                add("animation", JsonObject().apply { 
-                    addProperty("frametime", frameTime)
-                })
-            }.toString())
-        }
+        if (frametime > 0) texture.makeAnimated(frametime)
         
         addTextureLocation(path)
-        BlockTexture.addTextureLocation(path)
         textureModelData.writeToFile()
-        createZip()
-        forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
+        BlockTexture.addTextureLocation(path)
+        
+        updateResourcePack()
     }
     
     fun deleteTexture(name: String) {
-        val texturePath = "block/$name"
-        val image = File(texturesDir, "block/$name.png")
-        val mcmFile = File(image.parentFile, image.name + ".mcmeta")
-        if (image.exists()) image.delete()
-        if (mcmFile.exists()) mcmFile.delete()
+        val path = "block/$name"
+        val texture = textures.getTexture("$path.png")
         
-        val modelPath = "item/textureitem/$name"
-        val modelFile = File(modelsDir, "$modelPath.json")
-        if (modelFile.exists()) {
-            modelFile.delete()
-            textureModelData.customModels.removeIf { it.name == name }
-            textureModelData.writeToFile()
-            BlockTexture.removeTextureLocation(texturePath)
-            
-            createZip()
-            forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
-        }
+        if (texture.isAnimated()) texture.animationData.delete()
+        texture.delete()
+        
+        removeTextureLocation(path)
+        BlockTexture.removeTextureLocation(path)
+        
+        updateResourcePack()
     }
     
     private fun addTextureLocation(textureLocation: String) {
-        val modelName = "item/textureitem/" + (textureLocation.replace("block/", "").replace("/", ""))
-        val file = File(modelsDir, "$modelName.json")
+        val modelName = textureLocation.replace("block/", "").replace("/", "")
+        val modelPath = "item/textureitem/$modelName"
+        val file = File(textureItemModels, "$modelName.json")
         if (!file.exists()) {
             val mainObj = JsonObject()
             mainObj.addProperty("parent", "item/textureitem")
             mainObj.add("textures", JsonObject().apply { addProperty("1", textureLocation) })
             file.writeText(mainObj.toString())
             
-            textureModelData.customModels += textureModelData.CustomModel(textureModelData.getNextCustomModelData(), modelName)
+            textureModelData.customModels += textureModelData.CustomModel(textureModelData.getNextCustomModelData(), modelPath)
         }
     }
     
-    private fun extractTextureFiles() {
-        for (fileName in FileUtils.listExtractableFiles("resourcepack/textures/")) {
-            val file = File(moddedBlockTexturesDir, FilenameUtils.getName(fileName))
-            FileUtils.extractFile("/$fileName", file)
+    private fun removeTextureLocation(textureLocation: String) {
+        val modelName = textureLocation.replace("block/", "").replace("/", "")
+        val modelPath = "item/textureitem/$modelName"
+        val modelFile = File(textureItemModels, "$modelName.json")
+        if (modelFile.exists()) {
+            modelFile.delete()
+            textureModelData.customModels.removeIf { it.model == modelPath }
+            textureModelData.writeToFile()
         }
     }
     
-    private fun uploadToCustom() {
-        val reqUrl = config.getCustomUploaderRequest()
-        val hostUrl = config.getCustomUploaderHost()
-        val key = config.getCustomUploaderKey()
+    fun addMiniature(name: String, modelDataObj: JsonObject, force: Boolean = true) {
+        modelDataObj.writeToFile(File(moddedItemModels, "$name.json"))
         
-        if (downloadUrl != null) {
-            // delete previous resource pack
-            val fileName = FilenameUtils.getBaseName(downloadUrl)
-            CustomUploaderUtils.deleteFile(reqUrl, key, fileName)
-        }
+        val customModelData = mainModelData.getNextCustomModelData()
+        mainModelData.customModels.add(mainModelData.CustomModel(customModelData, "item/modded/$name"))
+        mainModelData.writeToFile()
         
-        // upload file
-        val url = CustomUploaderUtils.uploadFile(reqUrl, hostUrl, key, zipFile)
-        if (url != null) {
-            PermanentStorage.store("rp-download-url", url)
-            downloadUrl = url
-        }
+        updateResourcePack(force)
     }
     
-    private fun createZip() {
+    fun removeMiniature(name: String) {
+        File(moddedItemModels, "$name.json").delete()
+        
+        mainModelData.removeModel(name)
+        mainModelData.writeToFile()
+        
+        updateResourcePack()
+    }
+    
+    private fun updateResourcePack(force: Boolean = true) {
+        packZip()
+        if (force) forceResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
+    }
+    
+    private fun packZip() {
         if (zipFile.exists()) zipFile.delete()
         
         val invUIRP = File("plugins/MiniatureBlocks/InvUIRP.zip")
@@ -182,8 +173,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         
         // create MiniatureBlocks ResourcePack
         val zip = ZipFile(mbRP)
-        zip.addFile(packMcmeta)
-        zip.addFolder(assetsDir)
+        main.listFiles()!!.forEach { if (it.isDirectory) zip.addFolder(it) else zip.addFile(it) }
         
         // Merge both packs
         FileUtils.mergeZips(zipFile, invUIRP, mbRP)
@@ -192,67 +182,40 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         mbRP.delete()
         invUIRP.delete()
         
-        hash = getZipHash() // update hash
+        updateZipHash() // update hash
         if (config.hasCustomUploader()) uploadToCustom() // upload if custom uploader is set
     }
     
-    private fun getZipHash(): ByteArray {
-        return if (zipFile.exists()) {
+    private fun updateZipHash() {
+        hash = if (zipFile.exists()) {
             HashUtils.createSha1Hash(zipFile)
         } else ByteArray(0)
     }
     
-    private fun hasCustomModels(): Boolean {
-        return moddedItemModelsDir.listFiles()?.isNotEmpty() ?: false
-    }
-    
-    fun hasModel(name: String): Boolean {
-        val modelFile = File(moddedItemModelsDir, "$name.json")
-        return modelFile.exists()
-    }
-    
-    fun addNewModel(name: String, modelDataObj: JsonObject, forceResourcePack: Boolean = true): Int {
-        val modelFile = File(moddedItemModelsDir, "$name.json")
-        modelDataObj.writeToFile(modelFile)
+    private fun uploadToCustom() {
+        val reqUrl = config.getCustomUploaderRequest()
+        val hostUrl = config.getCustomUploaderHost()
+        val key = config.getCustomUploaderKey()
         
-        return addOverride("item/modded/$name", forceResourcePack)
-    }
-    
-    fun removeModel(name: String) {
-        val modelFile = File(moddedItemModelsDir, "$name.json")
-        modelFile.delete()
+        if (lastUploadUrl != null) {
+            // delete previous resource pack
+            val fileName = FilenameUtils.getBaseName(downloadUrl)
+            CustomUploaderUtils.deleteFile(reqUrl, key, fileName)
+        }
         
-        removeOverride(name)
+        // upload new resource pack
+        val url = CustomUploaderUtils.uploadFile(reqUrl, hostUrl, key, zipFile)!!
+        PermanentStorage.store("rp-download-url", url)
     }
     
-    private fun addOverride(model: String, forceResourcePack: Boolean = true): Int {
-        val customModelData = mainModelData.getNextCustomModelData()
-        mainModelData.customModels.add(mainModelData.CustomModel(customModelData, model))
-        mainModelData.writeToFile()
-        
-        createZip()
-        if (forceResourcePack) forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
-        return customModelData
-    }
-    
-    private fun removeOverride(name: String) {
-        mainModelData.removeModel(name)
-        mainModelData.writeToFile()
-        
-        createZip()
-        forcePlayerResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
-    }
-    
-    fun getModels(): ArrayList<CustomModel> {
-        return mainModelData.customModels
-    }
+    private fun uploadToDefault() = FileIOUploadUtils.uploadToFileIO(zipFile)
     
     @EventHandler
     fun handlePlayerJoin(event: PlayerJoinEvent) {
-        runTaskLater(5) { forcePlayerResourcePack(event.player) }
+        runTaskLater(5) { forceResourcePack(event.player) }
     }
     
-    private fun forcePlayerResourcePack(vararg players: Player) {
+    private fun forceResourcePack(vararg players: Player) {
         players.forEach { ForcedResourcePack(it, this).force() }
     }
     
