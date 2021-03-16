@@ -10,7 +10,7 @@ import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
-import org.bukkit.event.player.PlayerInteractAtEntityEvent
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
@@ -45,7 +45,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
             
             // set other properties & nbt tags
             armorStand.isVisible = false
-            armorStand.isCollidable = false
+            armorStand.isMarker = true
             armorStand.setGravity(false)
             
             // set miniature type
@@ -116,13 +116,11 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
         armorStand.teleport(location)
     }
     
-    fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
-        event.isCancelled = true
-        
-        val commandType = CommandType.getCommandType(event)
+    fun handleEntityInteract(player: Player) {
+        val commandType = CommandType.getCommandType(player.isSneaking)
         val command = commands[commandType]
         if (command != null) {
-            event.player.chat(command)
+            player.chat(command)
         } else if (degreesPerTick == 0f && !noRotate) {
             rotate(30f, true)
         }
@@ -193,8 +191,8 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
         
         companion object {
             
-            fun getCommandType(event: PlayerInteractAtEntityEvent): CommandType {
-                return if (event.player.isSneaking) SHIFT_RIGHT else RIGHT
+            fun getCommandType(sneaking: Boolean): CommandType {
+                return if (sneaking) SHIFT_RIGHT else RIGHT
             }
             
         }

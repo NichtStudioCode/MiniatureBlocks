@@ -10,22 +10,26 @@ import de.studiocode.miniatureblocks.miniature.item.MiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
-import de.studiocode.miniatureblocks.util.getTargetEntity
+import de.studiocode.miniatureblocks.util.getTargetMiniature
 import de.studiocode.miniatureblocks.util.runTaskTimer
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Chunk
+import org.bukkit.GameMode
+import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.inventory.InventoryCreativeEvent
-import org.bukkit.event.player.PlayerInteractAtEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.ChunkUnloadEvent
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataHolder
 
@@ -92,32 +96,53 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     }
     
     @EventHandler
-    fun handleEntityInteract(event: PlayerInteractAtEntityEvent) {
-        val entity = event.rightClicked
-        
-        if (entity is ArmorStand && entity.hasMiniatureData())
-            entity.getMiniature()?.handleEntityInteract(event)
+    fun handleInteract(event: PlayerInteractEvent) {
+        if (event.hand != null && event.hand == EquipmentSlot.HAND) { // right click is called twice for each hand
+            val player = event.player
+            val action = event.action
+            if (action.isClick()) {
+                val miniature = player.getTargetMiniature()
+                if (miniature != null) {
+                    event.isCancelled = true
+                    if (action.isRightClick()) miniature.handleEntityInteract(player)
+                    else handleMiniatureBreak(miniature, player)
+                }
+            }
+        }
+    }
+    
+    private fun Action.isClick() =
+        this == Action.LEFT_CLICK_BLOCK
+            || this == Action.LEFT_CLICK_AIR
+            || this == Action.RIGHT_CLICK_BLOCK
+            || this == Action.RIGHT_CLICK_AIR
+    
+    private fun Action.isRightClick() =
+        this == Action.RIGHT_CLICK_AIR
+            || this == Action.RIGHT_CLICK_BLOCK
+    
+    private fun handleMiniatureBreak(miniature: MiniatureArmorStand, player: Player) {
+        val entity = miniature.armorStand
+        val location = entity.location
+        if (player.gameMode != GameMode.CREATIVE) {
+            val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
+            else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
+            
+            location.world!!.dropItem(location, item.itemStack)
+        }
+        entity.remove()
     }
     
     @EventHandler
-    fun handleEntityDamage(event: EntityDamageByEntityEvent) {
-        val entity = event.entity
-        if (entity is ArmorStand && entity.hasMiniatureData()) {
-            val miniature = entity.getMiniature()
-            if (miniature != null) {
-                event.isCancelled = true
-                val location = entity.location
-                val damager = event.damager
-                if (damager !is Player || (damager.gameMode == GameMode.SURVIVAL || damager.gameMode == GameMode.ADVENTURE)) {
-                    val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(
-                        NormalMiniatureData(miniature)
-                    )
-                    else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
-                    
-                    location.world!!.dropItem(location, item.itemStack)
-                }
-                entity.remove()
-            }
+    fun handleMiniatureClone(event: InventoryCreativeEvent) {
+        val player = event.whoClicked as Player
+        val miniature = player.getTargetMiniature()
+        
+        if (miniature != null) {
+            val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
+            else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
+            
+            event.cursor = item.itemStack
         }
     }
     
@@ -133,8 +158,9 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
                 val miniature = MiniatureType.newInstance(armorStand)!!
                 
                 if (miniature.isValid()) {
-                    //  put it into map
+                    // put it into map
                     loadedMiniatures[armorStand] = miniature
+                    armorStand.isMarker = true // set version < 0.10 armor stands to marker
                 } else {
                     // remove armor stand if this miniature model does no longer exist
                     armorStand.remove()
@@ -148,28 +174,6 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
         event.chunk.entities
             .filterIsInstance<ArmorStand>()
             .forEach { loadedMiniatures.remove(it) }
-    }
-    
-    @EventHandler
-    fun handleMiniatureClone(event: InventoryCreativeEvent) {
-        val cloned = event.cursor
-        if (cloned.type == Material.ARMOR_STAND) {
-            
-            val player = event.whoClicked as Player
-            val entity = player.getTargetEntity(8.0)
-            
-            if (entity != null && entity is ArmorStand) {
-                val miniature = entity.getMiniature()
-                if (miniature != null) {
-                    val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(
-                        NormalMiniatureData(miniature)
-                    )
-                    else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
-                    
-                    event.cursor = item.itemStack
-                }
-            }
-        }
     }
     
     enum class MiniatureType(

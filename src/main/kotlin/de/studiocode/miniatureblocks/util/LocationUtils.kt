@@ -1,30 +1,36 @@
 package de.studiocode.miniatureblocks.util
 
-import de.studiocode.miniatureblocks.resourcepack.model.Direction
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
+import de.studiocode.miniatureblocks.miniature.armorstand.getMiniature
+import org.bukkit.Chunk
 import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.entity.Entity
+import org.bukkit.entity.ArmorStand
 import xyz.xenondevs.particle.ParticleBuilder
 import xyz.xenondevs.particle.ParticleEffect
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
 
-fun Location.getEntityLookingAt(maxDistance: Double, vararg exclusions: Entity, stepSize: Double = 0.25): Entity? {
-    val entities = (world?.entities ?: emptyList())
-        .filter { !exclusions.contains(it) }
-    
+fun Location.getMiniatureLookingAt(maxDistance: Double, stepSize: Double = 0.25): MiniatureArmorStand? {
     val location = this.clone()
     val vector = location.direction.multiply(stepSize)
     
+    val miniatures = HashMap<Chunk, List<ArmorStand>>()
+    
     var distance = 0.0
     while (distance <= maxDistance) {
-        
         location.add(vector)
         
-        if (location.block.type == Material.AIR) {
-            val entity = location.filterInBoundingBox(entities).firstOrNull()
-            if (entity != null) return entity
+        val chunk = location.chunk
+        if (!miniatures.containsKey(chunk)) miniatures[chunk] = chunk.getMiniatures()
+        
+        if (location.block.type.isTraversable()) {
+            for (miniature in miniatures[chunk]!!) {
+                val start = miniature.location.clone().subtract(0.5, 0.0, 0.5)
+                val end = miniature.location.clone().add(0.5, 1.0, 0.5)
+                
+                if (location.isBetween(start, end)) return miniature.getMiniature()
+            }
         } else return null
         
         distance += stepSize
@@ -33,26 +39,16 @@ fun Location.getEntityLookingAt(maxDistance: Double, vararg exclusions: Entity, 
     return null
 }
 
-fun <T : Entity> Location.filterInBoundingBox(entities: List<T>): List<T> {
-    return entities.filter { it.boundingBox.contains(x, y, z) }
+fun Chunk.getMiniatures(): List<ArmorStand> {
+    return entities
+        .filterIsInstance<ArmorStand>()
+        .filter { it.getMiniature() != null }
 }
 
-fun Location.roundCoordinates(digits: Int) {
-    x = MathUtils.roundToDecimalDigits(x, digits)
-    y = MathUtils.roundToDecimalDigits(y, digits)
-    z = MathUtils.roundToDecimalDigits(z, digits)
-}
-
-fun Location.advance(direction: Direction, step: Double = 1.0) {
-    when (direction) {
-        Direction.NORTH -> add(0.0, 0.0, -step)
-        Direction.EAST -> add(step, 0.0, 0.0)
-        Direction.SOUTH -> add(0.0, 0.0, step)
-        Direction.WEST -> add(-step, 0.0, 0.0)
-        Direction.UP -> add(0.0, step, 0.0)
-        Direction.DOWN -> add(0.0, -step, 0.0)
-    }
-}
+fun Location.isBetween(start: Location, end: Location) =
+    x in start.x.rangeTo(end.x)
+        && y in start.y.rangeTo(end.y)
+        && z in start.z.rangeTo(end.z)
 
 fun Location.getBoxOutline(other: Location, correct: Boolean, stepSize: Double = 0.5): List<Location> {
     val locations = ArrayList<Location>()

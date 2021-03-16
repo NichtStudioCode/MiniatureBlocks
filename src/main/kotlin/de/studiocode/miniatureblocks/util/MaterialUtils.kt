@@ -28,6 +28,8 @@ fun Material.isGlassPane() = name.endsWith("GLASS_PANE")
 
 fun Material.isFence() = name.endsWith("FENCE")
 
+fun Material.isTraversable() = isAir || name == "WATER" || name == "LAVA"
+
 object MaterialUtils {
     
     val translucentMaterials = ArrayList<Material>()
