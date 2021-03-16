@@ -13,7 +13,10 @@ import de.studiocode.miniatureblocks.util.isGlass
 import de.studiocode.miniatureblocks.util.isTranslucent
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Location
+import org.bukkit.Material
 import java.util.concurrent.*
+
+typealias ElementData = Triple<Element, Point3D, Material>
 
 private val EMPTY_TEXTURE = Texture(Texture.UV(0.0, 0.0, 0.0, 0.0), "")
 
@@ -116,58 +119,49 @@ class BuildDataCreator(min: Location, max: Location) {
     
     private fun removeObstructedFaces(point: Point3D) {
         val info = processedWorldData[point]!!
-        val data = info.first
+        val material = info.first.material
         val part = info.second
-        val material = data.material
         
         Direction.values().forEach { direction ->
             val neighborPoint = point.advance(direction)
-            
-            if (isInRange(neighborPoint)) {
-                val neighborInfo = processedWorldData[neighborPoint]
-                if (neighborInfo != null) {
-                    val neighborData = neighborInfo.first
-                    val neighborPart = neighborInfo.second
-                    val neighborMaterial = neighborData.material
-                    
-                    if (neighborMaterial.isTranslucent()) {
-                        // don't render glass side if glass blocks of the same glass type are side by side
-                        if (material.isGlass() && material == neighborMaterial) {
-                            part.elements.forEach { element -> element.textures[direction] = EMPTY_TEXTURE }
-                        } else return@forEach // otherwise render the side
+            var neighborElements: List<ElementData> = emptyList()
+            val neighborInfo = processedWorldData[neighborPoint]
+            if (neighborInfo != null) {
+                val neighborMaterial = neighborInfo.first.material
+                neighborElements = neighborInfo.second.elements
+                    .map {
+                        ElementData(
+                            it,
+                            Point3D(direction.stepX, direction.stepY, direction.stepZ),
+                            neighborMaterial
+                        )
                     }
-                    
-                    val neighborElements = neighborPart.elements
-                        .map { it to Point3D(direction.stepX, direction.stepY, direction.stepZ) }
-                    
-                    part.elements
-                        .filter { !it.hasRotation() } // ignore elements with rotation
-                        .forEach { element ->
-                            
-                            val surroundingElements = neighborElements +
-                                part.elements
-                                    .filter { !it.hasRotation() && it != element } // ignore elements with rotation and the same element
-                                    .map { it to Point3D(0, 0, 0) }
-                            
-                            
-                            if (isSideBlocked(element, direction, surroundingElements)) {
-                                element.textures[direction] = EMPTY_TEXTURE
-                            }
-                        }
-                }
             }
+            
+            part.elements
+                .filterNot(Element::hasRotation) // ignore elements with rotation
+                .forEach { element ->
+                    val surroundingElements = neighborElements +
+                        part.elements
+                            .filter { !it.hasRotation() && it != element } // ignore elements with rotation and the same element
+                            .map { ElementData(it, Point3D(0, 0, 0), material) }
+                    
+                    if (isSideBlocked(element, material, direction, surroundingElements)) {
+                        element.textures[direction] = EMPTY_TEXTURE
+                    }
+                }
         }
     }
     
-    private fun isSideBlocked(element: Element, direction: Direction, surroundingElements: List<Pair<Element, Point3D>>): Boolean {
+    private fun isSideBlocked(element: Element, material: Material, direction: Direction, surroundingElements: List<ElementData>): Boolean {
         val from = element.fromPos
         val to = element.toPos
         
-        surroundingElements.forEach { (neighbor, offset) ->
+        surroundingElements.forEach { (neighbor, offset, neighborMaterial) ->
             val neighborFrom = neighbor.fromPos.mapToOffset(offset)
             val neighborTo = neighbor.toPos.mapToOffset(offset)
             
-            if (doesTouch(direction, from, to, neighborFrom, neighborTo)) {
+            if (isTouching(direction, from, to, neighborFrom, neighborTo)) {
                 val from2D = from.to2D(direction.axis)
                 val to2D = to.to2D(direction.axis)
                 val neighborFrom2D = neighborFrom.to2D(direction.axis)
@@ -176,7 +170,14 @@ class BuildDataCreator(min: Location, max: Location) {
                 val xRange = neighborFrom2D.x.rangeTo(neighborTo2D.x)
                 val yRange = neighborFrom2D.y.rangeTo(neighborTo2D.y)
                 
-                if (from2D.x in xRange && to2D.x in xRange && from2D.y in yRange && to2D.y in yRange) return true
+                val blocked = from2D.x in xRange && to2D.x in xRange && from2D.y in yRange && to2D.y in yRange
+                if (blocked) {
+                    if (neighborMaterial.isTranslucent()) {
+                        if (material.isGlass() && material != neighborMaterial) return false // if it is not the same glass type, show the textures
+                        else if (!material.isGlass()) return false // if the neighbor is translucent (but not glass), show the textures
+                    }
+                    return true // side is blocked
+                }
             }
         }
         
@@ -185,7 +186,7 @@ class BuildDataCreator(min: Location, max: Location) {
     
     private fun Point3D.mapToOffset(offset: Point3D) = Point3D(x + offset.x, y + offset.y, z + offset.z)
     
-    private fun doesTouch(direction: Direction, from: Point3D, to: Point3D, neighborFrom: Point3D, neighborTo: Point3D) =
+    private fun isTouching(direction: Direction, from: Point3D, to: Point3D, neighborFrom: Point3D, neighborTo: Point3D) =
         when (direction) {
             NORTH -> from.z == neighborTo.z
             EAST -> to.x == neighborFrom.x
@@ -194,11 +195,5 @@ class BuildDataCreator(min: Location, max: Location) {
             UP -> to.y == neighborFrom.y
             DOWN -> from.y == neighborTo.y
         }
-    
-    private fun isInRange(point: Point3D): Boolean {
-        return point.x.toInt() in minX..maxX
-            && point.y.toInt() in minY..maxY
-            && point.z.toInt() in minZ..maxZ
-    }
     
 }

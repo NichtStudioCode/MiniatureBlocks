@@ -22,6 +22,12 @@ fun Material.isPressurePlate() = name.endsWith("PRESSURE_PLATE")
 
 fun Material.isPot() = name.startsWith("POTTED") || name == "FLOWER_POT"
 
+fun Material.isGlassBlock() = name.endsWith("GLASS")
+
+fun Material.isGlassPane() = name.endsWith("GLASS_PANE")
+
+fun Material.isFence() = name.endsWith("FENCE")
+
 object MaterialUtils {
     
     val translucentMaterials = ArrayList<Material>()
@@ -30,7 +36,7 @@ object MaterialUtils {
     val flatMaterials = ArrayList<Material>()
     
     init {
-        glassMaterials.addAll(Material.values().filter { it.name.contains("glass", true) })
+        glassMaterials.addAll(Material.values().filter { it.name.endsWith("GLASS") || it.name.endsWith("GLASS_PANE") })
         flatMaterials.addAll(listOfMaterials("LADDER", "VINE", "LILY_PAD"))
         crossMaterials.addAll(Material.values().filter {
             (it.name.endsWith("SAPLING") && !it.name.startsWith("POTTED")) || it.name.contains("coral", true)

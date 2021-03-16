@@ -32,8 +32,8 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         }
     }
     
-    fun freezeUV() {
-        textures.forEach { (direction, texture) ->  texture.freezeDynamicUV(this, direction) }
+    fun freezeUV(vararg directions: Direction = Direction.values()) {
+        directions.forEach { textures[it]!!.freezeDynamicUV(this, it) }
     }
     
     fun scaleCentred(scale: Double) {

@@ -8,7 +8,7 @@ import org.bukkit.Axis
 class Texture : Cloneable {
     
     private var uv: UV?
-    val textureLocation: String
+    var textureLocation: String
     var rotation by RotationValue()
     
     constructor(uv: UV, textureLocation: String, rotation: Int = 0) {

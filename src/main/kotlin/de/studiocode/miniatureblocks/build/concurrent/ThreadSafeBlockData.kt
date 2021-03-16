@@ -40,8 +40,6 @@ class DoorBlockData(material: Material, blockData: Door) : DirectionalBlockData(
     val hinge = blockData.hinge
 }
 
-class FenceBlockData(material: Material, blockData: Fence) : MultipleFacingBlockData(material, blockData)
-
 class GateBlockData(material: Material, blockData: Gate) : DirectionalBlockData(material, blockData) {
     val inWall = blockData.isInWall
     val open = blockData.isOpen
@@ -71,7 +69,6 @@ fun BlockData.toThreadSafeBlockData(material: Material) =
         this is Stairs -> StairBlockData(material, this)
         this is TrapDoor -> TrapdoorBlockData(material, this)
         this is Door -> DoorBlockData(material, this)
-        this is Fence -> FenceBlockData(material, this)
         this is Gate -> GateBlockData(material, this)
         this is Switch -> SwitchBlockData(material, this)
         this is DaylightDetector -> DaylightDetectorBlockData(material, this)

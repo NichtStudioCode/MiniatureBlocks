@@ -11,15 +11,12 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
     
     val customModels: ArrayList<CustomModel> by lazy { getCustomModelsFromFile() }
     
-    protected var mainObj: JsonObject = JsonObject()
-    private var overrides: JsonArray = JsonArray()
-    
     private fun getCustomModelsFromFile(): ArrayList<CustomModel> {
         val customModels = ArrayList<CustomModel>()
         if (exists()) {
-            mainObj = JsonParser().parse(inputStream().reader()).asJsonObject
+            val mainObj = JsonParser().parse(readText()).asJsonObject
             if (mainObj.has("overrides")) {
-                overrides = mainObj.get("overrides").asJsonArray
+                val overrides = mainObj.get("overrides").asJsonArray
                 for (customModelObj in overrides.map { it.asJsonObject }) {
                     val customModelData = customModelObj.get("predicate")
                         ?.asJsonObject
@@ -36,13 +33,12 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
     }
     
     fun writeToFile() {
-        writeToJsonObject()
-        writeText(mainObj.toString())
+        writeText(createJsonObject().toString())
     }
     
-    protected open fun writeToJsonObject() {
-        mainObj = JsonObject()
-        overrides = JsonArray()
+    protected open fun createJsonObject(): JsonObject {
+        val mainObj = JsonObject()
+        val overrides = JsonArray()
         
         for (customModel in customModels) {
             val customModelObj = JsonObject()
@@ -54,6 +50,8 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
             overrides.add(customModelObj)
         }
         mainObj.add("overrides", overrides)
+        
+        return mainObj
     }
     
     fun hasModel(name: String) = customModels.any { it.name == name }
