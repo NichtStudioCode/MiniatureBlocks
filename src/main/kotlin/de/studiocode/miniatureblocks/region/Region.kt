@@ -1,11 +1,11 @@
 package de.studiocode.miniatureblocks.region
 
+import de.studiocode.miniatureblocks.util.createColoredParticle
 import de.studiocode.miniatureblocks.util.getBoxOutline
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import xyz.xenondevs.particle.ParticleBuilder
-import xyz.xenondevs.particle.ParticleEffect
+import xyz.xenondevs.particle.utils.ReflectionUtils
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
@@ -13,7 +13,7 @@ import kotlin.math.min
 class Region(player: Player) {
     
     private val uuid = player.uniqueId
-    private var lineLocations: HashMap<Location, Boolean>? = null
+    private var particlePackets: List<Any>? = null
     
     private var pos1: Location? = null
     private var pos2: Location? = null
@@ -25,17 +25,22 @@ class Region(player: Player) {
         if (isValid()) {
             val player = Bukkit.getPlayer(uuid)
             if (player != null) {
-                if (lineLocations == null) {
-                    lineLocations = HashMap()
-                    pos1!!.getBoxOutline(pos2!!, true).forEach { lineLocations!![it] = false }
-                    cubePos1!!.getBoxOutline(cubePos2!!, true).forEach { lineLocations!![it] = true }
+                if (particlePackets == null) {
+                    particlePackets = ArrayList<Any>().apply {
+                        addAll(
+                            pos1!!
+                                .getBoxOutline(pos2!!, true)
+                                .map { it.createColoredParticle(Color.RED) }
+                        )
+                        addAll(
+                            cubePos1!!
+                                .getBoxOutline(cubePos2!!, true)
+                                .map { it.createColoredParticle(Color.GREEN) }
+                        )
+                    }
                 }
                 
-                lineLocations?.forEach { (location, green) ->
-                    ParticleBuilder(ParticleEffect.REDSTONE, location)
-                        .setColor(if (green) Color.GREEN else Color.RED)
-                        .display(player)
-                }
+                particlePackets?.forEach { ReflectionUtils.sendPacket(player, it) }
             }
         }
     }
@@ -68,13 +73,13 @@ class Region(player: Player) {
     
     fun setFirst(location: Location) {
         this.pos1 = location
-        lineLocations = null
+        particlePackets = null
         if (isValid()) makeCube()
     }
     
     fun setSecond(location: Location) {
         this.pos2 = location
-        lineLocations = null
+        particlePackets = null
         if (isValid()) makeCube()
     }
     

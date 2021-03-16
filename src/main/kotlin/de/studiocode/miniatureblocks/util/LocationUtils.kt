@@ -4,6 +4,9 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Entity
+import xyz.xenondevs.particle.ParticleBuilder
+import xyz.xenondevs.particle.ParticleEffect
+import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
 
@@ -93,3 +96,5 @@ fun Location.getBoxOutline(other: Location, correct: Boolean, stepSize: Double =
     
     return locations
 }
+
+fun Location.createColoredParticle(color: Color): Any = ParticleBuilder(ParticleEffect.REDSTONE, this).setColor(color).toPacket()
