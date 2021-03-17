@@ -67,12 +67,12 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         
         if (oldMainModelData.exists() && !newMainModelData.exists()) {
             // server upgraded to this version from version >= 0.6 version <= 0.8
-            oldMainModelData.copyTo(mainModelData)
+            oldMainModelData.copyTo(newMainModelData)
         }
         
         if (oldTextureModelData.exists() && !newTextureModelData.exists()) {
             // server upgraded to this version from version 0.9
-            oldTextureModelData.copyTo(textureModelData)
+            oldTextureModelData.copyTo(newTextureModelData)
         }
     }
     
