@@ -773,6 +773,74 @@
     {
       "material": "POLISHED_BLACKSTONE_BUTTON",
       "texture": "block/polished_blackstone"
+    },
+    {
+      "material": "COBBLESTONE_WALL",
+      "texture": "block/cobblestone"
+    },
+    {
+      "material": "MOSSY_COBBLESTONE_WALL",
+      "texture": "block/mossy_cobblestone"
+    },
+    {
+      "material": "BRICK_WALL",
+      "texture": "block/bricks"
+    },
+    {
+      "material": "PRISMARINE_WALL",
+      "texture": "block/prismarine"
+    },
+    {
+      "material": "RED_SANDSTONE_WALL",
+      "texture": "block/red_sandstone"
+    },
+    {
+      "material": "MOSSY_STONE_BRICK_WALL",
+      "texture": "block/mossy_stone_bricks"
+    },
+    {
+      "material": "GRANITE_WALL",
+      "texture": "block/granite"
+    },
+    {
+      "material": "STONE_BRICK_WALL",
+      "texture": "block/stone_bricks"
+    },
+    {
+      "material": "NETHER_BRICK_WALL",
+      "texture": "block/nether_bricks"
+    },
+    {
+      "material": "ANDESITE_WALL",
+      "texture": "block/andesite"
+    },
+    {
+      "material": "RED_NETHER_BRICK_WALL",
+      "texture": "block/red_nether_bricks"
+    },
+    {
+      "material": "SANDSTONE_WALL",
+      "texture": "block/sandstone"
+    },
+    {
+      "material": "END_STONE_BRICK_WALL",
+      "texture": "block/end_stone_bricks"
+    },
+    {
+      "material": "DIORITE_WALL",
+      "texture": "block/diorite"
+    },
+    {
+      "material": "BLACKSTONE_WALL",
+      "texture": "block/blackstone"
+    },
+    {
+      "material": "POLISHED_BLACKSTONE_WALL",
+      "texture": "block/polished_blackstone"
+    },
+    {
+      "material": "POLISHED_BLACKSTONE_BRICK_WALL",
+      "texture": "block/polished_blackstone_bricks"
     }
   ],
   "custom": [

@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
@@ -33,7 +33,7 @@ private fun createCactusElement(texture: BlockTexture): Element {
     )
 }
 
-class MiscPart(data: ThreadSafeBlockData) : Part() {
+class MiscPart(data: AsyncBlockData) : Part() {
     
     override val elements = ArrayList<Element>()
     

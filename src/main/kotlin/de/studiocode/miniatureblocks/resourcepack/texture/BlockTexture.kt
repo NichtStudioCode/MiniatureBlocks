@@ -136,6 +136,7 @@ class BlockTexture(materialName: String, val textures: Array<String>, val defaul
                 + obj.get("custom").asJsonArray)
                 .map { gson.fromJson(it)!! })
             
+            textures.removeIf { it.material == null }
             return textures
         }
         

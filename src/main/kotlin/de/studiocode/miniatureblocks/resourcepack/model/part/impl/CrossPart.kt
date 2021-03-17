@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
@@ -10,7 +10,7 @@ import org.bukkit.Axis
 
 class CrossPart(private val textures: Array<String>) : Part() {
     
-    constructor(data: ThreadSafeBlockData) : this(BlockTexture.of(data.material).textures)
+    constructor(data: AsyncBlockData) : this(BlockTexture.of(data.material).textures)
     
     override val elements = listOf(CrossElement1(), CrossElement2())
     

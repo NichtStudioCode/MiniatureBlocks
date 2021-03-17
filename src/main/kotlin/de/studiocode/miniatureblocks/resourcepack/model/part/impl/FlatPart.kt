@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
 import de.studiocode.miniatureblocks.build.concurrent.DirectionalBlockData
 import de.studiocode.miniatureblocks.build.concurrent.MultipleFacingBlockData
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
@@ -12,7 +12,7 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 
 private const val SIZE = 1.0 / 16.0
 
-class FlatPart(data: ThreadSafeBlockData) : Part() {
+class FlatPart(data: AsyncBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val textures = blockTexture.textures

@@ -57,6 +57,8 @@ enum class Direction(
     
     companion object {
         
+        val cardinalPoints = values().filter { it.stepY == 0 }
+        
         fun of(blockFace: BlockFace): Direction = values().first { it.blockFace == blockFace }
         fun of(axis: Axis): Direction = values().first { it.axis == axis }
         

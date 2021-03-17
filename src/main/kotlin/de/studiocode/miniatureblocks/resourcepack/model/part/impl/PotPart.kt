@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.SameTextureElement
@@ -15,7 +15,7 @@ private const val HALF_POT_SIZE = POT_SIZE / 2
 private const val BASE_HEIGHT = 5.0 / 16.0
 private const val RAIL_SIZE = 1.0 / 16.0
 
-class PotPart(data: ThreadSafeBlockData) : Part() {
+class PotPart(data: AsyncBlockData) : Part() {
     
     private val textures = BlockTexture.of(data.material).textures
     private val potTexture = textures[0]

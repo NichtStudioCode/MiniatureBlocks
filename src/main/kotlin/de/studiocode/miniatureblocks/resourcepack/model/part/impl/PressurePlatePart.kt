@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
@@ -9,7 +9,7 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 
 private const val PRESSURE_PLATE_HEIGHT = 1.0 / 16.0
 
-class PressurePlatePart(data: ThreadSafeBlockData) : Part() {
+class PressurePlatePart(data: AsyncBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     

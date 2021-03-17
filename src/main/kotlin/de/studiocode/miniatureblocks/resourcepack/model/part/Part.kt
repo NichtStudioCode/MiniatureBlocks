@@ -72,7 +72,7 @@ abstract class Part {
     
     companion object {
         
-        fun createPart(data: ThreadSafeBlockData): Part =
+        fun createPart(data: AsyncBlockData): Part =
             when {
                 data is StairBlockData -> StairPart(data)
                 data is SlabBlockData -> SlabPart(data)
@@ -82,6 +82,7 @@ abstract class Part {
                 data is SwitchBlockData -> SwitchPart(data)
                 data is DaylightDetectorBlockData -> DaylightDetectorPart(data)
                 data is SnowBlockData -> SnowPart(data)
+                data is WallBlockData -> WallPart(data)
                 data.material.isFence() -> FencePart(data as MultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as MultipleFacingBlockData)
                 data.material.isCrossMaterial() -> CrossPart(data)

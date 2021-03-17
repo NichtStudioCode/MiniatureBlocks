@@ -1,8 +1,8 @@
 package de.studiocode.miniatureblocks.build
 
 import de.studiocode.miniatureblocks.build.concurrent.SyncTaskExecutor
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
-import de.studiocode.miniatureblocks.build.concurrent.toThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
+import de.studiocode.miniatureblocks.build.concurrent.toAsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
@@ -35,7 +35,7 @@ class BuildDataCreator(min: Location, max: Location) {
     private val syncExecutor = SyncTaskExecutor()
     
     private val batches = ConcurrentLinkedQueue<Set<Point3D>>()
-    private val processedWorldData = ConcurrentHashMap<Point3D, Pair<ThreadSafeBlockData, Part>>()
+    private val processedWorldData = ConcurrentHashMap<Point3D, Pair<AsyncBlockData, Part>>()
     private val data = ConcurrentHashMap<Point3D, Part>()
     
     fun createData(): BuildData {
@@ -69,14 +69,14 @@ class BuildDataCreator(min: Location, max: Location) {
         awaitTermination(time, timeUnit)
     }
     
-    private fun loadWorldData(points: List<Point3D>, after: (HashMap<Point3D, ThreadSafeBlockData>) -> Unit) {
+    private fun loadWorldData(points: List<Point3D>, after: (HashMap<Point3D, AsyncBlockData>) -> Unit) {
         syncExecutor.submit { // run sync as it accesses Bukkit
-            val worldData = HashMap<Point3D, ThreadSafeBlockData>()
+            val worldData = HashMap<Point3D, AsyncBlockData>()
             points.forEach {
                 val block = it.getBlock(world)
                 val material = block.type
                 if (BlockTexture.has(material)) {
-                    val data = block.blockData.toThreadSafeBlockData(material)
+                    val data = block.blockData.toAsyncBlockData(material)
                     worldData[it] = data // save data (block and material) of this point
                 }
             }
@@ -84,7 +84,7 @@ class BuildDataCreator(min: Location, max: Location) {
         }
     }
     
-    private fun processWorldData(worldInfo: HashMap<Point3D, ThreadSafeBlockData>) {
+    private fun processWorldData(worldInfo: HashMap<Point3D, AsyncBlockData>) {
         partsExecutorService.submit {
             try {
                 worldInfo.forEach { (point, data) -> processedWorldData[point] = data to Part.createPart(data) }

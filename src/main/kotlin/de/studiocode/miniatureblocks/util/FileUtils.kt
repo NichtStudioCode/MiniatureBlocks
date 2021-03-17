@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks.util
 
 import com.google.common.base.Preconditions
+import de.studiocode.miniatureblocks.MiniatureBlocks
 import net.lingala.zip4j.ZipFile
 import java.io.File
 import java.io.FileOutputStream
@@ -40,7 +41,7 @@ object FileUtils {
     }
     
     private fun listExtractableFiles(path: String): List<String> {
-        val zip = ZipFile(File("D:\\Users\\nicht\\Documents\\Development\\1.16.5 Testserver\\plugins\\MiniatureBlocks-0.10-SNAPSHOT-shaded.jar"))
+        val zip = ZipFile(MiniatureBlocks.INSTANCE.pluginFile)
         
         return zip.fileHeaders
             .filter { !it.isDirectory }

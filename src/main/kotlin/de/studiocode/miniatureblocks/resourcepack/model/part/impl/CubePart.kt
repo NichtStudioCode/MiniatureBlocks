@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 import de.studiocode.miniatureblocks.build.concurrent.DirectionalBlockData
 import de.studiocode.miniatureblocks.build.concurrent.OrientableBlockData
 import de.studiocode.miniatureblocks.build.concurrent.SnowableBlockData
-import de.studiocode.miniatureblocks.build.concurrent.ThreadSafeBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
@@ -15,7 +15,7 @@ private val UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
 private val FROM = Point3D(0.0, 0.0, 0.0)
 private val TO = Point3D(1.0, 1.0, 1.0)
 
-class CubePart(data: ThreadSafeBlockData) : Part() {
+class CubePart(data: AsyncBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val textures = blockTexture.textures
