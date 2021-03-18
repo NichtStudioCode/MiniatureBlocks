@@ -2845,6 +2845,29 @@
         "block/anvil",
         "block/damaged_anvil_top"
       ]
+    },
+    {
+      "material": "CHEST",
+      "textures": [
+        "entity/chest/normal",
+        "entity/chest/normal_left",
+        "entity/chest/normal_right"
+      ]
+    },
+    {
+      "material": "TRAPPED_CHEST",
+      "textures": [
+        "entity/chest/trapped",
+        "entity/chest/trapped_left",
+        "entity/chest/trapped_right"
+      ]
+    },
+    {
+      "material": "ENDER_CHEST",
+      "model": "model/chest",
+      "textures": [
+        "entity/chest/ender"
+      ]
     }
   ]
 }

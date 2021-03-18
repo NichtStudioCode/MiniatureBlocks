@@ -69,6 +69,10 @@ class SwitchBlockData(material: Material, blockData: Switch) : DirectionalBlockD
 
 class WallBlockData(material: Material, val up: Boolean, val faces: HashMap<BlockFace, Boolean>) : AsyncBlockData(material)
 
+class ChestBlockData(material: Material, blockData: Chest) : DirectionalBlockData(material, blockData) {
+    val type = blockData.type
+}
+
 fun BlockData.toAsyncBlockData(material: Material) =
     when {
         material.isWall() -> createWallBlockData(material, this)
@@ -81,6 +85,7 @@ fun BlockData.toAsyncBlockData(material: Material) =
         this is Switch -> SwitchBlockData(material, this)
         this is DaylightDetector -> DaylightDetectorBlockData(material, this)
         this is Snowable -> SnowableBlockData(material, this)
+        this is Chest -> ChestBlockData(material, this)
         this is Directional -> DirectionalBlockData(material, this)
         this is Orientable -> OrientableBlockData(material, this)
         this is MultipleFacing -> MultipleFacingBlockData(material, this)

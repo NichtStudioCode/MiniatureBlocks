@@ -1,6 +1,5 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import com.google.gson.GsonBuilder
 import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.build.concurrent.DirectionalBlockData
 import de.studiocode.miniatureblocks.build.concurrent.OrientableBlockData
@@ -10,11 +9,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
-import de.studiocode.miniatureblocks.storage.serialization.ModelDeserializer
-import de.studiocode.miniatureblocks.util.fromJson
 import de.studiocode.miniatureblocks.util.point.Point3D
-import de.studiocode.miniatureblocks.util.registerTypeAdapter
-import org.bukkit.Material
 
 private val CUBE_UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
 private val CUBE_FROM = Point3D(0.0, 0.0, 0.0)
@@ -29,7 +24,6 @@ class DefaultPart(data: AsyncBlockData) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        Material.CHIPPED_ANVIL
         val cube =
             if (blockTexture.model != null) {
                 loadCustomElements()
@@ -51,21 +45,9 @@ class DefaultPart(data: AsyncBlockData) : Part() {
     }
     
     private fun loadCustomElements() {
-        val gson = GsonBuilder()
-            .registerTypeAdapter(ModelDeserializer)
-            .create()
-        
-        gson.fromJson<List<Element>>(blockTexture.serializedModel)!!
-            .forEach { element ->
-                element.textures
-                    .map { it.value }
-                    .forEach { texture ->
-                        val index = texture.textureLocation.toIntOrNull()
-                        if (index != null)
-                            texture.textureLocation = blockTexture.textures[index]
-                    }
-                elements += element
-            }
+        elements += object : SerializedPart(blockTexture.serializedModel!!) {
+            override fun getTextureLocation(i: Int) = blockTexture.textures[i]
+        }.elements
     }
     
     private fun createCubeElement(): Element {

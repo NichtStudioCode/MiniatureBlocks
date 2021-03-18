@@ -83,6 +83,7 @@ abstract class Part {
                 data is DaylightDetectorBlockData -> DaylightDetectorPart(data)
                 data is SnowBlockData -> SnowPart(data)
                 data is WallBlockData -> WallPart(data)
+                data is ChestBlockData -> ChestPart(data)
                 data.material.isFence() -> FencePart(data as MultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as MultipleFacingBlockData)
                 data.material.isCrossMaterial() -> CrossPart(data)
