@@ -1,7 +1,7 @@
 package de.studiocode.miniatureblocks.build
 
-import de.studiocode.miniatureblocks.build.concurrent.SyncTaskExecutor
 import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
+import de.studiocode.miniatureblocks.build.concurrent.SyncTaskExecutor
 import de.studiocode.miniatureblocks.build.concurrent.toAsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
@@ -18,7 +18,7 @@ import java.util.concurrent.*
 
 typealias ElementData = Triple<Element, Point3D, Material>
 
-private val EMPTY_TEXTURE = Texture(Texture.UV(0.0, 0.0, 0.0, 0.0), "")
+val EMPTY_TEXTURE = Texture(Texture.UV(0.0, 0.0, 0.0, 0.0), "")
 
 class BuildDataCreator(min: Location, max: Location) {
     

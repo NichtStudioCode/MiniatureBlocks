@@ -5,6 +5,8 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import org.bukkit.Axis
 
+fun List<Double>.toUV() = Texture.UV(this[0], this[1], this[2], this[3])
+
 class Texture : Cloneable {
     
     private var uv: UV?

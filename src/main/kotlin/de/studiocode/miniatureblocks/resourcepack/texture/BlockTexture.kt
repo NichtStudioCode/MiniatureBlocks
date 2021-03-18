@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.resourcepack.texture
 import com.google.common.base.Preconditions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.NORTH
@@ -13,9 +14,17 @@ import org.bukkit.Material
 import java.util.*
 import kotlin.collections.HashSet
 
-class BlockTexture(materialName: String, val textures: Array<String>, val defaultRotation: Direction = NORTH) {
+class BlockTexture(
+    materialName: String,
+    val textures: Array<String>,
+    val defaultRotation: Direction = NORTH,
+    val model: String? = null
+) {
     
     val material = findMaterialByName(materialName)
+    val serializedModel: JsonArray? = if (model != null) {
+        JsonParser().parse(BlockTexture::class.java.getResource("/$model.json").readText()).asJsonArray
+    } else null
     
     constructor(material: String, texture: String) : this(material, Array<String>(6) { texture })
     

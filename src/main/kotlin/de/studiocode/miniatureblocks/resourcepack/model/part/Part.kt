@@ -91,7 +91,7 @@ abstract class Part {
                 data.material.isPot() -> PotPart(data)
                 data.material.isFlat() -> FlatPart(data)
                 data.material.isMiscMaterial() -> MiscPart(data)
-                else -> CubePart(data)
+                else -> DefaultPart(data)
             }
         
     }

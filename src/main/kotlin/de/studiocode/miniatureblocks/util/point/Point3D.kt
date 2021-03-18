@@ -5,6 +5,8 @@ import org.bukkit.Axis
 import org.bukkit.Axis.*
 import org.bukkit.World
 
+fun List<Double>.toPoint3D() = Point3D(this[0], this[1], this[2])
+
 data class Point3D(var x: Double, var y: Double, var z: Double) {
     
     constructor(x: Int, y: Int, z: Int) : this(x.toDouble(), y.toDouble(), z.toDouble())

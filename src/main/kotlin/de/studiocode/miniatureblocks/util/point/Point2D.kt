@@ -1,5 +1,7 @@
 package de.studiocode.miniatureblocks.util.point
 
+fun List<Double>.toPoint2D() = Point2D(this[0], this[1])
+
 data class Point2D(var x: Double, var y: Double) {
     
     fun rotateClockwise() {

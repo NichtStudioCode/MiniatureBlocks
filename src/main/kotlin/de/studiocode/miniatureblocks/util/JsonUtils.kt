@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.util
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import java.io.File
+import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 fun JsonElement.writeToFile(file: File) =
@@ -38,10 +39,24 @@ fun JsonArray.addAll(stringArray: Array<String>) =
 fun JsonArray.getAllStrings() =
     filter(JsonElement::isString).map { it.asString }
 
+fun JsonArray.getAllDoubles() =
+    filter(JsonElement::isNumber).map { it.asDouble }
+
 inline fun <reified T> Gson.fromJson(jsonElement: JsonElement?): T? {
     if (jsonElement == null) return null
-    return fromJson(jsonElement, object : TypeToken<T>() {}.type)
+    return fromJson(jsonElement, type<T>())
 }
+
+inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: TypeAdapter<T>): GsonBuilder =
+    registerTypeAdapter(type<T>(), typeAdapter)
+
+inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonSerializer<T>): GsonBuilder =
+    registerTypeAdapter(type<T>(), typeAdapter)
+
+inline fun <reified T> GsonBuilder.registerTypeAdapter(typeAdapter: JsonDeserializer<T>): GsonBuilder =
+    registerTypeAdapter(type<T>(), typeAdapter)
+
+inline fun <reified T> type(): Type = object : TypeToken<T>() {}.type
 
 open class MemberAccessor<T>(
     private val jsonObject: JsonObject,
