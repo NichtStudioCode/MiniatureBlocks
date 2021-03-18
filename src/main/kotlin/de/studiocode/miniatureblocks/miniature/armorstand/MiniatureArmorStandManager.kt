@@ -25,7 +25,6 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.event.inventory.InventoryCreativeEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.ChunkUnloadEvent
@@ -131,19 +130,6 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
             location.world!!.dropItem(location, item.itemStack)
         }
         entity.remove()
-    }
-    
-    @EventHandler
-    fun handleMiniatureClone(event: InventoryCreativeEvent) {
-        val player = event.whoClicked as Player
-        val miniature = player.getTargetMiniature()
-        
-        if (miniature != null) {
-            val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
-            else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
-            
-            event.cursor = item.itemStack
-        }
     }
     
     @EventHandler

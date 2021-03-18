@@ -27,15 +27,12 @@ class Region(player: Player) {
             if (player != null) {
                 if (particlePackets == null) {
                     particlePackets = ArrayList<Any>().apply {
+                        val locations = pos1!!.getBoxOutline(pos2!!, true).map { it to true }.toMap() +
+                            cubePos1!!.getBoxOutline(cubePos2!!, true).map { it to false }.toMap()
                         addAll(
-                            pos1!!
-                                .getBoxOutline(pos2!!, true)
-                                .map { it.createColoredParticle(Color.RED) }
-                        )
-                        addAll(
-                            cubePos1!!
-                                .getBoxOutline(cubePos2!!, true)
-                                .map { it.createColoredParticle(Color.GREEN) }
+                            locations.map { (location, red) ->
+                                location.createColoredParticle(if (red) Color.RED else Color.GREEN)
+                            }
                         )
                     }
                 }
