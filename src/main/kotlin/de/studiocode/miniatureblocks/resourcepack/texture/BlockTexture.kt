@@ -39,7 +39,7 @@ class BlockTexture(
     fun copyOfChange(affectedIndices: List<Int>, textureName: String): BlockTexture {
         val texturesCopy = textures.copyOf()
         affectedIndices.forEach { index -> texturesCopy[index] = textureName }
-        return BlockTexture(material?.name ?: "", texturesCopy, defaultRotation)
+        return BlockTexture(material?.name ?: "", texturesCopy, defaultRotation, model)
     }
     
     override fun equals(other: Any?): Boolean {

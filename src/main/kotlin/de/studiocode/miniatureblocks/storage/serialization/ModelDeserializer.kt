@@ -79,8 +79,8 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
     
     private fun Element.setRotation(rotation: JsonObject) {
         val angle = rotation.get("angle").asFloat
-        val axis = Axis.valueOf(rotation.get("axis").asString)
-        val origin = rotation.get("origin").asJsonArray.getAllDoubles()
+        val axis = Axis.valueOf(rotation.get("axis").asString.toUpperCase())
+        val origin = rotation.get("origin").asJsonArray.getAllDoubles().map { it / 16.0 }
     
         setRotation(angle, axis, *origin.toDoubleArray())
     }

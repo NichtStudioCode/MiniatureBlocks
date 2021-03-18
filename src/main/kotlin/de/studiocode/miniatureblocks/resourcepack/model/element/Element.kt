@@ -2,6 +2,7 @@ package de.studiocode.miniatureblocks.resourcepack.model.element
 
 import com.google.common.base.Preconditions
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
+import de.studiocode.miniatureblocks.util.point.Point2D
 import de.studiocode.miniatureblocks.util.point.Point3D
 import de.studiocode.miniatureblocks.util.shift
 import org.bukkit.Axis
@@ -94,6 +95,20 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
+        
+        if (this.rotation != 0f) {
+            val rotZ = if (rotationAxis == Axis.Z) this.rotation else 0f
+            val rotX = if (rotationAxis == Axis.X) this.rotation else 0f
+            val rotPoint = Point2D(rotZ.toDouble(), rotX.toDouble())
+            repeat(rotation) { rotPoint.rotateClockwise() }
+            if (rotPoint.x != 0.0) {
+                rotationAxis = Axis.Z
+                this.rotation = rotPoint.x.toFloat()
+            } else {
+                rotationAxis = Axis.X
+                this.rotation = rotPoint.y.toFloat()
+            }
+        }
     }
     
     fun rotatePosAroundXAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {

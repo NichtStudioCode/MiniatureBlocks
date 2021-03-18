@@ -2868,6 +2868,17 @@
       "textures": [
         "entity/chest/ender"
       ]
+    },
+    {
+      "material": "LECTERN",
+      "model": "model/lectern",
+      "textures": [
+        "block/oak_planks",
+        "block/lectern_base",
+        "block/lectern_front",
+        "block/lectern_sides",
+        "block/lectern_top"
+      ]
     }
   ]
 }
