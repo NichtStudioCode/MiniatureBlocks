@@ -2821,6 +2821,30 @@
         "block/black_stained_glass_pane_top",
         "block/black_stained_glass_pane_top"
       ]
+    },
+    {
+      "material": "ANVIL",
+      "model": "model/anvil",
+      "textures": [
+        "block/anvil",
+        "block/anvil_top"
+      ]
+    },
+    {
+      "material": "CHIPPED_ANVIL",
+      "model": "model/anvil",
+      "textures": [
+        "block/anvil",
+        "block/chipped_anvil_top"
+      ]
+    },
+    {
+      "material": "DAMAGED_ANVIL",
+      "model": "model/anvil",
+      "textures": [
+        "block/anvil",
+        "block/damaged_anvil_top"
+      ]
     }
   ]
 }
