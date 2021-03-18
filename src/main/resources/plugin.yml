@@ -1,5 +1,5 @@
 name: MiniatureBlocks
 author: StudioCode
-version: '0.10'
+version: '0.11'
 api-version: '1.15'
 main: de.studiocode.miniatureblocks.MiniatureBlocks
