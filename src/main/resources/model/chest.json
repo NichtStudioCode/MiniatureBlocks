@@ -4,7 +4,7 @@
 		"to": [15, 14, 15],
 		"faces": {
 			"north": {"uv": [10.5, 3.5, 14, 4.75], "rotation": 180, "texture": "0"},
-			"east": {"uv": [3.5, 3.5, 0, 4.75], "rotation": 180, "texture": "0"},
+			"east": {"uv": [0, 3.5, 3.5, 4.75], "rotation": 180, "texture": "0"},
 			"south": {"uv": [3.5, 3.5, 7, 4.75], "rotation": 180, "texture": "0"},
 			"west": {"uv": [7, 3.5, 10.5, 4.75], "rotation": 180, "texture": "0"},
 			"up": {"uv": [10.5, 0, 7, 3.5], "texture": "0"}
