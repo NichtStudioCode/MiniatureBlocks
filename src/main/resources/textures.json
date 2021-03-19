@@ -2872,6 +2872,16 @@
         "block/soul_campfire_log_lit",
         "block/soul_campfire_fire"
       ]
+    },
+    {
+      "material": "ENCHANTING_TABLE",
+      "model": "model/enchanting_table",
+      "textures": [
+        "block/enchanting_table_bottom",
+        "block/enchanting_table_top",
+        "block/enchanting_table_side",
+        "entity/enchanting_table_book"
+      ]
     }
   ]
 }
