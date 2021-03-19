@@ -226,6 +226,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
 data class RotationData(var angle: Float, var axis: Axis, var origin: Point3D, var rescale: Boolean) {
     
     fun rotateAroundYAxis(rotation: Int) {
+        if (axis == Axis.Y) return
         val rotZ = if (axis == Axis.Z) angle else 0f
         val rotX = if (axis == Axis.X) angle else 0f
         val rotPoint = Point2D(rotZ.toDouble(), rotX.toDouble())

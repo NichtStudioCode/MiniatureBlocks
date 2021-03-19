@@ -2859,7 +2859,6 @@
     },
     {
       "material": "CAMPFIRE",
-      "model": "model/campfire",
       "textures": [
         "block/campfire_log",
         "block/campfire_log_lit",
@@ -2868,7 +2867,6 @@
     },
     {
       "material": "SOUL_CAMPFIRE",
-      "model": "model/campfire",
       "textures": [
         "block/campfire_log",
         "block/soul_campfire_log_lit",

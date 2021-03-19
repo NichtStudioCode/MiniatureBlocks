@@ -73,6 +73,10 @@ class ChestBlockData(material: Material, blockData: Chest) : DirectionalBlockDat
     val type = blockData.type
 }
 
+class CampfireBlockData(material: Material, blockData: Campfire) : DirectionalBlockData(material, blockData) {
+    val lit = blockData.isLit
+}
+
 fun BlockData.toAsyncBlockData(material: Material) =
     when {
         material.isWall() -> createWallBlockData(material, this)
@@ -86,6 +90,7 @@ fun BlockData.toAsyncBlockData(material: Material) =
         this is DaylightDetector -> DaylightDetectorBlockData(material, this)
         this is Snowable -> SnowableBlockData(material, this)
         this is Chest -> ChestBlockData(material, this)
+        this is Campfire -> CampfireBlockData(material, this)
         this is Directional -> DirectionalBlockData(material, this)
         this is Orientable -> OrientableBlockData(material, this)
         this is MultipleFacing -> MultipleFacingBlockData(material, this)
