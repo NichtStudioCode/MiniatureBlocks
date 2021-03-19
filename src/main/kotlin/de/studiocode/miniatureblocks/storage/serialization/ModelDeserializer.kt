@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import de.studiocode.miniatureblocks.build.EMPTY_TEXTURE
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
+import de.studiocode.miniatureblocks.resourcepack.model.element.RotationData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.element.toUV
 import de.studiocode.miniatureblocks.util.getAllDoubles
@@ -25,10 +26,11 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
                 val positions = getPositions(elementObj)
                 val from = positions.first
                 val to = positions.second
-                
+                val shade = getShade(elementObj)
                 val textures = getTextures(elementObj.getAsJsonObject("faces"))
                 
                 val element = Element(from, to, *textures.toTypedArray())
+                element.shade = shade
                 
                 val rotationObj = elementObj.get("rotation")?.asJsonObject
                 if (rotationObj != null) element.setRotation(rotationObj)
@@ -45,7 +47,7 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
             .getAllDoubles()
             .map { it / 16.0 }
             .toPoint3D()
-    
+        
         val to = elementObj.get("to")
             .asJsonArray
             .getAllDoubles()
@@ -54,6 +56,8 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
         
         return from to to
     }
+    
+    private fun getShade(elementObj: JsonObject) = elementObj.get("shade")?.asBoolean ?: true
     
     private fun getTextures(faces: JsonObject): List<Texture> {
         val textures = ArrayList<Texture>()
@@ -68,8 +72,9 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
                         .toUV()
                     val rotation = face.get("rotation")?.asInt?.div(90) ?: 0
                     val texture = face.get("texture")!!.asString
-                
-                    Texture(uv, texture, rotation)
+                    val tintIndex = face.get("tintindex")?.asInt
+                    
+                    Texture(uv, texture, rotation, tintIndex)
                 } else EMPTY_TEXTURE
             )
         }
@@ -80,9 +85,10 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
     private fun Element.setRotation(rotation: JsonObject) {
         val angle = rotation.get("angle").asFloat
         val axis = Axis.valueOf(rotation.get("axis").asString.toUpperCase())
-        val origin = rotation.get("origin").asJsonArray.getAllDoubles().map { it / 16.0 }
-    
-        setRotation(angle, axis, *origin.toDoubleArray())
+        val origin = rotation.get("origin").asJsonArray.getAllDoubles().map { it / 16.0 }.toPoint3D()
+        val rescale = rotation.get("rescale")?.asBoolean ?: false
+        
+        rotationData = RotationData(angle, axis, origin, rescale)
     }
     
 }

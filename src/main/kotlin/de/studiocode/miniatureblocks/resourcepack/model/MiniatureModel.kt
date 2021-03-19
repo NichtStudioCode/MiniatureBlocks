@@ -62,13 +62,17 @@ class MiniatureModel(buildData: BuildData) {
                     to.addAll(element.getToPosInMiniature(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize))
                     elementObj.add("to", to)
                     
+                    // shading
+                    if (!element.shade) elementObj.addProperty("shade", false)
+                    
                     // Rotation
-                    val rotationData = element.getRotationData(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize)
+                    val rotationData = element.getRotationInMiniature(point.x.toInt(), point.y.toInt(), point.z.toInt(), stepSize)
                     if (rotationData != null) {
                         val rotation = JsonObject()
-                        rotation.addProperty("angle", rotationData.first)
-                        rotation.addProperty("axis", rotationData.second)
-                        rotation.add("origin", JsonArray().apply { addAll(rotationData.third) })
+                        rotation.addProperty("angle", rotationData.angle)
+                        rotation.addProperty("axis", rotationData.axis.name.toLowerCase())
+                        rotation.add("origin", JsonArray().apply { addAll(rotationData.origin.toDoubleArray()) })
+                        if (rotationData.rescale) rotation.addProperty("rescale", true)
                         elementObj.add("rotation", rotation)
                     }
                     
@@ -81,6 +85,7 @@ class MiniatureModel(buildData: BuildData) {
                             face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
                             face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
                             face.addProperty("rotation", texture.rotation * 90)
+                            if (texture.tintIndex != null) face.addProperty("tintindex", texture.tintIndex!!)
                             
                             faces.add(direction.modelDataName, face)
                         }

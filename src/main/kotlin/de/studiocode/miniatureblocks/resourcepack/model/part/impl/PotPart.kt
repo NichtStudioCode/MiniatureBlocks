@@ -30,7 +30,8 @@ class PotPart(data: AsyncBlockData) : Part() {
             elements += createCactusElement()
         } else if (data.material != Material.FLOWER_POT) {
             val pottedTextures = textures.sliceArray(2 until textures.size)
-            elements += CrossPart(pottedTextures).elements.onEach { it.scaleCentred(0.75); it.move(0.0, 0.125, 0.0) }
+            val plantElements = SerializedPart.getModelElements("model/cross", pottedTextures)
+            elements += plantElements.onEach { it.scaleCentred(0.75); it.move(0.0, 0.125, 0.0) }
         }
     }
     

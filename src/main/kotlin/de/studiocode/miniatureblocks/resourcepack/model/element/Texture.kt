@@ -2,7 +2,6 @@ package de.studiocode.miniatureblocks.resourcepack.model.element
 
 import com.google.common.base.Preconditions
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import org.bukkit.Axis
 
 fun List<Double>.toUV() = Texture.UV(this[0], this[1], this[2], this[3])
@@ -11,13 +10,19 @@ class Texture : Cloneable {
     
     private var uv: UV?
     var textureLocation: String
-    var rotation by RotationValue()
+    var rotation: Int
+        set(value) {
+        field = value % 4
+        if (field < 0) field += 4
+    }
+    var tintIndex: Int? = null
     
-    constructor(uv: UV, textureLocation: String, rotation: Int = 0) {
+    constructor(uv: UV, textureLocation: String, rotation: Int = 0, tintIndex: Int? = null) {
         Preconditions.checkArgument(rotation > -4 && rotation < 4, "Illegal rotation")
         this.uv = uv
         this.textureLocation = textureLocation
         this.rotation = rotation
+        this.tintIndex = tintIndex
     }
     
     constructor(textureLocation: String, rotation: Int = 0) {

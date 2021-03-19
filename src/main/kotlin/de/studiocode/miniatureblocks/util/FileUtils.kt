@@ -40,7 +40,7 @@ object FileUtils {
         }
     }
     
-    private fun listExtractableFiles(path: String): List<String> {
+    fun listExtractableFiles(path: String): List<String> {
         val zip = ZipFile(MiniatureBlocks.INSTANCE.pluginFile)
         
         return zip.fileHeaders
@@ -48,6 +48,8 @@ object FileUtils {
             .map { it.fileName }
             .filter { it.startsWith(path) }
     }
+    
+    fun getFileInJar(path: String) = FileUtils::class.java.getResource(path).readBytes()
     
 }
 

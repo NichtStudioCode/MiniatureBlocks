@@ -10,13 +10,11 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Texture) {
+open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Texture) : Cloneable {
     
-    private var rotation: Float = 0f
-    private var rotationAxis: Axis = Axis.Y
-    private var rotationOrigin: DoubleArray = doubleArrayOf()
-    
-    val textures: EnumMap<Direction, Texture> = EnumMap(Direction::class.java)
+    var shade: Boolean = true
+    var textures: MutableMap<Direction, Texture> = EnumMap(Direction::class.java)
+    var rotationData: RotationData? = null
     
     init {
         Preconditions.checkArgument(textures.size == 6 || textures.size == 1, "textures size has to be 6 or 1")
@@ -69,12 +67,6 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         toPos.z += z
     }
     
-    fun setRotation(rotation: Float, axis: Axis, vararg origin: Double) {
-        this.rotation = rotation
-        this.rotationAxis = axis
-        this.rotationOrigin = origin
-    }
-    
     fun rotatePosAroundYAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
         if (rotation < 1) return
         val fromPos = this.fromPos.mapToOrigin(origin)
@@ -96,19 +88,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
         
-        if (this.rotation != 0f) {
-            val rotZ = if (rotationAxis == Axis.Z) this.rotation else 0f
-            val rotX = if (rotationAxis == Axis.X) this.rotation else 0f
-            val rotPoint = Point2D(rotZ.toDouble(), rotX.toDouble())
-            repeat(rotation) { rotPoint.rotateClockwise() }
-            if (rotPoint.x != 0.0) {
-                rotationAxis = Axis.Z
-                this.rotation = rotPoint.x.toFloat()
-            } else {
-                rotationAxis = Axis.X
-                this.rotation = rotPoint.y.toFloat()
-            }
-        }
+        rotationData?.rotateAroundYAxis(rotation)
     }
     
     fun rotatePosAroundXAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
@@ -216,18 +196,51 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         return posInMiniature
     }
     
-    fun getRotationData(x: Int, y: Int, z: Int, stepSize: Double): Triple<Float, String, DoubleArray>? {
-        return if (rotation != 0f) {
-            val origin = DoubleArray(3)
-            origin[0] = rotationOrigin[0] * stepSize + x * stepSize
-            origin[1] = rotationOrigin[1] * stepSize + y * stepSize
-            origin[2] = rotationOrigin[2] * stepSize + z * stepSize
-            Triple(rotation, rotationAxis.name.toLowerCase(), origin)
-        } else null
+    fun getRotationInMiniature(x: Int, y: Int, z: Int, stepSize: Double): RotationData? {
+        val rotationData = this.rotationData
+        if (rotationData != null) {
+            val origin = rotationData.origin
+            val point = Point3D(
+                origin.x * stepSize + x * stepSize,
+                origin.y * stepSize + y * stepSize,
+                origin.z * stepSize + z * stepSize
+            )
+            return rotationData.copy(origin = point)
+        }
+        return null
     }
     
     fun hasTextures() = textures.any { (_, texture) -> texture.textureLocation.isNotBlank() }
     
-    fun hasRotation() = rotation != 0f
+    public override fun clone(): Element {
+        return (super.clone() as Element).apply {
+            fromPos = fromPos.copy()
+            toPos = toPos.copy()
+            rotationData = rotationData?.copy()
+            textures = EnumMap(textures.map { (direction, texture) -> direction to texture.clone() }.toMap())
+        }
+    }
+    
+}
+
+data class RotationData(var angle: Float, var axis: Axis, var origin: Point3D, var rescale: Boolean) {
+    
+    fun rotateAroundYAxis(rotation: Int) {
+        val rotZ = if (axis == Axis.Z) angle else 0f
+        val rotX = if (axis == Axis.X) angle else 0f
+        val rotPoint = Point2D(rotZ.toDouble(), rotX.toDouble())
+        repeat(rotation) { rotPoint.rotateClockwise() }
+        if (rotPoint.x != 0.0) {
+            axis = Axis.Z
+            angle = rotPoint.x.toFloat()
+        } else {
+            axis = Axis.X
+            angle = rotPoint.y.toFloat()
+        }
+    }
+    
+    fun rotateAroundXAxis(rotation: Int) {
+        TODO("Not implemented yet")
+    }
     
 }

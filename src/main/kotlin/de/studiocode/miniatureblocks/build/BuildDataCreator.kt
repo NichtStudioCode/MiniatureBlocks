@@ -139,11 +139,11 @@ class BuildDataCreator(min: Location, max: Location) {
             }
             
             part.elements
-                .filterNot(Element::hasRotation) // ignore elements with rotation
+                .filter { it.rotationData == null} // ignore elements with rotation
                 .forEach { element ->
                     val surroundingElements = neighborElements +
                         part.elements
-                            .filter { !it.hasRotation() && it != element } // ignore elements with rotation and the same element
+                            .filter { it.rotationData == null && it != element } // ignore elements with rotation and the same element
                             .map { ElementData(it, Point3D(0, 0, 0), material) }
                     
                     if (isSideBlocked(element, material, direction, surroundingElements)) {

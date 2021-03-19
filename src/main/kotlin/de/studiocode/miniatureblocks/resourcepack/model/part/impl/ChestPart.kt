@@ -1,15 +1,12 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import com.google.gson.JsonParser
 import de.studiocode.miniatureblocks.build.concurrent.ChestBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 
-private val models = arrayOf("chest", "chest_left", "chest_right").map {
-    JsonParser().parse(ChestPart::class.java.getResource("/model/$it.json").readText()).asJsonArray
-}
+private val models = arrayOf("model/chest", "model/chest_left", "model/chest_right")
  
 class ChestPart(val data: ChestBlockData) : Part() {
     
@@ -17,9 +14,7 @@ class ChestPart(val data: ChestBlockData) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        elements += object : SerializedPart(models[data.type.ordinal]!!) {
-            override fun getTextureLocation(i: Int) = textures[data.type.ordinal]
-        }.elements
+        elements += SerializedPart.getModelElements(models[data.type.ordinal], arrayOf(textures[data.type.ordinal]))
         
         addRotation(Direction.of(data.facing))
         applyModifications()

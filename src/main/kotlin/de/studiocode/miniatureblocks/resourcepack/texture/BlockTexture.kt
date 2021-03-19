@@ -3,7 +3,6 @@ package de.studiocode.miniatureblocks.resourcepack.texture
 import com.google.common.base.Preconditions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.NORTH
@@ -22,9 +21,6 @@ class BlockTexture(
 ) {
     
     val material = findMaterialByName(materialName)
-    val serializedModel: JsonArray? = if (model != null) {
-        JsonParser().parse(BlockTexture::class.java.getResource("/$model.json").readText()).asJsonArray
-    } else null
     
     constructor(material: String, texture: String) : this(material, Array<String>(6) { texture })
     

@@ -45,9 +45,7 @@ class DefaultPart(data: AsyncBlockData) : Part() {
     }
     
     private fun loadCustomElements() {
-        elements += object : SerializedPart(blockTexture.serializedModel!!) {
-            override fun getTextureLocation(i: Int) = blockTexture.textures[i]
-        }.elements
+        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
     }
     
     private fun createCubeElement(): Element {

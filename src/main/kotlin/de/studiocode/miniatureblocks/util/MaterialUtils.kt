@@ -43,7 +43,7 @@ object MaterialUtils {
         glassMaterials.addAll(Material.values().filter { it.name.endsWith("GLASS") || it.name.endsWith("GLASS_PANE") })
         flatMaterials.addAll(listOfMaterials("LADDER", "VINE", "LILY_PAD"))
         crossMaterials.addAll(Material.values().filter {
-            (it.name.endsWith("SAPLING") && !it.name.startsWith("POTTED")) || it.name.contains("coral", true)
+            (it.name.endsWith("SAPLING") && !it.name.startsWith("POTTED")) || (it.name.contains("coral", true) && !it.name.endsWith("BLOCK"))
         })
         crossMaterials.addAll(listOfMaterials(
             "GRASS", "FERN", "DEAD_BUSH", "SEAGRASS", "DANDELION", "POPPY", "BLUE_ORCHID", "ALLIUM", "AZURE_BLUET",
@@ -63,7 +63,7 @@ object MaterialUtils {
         )
         translucentMaterials.addAll(listOfMaterials(
             "OAK_TRAPDOOR", "JUNGLE_TRAPDOOR", "ACACIA_TRAPDOOR", "CRIMSON_TRAPDOOR", "WARPED_TRAPDOOR", "IRON_TRAPDOOR",
-            "OAK_DOOR", "JUNGLE_DOOR", "ACACIA_DOOR", "IRON_DOOR"
+            "OAK_DOOR", "JUNGLE_DOOR", "ACACIA_DOOR", "IRON_DOOR", "BEACON"
         ))
     }
     
