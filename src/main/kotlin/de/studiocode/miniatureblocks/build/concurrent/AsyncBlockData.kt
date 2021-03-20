@@ -2,14 +2,19 @@ package de.studiocode.miniatureblocks.build.concurrent
 
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.util.VersionUtils
+import de.studiocode.miniatureblocks.util.advance
+import de.studiocode.miniatureblocks.util.isFluid
 import de.studiocode.miniatureblocks.util.isWall
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.*
 import org.bukkit.block.data.Bisected.Half
 import org.bukkit.block.data.type.*
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Wall.Height
+import java.util.*
+import kotlin.collections.HashSet
 
 open class AsyncBlockData(val material: Material)
 
@@ -67,7 +72,30 @@ class SwitchBlockData(material: Material, blockData: Switch) : DirectionalBlockD
     val attachedFace = blockData.attachedFace
 }
 
-class WallBlockData(material: Material, val up: Boolean, val faces: HashMap<BlockFace, Boolean>) : AsyncBlockData(material)
+class WallBlockData(material: Material, blockData: BlockData) : AsyncBlockData(material) {
+    
+    val up: Boolean
+    val faces: Map<BlockFace, Boolean>
+    
+    init {
+        faces = EnumMap(BlockFace::class.java)
+        if (VersionUtils.isVersionOrHigher("1.16.0")) {
+            val wall = blockData as Wall
+            up = wall.isUp
+            Direction.cardinalPoints
+                .map { it.blockFace }
+                .forEach {
+                    val height = wall.getHeight(it)
+                    if (height != Height.NONE) faces[it] = height == Height.TALL
+                }
+        } else {
+            val fence = blockData as Fence
+            up = true
+            fence.faces.forEach { faces[it] = false }
+        }
+    }
+    
+}
 
 class ChestBlockData(material: Material, blockData: Chest) : DirectionalBlockData(material, blockData) {
     val type = blockData.type
@@ -77,47 +105,58 @@ class CampfireBlockData(material: Material, blockData: Campfire) : DirectionalBl
     val lit = blockData.isLit
 }
 
-fun BlockData.toAsyncBlockData(material: Material) =
-    when {
-        material.isWall() -> createWallBlockData(material, this)
-        isSlab() -> SlabBlockData(material, this as Slab)
-        isSnow() -> SnowBlockData(material, this as Snow)
-        this is Stairs -> StairBlockData(material, this)
-        this is TrapDoor -> TrapdoorBlockData(material, this)
-        this is Door -> DoorBlockData(material, this)
-        this is Gate -> GateBlockData(material, this)
-        this is Switch -> SwitchBlockData(material, this)
-        this is DaylightDetector -> DaylightDetectorBlockData(material, this)
-        this is Snowable -> SnowableBlockData(material, this)
-        this is Chest -> ChestBlockData(material, this)
-        this is Campfire -> CampfireBlockData(material, this)
-        this is Directional -> DirectionalBlockData(material, this)
-        this is Orientable -> OrientableBlockData(material, this)
-        this is MultipleFacing -> MultipleFacingBlockData(material, this)
+class FluidBlockData(material: Material, block: Block) : AsyncBlockData(material) {
+    
+    val level = (block.blockData as Levelled).level
+    val direction: Direction?
+    
+    init {
+        val blockLocation = block.location
+        val blockAbove = blockLocation.clone().advance(Direction.UP).block
+        if (blockAbove.blockData !is Levelled) {
+            val flowDirections = HashSet<Direction>()
+            for (direction in Direction.cardinalPoints) {
+                val neighborBlock = blockLocation.clone().advance(direction).block
+                val neighborData = neighborBlock.blockData
+                if (neighborData is Levelled) {
+                    if (neighborData.level > level) {
+                        flowDirections += direction
+                    } else if (neighborData.level < level) {
+                        flowDirections += direction.opposite
+                    }
+                }
+            }
+            
+            direction = if (flowDirections.size == 1) flowDirections.first() else null
+        } else direction = null
+    }
+    
+}
+
+fun Block.toAsyncBlockData(): AsyncBlockData {
+    val material = type
+    val blockData = blockData
+    return when  {
+        material.isFluid() -> FluidBlockData(material, this)
+        material.isWall() -> WallBlockData(material, blockData)
+        blockData.isSlab() -> SlabBlockData(material, blockData as Slab)
+        blockData.isSnow() -> SnowBlockData(material, blockData as Snow)
+        blockData is Stairs -> StairBlockData(material, blockData)
+        blockData is TrapDoor -> TrapdoorBlockData(material, blockData)
+        blockData is Door -> DoorBlockData(material, blockData)
+        blockData is Gate -> GateBlockData(material, blockData)
+        blockData is Switch -> SwitchBlockData(material, blockData)
+        blockData is DaylightDetector -> DaylightDetectorBlockData(material, blockData)
+        blockData is Snowable -> SnowableBlockData(material, blockData)
+        blockData is Chest -> ChestBlockData(material, blockData)
+        blockData is Campfire -> CampfireBlockData(material, blockData)
+        blockData is Directional -> DirectionalBlockData(material, blockData)
+        blockData is Orientable -> OrientableBlockData(material, blockData)
+        blockData is MultipleFacing -> MultipleFacingBlockData(material, blockData)
         else -> AsyncBlockData(material)
     }
+}
 
 private fun BlockData.isSlab() = this is Slab && this.type != Type.DOUBLE
 
 private fun BlockData.isSnow() = this is Snow && this.layers < this.maximumLayers
-
-private fun createWallBlockData(material: Material, blockData: BlockData): WallBlockData {
-    val up: Boolean
-    val faces = HashMap<BlockFace, Boolean>()
-    if (VersionUtils.isVersionOrHigher("1.16.0")) {
-        val wall = blockData as Wall
-        up = wall.isUp
-        Direction.cardinalPoints
-            .map { it.blockFace }
-            .forEach {
-                val height = wall.getHeight(it)
-                if (height != Height.NONE) faces[it] = height == Height.TALL
-            }
-    } else {
-        val fence = blockData as Fence
-        up = true
-        fence.faces.forEach { faces[it] = false }
-    }
-    
-    return WallBlockData(material, up, faces)
-}

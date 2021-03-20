@@ -76,7 +76,7 @@ class BuildDataCreator(min: Location, max: Location) {
                 val block = it.getBlock(world)
                 val material = block.type
                 if (BlockTexture.has(material)) {
-                    val data = block.blockData.toAsyncBlockData(material)
+                    val data = block.toAsyncBlockData()
                     worldData[it] = data // save data (block and material) of this point
                 }
             }

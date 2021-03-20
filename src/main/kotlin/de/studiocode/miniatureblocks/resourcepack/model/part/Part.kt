@@ -85,6 +85,7 @@ abstract class Part {
                 data is WallBlockData -> WallPart(data)
                 data is ChestBlockData -> ChestPart(data)
                 data is CampfireBlockData -> CampfirePart(data)
+                data is FluidBlockData -> FluidPart(data)
                 data.material.isFence() -> FencePart(data as MultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as MultipleFacingBlockData)
                 data.material.isCarpet() -> CarpetPart(data)

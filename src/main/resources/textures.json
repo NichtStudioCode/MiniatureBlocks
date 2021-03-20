@@ -2882,6 +2882,22 @@
         "block/enchanting_table_side",
         "entity/enchanting_table_book"
       ]
+    },
+    {
+      "material": "WATER",
+      "textures": [
+        "block/modded/water_overlay",
+        "block/modded/water_still",
+        "block/modded/water_flow"
+      ]
+    },
+    {
+      "material": "LAVA",
+      "textures": [
+        "block/lava_flow",
+        "block/lava_still",
+        "block/lava_flow"
+      ]
     }
   ]
 }

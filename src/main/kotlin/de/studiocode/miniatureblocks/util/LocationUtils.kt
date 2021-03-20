@@ -2,6 +2,7 @@ package de.studiocode.miniatureblocks.util
 
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.getMiniature
+import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
@@ -94,3 +95,6 @@ fun Location.getBoxOutline(other: Location, correct: Boolean, stepSize: Double =
 }
 
 fun Location.createColoredParticle(color: Color): Any = ParticleBuilder(ParticleEffect.REDSTONE, this).setColor(color).toPacket()
+
+fun Location.advance(direction: Direction, stepSize: Double = 1.0) =
+    add(direction.stepX * stepSize, direction.stepY * stepSize, direction.stepZ * stepSize)

@@ -32,6 +32,8 @@ fun Material.isWall() = name.endsWith("WALL")
 
 fun Material.isTraversable() = isAir || name == "WATER" || name == "LAVA"
 
+fun Material.isFluid() =  name == "WATER" || name == "LAVA"
+
 object MaterialUtils {
     
     val translucentMaterials = ArrayList<Material>()
