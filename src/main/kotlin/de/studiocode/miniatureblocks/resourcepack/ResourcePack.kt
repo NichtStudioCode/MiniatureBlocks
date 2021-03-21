@@ -37,10 +37,10 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     var hash = ByteArray(0)
     
     private val lastUploadUrl: String?
-        get() = PermanentStorage.retrieveOrNull<String>("rp-download-url")
+        @Synchronized get() = PermanentStorage.retrieveOrNull<String>("rp-download-url")
     
     val downloadUrl: String?
-        get() {
+        @Synchronized get() {
             return if (config.hasCustomUploader()) {
                 if (lastUploadUrl == null) uploadToCustom()
                 lastUploadUrl
@@ -83,23 +83,39 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         textureModelData.writeToFile()
     }
     
-    fun downloadTexture(name: String, url: String, frametime: Int) {
+    @Synchronized
+    fun downloadTexture(
+        name: String,
+        url: String,
+        frametime: Int,
+        force: Boolean = true,
+        addTextureLocation: Boolean = true,
+        replace: Boolean = true
+    ): String {
+        
         val path = "block/$name"
         val texture = textures.getTexture("$path.png")
-        URL(url).openStream().use { inStream ->
-            texture.outputStream().use { outStream ->
-                inStream.copyTo(outStream)
+        if (replace || !texture.exists()) {
+            URL(url).openStream().use { inStream ->
+                texture.outputStream().use { outStream ->
+                    inStream.copyTo(outStream)
+                }
             }
+            if (frametime > 0) texture.makeAnimated(frametime)
+    
+            if (addTextureLocation) {
+                addTextureLocation(path)
+                textureModelData.writeToFile()
+                BlockTexture.addTextureLocation(path)
+            }
+    
+            updateResourcePack(force)
         }
-        if (frametime > 0) texture.makeAnimated(frametime)
         
-        addTextureLocation(path)
-        textureModelData.writeToFile()
-        BlockTexture.addTextureLocation(path)
-        
-        updateResourcePack()
+        return path
     }
     
+    @Synchronized
     fun deleteTexture(name: String) {
         val path = "block/$name"
         val texture = textures.getTexture("$path.png")
@@ -113,6 +129,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         updateResourcePack()
     }
     
+    @Synchronized
     private fun addTextureLocation(textureLocation: String) {
         val modelName = textureLocation.replace("block/", "").replace("/", "")
         val modelPath = "item/textureitem/$modelName"
@@ -127,6 +144,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         }
     }
     
+    @Synchronized
     private fun removeTextureLocation(textureLocation: String) {
         val modelName = textureLocation.replace("block/", "").replace("/", "")
         val modelPath = "item/textureitem/$modelName"
@@ -138,6 +156,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         }
     }
     
+    @Synchronized
     fun addMiniature(name: String, modelDataObj: JsonObject, force: Boolean = true) {
         modelDataObj.writeToFile(File(moddedItemModels, "$name.json"))
         
@@ -148,6 +167,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         updateResourcePack(force)
     }
     
+    @Synchronized
     fun removeMiniature(name: String) {
         File(moddedItemModels, "$name.json").delete()
         
@@ -157,11 +177,13 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         updateResourcePack()
     }
     
+    @Synchronized
     private fun updateResourcePack(force: Boolean = true) {
         packZip()
         if (force) forceResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
     }
     
+    @Synchronized
     private fun packZip() {
         if (zipFile.exists()) zipFile.delete()
         
@@ -186,12 +208,14 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         if (config.hasCustomUploader()) uploadToCustom() // upload if custom uploader is set
     }
     
+    @Synchronized
     private fun updateZipHash() {
         hash = if (zipFile.exists()) {
             HashUtils.createSha1Hash(zipFile)
         } else ByteArray(0)
     }
     
+    @Synchronized
     private fun uploadToCustom() {
         val reqUrl = config.getCustomUploaderRequest()
         val hostUrl = config.getCustomUploaderHost()
@@ -208,6 +232,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         PermanentStorage.store("rp-download-url", url)
     }
     
+    @Synchronized
     private fun uploadToDefault() = FileIOUploadUtils.uploadToFileIO(zipFile)
     
     @EventHandler

@@ -2898,6 +2898,76 @@
         "block/lava_still",
         "block/lava_flow"
       ]
+    },
+    {
+      "material": "PLAYER_HEAD",
+      "model": "model/player_head",
+      "textures": [
+        "entity/steve"
+      ]
+    },
+    {
+      "material": "PLAYER_WALL_HEAD",
+      "model": "model/player_head",
+      "textures": [
+        "entity/steve"
+      ]
+    },
+    {
+      "material": "ZOMBIE_HEAD",
+      "model": "model/zombie_head",
+      "textures": [
+        "entity/zombie/zombie"
+      ]
+    },
+    {
+      "material": "ZOMBIE_WALL_HEAD",
+      "model": "model/zombie_head",
+      "textures": [
+        "entity/zombie/zombie"
+      ]
+    },
+    {
+      "material": "CREEPER_HEAD",
+      "model": "model/creeper_head",
+      "textures": [
+        "entity/creeper/creeper"
+      ]
+    },
+    {
+      "material": "CREEPER_WALL_HEAD",
+      "model": "model/creeper_head",
+      "textures": [
+        "entity/creeper/creeper"
+      ]
+    },
+    {
+      "material": "SKELETON_SKULL",
+      "model": "model/skull",
+      "textures": [
+        "entity/skeleton/skeleton"
+      ]
+    },
+    {
+      "material": "SKELETON_WALL_SKULL",
+      "model": "model/skull",
+      "textures": [
+        "entity/skeleton/skeleton"
+      ]
+    },
+    {
+      "material": "WITHER_SKELETON_SKULL",
+      "model": "model/skull",
+      "textures": [
+        "entity/skeleton/wither_skeleton"
+      ]
+    },
+    {
+      "material": "WITHER_SKELETON_WALL_SKULL",
+      "model": "model/skull",
+      "textures": [
+        "entity/skeleton/wither_skeleton"
+      ]
     }
   ]
 }

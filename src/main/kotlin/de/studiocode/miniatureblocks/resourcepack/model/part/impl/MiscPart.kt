@@ -8,6 +8,8 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Material
 
+// TODO: should be a model file
+
 private val ELEMENT_CREATORS = hashMapOf(
     Material.GRASS_PATH to ::createGrassPathElement,
     Material.CACTUS to ::createCactusElement

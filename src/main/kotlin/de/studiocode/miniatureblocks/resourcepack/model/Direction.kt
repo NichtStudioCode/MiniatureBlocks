@@ -60,7 +60,33 @@ enum class Direction(
         val cardinalPoints = values().filter { it.stepY == 0 }
         
         fun of(blockFace: BlockFace): Direction = values().first { it.blockFace == blockFace }
+        
         fun of(axis: Axis): Direction = values().first { it.axis == axis }
+        
+        fun ofRotation(blockFace: BlockFace) =
+            when (blockFace) {
+                BlockFace.NORTH -> NORTH to 0.0
+                BlockFace.EAST -> EAST to 0.0
+                BlockFace.SOUTH -> SOUTH to 0.0
+                BlockFace.WEST -> WEST to 0.0
+                BlockFace.UP -> UP to 0.0
+                BlockFace.DOWN -> DOWN to 0.0
+                
+                BlockFace.NORTH_NORTH_EAST -> NORTH to -22.5
+                BlockFace.NORTH_EAST -> NORTH to -45.0
+                BlockFace.EAST_NORTH_EAST -> EAST to 22.5
+                BlockFace.EAST_SOUTH_EAST -> EAST to -22.5
+                BlockFace.SOUTH_EAST -> EAST to -45.0
+                BlockFace.SOUTH_SOUTH_EAST -> SOUTH to 22.5
+                BlockFace.SOUTH_SOUTH_WEST -> SOUTH to -22.5
+                BlockFace.SOUTH_WEST -> SOUTH to -45.0
+                BlockFace.WEST_SOUTH_WEST -> WEST to 22.5
+                BlockFace.WEST_NORTH_WEST -> WEST to -22.5
+                BlockFace.NORTH_WEST -> WEST to -45.0
+                BlockFace.NORTH_NORTH_WEST -> NORTH to 22.5
+                
+                else -> NORTH to 0.0
+            }
         
     }
     

@@ -54,11 +54,11 @@ abstract class Part {
     
     fun applyModifications() {
         elements.forEach {
+            it.move(moveX, moveY, moveZ)
             it.rotateTexturesAroundXAxis(texRotX)
             it.rotateTexturesAroundYAxis(texRotY)
             it.rotatePosAroundXAxis(posRotX)
             it.rotatePosAroundYAxis(posRotY)
-            it.move(moveX, moveY, moveZ)
         }
         
         posRotX = 0
@@ -86,6 +86,7 @@ abstract class Part {
                 data is ChestBlockData -> ChestPart(data)
                 data is CampfireBlockData -> CampfirePart(data)
                 data is FluidBlockData -> FluidPart(data)
+                data is HeadBlockData -> HeadPart(data)
                 data.material.isFence() -> FencePart(data as MultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as MultipleFacingBlockData)
                 data.material.isCarpet() -> CarpetPart(data)

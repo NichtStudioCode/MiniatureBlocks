@@ -1,10 +1,8 @@
 package de.studiocode.miniatureblocks.build.concurrent
 
+import com.mojang.authlib.GameProfile
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.util.VersionUtils
-import de.studiocode.miniatureblocks.util.advance
-import de.studiocode.miniatureblocks.util.isFluid
-import de.studiocode.miniatureblocks.util.isWall
+import de.studiocode.miniatureblocks.util.*
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -13,6 +11,7 @@ import org.bukkit.block.data.Bisected.Half
 import org.bukkit.block.data.type.*
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Wall.Height
+import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -105,6 +104,32 @@ class CampfireBlockData(material: Material, blockData: Campfire) : DirectionalBl
     val lit = blockData.isLit
 }
 
+class HeadBlockData(material: Material, block: Block) : AsyncBlockData(material) {
+    
+    val wall: Boolean
+    val facing: BlockFace
+    val gameProfile: GameProfile?
+    
+    init {
+        val blockData = block.blockData
+        if (blockData is Directional) {
+            wall = true
+            facing = blockData.facing
+        } else {
+            wall = false
+            facing = (blockData as Rotatable).rotation
+        }
+        
+        gameProfile = if (material == Material.PLAYER_HEAD) {
+            val item = block.drops.firstOrNull()
+            if (item != null && item.hasItemMeta() && item.itemMeta is SkullMeta) {
+                ReflectionRegistry.CB_CRAFT_META_SKULL_PROFILE_FIELD.get(item.itemMeta) as GameProfile
+            } else null
+        } else null
+    }
+    
+}
+
 class FluidBlockData(material: Material, block: Block) : AsyncBlockData(material) {
     
     val level = (block.blockData as Levelled).level
@@ -136,8 +161,9 @@ class FluidBlockData(material: Material, block: Block) : AsyncBlockData(material
 fun Block.toAsyncBlockData(): AsyncBlockData {
     val material = type
     val blockData = blockData
-    return when  {
+    return when {
         material.isFluid() -> FluidBlockData(material, this)
+        material.isHead() -> HeadBlockData(material, this)
         material.isWall() -> WallBlockData(material, blockData)
         blockData.isSlab() -> SlabBlockData(material, blockData as Slab)
         blockData.isSnow() -> SnowBlockData(material, blockData as Snow)

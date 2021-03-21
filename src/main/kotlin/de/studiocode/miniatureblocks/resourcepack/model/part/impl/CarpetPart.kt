@@ -7,6 +7,8 @@ import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 
+// TODO: should be a model file
+
 private const val CARPET_HEIGHT = 1.0 / 16.0
 
 class CarpetPart(data: AsyncBlockData) : Part() {
