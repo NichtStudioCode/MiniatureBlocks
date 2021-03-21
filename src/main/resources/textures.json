@@ -2968,6 +2968,76 @@
       "textures": [
         "entity/skeleton/wither_skeleton"
       ]
+    },
+    {
+      "material": "ROSE_BUSH",
+      "model": "model/cross",
+      "textures": [
+        "block/rose_bush_bottom",
+        "block/rose_bush_bottom",
+        "block/rose_bush_top",
+        "block/rose_bush_top"
+      ]
+    },
+    {
+      "material": "LILAC",
+      "model": "model/cross",
+      "textures": [
+        "block/lilac_bottom",
+        "block/lilac_bottom",
+        "block/lilac_top",
+        "block/lilac_top"
+      ]
+    },
+    {
+      "material": "PEONY",
+      "model": "model/cross",
+      "textures": [
+        "block/peony_bottom",
+        "block/peony_bottom",
+        "block/peony_top",
+        "block/peony_top"
+      ]
+    },
+    {
+      "material": "SUNFLOWER",
+      "model": "model/cross",
+      "textures": [
+        "block/sunflower_bottom",
+        "block/sunflower_bottom",
+        "block/sunflower_top",
+        "block/sunflower_top"
+      ]
+    },
+    {
+      "material": "TALL_GRASS",
+      "model": "model/cross",
+      "textures": [
+        "block/modded/tall_grass_bottom",
+        "block/modded/tall_grass_bottom",
+        "block/modded/tall_grass_top",
+        "block/modded/tall_grass_top"
+      ]
+    },
+    {
+      "material": "LARGE_FERN",
+      "model": "model/cross",
+      "textures": [
+        "block/modded/large_fern_bottom",
+        "block/modded/large_fern_bottom",
+        "block/modded/large_fern_top",
+        "block/modded/large_fern_top"
+      ]
+    },
+    {
+      "material": "TALL_SEAGRASS",
+      "model": "model/cross",
+      "textures": [
+        "block/tall_seagrass_bottom",
+        "block/tall_seagrass_bottom",
+        "block/tall_seagrass_top",
+        "block/tall_seagrass_top"
+      ]
     }
   ]
 }

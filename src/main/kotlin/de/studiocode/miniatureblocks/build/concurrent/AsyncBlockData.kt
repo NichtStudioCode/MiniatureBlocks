@@ -25,6 +25,10 @@ class OrientableBlockData(material: Material, blockData: Orientable) : AsyncBloc
     val axis = blockData.axis
 }
 
+class BisectedBlockData(material: Material, blockData: Bisected) : AsyncBlockData(material) {
+    val half = blockData.half
+}
+
 open class MultipleFacingBlockData(material: Material, blockData: MultipleFacing) : AsyncBlockData(material) {
     val faces = HashSet(blockData.faces)
 }
@@ -179,6 +183,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Directional -> DirectionalBlockData(material, blockData)
         blockData is Orientable -> OrientableBlockData(material, blockData)
         blockData is MultipleFacing -> MultipleFacingBlockData(material, blockData)
+        blockData is Bisected -> BisectedBlockData(material, blockData)
         else -> AsyncBlockData(material)
     }
 }
