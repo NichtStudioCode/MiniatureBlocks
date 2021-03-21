@@ -21,6 +21,10 @@ open class DirectionalBlockData(material: Material, blockData: Directional) : As
     val facing = blockData.facing
 }
 
+class RotatableBlockData(material: Material, blockData: Rotatable) : AsyncBlockData(material) {
+    val rotation = blockData.rotation
+}
+
 class OrientableBlockData(material: Material, blockData: Orientable) : AsyncBlockData(material) {
     val axis = blockData.axis
 }
@@ -184,6 +188,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Orientable -> OrientableBlockData(material, blockData)
         blockData is MultipleFacing -> MultipleFacingBlockData(material, blockData)
         blockData is Bisected -> BisectedBlockData(material, blockData)
+        blockData is Rotatable -> RotatableBlockData(material, blockData)
         else -> AsyncBlockData(material)
     }
 }

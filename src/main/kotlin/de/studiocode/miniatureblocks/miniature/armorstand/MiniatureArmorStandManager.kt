@@ -95,7 +95,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
             .forEach { it.armorStand.remove() }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler
     fun handleInteract(event: PlayerInteractEvent) {
         if (event.hand != null && event.hand == EquipmentSlot.HAND) { // right click is called twice for each hand
             val player = event.player

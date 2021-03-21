@@ -3038,6 +3038,118 @@
         "block/tall_seagrass_top",
         "block/tall_seagrass_top"
       ]
+    },
+    {
+      "material": "ACACIA_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/acacia"
+      ]
+    },
+    {
+      "material": "ACACIA_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/acacia"
+      ]
+    },
+    {
+      "material": "BIRCH_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/birch"
+      ]
+    },
+    {
+      "material": "BIRCH_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/birch"
+      ]
+    },
+    {
+      "material": "CRIMSON_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/crimson"
+      ]
+    },
+    {
+      "material": "CRIMSON_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/crimson"
+      ]
+    },
+    {
+      "material": "DARK_OAK_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/dark_oak"
+      ]
+    },
+    {
+      "material": "DARK_OAK_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/dark_oak"
+      ]
+    },
+    {
+      "material": "JUNGLE_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/jungle"
+      ]
+    },
+    {
+      "material": "JUNGLE_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/jungle"
+      ]
+    },
+    {
+      "material": "OAK_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/oak"
+      ]
+    },
+    {
+      "material": "OAK_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/oak"
+      ]
+    },
+    {
+      "material": "SPRUCE_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/spruce"
+      ]
+    },
+    {
+      "material": "SPRUCE_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/spruce"
+      ]
+    },
+    {
+      "material": "WARPED_SIGN",
+      "model": "model/sign",
+      "textures": [
+        "entity/signs/warped"
+      ]
+    },
+    {
+      "material": "WARPED_WALL_SIGN",
+      "model": "model/sign_wall",
+      "textures": [
+        "entity/signs/warped"
+      ]
     }
   ]
 }

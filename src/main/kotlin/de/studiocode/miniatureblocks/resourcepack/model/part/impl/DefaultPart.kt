@@ -3,10 +3,12 @@ package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 import de.studiocode.miniatureblocks.build.concurrent.*
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
+import de.studiocode.miniatureblocks.resourcepack.model.element.RotationData
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
+import org.bukkit.Axis
 import org.bukkit.block.data.Bisected.Half.TOP
 
 private val CUBE_UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
@@ -38,8 +40,16 @@ class DefaultPart(data: AsyncBlockData) : Part() {
             }
         
         addRotation(blockTexture.defaultRotation, cube)
-        if (data is DirectionalBlockData) addRotation(Direction.of(data.facing), cube)
-        else if (data is OrientableBlockData) addRotation(Direction.of(data.axis), cube)
+        when (data) {
+            is DirectionalBlockData -> addRotation(Direction.of(data.facing), cube)
+            is OrientableBlockData -> addRotation(Direction.of(data.axis), cube)
+            is RotatableBlockData -> {
+                val rotation = Direction.ofRotation(data.rotation)
+                addRotation(rotation.first)
+                val rotationData = RotationData(rotation.second.toFloat(), Axis.Y, Point3D(0.5, 0.0, 0.5), false)
+                elements.forEach { it.rotationData = rotationData }
+            }
+        }
         applyModifications()
     }
     
