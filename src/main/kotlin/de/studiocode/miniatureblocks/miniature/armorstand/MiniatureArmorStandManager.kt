@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.world.ChunkLoadEvent
@@ -94,7 +95,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
             .forEach { it.armorStand.remove() }
     }
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun handleInteract(event: PlayerInteractEvent) {
         if (event.hand != null && event.hand == EquipmentSlot.HAND) { // right click is called twice for each hand
             val player = event.player
@@ -123,13 +124,19 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     private fun handleMiniatureBreak(miniature: MiniatureArmorStand, player: Player) {
         val entity = miniature.armorStand
         val location = entity.location
-        if (player.gameMode != GameMode.CREATIVE) {
-            val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
-            else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
-            
-            location.world!!.dropItem(location, item.itemStack)
+    
+        // check if player is allowed to break things here
+        val breakEvent = BlockBreakEvent(location.block, player)
+        Bukkit.getServer().pluginManager.callEvent(breakEvent)
+        if (!breakEvent.isCancelled) {
+            if (player.gameMode != GameMode.CREATIVE) {
+                val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
+                else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
+        
+                location.world!!.dropItem(location, item.itemStack)
+            }
+            entity.remove()
         }
-        entity.remove()
     }
     
     @EventHandler
