@@ -14,7 +14,7 @@ private val CUBE_UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
 private val CUBE_FROM = Point3D(0.0, 0.0, 0.0)
 private val CUBE_TO = Point3D(1.0, 1.0, 1.0)
 
-class DefaultPart(data: AsyncData) : Part() {
+open class DefaultPart(data: AsyncData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val textures: Array<String>

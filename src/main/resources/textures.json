@@ -2780,7 +2780,8 @@
     "textures": [
       "block/glass",
       "block/obsidian",
-      "block/beacon"
+      "block/beacon",
+      "entity/beacon_beam"
     ]
   },
   {

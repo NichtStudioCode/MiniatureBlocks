@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part
 
+import de.studiocode.miniatureblocks.build.BuildContext
 import de.studiocode.miniatureblocks.build.concurrent.*
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
@@ -9,6 +10,7 @@ import de.studiocode.miniatureblocks.util.isFence
 import de.studiocode.miniatureblocks.util.isFlat
 import de.studiocode.miniatureblocks.util.isGlassPane
 import de.studiocode.miniatureblocks.util.isPot
+import de.studiocode.miniatureblocks.util.point.Point3D
 
 abstract class Part {
     
@@ -75,7 +77,7 @@ abstract class Part {
     
     companion object {
         
-        fun createPart(data: AsyncBlockData): Part =
+        fun createPart(data: AsyncBlockData, context: BuildContext, point: Point3D): Part =
             when {
                 data is AsyncStairs -> StairPart(data)
                 data is AsyncSlab -> SlabPart(data)
@@ -89,6 +91,7 @@ abstract class Part {
                 data is AsyncCampfire -> CampfirePart(data)
                 data is AsyncFluid -> FluidPart(data)
                 data is AsyncHead -> HeadPart(data)
+                data is AsyncBeacon -> BeaconPart(data, context, point)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)

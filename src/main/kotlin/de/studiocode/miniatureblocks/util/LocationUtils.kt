@@ -1,8 +1,10 @@
 package de.studiocode.miniatureblocks.util
 
+import com.google.common.base.Preconditions
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.getMiniature
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
+import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
@@ -11,6 +13,8 @@ import xyz.xenondevs.particle.ParticleEffect
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
+
+fun Location.toPoint() = Point3D(x, y, z)
 
 fun Location.getMiniatureLookingAt(maxDistance: Double, stepSize: Double = 0.25): MiniatureArmorStand? {
     val location = this.clone()
@@ -98,3 +102,18 @@ fun Location.createColoredParticle(color: Color): Any = ParticleBuilder(Particle
 
 fun Location.advance(direction: Direction, stepSize: Double = 1.0) =
     add(direction.stepX * stepSize, direction.stepY * stepSize, direction.stepZ * stepSize)
+
+operator fun Location.rangeTo(end: Location): List<Location> {
+    Preconditions.checkArgument(world == end.world, "Locations are not in the same world")
+    
+    val locations = ArrayList<Location>()
+    for (x in blockX..end.blockX) {
+        for (y in blockY..end.blockY) {
+            for (z in blockZ..end.blockZ) {
+                locations += Location(world, x.toDouble(), y.toDouble(), z.toDouble())
+            }
+        }
+    }
+    
+    return locations
+}

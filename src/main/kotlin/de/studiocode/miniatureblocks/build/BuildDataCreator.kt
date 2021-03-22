@@ -12,6 +12,7 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.isGlass
 import de.studiocode.miniatureblocks.util.isTranslucent
 import de.studiocode.miniatureblocks.util.point.Point3D
+import de.studiocode.miniatureblocks.util.toPoint
 import org.bukkit.Location
 import org.bukkit.Material
 import java.util.concurrent.*
@@ -21,6 +22,8 @@ typealias ElementData = Triple<Element, Point3D, Material>
 val EMPTY_TEXTURE = Texture(Texture.UV(0.0, 0.0, 0.0, 0.0), "")
 
 class BuildDataCreator(min: Location, max: Location) {
+    
+    private val context = BuildContext(min.toPoint(), max.toPoint())
     
     private val world = min.world!!
     private val minX = min.blockX
@@ -87,7 +90,9 @@ class BuildDataCreator(min: Location, max: Location) {
     private fun processWorldData(worldInfo: HashMap<Point3D, AsyncBlockData>) {
         partsExecutorService.submit {
             try {
-                worldInfo.forEach { (point, data) -> processedWorldData[point] = data to Part.createPart(data) }
+                worldInfo.forEach { (point, data) ->
+                    processedWorldData[point] = data to Part.createPart(data, context, point.copy())
+                }
                 batches.add(worldInfo.keys) // add points batch for later processing (createBuildData)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -195,5 +200,21 @@ class BuildDataCreator(min: Location, max: Location) {
             UP -> to.y == neighborFrom.y
             DOWN -> from.y == neighborTo.y
         }
+    
+}
+
+class BuildContext(val min: Point3D, val max: Point3D) {
+    
+    val sizeX = max.x - min.x
+    val sizeY = max.y - min.y
+    val sizeZ = max.z - min.z
+    
+    val minX = min.x
+    val minY = min.y
+    val minZ = min.z
+    
+    val maxX = max.x
+    val maxY = max.y
+    val maxZ = max.z
     
 }

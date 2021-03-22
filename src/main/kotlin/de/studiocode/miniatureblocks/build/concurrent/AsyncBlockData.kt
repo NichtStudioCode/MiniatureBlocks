@@ -228,13 +228,41 @@ class AsyncFluid(material: Material, block: Block) : AsyncBlockData(material) {
     
 }
 
+class AsyncBeacon(block: Block) : AsyncBlockData(Material.BEACON) {
+    
+    val active: Boolean
+    
+    init {
+        val location = block.location
+        val start = location.clone().subtract(1.0, 1.0, 1.0)
+        val end = location.clone().add(1.0, -1.0, 1.0)
+        
+        active = if ((start..end).all { it.block.type.isBeaconBase() }) {
+            val l = location.clone()
+            var obstructed = false
+            repeat(255 - location.blockY) {
+                l.add(0.0, 1.0, 0.0)
+                val material = l.block.type
+                if (!material.isTranslucent() && material.isSolid) {
+                    obstructed = true
+                    return@repeat
+                }
+            }
+            !obstructed
+        } else false
+    }
+    
+}
+
 fun Block.toAsyncBlockData(): AsyncBlockData {
     val material = type
     val blockData = blockData
     return when {
+        material == Material.BEACON -> AsyncBeacon(this)
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)
         material.isWall() -> AsyncWall(material, blockData)
+        
         blockData.isSlab() -> AsyncSlab(material, blockData as Slab)
         blockData.isSnow() -> AsyncSnow(material, blockData as Snow)
         
