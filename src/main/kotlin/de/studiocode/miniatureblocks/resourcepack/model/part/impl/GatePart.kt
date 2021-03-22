@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.GateBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncGate
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
@@ -18,7 +18,7 @@ private const val HORIZONTAL_BEAM_LENGTH = 4.0 / 16.0
 private val LEFT_ROT_ORIGIN = doubleArrayOf(HALF_GATE_WIDTH, 0.0, 0.5)
 private val RIGHT_ROT_ORIGIN = doubleArrayOf(1 - HALF_GATE_WIDTH, 0.0, 0.5)
 
-class GatePart(data: GateBlockData) : Part() {
+class GatePart(data: AsyncGate) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     override val elements = ArrayList<Element>()

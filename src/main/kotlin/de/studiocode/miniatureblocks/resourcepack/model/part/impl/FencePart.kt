@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.MultipleFacingBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncMultipleFacingBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
@@ -11,7 +11,7 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 private const val HALF_FENCE_POST_WIDTH = 4.0 / 16.0 / 2
 private const val HALF_FENCE_BEAM_WIDTH = 2.0 / 16.0 / 2
 
-class FencePart(data: MultipleFacingBlockData) : Part() {
+class FencePart(data: AsyncMultipleFacingBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     

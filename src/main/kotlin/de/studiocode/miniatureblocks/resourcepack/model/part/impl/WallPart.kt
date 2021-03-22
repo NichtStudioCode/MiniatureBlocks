@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.WallBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncWall
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
@@ -12,7 +12,7 @@ const val TALL_HEIGHT = 1.0
 const val LOW_HEIGHT = 14.0 / 16.0
 const val HALF_SIDE_WIDTH = 6.0 / 16.0 / 2.0
 
-class WallPart(val data: WallBlockData) : Part() {
+class WallPart(val data: AsyncWall) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val halfCenterSize = (if (data.up) 8.0 / 16.0 else 6.0 / 16.0) / 2

@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.DoorBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncDoor
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
@@ -12,7 +12,7 @@ import org.bukkit.block.data.type.Door.Hinge
 private const val DOOR_WIDTH = 3.0 / 16.0
 private const val HALF_DOOR_WIDTH = DOOR_WIDTH / 2
 
-class DoorPart(data: DoorBlockData) : Part() {
+class DoorPart(data: AsyncDoor) : Part() {
     
     private val textureLocations = BlockTexture.of(data.material).textures
     private val textureLocation = textureLocations[if (data.top) 1 else 0]

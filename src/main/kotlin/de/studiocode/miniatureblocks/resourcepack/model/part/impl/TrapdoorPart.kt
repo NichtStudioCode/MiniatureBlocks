@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.TrapdoorBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncTrapDoor
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
@@ -13,7 +13,7 @@ private val INVERTED_TRAPDOOR_MATERIALS = listOf(Material.OAK_TRAPDOOR, Material
 private const val TRAPDOOR_HEIGHT = 3.0 / 16.0
 private const val HALF_TRAPDOOR_HEIGHT = TRAPDOOR_HEIGHT / 2
 
-class TrapdoorPart(data: TrapdoorBlockData) : Part() {
+class TrapdoorPart(data: AsyncTrapDoor) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val inverted = INVERTED_TRAPDOOR_MATERIALS.contains(data.material)

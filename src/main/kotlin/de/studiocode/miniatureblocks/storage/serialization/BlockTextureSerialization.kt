@@ -10,35 +10,25 @@ import java.lang.reflect.Type
 object BlockTextureSerializer : JsonSerializer<BlockTexture> {
     
     override fun serialize(src: BlockTexture, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        return if (src.defaultRotation == Direction.NORTH && src.model == null && src.textures.size == 6) {
-            if (src.textures.all { "block/" + (src.material?.name ?: "").toLowerCase() == it }) {
-                serializeToDefault(src)
-            } else if (src.textures.isNotEmpty() && src.textures.all { it == src.textures[0] }) {
-                serializeToDelegate(src)
-            } else {
-                serializeToCustom(src)
-            }
-        } else serializeToCustom(src)
-    }
-    
-    private fun serializeToDefault(src: BlockTexture): JsonElement {
-        return JsonPrimitive(src.material?.name ?: "")
-    }
-    
-    private fun serializeToDelegate(src: BlockTexture): JsonElement {
-        val obj = JsonObject()
-        obj.addProperty("material", src.material?.name ?: "")
-        obj.addProperty("texture", src.textures[0])
-        return obj
-    }
-    
-    private fun serializeToCustom(src: BlockTexture): JsonElement {
-        val obj = JsonObject()
-        obj.addProperty("material", src.material?.name ?: "")
-        if (src.defaultRotation != Direction.NORTH) obj.addProperty("rotation", src.defaultRotation.name)
-        if (src.model != null) obj.addProperty("model", src.model)
-        obj.add("textures", JsonArray().apply { addAll(src.textures) })
-        return obj
+        if (src.defaultRotation == Direction.NORTH
+            && src.model == null
+            && src.textures.size == 6
+            && src.textures.all { "block/" + (src.material?.name ?: "").toLowerCase() == it }) {
+            return JsonPrimitive(src.material?.name ?: "")
+        } else {
+            val jsonObj = JsonObject()
+            
+            val textures: JsonElement = if (src.textures.size == 6 && src.textures.all { it == src.textures[0] }) {
+                JsonPrimitive(src.textures[0])
+            } else JsonArray().apply { addAll(src.textures) }
+            
+            jsonObj.addProperty("material", src.material?.name ?: "")
+            if (src.defaultRotation != Direction.NORTH) jsonObj.addProperty("rotation", src.defaultRotation.name)
+            if (src.model != null) jsonObj.addProperty("model", src.model)
+            jsonObj.add("textures", textures)
+            
+            return jsonObj
+        }
     }
     
 }
@@ -46,33 +36,18 @@ object BlockTextureSerializer : JsonSerializer<BlockTexture> {
 object BlockTextureDeserializer : JsonDeserializer<BlockTexture> {
     
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): BlockTexture {
-        return if (json.isJsonPrimitive) {
-            deserializeFromDefault(json)
+        return if (json is JsonPrimitive) {
+            BlockTexture(json.asString)
         } else {
-            val obj = json.asJsonObject
-            val materialName = obj.get("material").asString
-            if (obj.has("texture")) {
-                deserializeFromDelegate(obj, materialName)
-            } else {
-                deserializeFromCustom(obj, materialName)
-            }
+            val jsonObj = json.asJsonObject
+            val materialName = jsonObj.get("material").asString
+            val textures = jsonObj.get("textures") ?: jsonObj.get("texture") // legacy support
+            val rotation = jsonObj.get("rotation")?.asString?.let { Direction.valueOf(it) } ?: Direction.NORTH
+            val model = jsonObj.get("model")?.asString
+            
+            if (textures is JsonArray) BlockTexture(materialName, textures.getAllStrings().toTypedArray(), rotation, model)
+            else BlockTexture(materialName, textures.asString, rotation, model)
         }
-    }
-    
-    private fun deserializeFromDefault(json: JsonElement): BlockTexture {
-        return BlockTexture(json.asString)
-    }
-    
-    private fun deserializeFromDelegate(obj: JsonObject, materialName: String): BlockTexture {
-        val texture = obj.get("texture").asString
-        return BlockTexture(materialName, texture)
-    }
-    
-    private fun deserializeFromCustom(obj: JsonObject, materialName: String): BlockTexture {
-        val rotation = if (obj.has("rotation")) Direction.valueOf(obj.get("rotation").asString) else Direction.NORTH
-        val model = if (obj.has("model")) obj.get("model").asString else null
-        val textures = obj.get("textures").asJsonArray.getAllStrings().toTypedArray()
-        return BlockTexture(materialName, textures, rotation, model)
     }
     
 }

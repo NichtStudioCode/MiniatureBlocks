@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.MultipleFacingBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncMultipleFacingBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
@@ -12,7 +12,7 @@ import org.bukkit.Axis
 private const val GLASS_PANE_WIDTH = 2.0 / 16.0
 private const val HALF_GLASS_PANE_WIDTH = GLASS_PANE_WIDTH / 2
 
-class GlassPanePart(data: MultipleFacingBlockData) : Part() {
+class GlassPanePart(data: AsyncMultipleFacingBlockData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     override val elements = ArrayList<Element>()

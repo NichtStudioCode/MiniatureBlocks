@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
 import com.google.gson.JsonParser
 import de.studiocode.miniatureblocks.MiniatureBlocks
-import de.studiocode.miniatureblocks.build.concurrent.HeadBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncHead
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.RotationData
@@ -14,7 +14,7 @@ import org.bukkit.Material
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HeadPart(data: HeadBlockData) : Part() {
+class HeadPart(data: AsyncHead) : Part() {
     
     private val material = data.material
     private val blockTexture = BlockTexture.of(material)
@@ -54,7 +54,7 @@ class HeadPart(data: HeadBlockData) : Part() {
         elements.forEach { it.rotationData = rotationData }
     }
     
-    private fun HeadBlockData.getSkinURL(): String? {
+    private fun AsyncHead.getSkinURL(): String? {
         try {
             if (gameProfile != null) {
                 val properties = gameProfile.properties

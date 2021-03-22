@@ -5,7 +5,10 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
-import de.studiocode.miniatureblocks.util.*
+import de.studiocode.miniatureblocks.util.isFence
+import de.studiocode.miniatureblocks.util.isFlat
+import de.studiocode.miniatureblocks.util.isGlassPane
+import de.studiocode.miniatureblocks.util.isPot
 
 abstract class Part {
     
@@ -74,26 +77,22 @@ abstract class Part {
         
         fun createPart(data: AsyncBlockData): Part =
             when {
-                data is StairBlockData -> StairPart(data)
-                data is SlabBlockData -> SlabPart(data)
-                data is TrapdoorBlockData -> TrapdoorPart(data)
-                data is DoorBlockData -> DoorPart(data)
-                data is GateBlockData -> GatePart(data)
-                data is SwitchBlockData -> SwitchPart(data)
-                data is DaylightDetectorBlockData -> DaylightDetectorPart(data)
-                data is SnowBlockData -> SnowPart(data)
-                data is WallBlockData -> WallPart(data)
-                data is ChestBlockData -> ChestPart(data)
-                data is CampfireBlockData -> CampfirePart(data)
-                data is FluidBlockData -> FluidPart(data)
-                data is HeadBlockData -> HeadPart(data)
-                data.material.isFence() -> FencePart(data as MultipleFacingBlockData)
-                data.material.isGlassPane() -> GlassPanePart(data as MultipleFacingBlockData)
-                data.material.isCarpet() -> CarpetPart(data)
-                data.material.isPressurePlate() -> PressurePlatePart(data)
+                data is AsyncStairs -> StairPart(data)
+                data is AsyncSlab -> SlabPart(data)
+                data is AsyncTrapDoor -> TrapdoorPart(data)
+                data is AsyncDoor -> DoorPart(data)
+                data is AsyncGate -> GatePart(data)
+                data is AsyncSwitch -> SwitchPart(data)
+                data is AsyncSnow -> SnowPart(data)
+                data is AsyncWall -> WallPart(data)
+                data is AsyncChest -> ChestPart(data)
+                data is AsyncCampfire -> CampfirePart(data)
+                data is AsyncFluid -> FluidPart(data)
+                data is AsyncHead -> HeadPart(data)
+                data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
+                data.material.isGlassPane() -> GlassPanePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)
                 data.material.isFlat() -> FlatPart(data)
-                data.material.isMiscMaterial() -> MiscPart(data)
                 else -> DefaultPart(data)
             }
         

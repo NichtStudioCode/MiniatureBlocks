@@ -23,7 +23,7 @@ class DefaultPart(data: AsyncData) : Part() {
     
     init {
         val size = blockTexture.textures.size
-        textures = if (data is TwoStateData) {
+        textures = if (data is AsyncTwoState) {
             if (data.state) {
                 blockTexture.textures.copyOfRange(size / 2, size)
             } else blockTexture.textures.copyOfRange(0, size / 2)
@@ -40,9 +40,9 @@ class DefaultPart(data: AsyncData) : Part() {
         
         addRotation(blockTexture.defaultRotation, cube)
         when (data) {
-            is DirectionalData -> addRotation(Direction.of(data.facing), cube)
-            is OrientableData -> addRotation(Direction.of(data.axis), cube)
-            is RotatableData -> {
+            is AsyncDirectional -> addRotation(Direction.of(data.facing), cube)
+            is AsyncOrientable -> addRotation(Direction.of(data.axis), cube)
+            is AsyncRotatable -> {
                 val rotation = Direction.ofRotation(data.rotation)
                 addRotation(rotation.first)
                 val rotationData = RotationData(rotation.second.toFloat(), Axis.Y, Point3D(0.5, 0.0, 0.5), false)

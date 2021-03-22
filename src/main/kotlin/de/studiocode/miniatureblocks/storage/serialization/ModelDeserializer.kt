@@ -66,15 +66,16 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
             textures.add(
                 if (face != null) {
                     val uv = face.get("uv")
-                        .asJsonArray
-                        .getAllDoubles()
-                        .map { it / 16.0 }
-                        .toUV()
+                        ?.asJsonArray
+                        ?.getAllDoubles()
+                        ?.map { it / 16.0 }
+                        ?.toUV()
                     val rotation = face.get("rotation")?.asInt?.div(90) ?: 0
                     val texture = face.get("texture")!!.asString
                     val tintIndex = face.get("tintindex")?.asInt
                     
-                    Texture(uv, texture, rotation, tintIndex)
+                    if (uv == null) Texture(texture, rotation, tintIndex)
+                    else Texture(uv, texture, rotation, tintIndex)
                 } else EMPTY_TEXTURE
             )
         }

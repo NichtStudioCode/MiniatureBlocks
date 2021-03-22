@@ -9,6 +9,7 @@ import de.studiocode.miniatureblocks.resourcepack.model.Direction.NORTH
 import de.studiocode.miniatureblocks.storage.PermanentStorage
 import de.studiocode.miniatureblocks.storage.serialization.BlockTextureDeserializer
 import de.studiocode.miniatureblocks.util.fromJson
+import de.studiocode.miniatureblocks.util.registerTypeAdapter
 import org.bukkit.Material
 import java.util.*
 import kotlin.collections.HashSet
@@ -22,7 +23,8 @@ class BlockTexture(
     
     val material = findMaterialByName(materialName)
     
-    constructor(material: String, texture: String) : this(material, Array<String>(6) { texture })
+    constructor(materialName: String, texture: String, defaultRotation: Direction = NORTH, model: String? = null)
+        : this(materialName, Array<String>(6) { texture }, defaultRotation, model)
     
     constructor(material: String) : this(material, Array<String>(6) { "block/${material.toLowerCase()}" })
     
@@ -129,20 +131,15 @@ class BlockTexture(
         fun hasOverrides(material: Material) = textureOverrides.containsKey(material)
         
         private fun loadBlockTextures(): HashSet<BlockTexture> {
-            val textures = HashSet<BlockTexture>()
-            val obj = JsonParser().parse(BlockTexture::class.java.getResource("/textures.json").readText()).asJsonObject
+            val obj = JsonParser().parse(BlockTexture::class.java.getResource("/textures.json").readText()).asJsonArray
             
             val gson: Gson = GsonBuilder()
-                .registerTypeAdapter(BlockTexture::class.java, BlockTextureDeserializer)
+                .registerTypeAdapter(BlockTextureDeserializer)
                 .create()
             
-            textures.addAll((obj.get("default").asJsonArray
-                + obj.get("delegate").asJsonArray
-                + obj.get("custom").asJsonArray)
-                .map { gson.fromJson(it)!! })
-            
-            textures.removeIf { it.material == null }
-            return textures
+            return HashSet<BlockTexture>(
+                obj.map { gson.fromJson(it)!! }
+            ).apply { removeIf { it.material == null } }
         }
         
     }

@@ -25,9 +25,10 @@ class Texture : Cloneable {
         this.tintIndex = tintIndex
     }
     
-    constructor(textureLocation: String, rotation: Int = 0) {
+    constructor(textureLocation: String, rotation: Int = 0, tintIndex: Int? = null) {
         this.textureLocation = textureLocation
         this.rotation = rotation
+        this.tintIndex = tintIndex
         uv = null
     }
     

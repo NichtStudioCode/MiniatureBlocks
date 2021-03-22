@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.SwitchBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncSwitch
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
@@ -14,7 +14,7 @@ private const val HALF_BUTTON_WIDTH = 4.0 / 16.0 / 2
 private const val BUTTON_HEIGHT = 2.0 / 16.0
 
 // TODO: levers
-class SwitchPart(data: SwitchBlockData) : Part() {
+class SwitchPart(data: AsyncSwitch) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     override val elements = ArrayList<Element>()

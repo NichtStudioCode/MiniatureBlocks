@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.StairBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncStairs
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.impl.SlabElement
@@ -10,7 +10,7 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.block.data.type.Stairs.Shape.*
 
-class StairPart(data: StairBlockData) : Part() {
+class StairPart(data: AsyncStairs) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     override val elements = ArrayList<Element>()

@@ -1,7 +1,7 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
-import de.studiocode.miniatureblocks.build.concurrent.DirectionalBlockData
-import de.studiocode.miniatureblocks.build.concurrent.MultipleFacingBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncDirectionalBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncMultipleFacingBlockData
 import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
@@ -20,7 +20,7 @@ class FlatPart(data: AsyncBlockData) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        if (data is MultipleFacingBlockData) {
+        if (data is AsyncMultipleFacingBlockData) {
             data.faces
                 .map { Direction.of(it) }
                 .forEach { 
@@ -31,7 +31,7 @@ class FlatPart(data: AsyncBlockData) : Part() {
                 }
         } else {
             elements += createFlatElement(true)
-            if (data is DirectionalBlockData) addRotation(Direction.of(data.facing))
+            if (data is AsyncDirectionalBlockData) addRotation(Direction.of(data.facing))
         }
         
         addRotation(blockTexture.defaultRotation)
