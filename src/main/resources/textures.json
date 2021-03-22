@@ -3150,6 +3150,50 @@
       "textures": [
         "entity/signs/warped"
       ]
+    },
+    {
+      "material": "TORCH",
+      "model": "model/torch",
+      "textures": [
+        "block/torch"
+      ]
+    },
+    {
+      "material": "WALL_TORCH",
+      "model": "model/torch_wall",
+      "textures": [
+        "block/torch"
+      ]
+    },
+    {
+      "material": "REDSTONE_TORCH",
+      "model": "model/torch",
+      "textures": [
+        "block/redstone_torch_off",
+        "block/redstone_torch"
+      ]
+    },
+    {
+      "material": "REDSTONE_WALL_TORCH",
+      "model": "model/torch_wall",
+      "textures": [
+        "block/redstone_torch_off",
+        "block/redstone_torch"
+      ]
+    },
+    {
+      "material": "SOUL_TORCH",
+      "model": "model/torch",
+      "textures": [
+        "block/soul_torch"
+      ]
+    },
+    {
+      "material": "SOUL_WALL_TORCH",
+      "model": "model/torch_wall",
+      "textures": [
+        "block/soul_torch"
+      ]
     }
   ]
 }

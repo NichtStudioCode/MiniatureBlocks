@@ -1,5 +1,7 @@
 package de.studiocode.miniatureblocks.util.point
 
+import org.bukkit.Axis
+
 fun List<Double>.toPoint2D() = Point2D(this[0], this[1])
 
 data class Point2D(var x: Double, var y: Double) {
@@ -31,5 +33,12 @@ data class Point2D(var x: Double, var y: Double) {
             y = 0.0
         }
     }
+    
+    fun to3D(missingAxis: Axis, value: Double) =
+        when (missingAxis) {
+            Axis.X -> Point3D(value, y, x)
+            Axis.Y -> Point3D(y, value, x)
+            Axis.Z -> Point3D(x, y, value)
+        }
     
 }

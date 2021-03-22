@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.build.concurrent
 import com.mojang.authlib.GameProfile
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.util.*
+import org.bukkit.Axis
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -15,49 +16,97 @@ import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 import kotlin.collections.HashSet
 
-open class AsyncBlockData(val material: Material)
-
-open class DirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material) {
-    val facing = blockData.facing
+interface AsyncData {
+    val material: Material
 }
 
-class RotatableBlockData(material: Material, blockData: Rotatable) : AsyncBlockData(material) {
-    val rotation = blockData.rotation
+interface TwoStateData {
+    val state: Boolean
 }
 
-class OrientableBlockData(material: Material, blockData: Orientable) : AsyncBlockData(material) {
-    val axis = blockData.axis
+interface DirectionalData {
+    val facing: BlockFace
 }
 
-class BisectedBlockData(material: Material, blockData: Bisected) : AsyncBlockData(material) {
-    val half = blockData.half
+interface RotatableData {
+    val rotation: BlockFace
 }
 
-open class MultipleFacingBlockData(material: Material, blockData: MultipleFacing) : AsyncBlockData(material) {
-    val faces = HashSet(blockData.faces)
+interface OrientableData {
+    val axis: Axis
+}
+
+interface BisectedData : TwoStateData {
+    val half: Half
+}
+
+interface MultipleFacingData {
+    val faces: HashSet<BlockFace>
+}
+
+interface LightableData : TwoStateData {
+    val lit: Boolean
+}
+
+open class AsyncBlockData(override val material: Material) : AsyncData
+
+class DirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material), DirectionalData {
+    override val facing = blockData.facing
+}
+
+class RotatableBlockData(material: Material, blockData: Rotatable) : AsyncBlockData(material), RotatableData {
+    override val rotation = blockData.rotation
+}
+
+class OrientableBlockData(material: Material, blockData: Orientable) : AsyncBlockData(material), OrientableData {
+    override val axis = blockData.axis
+}
+
+class BisectedBlockData(material: Material, blockData: Bisected) : AsyncBlockData(material), BisectedData {
+    override val half = blockData.half
+    override val state = half == Half.TOP
+}
+
+class MultipleFacingBlockData(material: Material, blockData: MultipleFacing) : AsyncBlockData(material), MultipleFacingData {
+    override val faces = HashSet(blockData.faces)
+}
+
+class LightableBlockData(material: Material, lightable: Lightable) : AsyncBlockData(material), TwoStateData {
+    override val state = lightable.isLit
+    val lit = state
 }
 
 class SlabBlockData(material: Material, blockData: Slab) : AsyncBlockData(material) {
     val top = blockData.type == Type.TOP
 }
 
-class StairBlockData(material: Material, blockData: Stairs) : DirectionalBlockData(material, blockData) {
-    val top = blockData.half == Half.TOP
+class StairBlockData(material: Material, blockData: Stairs) : AsyncBlockData(material), DirectionalData, BisectedData {
+    override val half = blockData.half
+    override val facing = blockData.facing
+    override val state = blockData.half == Half.TOP
+    val top = half == Half.TOP
     val shape = blockData.shape
 }
 
-class TrapdoorBlockData(material: Material, blockData: TrapDoor) : DirectionalBlockData(material, blockData) {
-    val top = blockData.half == Half.TOP
+class TrapdoorBlockData(material: Material, blockData: TrapDoor) : AsyncBlockData(material), DirectionalData, BisectedData {
+    override val facing = blockData.facing
+    override val half = blockData.half
+    override val state = half == Half.TOP
+    val top = state
     val open = blockData.isOpen
 }
 
-class DoorBlockData(material: Material, blockData: Door) : DirectionalBlockData(material, blockData) {
-    val top = blockData.half == Half.TOP
+class DoorBlockData(material: Material, blockData: Door) : AsyncBlockData(material), DirectionalData, BisectedData {
+    override val facing = blockData.facing
+    override val half = blockData.half
+    override val state = half == Half.TOP
+    val top = state
     val open = blockData.isOpen
     val hinge = blockData.hinge
 }
 
-class GateBlockData(material: Material, blockData: Gate) : DirectionalBlockData(material, blockData) {
+class GateBlockData(material: Material, blockData: Gate) : AsyncBlockData(material), DirectionalData {
+    override val facing = blockData.facing
     val inWall = blockData.isInWall
     val open = blockData.isOpen
 }
@@ -71,17 +120,37 @@ class SnowBlockData(material: Material, blockData: Snow) : AsyncBlockData(materi
     val maximumLayers = blockData.maximumLayers
 }
 
-class SnowableBlockData(material: Material, blockData: Snowable) : AsyncBlockData(material) {
+class SnowableBlockData(material: Material, blockData: Snowable) : AsyncBlockData(material), TwoStateData {
     val snowy = blockData.isSnowy
+    override val state = snowy
 }
 
-class SwitchBlockData(material: Material, blockData: Switch) : DirectionalBlockData(material, blockData) {
+class SwitchBlockData(material: Material, blockData: Switch) : AsyncBlockData(material), DirectionalData {
+    override val facing = blockData.facing
     val attachedFace = blockData.attachedFace
+    val powered = blockData.isPowered
+}
+
+class ChestBlockData(material: Material, blockData: Chest) : AsyncBlockData(material), DirectionalData {
+    override val facing = blockData.facing
+    val type = blockData.type
+}
+
+class CampfireBlockData(material: Material, blockData: Campfire) : AsyncBlockData(material), DirectionalData, LightableData {
+    override val facing = blockData.facing
+    override val lit = blockData.isLit
+    override val state = lit
+}
+
+class RedstoneWallTorchBlockData(material: Material, blockData: RedstoneWallTorch) : AsyncBlockData(material), DirectionalData, LightableData {
+    override val facing = blockData.facing
+    override val lit = blockData.isLit
+    override val state = lit
 }
 
 class WallBlockData(material: Material, blockData: BlockData) : AsyncBlockData(material) {
-    
     val up: Boolean
+    
     val faces: Map<BlockFace, Boolean>
     
     init {
@@ -101,15 +170,6 @@ class WallBlockData(material: Material, blockData: BlockData) : AsyncBlockData(m
             fence.faces.forEach { faces[it] = false }
         }
     }
-    
-}
-
-class ChestBlockData(material: Material, blockData: Chest) : DirectionalBlockData(material, blockData) {
-    val type = blockData.type
-}
-
-class CampfireBlockData(material: Material, blockData: Campfire) : DirectionalBlockData(material, blockData) {
-    val lit = blockData.isLit
 }
 
 class HeadBlockData(material: Material, block: Block) : AsyncBlockData(material) {
@@ -175,6 +235,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         material.isWall() -> WallBlockData(material, blockData)
         blockData.isSlab() -> SlabBlockData(material, blockData as Slab)
         blockData.isSnow() -> SnowBlockData(material, blockData as Snow)
+        
         blockData is Stairs -> StairBlockData(material, blockData)
         blockData is TrapDoor -> TrapdoorBlockData(material, blockData)
         blockData is Door -> DoorBlockData(material, blockData)
@@ -184,11 +245,15 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Snowable -> SnowableBlockData(material, blockData)
         blockData is Chest -> ChestBlockData(material, blockData)
         blockData is Campfire -> CampfireBlockData(material, blockData)
+        blockData is RedstoneWallTorch -> RedstoneWallTorchBlockData(material, blockData)
+        
         blockData is Directional -> DirectionalBlockData(material, blockData)
         blockData is Orientable -> OrientableBlockData(material, blockData)
         blockData is MultipleFacing -> MultipleFacingBlockData(material, blockData)
         blockData is Bisected -> BisectedBlockData(material, blockData)
         blockData is Rotatable -> RotatableBlockData(material, blockData)
+        blockData is Lightable -> LightableBlockData(material, blockData)
+        
         else -> AsyncBlockData(material)
     }
 }

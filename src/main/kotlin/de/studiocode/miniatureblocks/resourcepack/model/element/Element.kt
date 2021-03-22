@@ -10,6 +10,12 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
+private fun Point3D.mapToOrigin(origin: DoubleArray) =
+    Point3D(x - origin[0], y - origin[1], z - origin[2])
+
+private fun Point3D.mapFromOrigin(origin: DoubleArray) =
+    Point3D(x + origin[0], y + origin[1], z + origin[2])
+
 open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Texture) : Cloneable {
     
     var shade: Boolean = true
@@ -88,7 +94,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
         
-        rotationData?.rotateAroundYAxis(rotation)
+        rotationData?.rotateAroundYAxis(rotation, origin)
     }
     
     fun rotatePosAroundXAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
@@ -134,12 +140,6 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         this.fromPos = fromPos.mapFromOrigin(origin)
         this.toPos = toPos.mapFromOrigin(origin)
     }
-    
-    private fun Point3D.mapToOrigin(origin: DoubleArray) =
-        Point3D(x - origin[0], y - origin[1], z - origin[2])
-    
-    private fun Point3D.mapFromOrigin(origin: DoubleArray) =
-        Point3D(x + origin[0], y + origin[1], z + origin[2])
     
     fun addTextureRotation(rotation: Int, vararg directions: Direction) {
         directions.forEach { textures[it]!!.rotation += rotation }
@@ -199,13 +199,13 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     fun getRotationInMiniature(x: Int, y: Int, z: Int, stepSize: Double): RotationData? {
         val rotationData = this.rotationData
         if (rotationData != null) {
-            val origin = rotationData.origin
+            val origin = rotationData.pivotPoint
             val point = Point3D(
                 origin.x * stepSize + x * stepSize,
                 origin.y * stepSize + y * stepSize,
                 origin.z * stepSize + z * stepSize
             )
-            return rotationData.copy(origin = point)
+            return rotationData.clone().also { it.pivotPoint = point }
         }
         return null
     }
@@ -216,32 +216,49 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         return (super.clone() as Element).apply {
             fromPos = fromPos.copy()
             toPos = toPos.copy()
-            rotationData = rotationData?.copy()
+            rotationData = rotationData?.clone()
             textures = EnumMap(textures.map { (direction, texture) -> direction to texture.clone() }.toMap())
         }
     }
     
 }
 
-data class RotationData(var angle: Float, var axis: Axis, var origin: Point3D, var rescale: Boolean) {
+class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, var rescale: Boolean) : Cloneable {
     
-    fun rotateAroundYAxis(rotation: Int) {
-        if (axis == Axis.Y) return
+    fun rotateAroundYAxis(rotation: Int, origin: DoubleArray) {
+        if (rotation == 0 || axis == Axis.Y) return
+        
         val rotZ = if (axis == Axis.Z) angle else 0f
         val rotX = if (axis == Axis.X) angle else 0f
-        val rotPoint = Point2D(rotZ.toDouble(), rotX.toDouble())
-        repeat(rotation) { rotPoint.rotateClockwise() }
-        if (rotPoint.x != 0.0) {
+        
+        val angle2D = Point2D(rotZ.toDouble(), rotX.toDouble())
+        val mappedPivot = pivotPoint.mapToOrigin(origin)
+        val pivot2D = mappedPivot.to2D(Axis.Y)
+        
+        repeat(rotation) {
+            angle2D.rotateClockwise()
+            pivot2D.rotateClockwise()
+        }
+        
+        pivotPoint = pivot2D.to3D(Axis.Y, mappedPivot.y).mapFromOrigin(origin)
+        
+        if (angle2D.x != 0.0) {
             axis = Axis.Z
-            angle = rotPoint.x.toFloat()
+            angle = angle2D.x.toFloat()
         } else {
             axis = Axis.X
-            angle = rotPoint.y.toFloat()
+            angle = angle2D.y.toFloat()
         }
     }
     
     fun rotateAroundXAxis(rotation: Int) {
         TODO("Not implemented yet")
+    }
+    
+    public override fun clone(): RotationData {
+        return (super.clone() as RotationData).apply {
+            pivotPoint = pivotPoint.copy()
+        }
     }
     
 }

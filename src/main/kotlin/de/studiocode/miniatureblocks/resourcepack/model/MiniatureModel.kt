@@ -71,7 +71,7 @@ class MiniatureModel(buildData: BuildData) {
                         val rotation = JsonObject()
                         rotation.addProperty("angle", rotationData.angle)
                         rotation.addProperty("axis", rotationData.axis.name.toLowerCase())
-                        rotation.add("origin", JsonArray().apply { addAll(rotationData.origin.toDoubleArray()) })
+                        rotation.add("origin", JsonArray().apply { addAll(rotationData.pivotPoint.toDoubleArray()) })
                         if (rotationData.rescale) rotation.addProperty("rescale", true)
                         elementObj.add("rotation", rotation)
                     }

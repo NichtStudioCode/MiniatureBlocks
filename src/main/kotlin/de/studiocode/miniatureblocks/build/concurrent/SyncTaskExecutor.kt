@@ -13,8 +13,12 @@ class SyncTaskExecutor {
         
         tasks.add(task.hashCode())
         runTask {
-            task()
-            tasks.remove(task.hashCode())
+            try {
+                task()
+                tasks.remove(task.hashCode())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
     
