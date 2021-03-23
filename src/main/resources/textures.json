@@ -3184,5 +3184,21 @@
       "block/scaffolding_side",
       "block/scaffolding_bottom"
     ]
+  },
+  {
+    "material": "FIRE",
+    "model": "model/fire",
+    "textures": [
+      "block/fire_0",
+      "block/fire_1"
+    ]
+  },
+  {
+    "material": "SOUL_FIRE",
+    "model": "model/fire",
+    "textures": [
+      "block/soul_fire_0",
+      "block/soul_fire_1"
+    ]
   }
 ]

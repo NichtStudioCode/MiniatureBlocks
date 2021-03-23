@@ -134,6 +134,7 @@ class BuildDataCreator(min: Location, max: Location) {
             if (neighborInfo != null) {
                 val neighborMaterial = neighborInfo.first.material
                 neighborElements = neighborInfo.second.elements
+                    .filter { it.rotationData == null }
                     .map {
                         ElementData(
                             it,

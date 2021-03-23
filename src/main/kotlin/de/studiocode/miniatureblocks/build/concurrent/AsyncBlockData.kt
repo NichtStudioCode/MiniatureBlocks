@@ -164,6 +164,10 @@ class AsyncScaffolding(material: Material, blockData: Scaffolding) : AsyncBlockD
     override val state = blockData.isBottom
 }
 
+class AsyncFire(material: Material, blockData: Fire) : AsyncBlockData(material), AsyncMultipleFacing {
+    override val faces = HashSet(blockData.faces)
+}
+
 class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(material) {
     
     val up: Boolean
@@ -294,6 +298,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is RedstoneWallTorch -> AsyncRedstoneWallTorch(material, blockData)
         blockData is Rail -> AsyncRail(material, blockData)
         blockData is Scaffolding -> AsyncScaffolding(material, blockData)
+        blockData is Fire -> AsyncFire(material, blockData)
         
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)
