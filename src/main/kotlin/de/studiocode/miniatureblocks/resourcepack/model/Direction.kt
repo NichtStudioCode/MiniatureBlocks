@@ -1,6 +1,7 @@
 package de.studiocode.miniatureblocks.resourcepack.model
 
 import org.bukkit.Axis
+import org.bukkit.Axis.*
 import org.bukkit.block.BlockFace
 
 enum class Direction(
@@ -14,42 +15,42 @@ enum class Direction(
         lazy { SOUTH },
         xRot = 0, yRot = 0,
         stepX = 0, stepY = 0, stepZ = -1,
-        BlockFace.NORTH, Axis.Z
+        BlockFace.NORTH, Z
     ),
     
     EAST(
         lazy { WEST },
         xRot = 0, yRot = 1,
         stepX = 1, stepY = 0, stepZ = 0,
-        BlockFace.EAST, Axis.X
+        BlockFace.EAST, X
     ),
     
     SOUTH(
         lazy { NORTH },
         xRot = 0, yRot = 2,
         stepX = 0, stepY = 0, stepZ = 1,
-        BlockFace.SOUTH, Axis.Z
+        BlockFace.SOUTH, Z
     ),
     
     WEST(
         lazy { EAST },
         xRot = 0, yRot = 3,
         stepX = -1, stepY = 0, stepZ = 0,
-        BlockFace.WEST, Axis.X
+        BlockFace.WEST, X
     ),
     
     UP(
         lazy { DOWN },
         xRot = 1, yRot = 0,
         stepX = 0, stepY = 1, stepZ = 0,
-        BlockFace.UP, Axis.Y
+        BlockFace.UP, Y
     ),
     
     DOWN(
         lazy { UP },
         xRot = 3, yRot = 0,
         stepX = 0, stepY = -1, stepZ = 0,
-        BlockFace.DOWN, Axis.Y
+        BlockFace.DOWN, Y
     );
     
     val modelDataName = name.toLowerCase()
@@ -61,7 +62,12 @@ enum class Direction(
         
         fun of(blockFace: BlockFace): Direction = values().first { it.blockFace == blockFace }
         
-        fun of(axis: Axis): Direction = values().first { it.axis == axis }
+        fun of(axis: Axis) =
+            when (axis) {
+                X -> EAST
+                Y -> UP
+                Z -> NORTH
+            }
         
         fun ofRotation(blockFace: BlockFace) =
             when (blockFace) {

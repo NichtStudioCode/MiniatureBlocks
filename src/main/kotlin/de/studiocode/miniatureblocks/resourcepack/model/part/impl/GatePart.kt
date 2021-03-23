@@ -15,8 +15,8 @@ private const val BOTTOM_SPACE = 5.0 / 16.0
 private const val HORIZONTAL_BEAM_HEIGHT = 3.0 / 16.0
 private const val HORIZONTAL_BEAM_LENGTH = 4.0 / 16.0
 
-private val LEFT_ROT_ORIGIN = doubleArrayOf(HALF_GATE_WIDTH, 0.0, 0.5)
-private val RIGHT_ROT_ORIGIN = doubleArrayOf(1 - HALF_GATE_WIDTH, 0.0, 0.5)
+private val LEFT_ROT_ORIGIN = Point3D(HALF_GATE_WIDTH, 0.0, 0.5)
+private val RIGHT_ROT_ORIGIN = Point3D(1 - HALF_GATE_WIDTH, 0.0, 0.5)
 
 class GatePart(data: AsyncGate) : Part() {
     

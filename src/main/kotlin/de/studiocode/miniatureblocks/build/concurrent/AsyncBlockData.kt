@@ -150,6 +150,11 @@ class AsyncRedstoneWallTorch(material: Material, blockData: RedstoneWallTorch) :
     override val state = lit
 }
 
+class AsyncDropperDispenser(material: Material, blockData: BlockData) : AsyncBlockData(material), AsyncDirectional, AsyncTwoState {
+    override val facing = (blockData as Directional).facing
+    override val state = facing == BlockFace.UP || facing == BlockFace.DOWN
+}
+
 class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(material) {
     
     val up: Boolean
@@ -259,9 +264,11 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
     val blockData = blockData
     return when {
         material == Material.BEACON -> AsyncBeacon(this)
+        
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)
         material.isWall() -> AsyncWall(material, blockData)
+        material.isDropperDispenser() -> AsyncDropperDispenser(material, blockData)
         
         blockData.isSlab() -> AsyncSlab(material, blockData as Slab)
         blockData.isSnow() -> AsyncSnow(material, blockData as Snow)
@@ -291,3 +298,5 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
 private fun BlockData.isSlab() = this is Slab && this.type != Type.DOUBLE
 
 private fun BlockData.isSnow() = this is Snow && this.layers < this.maximumLayers
+
+private fun Material.isDropperDispenser() = this == Material.DISPENSER || this == Material.DROPPER

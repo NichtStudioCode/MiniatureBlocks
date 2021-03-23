@@ -7,14 +7,6 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 import de.studiocode.miniatureblocks.util.shift
 import org.bukkit.Axis
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
-
-private fun Point3D.mapToOrigin(origin: DoubleArray) =
-    Point3D(x - origin[0], y - origin[1], z - origin[2])
-
-private fun Point3D.mapFromOrigin(origin: DoubleArray) =
-    Point3D(x + origin[0], y + origin[1], z + origin[2])
 
 open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Texture) : Cloneable {
     
@@ -73,72 +65,28 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         toPos.z += z
     }
     
-    fun rotatePosAroundYAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
+    fun rotatePosAroundYAxis(rotation: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
         if (rotation < 1) return
-        val fromPos = this.fromPos.mapToOrigin(origin)
-        val toPos = this.toPos.mapToOrigin(origin)
+        fromPos.rotateAroundYAxis(rotation, origin)
+        toPos.rotateAroundYAxis(rotation, origin)
         
-        val start = fromPos.to2D(Axis.Y)
-        val end = toPos.to2D(Axis.Y)
-        
-        repeat(rotation) {
-            start.rotateClockwise()
-            end.rotateClockwise()
-        }
-        
-        fromPos.z = min(start.x, end.x)
-        fromPos.x = min(start.y, end.y)
-        toPos.z = max(start.x, end.x)
-        toPos.x = max(start.y, end.y)
-        
-        this.fromPos = fromPos.mapFromOrigin(origin)
-        this.toPos = toPos.mapFromOrigin(origin)
+        val sorted = Point3D.sort(fromPos, toPos)
+        fromPos = sorted.first
+        toPos = sorted.second
         
         rotationData?.rotateAroundYAxis(rotation, origin)
     }
     
-    fun rotatePosAroundXAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
+    fun rotatePosAroundXAxis(rotation: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
         if (rotation < 1) return
-        val fromPos = this.fromPos.mapToOrigin(origin)
-        val toPos = this.toPos.mapToOrigin(origin)
+        fromPos.rotateAroundXAxis(rotation, origin)
+        toPos.rotateAroundXAxis(rotation, origin)
         
-        val start = fromPos.to2D(Axis.X)
-        val end = toPos.to2D(Axis.X)
+        val sorted = Point3D.sort(fromPos, toPos)
+        fromPos = sorted.first
+        toPos = sorted.second
         
-        repeat(rotation) {
-            start.rotateClockwise()
-            end.rotateClockwise()
-        }
-        
-        fromPos.z = min(start.x, end.x)
-        fromPos.y = min(start.y, end.y)
-        toPos.z = max(start.x, end.x)
-        toPos.y = max(start.y, end.y)
-        
-        this.fromPos = fromPos.mapFromOrigin(origin)
-        this.toPos = toPos.mapFromOrigin(origin)
-    }
-    
-    fun rotatePosAroundZAxis(rotation: Int, origin: DoubleArray = doubleArrayOf(0.5, 0.5, 0.5)) {
-        if (rotation < 1) return
-        val fromPos = this.fromPos.mapToOrigin(origin)
-        val toPos = this.toPos.mapToOrigin(origin)
-        
-        val start = fromPos.to2D(Axis.Z)
-        val end = fromPos.to2D(Axis.Z)
-        
-        repeat(rotation) {
-            start.rotateClockwise()
-            end.rotateClockwise()
-        }
-        
-        fromPos.x = min(start.x, end.x)
-        fromPos.y = min(start.y, end.y)
-        toPos.x = max(start.x, end.x)
-        toPos.y = max(start.y, end.y)
-        
-        this.fromPos = fromPos.mapFromOrigin(origin)
-        this.toPos = toPos.mapFromOrigin(origin)
+        rotationData?.rotateAroundXAxis(rotation, origin)
     }
     
     fun addTextureRotation(rotation: Int, vararg directions: Direction) {
@@ -225,22 +173,14 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
 
 class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, var rescale: Boolean) : Cloneable {
     
-    fun rotateAroundYAxis(rotation: Int, origin: DoubleArray) {
+    fun rotateAroundYAxis(rotation: Int, origin: Point3D) {
         if (rotation == 0 || axis == Axis.Y) return
         
         val rotZ = if (axis == Axis.Z) angle else 0f
         val rotX = if (axis == Axis.X) angle else 0f
         
         val angle2D = Point2D(rotZ.toDouble(), rotX.toDouble())
-        val mappedPivot = pivotPoint.mapToOrigin(origin)
-        val pivot2D = mappedPivot.to2D(Axis.Y)
-        
-        repeat(rotation) {
-            angle2D.rotateClockwise()
-            pivot2D.rotateClockwise()
-        }
-        
-        pivotPoint = pivot2D.to3D(Axis.Y, mappedPivot.y).mapFromOrigin(origin)
+        repeat(rotation) { angle2D.rotateClockwise() }
         
         if (angle2D.x != 0.0) {
             axis = Axis.Z
@@ -249,9 +189,11 @@ class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, va
             axis = Axis.X
             angle = angle2D.y.toFloat()
         }
+        
+        pivotPoint.rotateAroundYAxis(rotation, origin)
     }
     
-    fun rotateAroundXAxis(rotation: Int) {
+    fun rotateAroundXAxis(rotation: Int, origin: Point3D) {
         TODO("Not implemented yet")
     }
     

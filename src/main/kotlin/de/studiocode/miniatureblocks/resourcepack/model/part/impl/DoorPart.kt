@@ -50,10 +50,10 @@ class DoorPart(data: AsyncDoor) : Part() {
             element.textures[Direction.DOWN]!!.rotation +=2
             
             if (data.hinge == Hinge.RIGHT) {
-                element.rotatePosAroundYAxis(1, doubleArrayOf(1 - HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
+                element.rotatePosAroundYAxis(1, Point3D(1 - HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
                 element.rotateTexturesAroundYAxis(1)
             } else {
-                element.rotatePosAroundYAxis(3, doubleArrayOf(HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
+                element.rotatePosAroundYAxis(3, Point3D(HALF_DOOR_WIDTH, 0.0, 1 - HALF_DOOR_WIDTH))
                 element.rotateTexturesAroundYAxis(3)
             }
         } else {

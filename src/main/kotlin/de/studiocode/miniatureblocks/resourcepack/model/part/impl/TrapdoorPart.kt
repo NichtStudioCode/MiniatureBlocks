@@ -30,8 +30,7 @@ class TrapdoorPart(data: AsyncTrapDoor) : Part() {
         
         if (open) {
             if (top) element.rotateTexturesAroundYAxis(2)
-            // rotation is always the same because direction rotation hasn't been applied yet
-            val origin = doubleArrayOf(0.0, HALF_TRAPDOOR_HEIGHT, 1.0 - HALF_TRAPDOOR_HEIGHT)
+            val origin = Point3D(0.0, HALF_TRAPDOOR_HEIGHT, 1.0 - HALF_TRAPDOOR_HEIGHT)
             element.rotatePosAroundXAxis(1, origin)
             element.rotateTexturesAroundXAxis(1)
         } else if (top) {
