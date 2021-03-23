@@ -155,6 +155,11 @@ class AsyncDropperDispenser(material: Material, blockData: BlockData) : AsyncBlo
     override val state = facing == BlockFace.UP || facing == BlockFace.DOWN
 }
 
+class AsyncRail(material: Material, blockData: Rail) : AsyncBlockData(material) {
+    val shape = blockData.shape
+    val powered = if (blockData is RedstoneRail) blockData.isPowered else false
+}
+
 class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(material) {
     
     val up: Boolean
@@ -283,6 +288,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Chest -> AsyncChest(material, blockData)
         blockData is Campfire -> AsyncCampfire(material, blockData)
         blockData is RedstoneWallTorch -> AsyncRedstoneWallTorch(material, blockData)
+        blockData is Rail -> AsyncRail(material, blockData)
         
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)

@@ -194,7 +194,23 @@ class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, va
     }
     
     fun rotateAroundXAxis(rotation: Int, origin: Point3D) {
-        TODO("Not implemented yet")
+        if (rotation == 0 || axis == Axis.X) return
+        
+        val rotY = if (axis == Axis.Y) angle else 0f
+        val rotZ = if (axis == Axis.Z) angle else 0f
+        
+        val angle2D = Point2D(rotY.toDouble(), rotZ.toDouble())
+        repeat(rotation) { angle2D.rotateClockwise() }
+        
+        if (angle2D.x != 0.0) {
+            axis = Axis.Y
+            angle = angle2D.x.toFloat()
+        } else {
+            axis = Axis.Z
+            angle = angle2D.y.toFloat()
+        }
+        
+        pivotPoint.rotateAroundXAxis(rotation, origin)
     }
     
     public override fun clone(): RotationData {

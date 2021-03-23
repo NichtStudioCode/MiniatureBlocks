@@ -3147,5 +3147,33 @@
     "textures": [
       "entity/end_portal"
     ]
+  },
+  {
+    "material": "RAIL",
+    "textures": [
+      "block/rail",
+      "block/rail_corner"
+    ]
+  },
+  {
+    "material": "POWERED_RAIL",
+    "textures": [
+      "block/powered_rail",
+      "block/powered_rail_on"
+    ]
+  },
+  {
+    "material": "ACTIVATOR_RAIL",
+    "textures": [
+      "block/activator_rail",
+      "block/activator_rail_on"
+    ]
+  },
+  {
+    "material": "DETECTOR_RAIL",
+    "textures": [
+      "block/detector_rail",
+      "block/detector_rail_on"
+    ]
   }
 ]

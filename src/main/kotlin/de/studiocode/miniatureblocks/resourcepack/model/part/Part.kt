@@ -92,6 +92,7 @@ abstract class Part {
                 data is AsyncFluid -> FluidPart(data)
                 data is AsyncHead -> HeadPart(data)
                 data is AsyncBeacon -> BeaconPart(data, context, point)
+                data is AsyncRail -> RailPart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)
