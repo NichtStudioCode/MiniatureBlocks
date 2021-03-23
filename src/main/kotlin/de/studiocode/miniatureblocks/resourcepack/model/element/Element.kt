@@ -13,6 +13,7 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
     var shade: Boolean = true
     var textures: MutableMap<Direction, Texture> = EnumMap(Direction::class.java)
     var rotationData: RotationData? = null
+    var comment: String? = null
     
     init {
         Preconditions.checkArgument(textures.size == 6 || textures.size == 1, "textures size has to be 6 or 1")

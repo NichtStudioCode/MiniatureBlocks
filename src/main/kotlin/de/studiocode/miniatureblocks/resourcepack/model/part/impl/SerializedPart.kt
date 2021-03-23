@@ -7,6 +7,7 @@ import de.studiocode.miniatureblocks.storage.serialization.ModelDeserializer
 import de.studiocode.miniatureblocks.util.FileUtils
 import de.studiocode.miniatureblocks.util.fromJson
 import de.studiocode.miniatureblocks.util.registerTypeAdapter
+import kotlin.math.max
 
 object SerializedPart {
     
@@ -28,9 +29,12 @@ object SerializedPart {
         MODELS = models
     }
     
+    fun getModelElements(model: String): List<Element> {
+        return getCloneOfElements(model)
+    }
     
     fun getModelElements(model: String, textures: Array<String>): List<Element> {
-        return getCloneOfElements(model).apply { applyTextures(textures) }
+        return getCloneOfElements(model).also { applyTextures(it, textures) }
     }
     
     private fun getCloneOfElements(model: String): List<Element> {
@@ -42,8 +46,8 @@ object SerializedPart {
         return clonedList
     }
     
-    private fun List<Element>.applyTextures(textures: Array<String>) {
-        forEach { element ->
+    fun applyTextures(elements: List<Element>, textures: Array<String>) {
+        elements.forEach { element ->
             element.textures
                 .map { it.value }
                 .forEach { texture ->
@@ -52,6 +56,20 @@ object SerializedPart {
                         texture.textureLocation = textures[index]
                 }
         }
+    }
+    
+    fun countTexturesNeeded(elements: List<Element>): Int {
+        var highest = 0
+        elements.forEach { element ->
+            element.textures
+                .map { it.value }
+                .forEach { texture ->
+                    val index = texture.textureLocation.toIntOrNull()
+                    if (index != null) highest = max(highest, index)
+                }
+        }
+        
+        return highest + 1
     }
     
 }

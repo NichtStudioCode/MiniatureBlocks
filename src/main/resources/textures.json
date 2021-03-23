@@ -3175,5 +3175,14 @@
       "block/detector_rail",
       "block/detector_rail_on"
     ]
+  },
+  {
+    "material": "SCAFFOLDING",
+    "model": "model/scaffolding",
+    "textures": [
+      "block/scaffolding_top",
+      "block/scaffolding_side",
+      "block/scaffolding_bottom"
+    ]
   }
 ]

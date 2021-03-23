@@ -34,6 +34,7 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
                 
                 val rotationObj = elementObj.get("rotation")?.asJsonObject
                 if (rotationObj != null) element.setRotation(rotationObj)
+                elementObj.get("__comment")?.also { element.comment = it.asString }
                 
                 elements += element
             }

@@ -160,6 +160,10 @@ class AsyncRail(material: Material, blockData: Rail) : AsyncBlockData(material) 
     val powered = if (blockData is RedstoneRail) blockData.isPowered else false
 }
 
+class AsyncScaffolding(material: Material, blockData: Scaffolding) : AsyncBlockData(material), AsyncTwoState {
+    override val state = blockData.isBottom
+}
+
 class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(material) {
     
     val up: Boolean
@@ -289,6 +293,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Campfire -> AsyncCampfire(material, blockData)
         blockData is RedstoneWallTorch -> AsyncRedstoneWallTorch(material, blockData)
         blockData is Rail -> AsyncRail(material, blockData)
+        blockData is Scaffolding -> AsyncScaffolding(material, blockData)
         
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)
