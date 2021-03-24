@@ -2940,12 +2940,16 @@
   },
   {
     "material": "SUNFLOWER",
-    "model": "model/cross",
+    "model": "model/sunflower",
     "textures": [
       "block/sunflower_bottom",
       "block/sunflower_bottom",
+      "block/sunflower_front",
+      "block/sunflower_back",
       "block/sunflower_top",
-      "block/sunflower_top"
+      "block/sunflower_top",
+      "block/sunflower_front",
+      "block/sunflower_back"
     ]
   },
   {
