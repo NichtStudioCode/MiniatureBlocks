@@ -3460,5 +3460,14 @@
       "entity/banner_base",
       "block/black_concrete"
     ]
+  },
+  {
+    "material": "REDSTONE_WIRE",
+    "textures": [
+      "block/modded/redstone_dust_dot_off",
+      "block/modded/redstone_dust_line_off",
+      "block/modded/redstone_dust_dot_on",
+      "block/modded/redstone_dust_line_on"
+    ]
   }
 ]

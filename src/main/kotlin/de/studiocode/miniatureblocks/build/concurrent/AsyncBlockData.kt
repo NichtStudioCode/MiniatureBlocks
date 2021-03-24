@@ -10,6 +10,7 @@ import org.bukkit.block.BlockFace
 import org.bukkit.block.data.*
 import org.bukkit.block.data.Bisected.Half
 import org.bukkit.block.data.type.*
+import org.bukkit.block.data.type.RedstoneWire.Connection
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Wall.Height
 import org.bukkit.inventory.meta.SkullMeta
@@ -168,6 +169,19 @@ class AsyncFire(material: Material, blockData: Fire) : AsyncBlockData(material),
     override val faces = HashSet(blockData.faces)
 }
 
+class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
+    
+    val faces = HashMap<BlockFace, Connection>()
+    val power = blockData.power
+    
+    init {
+        Direction.cardinalPoints
+            .map { it.blockFace }
+            .forEach { faces[it] = blockData.getFace(it) }
+    }
+    
+}
+
 class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(material) {
     
     val up: Boolean
@@ -299,6 +313,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Rail -> AsyncRail(material, blockData)
         blockData is Scaffolding -> AsyncScaffolding(material, blockData)
         blockData is Fire -> AsyncFire(material, blockData)
+        blockData is RedstoneWire -> AsyncRedstoneWire(material, blockData)
         
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)

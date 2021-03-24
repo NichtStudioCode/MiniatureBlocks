@@ -44,7 +44,7 @@ open class DefaultPart(data: AsyncData) : Part() {
         
         // remove elements
         if (data is AsyncTwoState) {
-            elements.removeIf { (data.state && it.comment.equals("0")) || (!data.state && it.comment.equals("1")) }
+            elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
         }
         
         // apply correct rotation

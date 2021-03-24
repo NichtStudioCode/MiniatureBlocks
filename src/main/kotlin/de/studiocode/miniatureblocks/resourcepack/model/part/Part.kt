@@ -94,6 +94,7 @@ abstract class Part {
                 data is AsyncBeacon -> BeaconPart(data, context, point)
                 data is AsyncRail -> RailPart(data)
                 data is AsyncFire -> FirePart(data)
+                data is AsyncRedstoneWire -> RedstonePart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material.isGlassPane() -> GlassPanePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)

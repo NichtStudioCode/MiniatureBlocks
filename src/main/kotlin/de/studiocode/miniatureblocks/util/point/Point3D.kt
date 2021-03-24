@@ -27,9 +27,9 @@ data class Point3D(var x: Double, var y: Double, var z: Double) {
     
     fun rotateAroundXAxis(rotation: Int, origin: Point3D) {
         subtract(origin)
-        val point2D = to2D(Z)
+        val point2D = to2D(X)
         repeat(rotation) { point2D.rotateClockwise() }
-        setTo(point2D.to3D(Z, z))
+        setTo(point2D.to3D(X, x))
         add(origin)
     }
     
