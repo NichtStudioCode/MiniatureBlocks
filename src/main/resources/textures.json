@@ -3200,5 +3200,261 @@
       "block/soul_fire_0",
       "block/soul_fire_1"
     ]
+  },
+  {
+    "material": "WHITE_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/white_concrete"
+    ]
+  },
+  {
+    "material": "ORANGE_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/orange_concrete"
+    ]
+  },
+  {
+    "material": "MAGENTA_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/magenta_concrete"
+    ]
+  },
+  {
+    "material": "LIGHT_BLUE_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/light_blue_concrete"
+    ]
+  },
+  {
+    "material": "YELLOW_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/yellow_concrete"
+    ]
+  },
+  {
+    "material": "LIME_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/lime_concrete"
+    ]
+  },
+  {
+    "material": "PINK_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/pink_concrete"
+    ]
+  },
+  {
+    "material": "GRAY_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/gray_concrete"
+    ]
+  },
+  {
+    "material": "LIGHT_GRAY_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/light_gray_concrete"
+    ]
+  },
+  {
+    "material": "CYAN_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/cyan_concrete"
+    ]
+  },
+  {
+    "material": "PURPLE_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/purple_concrete"
+    ]
+  },
+  {
+    "material": "BLUE_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/blue_concrete"
+    ]
+  },
+  {
+    "material": "BROWN_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/brown_concrete"
+    ]
+  },
+  {
+    "material": "GREEN_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/green_concrete"
+    ]
+  },
+  {
+    "material": "RED_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/red_concrete"
+    ]
+  },
+  {
+    "material": "BLACK_BANNER",
+    "model": "model/banner",
+    "textures": [
+      "entity/banner_base",
+      "block/black_concrete"
+    ]
+  },
+  {
+    "material": "WHITE_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/white_concrete"
+    ]
+  },
+  {
+    "material": "ORANGE_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/orange_concrete"
+    ]
+  },
+  {
+    "material": "MAGENTA_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/magenta_concrete"
+    ]
+  },
+  {
+    "material": "LIGHT_BLUE_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/light_blue_concrete"
+    ]
+  },
+  {
+    "material": "YELLOW_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/yellow_concrete"
+    ]
+  },
+  {
+    "material": "LIME_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/lime_concrete"
+    ]
+  },
+  {
+    "material": "PINK_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/pink_concrete"
+    ]
+  },
+  {
+    "material": "GRAY_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/gray_concrete"
+    ]
+  },
+  {
+    "material": "LIGHT_GRAY_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/light_gray_concrete"
+    ]
+  },
+  {
+    "material": "CYAN_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/cyan_concrete"
+    ]
+  },
+  {
+    "material": "PURPLE_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/purple_concrete"
+    ]
+  },
+  {
+    "material": "BLUE_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/blue_concrete"
+    ]
+  },
+  {
+    "material": "BROWN_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/brown_concrete"
+    ]
+  },
+  {
+    "material": "GREEN_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/green_concrete"
+    ]
+  },
+  {
+    "material": "RED_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/red_concrete"
+    ]
+  },
+  {
+    "material": "BLACK_WALL_BANNER",
+    "model": "model/banner_wall",
+    "textures": [
+      "entity/banner_base",
+      "block/black_concrete"
+    ]
   }
 ]
