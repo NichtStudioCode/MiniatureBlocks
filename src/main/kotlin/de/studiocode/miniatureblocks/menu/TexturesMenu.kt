@@ -20,9 +20,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class TexturesMenu(val player: Player) {
     
@@ -35,13 +32,11 @@ class TexturesMenu(val player: Player) {
     
     private var currentMenu = 0
     
-    private val modelNames: SortedSet<String> =
-        BlockTexture.textureLocations.map { it.replace("block/", "").replace("/", "") }.toSortedSet()
     private val textureModels = HashMap<String, CustomModel>()
     
     init {
-        modelNames.forEach {
-            textureModels[it] = MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getCustomModelFromName(it)!!
+        BlockTexture.sortedTextureLocations.forEach {
+            textureModels[it] = MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getModelByTextureLocation(it)!!
         }
     }
     
@@ -99,12 +94,7 @@ class TexturesMenu(val player: Player) {
                 .map { MaterialItem(it) }
         }
         
-        inner class MaterialItem(private val material: Material) :
-            SimpleItem(
-                if (material.isItem) ItemBuilder(material)
-                else ItemBuilder(Material.BARRIER).setDisplayName("§r(No item) ${material.name}")
-            ) {
-            
+        inner class MaterialItem(private val material: Material) : SimpleItem(MATERIALS[material]!!) {
             override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
                 if (clickType == ClickType.LEFT) handleMaterialChoose(material)
             }
@@ -161,8 +151,7 @@ class TexturesMenu(val player: Player) {
         }
         
         inner class CurrentMaterialItem : SupplierItem({
-            if (material.isItem) ItemBuilder(material).setDisplayName("§7Current material")
-            else Icon.BACKGROUND.itemBuilder
+            MATERIALS[material]!!.clone().setDisplayName("§7Current material")
         })
         
         inner class ClearOverridesItem : BaseItem() {
@@ -211,7 +200,7 @@ class TexturesMenu(val player: Player) {
         var material: Material = Material.STONE
         
         override fun getItems(preview: Boolean, filter: String): List<Item> {
-            return modelNames
+            return BlockTexture.sortedTextureLocations
                 .searchFor(filter)
                 .map { TextureItem(it, textureModels[it]!!) }
         }
@@ -222,6 +211,28 @@ class TexturesMenu(val player: Player) {
                 if (clickType == ClickType.LEFT) handleTextureChoose(model)
             }
         }
+    }
+    
+    companion object {
+        
+        private val MATERIALS: Map<Material, ItemBuilder>
+        
+        init {
+            val materials = HashMap<Material, ItemBuilder>()
+            
+            val materialModelData = MiniatureBlocks.INSTANCE.resourcePack.materialModelData
+            BlockTexture.supportedMaterials
+                .forEach { material ->
+                    if (material.isItem) {
+                        materials[material] = ItemBuilder(material)
+                    } else {
+                        materials[material] = materialModelData.getModelByMaterial(material)!!.createItemBuilder()
+                    }
+                }
+            
+            MATERIALS = materials
+        }
+        
     }
     
 }

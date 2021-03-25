@@ -13,7 +13,6 @@ class TextureModelDataFile(resourcePack: ResourcePack) :
         "assets/minecraft/models/item/white_stained_glass.json"
     ) {
     
-    
     override fun createJsonObject(): JsonObject {
         val mainObj = super.createJsonObject()
         mainObj.addProperty("parent", "block/white_stained_glass")
@@ -21,12 +20,11 @@ class TextureModelDataFile(resourcePack: ResourcePack) :
     }
     
     fun getModelByTextureLocation(textureLocation: String): CustomModel? {
-        val modelName = textureLocation.replace("block/", "").replace("/", "")
-        return getCustomModelFromName(modelName)
+        return getCustomModelFromPath("item/textureitem/$textureLocation")
     }
     
     fun getTextureLocation(customModel: CustomModel): String {
-        val modelFile = File(resourcePack.models, customModel.model + ".json")
+        val modelFile = File(resourcePack.models, customModel.path + ".json")
         return JsonParser()
             .parse(modelFile.readText()).asJsonObject
             .get("textures").asJsonObject

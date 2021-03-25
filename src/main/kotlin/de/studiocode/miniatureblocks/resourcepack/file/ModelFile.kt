@@ -45,7 +45,7 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
             val predicateObj = JsonObject()
             predicateObj.addProperty("custom_model_data", customModel.customModelData)
             customModelObj.add("predicate", predicateObj)
-            customModelObj.addProperty("model", customModel.model)
+            customModelObj.addProperty("model", customModel.path)
             
             overrides.add(customModelObj)
         }
@@ -72,9 +72,11 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
     
     fun getCustomModelFromName(name: String): CustomModel? = customModels.find { it.name == name }
     
-    inner class CustomModel(val customModelData: Int, val model: String) {
+    fun getCustomModelFromPath(path: String): CustomModel? = customModels.find { it.path == path }
+    
+    inner class CustomModel(val customModelData: Int, val path: String) {
         
-        val name = model.substringAfterLast("/")
+        val name = path.substringAfterLast("/")
         
         fun createItemBuilder(): ItemBuilder =
             ItemBuilder(material).setDisplayName("§f$name").setCustomModelData(customModelData)

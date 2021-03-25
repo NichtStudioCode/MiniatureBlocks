@@ -12,3 +12,5 @@ fun runTask(run: () -> Unit) =
 fun runTaskTimer(delay: Long, period: Long, run: () -> Unit) =
     Bukkit.getScheduler().runTaskTimer(MiniatureBlocks.INSTANCE, run, delay, period)
 
+fun runAsyncTask(run: () -> Unit) =
+    Bukkit.getScheduler().runTaskAsynchronously(MiniatureBlocks.INSTANCE, run)

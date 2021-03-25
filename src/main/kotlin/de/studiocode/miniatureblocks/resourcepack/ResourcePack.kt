@@ -3,20 +3,26 @@ package de.studiocode.miniatureblocks.resourcepack
 import com.google.gson.JsonObject
 import de.studiocode.invui.resourcepack.ForceResourcePack
 import de.studiocode.miniatureblocks.MiniatureBlocks
+import de.studiocode.miniatureblocks.build.BuildDataCreator
+import de.studiocode.miniatureblocks.build.concurrent.SyncTaskExecutor
 import de.studiocode.miniatureblocks.resourcepack.file.DirectoryFile
 import de.studiocode.miniatureblocks.resourcepack.file.MainModelDataFile
+import de.studiocode.miniatureblocks.resourcepack.file.MaterialModelDataFile
 import de.studiocode.miniatureblocks.resourcepack.file.TextureModelDataFile
 import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
+import de.studiocode.miniatureblocks.resourcepack.model.MiniatureModel
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.storage.PermanentStorage
 import de.studiocode.miniatureblocks.util.*
 import net.lingala.zip4j.ZipFile
 import org.apache.commons.io.FilenameUtils
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerLoginEvent
 import java.io.File
 import java.net.URL
 
@@ -26,10 +32,12 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     val models = DirectoryFile(this, "assets/minecraft/models/")
     private val moddedItemModels = DirectoryFile(this, "assets/minecraft/models/item/modded")
     private val textureItemModels = DirectoryFile(this, "assets/minecraft/models/item/textureitem")
+    private val materialItemModels = DirectoryFile(this, "assets/minecraft/models/item/materialitem")
     private val textures = DirectoryFile(this, "assets/minecraft/textures/")
     
     val mainModelData: MainModelDataFile
     val textureModelData: TextureModelDataFile
+    val materialModelData = MaterialModelDataFile(this)
     
     private val config = plugin.config
     
@@ -47,16 +55,26 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
             } else uploadToDefault()
         }
     
+    @Volatile
+    private var initialized = false
+    
     init {
         Bukkit.getServer().pluginManager.registerEvents(this, plugin)
         
         updateOldFiles()
         mainModelData = MainModelDataFile(this)
         textureModelData = TextureModelDataFile(this)
-        
+    
         extractDefaults()
         createTextureModelFiles()
-        packZip()
+        
+        runAsyncTask {
+            createMaterialModelFiles()
+            packZip()
+            
+            initialized = true
+            println("[MiniatureBlocks] ResourcePack initialized")
+        }
     }
     
     private fun updateOldFiles() {
@@ -76,11 +94,44 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         }
     }
     
+    @Synchronized
     private fun extractDefaults() = FileUtils.extractFiles("resourcepack/", main)
     
+    @Synchronized
     private fun createTextureModelFiles() {
         BlockTexture.textureLocations.forEach(this::addTextureLocation)
         textureModelData.writeToFile()
+    }
+    
+    @Synchronized
+    private fun createMaterialModelFiles() {
+        val executor = SyncTaskExecutor()
+        val block = MiniatureBlocks.INSTANCE.builderWorld.world.getBlockAt(0, 200, 0)
+        
+        BlockTexture.supportedMaterials
+            .filterNot { it.isItem }
+            .forEach { material ->
+                val file = File(materialItemModels, "${material.name.toLowerCase()}.json")
+                if (!file.exists()) {
+                    executor.submit {
+                        val blockState = block.state
+                        blockState.type = material
+                        blockState.update(true, false)
+                    }
+                    executor.awaitCompletion()
+                    
+                    val data = BuildDataCreator(block.location, block.location).createData()
+                    val modelDataObj = MiniatureModel(data).modelDataObj
+                    modelDataObj.writeToFile(file)
+                    
+                    val customModelData = materialModelData.getNextCustomModelData()
+                    materialModelData.customModels += materialModelData.CustomModel(customModelData, "item/materialitem/${material.name.toLowerCase()}")
+                }
+            }
+        
+        materialModelData.writeToFile()
+        
+        executor.submit { block.type = Material.AIR }
     }
     
     @Synchronized
@@ -102,13 +153,13 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
                 }
             }
             if (frametime > 0) texture.makeAnimated(frametime)
-    
+            
             if (addTextureLocation) {
                 addTextureLocation(path)
                 textureModelData.writeToFile()
                 BlockTexture.addTextureLocation(path)
             }
-    
+            
             updateResourcePack(force)
         }
         
@@ -131,10 +182,11 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     @Synchronized
     private fun addTextureLocation(textureLocation: String) {
-        val modelName = textureLocation.replace("block/", "").replace("/", "")
-        val modelPath = "item/textureitem/$modelName"
-        val file = File(textureItemModels, "$modelName.json")
+        val modelPath = "item/textureitem/$textureLocation"
+        val file = File(textureItemModels, "$textureLocation.json")
         if (!file.exists()) {
+            file.parentFile.mkdirs()
+            
             val mainObj = JsonObject()
             mainObj.addProperty("parent", "item/textureitem")
             mainObj.add("textures", JsonObject().apply { addProperty("1", textureLocation) })
@@ -146,15 +198,15 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     @Synchronized
     private fun removeTextureLocation(textureLocation: String) {
-        val modelName = textureLocation.replace("block/", "").replace("/", "")
-        val modelPath = "item/textureitem/$modelName"
-        val modelFile = File(textureItemModels, "$modelName.json")
+        val modelPath = "item/textureitem/$textureLocation"
+        val modelFile = File(textureItemModels, "$textureLocation.json")
         if (modelFile.exists()) {
             modelFile.delete()
-            textureModelData.customModels.removeIf { it.model == modelPath }
+            textureModelData.customModels.removeIf { it.path == modelPath }
             textureModelData.writeToFile()
         }
     }
+    
     
     @Synchronized
     fun addMiniature(name: String, modelDataObj: JsonObject, force: Boolean = true) {
@@ -234,6 +286,11 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     @Synchronized
     private fun uploadToDefault() = FileIOUploadUtils.uploadToFileIO(zipFile)
+    
+    @EventHandler
+    fun handlePlayerLogin(event: PlayerLoginEvent) {
+        if (!initialized) event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "")
+    }
     
     @EventHandler
     fun handlePlayerJoin(event: PlayerJoinEvent) {

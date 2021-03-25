@@ -12,6 +12,8 @@ import de.studiocode.miniatureblocks.util.fromJson
 import de.studiocode.miniatureblocks.util.registerTypeAdapter
 import org.bukkit.Material
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 class BlockTexture(
@@ -66,11 +68,12 @@ class BlockTexture(
         
         @Suppress("ReplaceWithEnumMap")
         val textureOverrides = PermanentStorage.retrieve(HashMap<Material, BlockTexture>(), "textureOverrides")
-        
+        val associatedMaterials = HashMap<String, ArrayList<Material>>()
         private val defaultTextureLocations: HashSet<String>
         private val customTextureLocations: ArrayList<String>
         val textureLocations: HashSet<String>
-        val supportedMaterials: TreeSet<Material>
+        lateinit var sortedTextureLocations: SortedSet<String>
+        val supportedMaterials: SortedSet<Material>
         
         init {
             loadBlockTextures()
@@ -86,6 +89,7 @@ class BlockTexture(
             customTextureLocations = PermanentStorage.retrieve(ArrayList(), "customTextures")
             textureLocations = HashSet(defaultTextureLocations)
             textureLocations.addAll(customTextureLocations)
+            sortTextureLocations()
         }
         
         fun addTextureLocation(location: String) {
@@ -93,12 +97,14 @@ class BlockTexture(
             customTextureLocations.add(location)
             
             PermanentStorage.store("customTextures", customTextureLocations)
+            sortTextureLocations()
         }
         
         fun removeTextureLocation(location: String): Boolean {
             if (!defaultTextureLocations.contains(location) && customTextureLocations.remove(location)) {
                 PermanentStorage.store("customTextures", customTextureLocations)
                 textureLocations.remove(location)
+                sortTextureLocations()
                 return true
             }
             return false
@@ -131,15 +137,34 @@ class BlockTexture(
         fun hasOverrides(material: Material) = textureOverrides.containsKey(material)
         
         private fun loadBlockTextures(): HashSet<BlockTexture> {
-            val obj = JsonParser().parse(BlockTexture::class.java.getResource("/textures.json").readText()).asJsonArray
+            val array = JsonParser().parse(BlockTexture::class.java.getResource("/textures.json").readText()).asJsonArray
             
             val gson: Gson = GsonBuilder()
                 .registerTypeAdapter(BlockTextureDeserializer)
                 .create()
             
+            val textures = HashSet<BlockTexture>()
+            
+            array.forEach { element ->
+                val blockTexture = gson.fromJson<BlockTexture>(element)!!
+                if (blockTexture.material != null) {
+                    textures += blockTexture
+                    
+                    blockTexture.textures.forEach { texture ->
+                        val materials = associatedMaterials[texture] ?: ArrayList()
+                        materials.add(blockTexture.material)
+                        associatedMaterials[texture] = materials
+                    }
+                }
+            }
+            
             return HashSet<BlockTexture>(
-                obj.map { gson.fromJson(it)!! }
+                array.map { gson.fromJson(it)!! }
             ).apply { removeIf { it.material == null } }
+        }
+        
+        private fun sortTextureLocations() {
+            sortedTextureLocations = textureLocations.toSortedSet(TextureLocationComparator)
         }
         
     }

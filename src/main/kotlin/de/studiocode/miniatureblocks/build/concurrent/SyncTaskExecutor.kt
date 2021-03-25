@@ -1,29 +1,25 @@
 package de.studiocode.miniatureblocks.build.concurrent
 
 import de.studiocode.miniatureblocks.util.runTask
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.ConcurrentHashMap
 
 class SyncTaskExecutor {
     
-    private val tasks = CopyOnWriteArrayList<Int>()
-    private var open = true
+    private val tasks = ConcurrentHashMap.newKeySet<() -> Unit>()
     
     fun submit(task: () -> Unit) {
-        if (!open) throw IllegalStateException("SyncTaskExecutor is not open")
-        
-        tasks.add(task.hashCode())
+        tasks.add(task)
         runTask {
             try {
                 task()
-                tasks.remove(task.hashCode())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            tasks.remove(task)
         }
     }
     
     fun awaitCompletion() {
-        open = false
         while (tasks.isNotEmpty()) {
             Thread.sleep(50)
         }
