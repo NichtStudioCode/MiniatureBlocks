@@ -9,6 +9,7 @@ import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.*
 import org.bukkit.block.data.Bisected.Half
+import org.bukkit.block.data.FaceAttachable.AttachedFace
 import org.bukkit.block.data.type.*
 import org.bukkit.block.data.type.RedstoneWire.Connection
 import org.bukkit.block.data.type.Slab.Type
@@ -49,6 +50,10 @@ interface AsyncLightable : AsyncTwoState {
     val lit: Boolean
 }
 
+interface AsyncFaceAttachable {
+    val attachedFace: AttachedFace
+}
+
 open class AsyncBlockData(override val material: Material) : AsyncData
 
 class AsyncDirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material), AsyncDirectional {
@@ -74,7 +79,6 @@ class AsyncMultipleFacingBlockData(material: Material, blockData: MultipleFacing
 
 class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncBlockData(material), AsyncTwoState {
     override val state = lightable.isLit
-    val lit = state
 }
 
 class AsyncSlab(material: Material, blockData: Slab) : AsyncBlockData(material) {
@@ -114,7 +118,6 @@ class AsyncGate(material: Material, blockData: Gate) : AsyncBlockData(material),
 
 class AsyncDaylightDetector(material: Material, blockData: DaylightDetector) : AsyncBlockData(material), AsyncTwoState {
     override val state = blockData.isInverted
-    val inverted = state
 }
 
 class AsyncSnow(material: Material, blockData: Snow) : AsyncBlockData(material) {
@@ -123,15 +126,13 @@ class AsyncSnow(material: Material, blockData: Snow) : AsyncBlockData(material) 
 }
 
 class AsyncSnowable(material: Material, blockData: Snowable) : AsyncBlockData(material), AsyncTwoState {
-    val snowy = blockData.isSnowy
-    override val state = snowy
+    override val state = blockData.isSnowy
 }
 
-class AsyncSwitch(material: Material, blockData: Switch) : AsyncBlockData(material), AsyncDirectional, AsyncTwoState {
+class AsyncSwitch(material: Material, blockData: Switch) : AsyncBlockData(material), AsyncFaceAttachable, AsyncDirectional, AsyncTwoState {
     override val facing = blockData.facing
     override val state = blockData.isPowered
-    val attachedFace = blockData.attachedFace
-    val powered = blockData.isPowered
+    override val attachedFace = blockData.attachedFace
 }
 
 class AsyncChest(material: Material, blockData: Chest) : AsyncBlockData(material), AsyncDirectional {

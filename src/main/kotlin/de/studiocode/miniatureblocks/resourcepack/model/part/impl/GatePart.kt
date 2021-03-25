@@ -34,14 +34,12 @@ class GatePart(data: AsyncGate) : Part() {
             rightBeams.forEach { it.rotatePosAroundYAxis(1, RIGHT_ROT_ORIGIN) }
         }
         
-        addPosRotation(Direction.of(data.facing))
-        applyModifications()
+        rotatePos(Direction.of(data.facing))
         
         elements.forEach(Element::freezeUV)
         
         if (data.inWall) {
-            addMove(0.0, -3.0 / 16.0, 0.0)
-            applyModifications()
+            move(0.0, -3.0 / 16.0, 0.0)
         }
     }
     

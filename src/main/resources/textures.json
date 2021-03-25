@@ -752,42 +752,52 @@
   },
   {
     "material": "STONE_BUTTON",
+    "model": "model/button",
     "textures": "block/stone"
   },
   {
     "material": "OAK_BUTTON",
+    "model": "model/button",
     "textures": "block/oak_planks"
   },
   {
     "material": "SPRUCE_BUTTON",
+    "model": "model/button",
     "textures": "block/spruce_planks"
   },
   {
     "material": "BIRCH_BUTTON",
+    "model": "model/button",
     "textures": "block/birch_planks"
   },
   {
     "material": "JUNGLE_BUTTON",
+    "model": "model/button",
     "textures": "block/jungle_planks"
   },
   {
     "material": "ACACIA_BUTTON",
+    "model": "model/button",
     "textures": "block/acacia_planks"
   },
   {
     "material": "DARK_OAK_BUTTON",
+    "model": "model/button",
     "textures": "block/dark_oak_planks"
   },
   {
     "material": "CRIMSON_BUTTON",
+    "model": "model/button",
     "textures": "block/crimson_planks"
   },
   {
     "material": "WARPED_BUTTON",
+    "model": "model/button",
     "textures": "block/warped_planks"
   },
   {
     "material": "POLISHED_BLACKSTONE_BUTTON",
+    "model": "model/button",
     "textures": "block/polished_blackstone"
   },
   {
@@ -3468,6 +3478,14 @@
       "block/modded/redstone_dust_line_off",
       "block/modded/redstone_dust_dot_on",
       "block/modded/redstone_dust_line_on"
+    ]
+  },
+  {
+    "material": "LEVER",
+    "model": "model/lever",
+    "textures": [
+      "block/cobblestone",
+      "block/lever"
     ]
   }
 ]

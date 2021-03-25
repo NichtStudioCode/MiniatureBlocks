@@ -30,13 +30,12 @@ class RailPart(data: AsyncRail) : Part() {
         val rotation = getRequiredRotation(data.shape)
         val angle = rotation.second
         if (angle != 0.0) {
-            addMove(0.0, 0.5, 0.0)
+            move(0.0, 0.5, 0.0)
             element.rotationData = RotationData(angle.toFloat(), Axis.X, Point3D(0.5, 0.5 + SPACE, 0.5), true)
         }
         
-        addMove(0.0, SPACE, 0.0)
-        addRotation(0, rotation.first)
-        applyModifications()
+        move(0.0, SPACE, 0.0)
+        rotate(0, rotation.first)
     }
     
     private fun getRequiredRotation(shape: Shape) =

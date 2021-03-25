@@ -16,8 +16,7 @@ class ChestPart(val data: AsyncChest) : Part() {
     init {
         elements += SerializedPart.getModelElements(models[data.type.ordinal], arrayOf(textures[data.type.ordinal]))
         
-        addRotation(Direction.of(data.facing))
-        applyModifications()
+        rotate(Direction.of(data.facing))
     }
     
 }

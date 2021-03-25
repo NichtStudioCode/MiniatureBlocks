@@ -61,8 +61,7 @@ class DoorPart(data: AsyncDoor) : Part() {
         }
         
         val direction = Direction.of(data.facing)
-        addRotation(direction)
-        applyModifications()
+        rotate(direction)
     }
     
 }

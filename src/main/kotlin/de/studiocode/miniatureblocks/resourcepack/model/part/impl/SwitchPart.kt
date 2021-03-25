@@ -3,43 +3,27 @@ package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 import de.studiocode.miniatureblocks.build.concurrent.AsyncSwitch
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
-import de.studiocode.miniatureblocks.resourcepack.model.element.impl.TexturedElement
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
-import de.studiocode.miniatureblocks.util.point.Point3D
-import org.bukkit.block.data.FaceAttachable.AttachedFace
+import org.bukkit.Material
+import org.bukkit.block.data.FaceAttachable
 
-private const val HALF_BUTTON_LENGTH = 6.0 / 16.0 / 2
-private const val HALF_BUTTON_WIDTH = 4.0 / 16.0 / 2
-private const val BUTTON_HEIGHT = 2.0 / 16.0
-
-// TODO: levers
 class SwitchPart(data: AsyncSwitch) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     override val elements = ArrayList<Element>()
     
     init {
-        val direction = Direction.of(data.facing)
-        val element = createButtonElement()
+        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
+        elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
         
-        if (data.attachedFace == AttachedFace.WALL) {
-            element.rotatePosAroundXAxis(3)
-        } else if (data.attachedFace == AttachedFace.CEILING) {
-            element.rotatePosAroundXAxis(2)
+        if (data.attachedFace == FaceAttachable.AttachedFace.CEILING) rotate(2, 2)
+        else if (data.attachedFace == FaceAttachable.AttachedFace.WALL) {
+            if (data.material == Material.LEVER) rotate(0, 2)
+            rotate(1, 2)
         }
         
-        element.rotatePosAroundYAxis(direction.yRot)
-        
-        elements += element
-    }
-    
-    private fun createButtonElement(): Element {
-        return TexturedElement(
-            Point3D(0.5 - HALF_BUTTON_LENGTH, 0.0, 0.5 - HALF_BUTTON_WIDTH),
-            Point3D(0.5 + HALF_BUTTON_LENGTH, BUTTON_HEIGHT, 0.5 + HALF_BUTTON_WIDTH),
-            blockTexture
-        )
+        rotate(Direction.of(data.facing))
     }
     
 }

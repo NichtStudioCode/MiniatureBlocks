@@ -13,8 +13,7 @@ class SlabPart(data: AsyncSlab) : Part() {
     override val elements = listOf(SlabElement(blockTexture))
     
     init {
-        if (top) addPosRotation(2, 0)
-        applyModifications()
+        if (top) rotatePos(2, 0)
     }
     
 }

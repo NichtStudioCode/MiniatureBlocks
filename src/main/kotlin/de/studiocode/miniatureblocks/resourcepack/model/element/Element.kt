@@ -66,8 +66,9 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         toPos.z += z
     }
     
-    fun rotatePosAroundYAxis(rotation: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
-        if (rotation < 1) return
+    fun rotatePosAroundYAxis(rot: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
+        val rotation = normalizeRotation(rot)
+        if (rotation == 0) return
         fromPos.rotateAroundYAxis(rotation, origin)
         toPos.rotateAroundYAxis(rotation, origin)
         
@@ -78,8 +79,9 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         rotationData?.rotateAroundYAxis(rotation, origin)
     }
     
-    fun rotatePosAroundXAxis(rotation: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
-        if (rotation < 1) return
+    fun rotatePosAroundXAxis(rot: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
+        val rotation = normalizeRotation(rot)
+        if (rotation == 0) return
         fromPos.rotateAroundXAxis(rotation, origin)
         toPos.rotateAroundXAxis(rotation, origin)
         
@@ -94,8 +96,9 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         directions.forEach { textures[it]!!.rotation += rotation }
     }
     
-    fun rotateTexturesAroundYAxis(rotation: Int) {
-        if (rotation < 1) return
+    fun rotateTexturesAroundYAxis(rot: Int) {
+        val rotation = normalizeRotation(rot)
+        if (rotation == 0) return
         
         // shift all sides that aren't on the Y axis
         shiftSides(rotation, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
@@ -105,8 +108,9 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         textures[Direction.DOWN]!!.rotation -= rotation // down texture rotates in the opposite direction
     }
     
-    fun rotateTexturesAroundXAxis(rotation: Int) {
-        if (rotation < 1) return
+    fun rotateTexturesAroundXAxis(rot: Int) {
+        val rotation = normalizeRotation(rot)
+        if (rotation == 0) return
         
         // rotate current front texture -180°
         textures[Direction.NORTH]!!.rotation -= 2
@@ -131,6 +135,11 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         for ((index, side) in directions.withIndex()) {
             textures[side] = sideTextures[index]!!
         }
+    }
+    
+    private fun normalizeRotation(rotation: Int): Int {
+        val rot = rotation % 4
+        return if (rot < 0) rot + 4 else rot
     }
     
     fun getFromPosInMiniature(x: Int, y: Int, z: Int, stepSize: Double) = getPosInMiniature(fromPos, x, y, z, stepSize)
@@ -175,6 +184,8 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
 class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, var rescale: Boolean) : Cloneable {
     
     fun rotateAroundYAxis(rotation: Int, origin: Point3D) {
+        pivotPoint.rotateAroundYAxis(rotation, origin)
+        
         if (rotation == 0 || axis == Axis.Y) return
         
         val rotZ = if (axis == Axis.Z) angle else 0f
@@ -191,10 +202,11 @@ class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, va
             angle = angle2D.y.toFloat()
         }
         
-        pivotPoint.rotateAroundYAxis(rotation, origin)
     }
     
     fun rotateAroundXAxis(rotation: Int, origin: Point3D) {
+        pivotPoint.rotateAroundXAxis(rotation, origin)
+        
         if (rotation == 0 || axis == Axis.X) return
         
         val rotY = if (axis == Axis.Y) angle else 0f
@@ -211,7 +223,6 @@ class RotationData(var angle: Float, var axis: Axis, var pivotPoint: Point3D, va
             angle = angle2D.y.toFloat()
         }
         
-        pivotPoint.rotateAroundXAxis(rotation, origin)
     }
     
     public override fun clone(): RotationData {

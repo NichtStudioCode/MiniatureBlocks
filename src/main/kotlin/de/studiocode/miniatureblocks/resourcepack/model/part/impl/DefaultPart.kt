@@ -46,25 +46,24 @@ open class DefaultPart(data: AsyncData) : Part() {
         if (data is AsyncTwoState) {
             elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
         }
-        
+    
         // apply correct rotation
-        addRotation(blockTexture.defaultRotation, cube)
+        rotate(blockTexture.defaultRotation, cube)
         when (data) {
-            is AsyncDirectional -> addRotation(Direction.of(data.facing), cube)
-            is AsyncOrientable -> addRotation(Direction.of(data.axis), cube)
+            is AsyncDirectional -> rotate(Direction.of(data.facing), cube)
+            is AsyncOrientable -> rotate(Direction.of(data.axis), cube)
             is AsyncRotatable -> {
                 val rotation = Direction.ofRotation(data.rotation)
-                addRotation(rotation.first)
+                rotate(rotation.first)
                 val rotationData = RotationData(rotation.second.toFloat(), Axis.Y, Point3D(0.5, 0.0, 0.5), false)
                 elements.forEach { it.rotationData = rotationData }
             }
         }
-        applyModifications()
     }
     
-    private fun addRotation(direction: Direction, cube: Boolean) {
-        if (cube) addTextureRotation(direction)
-        else addRotation(direction)
+    private fun rotate(direction: Direction, cube: Boolean) {
+        if (cube) rotateTextures(direction)
+        else rotate(direction)
     }
     
     private fun createCubeElement(textures: Array<String>) =

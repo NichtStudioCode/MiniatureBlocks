@@ -37,8 +37,7 @@ class TrapdoorPart(data: AsyncTrapDoor) : Part() {
             element.rotatePosAroundXAxis(2)
         }
         
-        addRotation(facing)
-        applyModifications()
+        rotate(facing)
     }
     
     private fun createTrapdoorElement(): Element {

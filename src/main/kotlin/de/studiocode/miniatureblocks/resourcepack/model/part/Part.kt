@@ -3,7 +3,6 @@ package de.studiocode.miniatureblocks.resourcepack.model.part
 import de.studiocode.miniatureblocks.build.BuildContext
 import de.studiocode.miniatureblocks.build.concurrent.*
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
-import de.studiocode.miniatureblocks.resourcepack.model.RotationValue
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
 import de.studiocode.miniatureblocks.util.isFence
@@ -11,68 +10,45 @@ import de.studiocode.miniatureblocks.util.isFlat
 import de.studiocode.miniatureblocks.util.isGlassPane
 import de.studiocode.miniatureblocks.util.isPot
 import de.studiocode.miniatureblocks.util.point.Point3D
+import org.jetbrains.annotations.Async
 
 abstract class Part {
     
     abstract val elements: List<Element>
     
-    private var posRotX by RotationValue()
-    private var posRotY by RotationValue()
-    private var texRotX by RotationValue()
-    private var texRotY by RotationValue()
-    private var moveX = 0.0
-    private var moveY = 0.0
-    private var moveZ = 0.0
-    
-    fun addMove(x: Double, y: Double, z: Double) {
-        moveX += x
-        moveY += y
-        moveZ += z
+    fun move(x: Double, y: Double, z: Double) {
+        elements.forEach { it.move(x, y, z) }
     }
     
-    fun addRotation(direction: Direction) {
-        addRotation(direction.xRot, direction.yRot)
+    fun rotate(direction: Direction) {
+        rotate(direction.xRot, direction.yRot)
     }
     
-    fun addRotation(x: Int, y: Int) {
-        addPosRotation(x, y)
-        addTextureRotation(x, y)
+    fun rotate(x: Int, y: Int) {
+        rotatePos(x, y)
+        rotateTextures(x, y)
     }
     
-    fun addPosRotation(direction: Direction) {
-        addPosRotation(direction.xRot, direction.yRot)
+    fun rotatePos(direction: Direction) {
+        rotatePos(direction.xRot, direction.yRot)
     }
     
-    fun addPosRotation(x: Int, y: Int) {
-        posRotX += x
-        posRotY += y
-    }
-    
-    fun addTextureRotation(direction: Direction) {
-        addTextureRotation(direction.xRot, direction.yRot)
-    }
-    
-    fun addTextureRotation(x: Int, y: Int) {
-        texRotX += x
-        texRotY += y
-    }
-    
-    fun applyModifications() {
-        elements.forEach {
-            it.move(moveX, moveY, moveZ)
-            it.rotateTexturesAroundXAxis(texRotX)
-            it.rotateTexturesAroundYAxis(texRotY)
-            it.rotatePosAroundXAxis(posRotX)
-            it.rotatePosAroundYAxis(posRotY)
+    fun rotatePos(x: Int, y: Int) {
+        elements.forEach { 
+            it.rotatePosAroundXAxis(x)
+            it.rotatePosAroundYAxis(y)
         }
-        
-        posRotX = 0
-        posRotY = 0
-        texRotX = 0
-        texRotY = 0
-        moveX = 0.0
-        moveY = 0.0
-        moveZ = 0.0
+    }
+    
+    fun rotateTextures(direction: Direction) {
+        rotateTextures(direction.xRot, direction.yRot)
+    }
+    
+    fun rotateTextures(x: Int, y: Int) {
+        elements.forEach {
+            it.rotateTexturesAroundXAxis(x)
+            it.rotateTexturesAroundYAxis(y)
+        }
     }
     
     companion object {

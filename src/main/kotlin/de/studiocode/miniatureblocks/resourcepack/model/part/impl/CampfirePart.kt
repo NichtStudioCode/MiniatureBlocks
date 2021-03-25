@@ -13,8 +13,7 @@ class CampfirePart(data: AsyncCampfire) : Part() {
     override val elements = SerializedPart.getModelElements(models[if (data.lit) 0 else 1], blockTexture.textures)
     
     init {
-        addRotation(Direction.of(data.facing))
-        applyModifications()
+        rotate(Direction.of(data.facing))
     }
     
 }

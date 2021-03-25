@@ -1,8 +1,8 @@
 package de.studiocode.miniatureblocks.resourcepack.model.part.impl
 
+import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.build.concurrent.AsyncDirectionalBlockData
 import de.studiocode.miniatureblocks.build.concurrent.AsyncMultipleFacingBlockData
-import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
@@ -31,11 +31,10 @@ class FlatPart(data: AsyncBlockData) : Part() {
                 }
         } else {
             elements += createFlatElement(true)
-            if (data is AsyncDirectionalBlockData) addRotation(Direction.of(data.facing))
+            if (data is AsyncDirectionalBlockData) rotate(Direction.of(data.facing))
         }
         
-        addRotation(blockTexture.defaultRotation)
-        applyModifications()
+        rotate(blockTexture.defaultRotation)
     }
     
     private fun createFlatElement(inverted: Boolean) =

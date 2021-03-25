@@ -43,12 +43,11 @@ class HeadPart(data: AsyncHead) : Part() {
         
         val rotation = Direction.ofRotation(data.facing)
         val direction = if (data.wall) {
-            addMove(0.0, 4.0 / 16.0, -4.0 / 16.0)
+            move(0.0, 4.0 / 16.0, -4.0 / 16.0)
             rotation.first.opposite
         } else rotation.first
         
-        addRotation(direction)
-        applyModifications()
+        rotate(direction)
         
         val rotationData = RotationData(rotation.second.toFloat(), Axis.Y, Point3D(0.5, 0.5, 0.5), false)
         elements.forEach { it.rotationData = rotationData }
