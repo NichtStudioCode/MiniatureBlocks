@@ -7,10 +7,9 @@ import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
 import de.studiocode.miniatureblocks.util.isFence
 import de.studiocode.miniatureblocks.util.isFlat
-import de.studiocode.miniatureblocks.util.isGlassPane
 import de.studiocode.miniatureblocks.util.isPot
 import de.studiocode.miniatureblocks.util.point.Point3D
-import org.jetbrains.annotations.Async
+import org.bukkit.Material
 
 abstract class Part {
     
@@ -34,7 +33,7 @@ abstract class Part {
     }
     
     fun rotatePos(x: Int, y: Int) {
-        elements.forEach { 
+        elements.forEach {
             it.rotatePosAroundXAxis(x)
             it.rotatePosAroundYAxis(y)
         }
@@ -72,9 +71,10 @@ abstract class Part {
                 data is AsyncFire -> FirePart(data)
                 data is AsyncRedstoneWire -> RedstonePart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
-                data.material.isGlassPane() -> GlassPanePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)
                 data.material.isFlat() -> FlatPart(data)
+                data.material == Material.IRON_BARS -> IronBarsPart(data as AsyncMultipleFacing)
+                data is AsyncMultipleFacing -> MultipleFacingPart(data)
                 else -> DefaultPart(data)
             }
         

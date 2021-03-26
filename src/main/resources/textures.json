@@ -2553,188 +2553,137 @@
   },
   {
     "material": "GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/glass",
-      "block/glass",
-      "block/glass",
-      "block/glass",
-      "block/glass_pane_top",
       "block/glass_pane_top"
     ]
   },
   {
     "material": "WHITE_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/white_stained_glass",
-      "block/white_stained_glass",
-      "block/white_stained_glass",
-      "block/white_stained_glass",
-      "block/white_stained_glass_pane_top",
       "block/white_stained_glass_pane_top"
     ]
   },
   {
     "material": "ORANGE_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/orange_stained_glass",
-      "block/orange_stained_glass",
-      "block/orange_stained_glass",
-      "block/orange_stained_glass",
-      "block/orange_stained_glass_pane_top",
       "block/orange_stained_glass_pane_top"
     ]
   },
   {
     "material": "MAGENTA_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/magenta_stained_glass",
-      "block/magenta_stained_glass",
-      "block/magenta_stained_glass",
-      "block/magenta_stained_glass",
-      "block/magenta_stained_glass_pane_top",
       "block/magenta_stained_glass_pane_top"
     ]
   },
   {
     "material": "LIGHT_BLUE_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/light_blue_stained_glass",
-      "block/light_blue_stained_glass",
-      "block/light_blue_stained_glass",
-      "block/light_blue_stained_glass",
-      "block/light_blue_stained_glass_pane_top",
       "block/light_blue_stained_glass_pane_top"
     ]
   },
   {
     "material": "YELLOW_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/yellow_stained_glass",
-      "block/yellow_stained_glass",
-      "block/yellow_stained_glass",
-      "block/yellow_stained_glass",
-      "block/yellow_stained_glass_pane_top",
       "block/yellow_stained_glass_pane_top"
     ]
   },
   {
     "material": "LIME_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/lime_stained_glass",
-      "block/lime_stained_glass",
-      "block/lime_stained_glass",
-      "block/lime_stained_glass",
-      "block/lime_stained_glass_pane_top",
       "block/lime_stained_glass_pane_top"
     ]
   },
   {
     "material": "PINK_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/pink_stained_glass",
-      "block/pink_stained_glass",
-      "block/pink_stained_glass",
-      "block/pink_stained_glass",
-      "block/pink_stained_glass_pane_top",
       "block/pink_stained_glass_pane_top"
     ]
   },
   {
     "material": "GRAY_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/gray_stained_glass",
-      "block/gray_stained_glass",
-      "block/gray_stained_glass",
-      "block/gray_stained_glass",
-      "block/gray_stained_glass_pane_top",
       "block/gray_stained_glass_pane_top"
     ]
   },
   {
     "material": "LIGHT_GRAY_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/light_gray_stained_glass",
-      "block/light_gray_stained_glass",
-      "block/light_gray_stained_glass",
-      "block/light_gray_stained_glass",
-      "block/light_gray_stained_glass_pane_top",
       "block/light_gray_stained_glass_pane_top"
     ]
   },
   {
     "material": "CYAN_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/cyan_stained_glass",
-      "block/cyan_stained_glass",
-      "block/cyan_stained_glass",
-      "block/cyan_stained_glass",
-      "block/cyan_stained_glass_pane_top",
       "block/cyan_stained_glass_pane_top"
     ]
   },
   {
     "material": "PURPLE_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/purple_stained_glass",
-      "block/purple_stained_glass",
-      "block/purple_stained_glass",
-      "block/purple_stained_glass",
-      "block/purple_stained_glass_pane_top",
       "block/purple_stained_glass_pane_top"
     ]
   },
   {
     "material": "BLUE_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/blue_stained_glass",
-      "block/blue_stained_glass",
-      "block/blue_stained_glass",
-      "block/blue_stained_glass",
-      "block/blue_stained_glass_pane_top",
       "block/blue_stained_glass_pane_top"
     ]
   },
   {
     "material": "BROWN_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/brown_stained_glass",
-      "block/brown_stained_glass",
-      "block/brown_stained_glass",
-      "block/brown_stained_glass",
-      "block/brown_stained_glass_pane_top",
       "block/brown_stained_glass_pane_top"
     ]
   },
   {
     "material": "GREEN_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/green_stained_glass",
-      "block/green_stained_glass",
-      "block/green_stained_glass",
-      "block/green_stained_glass",
-      "block/green_stained_glass_pane_top",
       "block/green_stained_glass_pane_top"
     ]
   },
   {
     "material": "RED_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/red_stained_glass",
-      "block/red_stained_glass",
-      "block/red_stained_glass",
-      "block/red_stained_glass",
-      "block/red_stained_glass_pane_top",
       "block/red_stained_glass_pane_top"
     ]
   },
   {
     "material": "BLACK_STAINED_GLASS_PANE",
+    "model": "model/glass_pane",
     "textures": [
       "block/black_stained_glass",
-      "block/black_stained_glass",
-      "block/black_stained_glass",
-      "block/black_stained_glass",
-      "block/black_stained_glass_pane_top",
       "block/black_stained_glass_pane_top"
     ]
   },
@@ -3486,6 +3435,13 @@
     "textures": [
       "block/cobblestone",
       "block/lever"
+    ]
+  },
+  {
+    "material": "IRON_BARS",
+    "model": "model/iron_bars",
+    "textures": [
+      "block/iron_bars"
     ]
   }
 ]

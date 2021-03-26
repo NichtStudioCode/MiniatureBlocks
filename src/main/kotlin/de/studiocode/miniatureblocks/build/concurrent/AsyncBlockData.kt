@@ -22,19 +22,19 @@ interface AsyncData {
     val material: Material
 }
 
-interface AsyncTwoState {
+interface AsyncTwoState : AsyncData {
     val state: Boolean
 }
 
-interface AsyncDirectional {
+interface AsyncDirectional : AsyncData {
     val facing: BlockFace
 }
 
-interface AsyncRotatable {
+interface AsyncRotatable : AsyncData {
     val rotation: BlockFace
 }
 
-interface AsyncOrientable {
+interface AsyncOrientable : AsyncData {
     val axis: Axis
 }
 
@@ -42,7 +42,7 @@ interface AsyncBisected : AsyncTwoState {
     val half: Half
 }
 
-interface AsyncMultipleFacing {
+interface AsyncMultipleFacing : AsyncData {
     val faces: HashSet<BlockFace>
 }
 
@@ -50,7 +50,7 @@ interface AsyncLightable : AsyncTwoState {
     val lit: Boolean
 }
 
-interface AsyncFaceAttachable {
+interface AsyncFaceAttachable : AsyncData {
     val attachedFace: AttachedFace
 }
 
