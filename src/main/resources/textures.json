@@ -1216,7 +1216,14 @@
   },
   {
     "material": "FARMLAND",
+    "model": "model/grass_path",
     "textures": [
+      "block/dirt",
+      "block/dirt",
+      "block/dirt",
+      "block/dirt",
+      "block/farmland",
+      "block/dirt",
       "block/dirt",
       "block/dirt",
       "block/dirt",
