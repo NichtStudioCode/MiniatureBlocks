@@ -3443,5 +3443,13 @@
     "textures": [
       "block/iron_bars"
     ]
+  },
+  {
+    "material": "CHAIN",
+    "model": "model/chain",
+    "rotation": "UP",
+    "textures": [
+      "block/chain"
+    ]
   }
 ]

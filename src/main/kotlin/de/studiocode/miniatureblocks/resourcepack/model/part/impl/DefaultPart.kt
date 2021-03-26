@@ -48,7 +48,8 @@ open class DefaultPart(data: AsyncData) : Part() {
         }
     
         // apply correct rotation
-        rotate(blockTexture.defaultRotation, cube)
+        val defaultRotation = blockTexture.defaultRotation
+        rotate(-defaultRotation.xRot, -defaultRotation.yRot, cube)
         when (data) {
             is AsyncDirectional -> rotate(Direction.of(data.facing), cube)
             is AsyncOrientable -> rotate(Direction.of(data.axis), cube)
@@ -64,6 +65,11 @@ open class DefaultPart(data: AsyncData) : Part() {
     private fun rotate(direction: Direction, cube: Boolean) {
         if (cube) rotateTextures(direction)
         else rotate(direction)
+    }
+    
+    private fun rotate(x: Int, y: Int, cube: Boolean) {
+        if (cube) rotateTextures(x, y)
+        else rotate(x, y)
     }
     
     private fun createCubeElement(textures: Array<String>) =

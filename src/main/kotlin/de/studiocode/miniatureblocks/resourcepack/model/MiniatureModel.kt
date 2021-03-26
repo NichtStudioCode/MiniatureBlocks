@@ -84,7 +84,7 @@ class MiniatureModel(buildData: BuildData) {
                             val face = JsonObject()
                             face.add("uv", JsonArray().apply { addAll(texture.getUvInMiniature(element, direction)) })
                             face.addProperty("texture", "#" + textureMap[texture.textureLocation]!!.toString())
-                            face.addProperty("rotation", texture.rotation * 90)
+                            if (texture.rotation != 0) face.addProperty("rotation", texture.rotation * 90)
                             if (texture.tintIndex != null) face.addProperty("tintindex", texture.tintIndex!!)
                             
                             faces.add(direction.modelDataName, face)
