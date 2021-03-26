@@ -3458,5 +3458,13 @@
     "textures": [
       "block/chain"
     ]
+  },
+  {
+    "material": "BREWING_STAND",
+    "model": "model/brewing_stand",
+    "textures": [
+      "block/brewing_stand_base",
+      "block/brewing_stand"
+    ]
   }
 ]

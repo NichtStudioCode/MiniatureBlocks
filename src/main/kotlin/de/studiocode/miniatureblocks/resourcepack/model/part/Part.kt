@@ -70,6 +70,7 @@ abstract class Part {
                 data is AsyncRail -> RailPart(data)
                 data is AsyncFire -> FirePart(data)
                 data is AsyncRedstoneWire -> RedstonePart(data)
+                data is AsyncBrewingStand -> BrewingStandPart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material.isPot() -> PotPart(data)
                 data.material.isFlat() -> FlatPart(data)

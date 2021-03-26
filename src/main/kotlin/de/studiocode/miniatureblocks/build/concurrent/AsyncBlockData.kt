@@ -174,6 +174,10 @@ class AsyncFarmland(material: Material, blockData: Farmland) : AsyncBlockData(ma
     override val state = blockData.moisture > 0
 }
 
+class AsyncBrewingStand(material: Material, blockData: BrewingStand) : AsyncBlockData(material) {
+    val bottles = HashSet(blockData.bottles)
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -320,6 +324,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Fire -> AsyncFire(material, blockData)
         blockData is RedstoneWire -> AsyncRedstoneWire(material, blockData)
         blockData is Farmland -> AsyncFarmland(material, blockData)
+        blockData is BrewingStand -> AsyncBrewingStand(material, blockData)
         
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)
