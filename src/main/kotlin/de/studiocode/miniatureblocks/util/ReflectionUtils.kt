@@ -13,12 +13,9 @@ import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_ARGUME
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_CHILDREN_FIELD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.COMMAND_NODE_LITERALS_FIELD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD
-import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_DEDICATED_SERVER
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_ENTITY_GET_BUKKIT_ENTITY_METHOD
-import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_MINECRAFT_SERVER_GET_PLAYER_LIST_METHOD
 import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_PACKAGE_PATH
-import de.studiocode.miniatureblocks.util.ReflectionRegistry.NMS_PLAYER_LIST_UPDATE_PERMISSION_LEVEL_METHOD
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
@@ -119,15 +116,6 @@ object ReflectionUtils {
     fun getPlayerFromCommandListenerWrapper(commandListenerWrapper: Any): Player? {
         val entity = getEntityFromCommandListenerWrapper(commandListenerWrapper)
         return if (entity != null) getPlayerFromEntityPlayer(entity) else null
-    }
-    
-    fun updatePermissionLevel(entityPlayer: Any) {
-        val playerList = NMS_MINECRAFT_SERVER_GET_PLAYER_LIST_METHOD.invoke(NMS_DEDICATED_SERVER)
-        NMS_PLAYER_LIST_UPDATE_PERMISSION_LEVEL_METHOD.invoke(playerList, entityPlayer)
-    }
-    
-    fun updatePermissionLevelPlayer(player: Player) {
-        updatePermissionLevel(getNMSEntity(player))
     }
     
     fun createNMSEntity(world: World, location: Location, entityType: EntityType): Any {

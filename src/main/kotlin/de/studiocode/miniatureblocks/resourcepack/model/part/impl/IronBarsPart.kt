@@ -11,7 +11,7 @@ class IronBarsPart(data: AsyncMultipleFacing) : MultipleFacingPart(data) {
         elements.removeIf {
             val name = it.name
             return@removeIf if (name != null) {
-                it.name!!.startsWith("cap") && !it.name!!.substringAfterLast("cap ").equals(keepCap?.name, true)
+                it.name!!.startsWith("cap") && !it.name!!.substringAfter("cap ").equals(keepCap?.name, true)
             } else false
         }
     }

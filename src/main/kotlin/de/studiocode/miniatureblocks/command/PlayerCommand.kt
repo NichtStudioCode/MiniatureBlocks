@@ -13,11 +13,11 @@ abstract class PlayerCommand(val name: String, private val permission: String) {
     }
     
     fun literal(name: String): LiteralArgumentBuilder<Any> {
-        return LiteralArgumentBuilder.literal<Any>(name)
+        return LiteralArgumentBuilder.literal(name)
     }
     
     fun <T> argument(name: String, argumentType: ArgumentType<T>): RequiredArgumentBuilder<Any, T> {
-        return RequiredArgumentBuilder.argument<Any, T>(name, argumentType)
+        return RequiredArgumentBuilder.argument(name, argumentType)
     }
     
 }

@@ -56,23 +56,16 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
     
     fun hasModel(name: String) = customModels.any { it.name == name }
     
-    fun hasCustomModelData(customModelData: Int): Boolean = customModels.any { it.customModelData == customModelData }
-    
     fun getNextCustomModelData(): Int = (customModels.map { it.customModelData }.maxOrNull() ?: 0) + 1
     
     fun removeModel(name: String) = customModels.removeIf { it.name == name }
     
-    fun getExactModel(name: String, customModelData: Int): CustomModel? =
-        customModels.find { it.customModelData == customModelData && it.name == name }
+    fun getCustomModelFromPath(path: String): CustomModel? = customModels.find { it.path == path }
     
     fun getExactModel(jsonArray: JsonArray) = getExactModel(jsonArray[0].asString, jsonArray[1].asInt)
     
-    fun getCustomModelFromCustomModelData(customModelData: Int): CustomModel? =
-        customModels.find { it.customModelData == customModelData }
-    
-    fun getCustomModelFromName(name: String): CustomModel? = customModels.find { it.name == name }
-    
-    fun getCustomModelFromPath(path: String): CustomModel? = customModels.find { it.path == path }
+    private fun getExactModel(name: String, customModelData: Int): CustomModel? =
+        customModels.find { it.customModelData == customModelData && it.name == name }
     
     inner class CustomModel(val customModelData: Int, val path: String) {
         

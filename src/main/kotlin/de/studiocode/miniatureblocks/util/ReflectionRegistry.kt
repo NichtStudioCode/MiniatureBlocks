@@ -26,8 +26,6 @@ object ReflectionRegistry {
     val NMS_MINECRAFT_SERVER_CLASS = getNMSClass("MinecraftServer")
     val NMS_COMMAND_DISPATCHER_CLASS = getNMSClass("CommandDispatcher")
     val NMS_COMMAND_LISTENER_WRAPPER_CLASS = getNMSClass("CommandListenerWrapper")
-    val NMS_ENTITY_PLAYER_CLASS = getNMSClass("EntityPlayer")
-    val NMS_PLAYER_LIST_CLASS = getNMSClass("PlayerList")
     val NMS_ENTITY_CLASS = getNMSClass("Entity")
     val NMS_ENTITY_ARMOR_STAND_CLASS = getNMSClass("EntityArmorStand")
     
@@ -41,8 +39,6 @@ object ReflectionRegistry {
     // NMS methods
     val NMS_COMMAND_DISPATCHER_GET_BRIGADIER_COMMAND_DISPATCHER_METHOD = getMethod(NMS_COMMAND_DISPATCHER_CLASS, false, "a")
     val NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD = getMethod(NMS_COMMAND_LISTENER_WRAPPER_CLASS, false, "getEntity")
-    val NMS_MINECRAFT_SERVER_GET_PLAYER_LIST_METHOD = getMethod(NMS_MINECRAFT_SERVER_CLASS, false, "getPlayerList")
-    val NMS_PLAYER_LIST_UPDATE_PERMISSION_LEVEL_METHOD = getMethod(NMS_PLAYER_LIST_CLASS, false, "d", NMS_ENTITY_PLAYER_CLASS)
     val NMS_ENTITY_GET_BUKKIT_ENTITY_METHOD = getMethod(NMS_ENTITY_CLASS, false, "getBukkitEntity")
     
     // CB methods

@@ -9,7 +9,7 @@
     <version>0.11-SNAPSHOT</version>
 
     <properties>
-        <kotlin.version>1.4.30</kotlin.version>
+        <kotlin.version>1.4.31</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <shadePath>de.studiocode.miniatureblocks.lib</shadePath>

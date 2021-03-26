@@ -68,7 +68,6 @@ class BlockTexture(
         
         @Suppress("ReplaceWithEnumMap")
         val textureOverrides = PermanentStorage.retrieve(HashMap<Material, BlockTexture>(), "textureOverrides")
-        val associatedMaterials = HashMap<String, ArrayList<Material>>()
         private val defaultTextureLocations: HashSet<String>
         private val customTextureLocations: ArrayList<String>
         val textureLocations: HashSet<String>
@@ -142,21 +141,6 @@ class BlockTexture(
             val gson: Gson = GsonBuilder()
                 .registerTypeAdapter(BlockTextureDeserializer)
                 .create()
-            
-            val textures = HashSet<BlockTexture>()
-            
-            array.forEach { element ->
-                val blockTexture = gson.fromJson<BlockTexture>(element)!!
-                if (blockTexture.material != null) {
-                    textures += blockTexture
-                    
-                    blockTexture.textures.forEach { texture ->
-                        val materials = associatedMaterials[texture] ?: ArrayList()
-                        materials.add(blockTexture.material)
-                        associatedMaterials[texture] = materials
-                    }
-                }
-            }
             
             return HashSet<BlockTexture>(
                 array.map { gson.fromJson(it)!! }
