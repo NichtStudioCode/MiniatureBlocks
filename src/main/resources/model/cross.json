@@ -15,8 +15,8 @@
 		"shade": false,
 		"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
 		"faces": {
-			"east": {"uv": [0, 0, 16, 16], "texture": "1"},
-			"west": {"uv": [0, 0, 16, 16], "texture": "1"}
+			"east": {"uv": [0, 0, 16, 16], "texture": "0"},
+			"west": {"uv": [0, 0, 16, 16], "texture": "0"}
 		}
 	}
 ]

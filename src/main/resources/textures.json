@@ -1812,7 +1812,6 @@
     "material": "OAK_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/oak_sapling",
       "block/oak_sapling"
     ]
   },
@@ -1820,7 +1819,6 @@
     "material": "SPRUCE_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/spruce_sapling",
       "block/spruce_sapling"
     ]
   },
@@ -1828,7 +1826,6 @@
     "material": "BIRCH_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/birch_sapling",
       "block/birch_sapling"
     ]
   },
@@ -1836,7 +1833,6 @@
     "material": "JUNGLE_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/jungle_sapling",
       "block/jungle_sapling"
     ]
   },
@@ -1844,7 +1840,6 @@
     "material": "ACACIA_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/acacia_sapling",
       "block/acacia_sapling"
     ]
   },
@@ -1852,7 +1847,6 @@
     "material": "DARK_OAK_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/dark_oak_sapling",
       "block/dark_oak_sapling"
     ]
   },
@@ -1860,7 +1854,6 @@
     "material": "COBWEB",
     "model": "model/cross",
     "textures": [
-      "block/cobweb",
       "block/cobweb"
     ]
   },
@@ -1868,7 +1861,6 @@
     "material": "GRASS",
     "model": "model/cross",
     "textures": [
-      "block/modded/grass",
       "block/modded/grass"
     ]
   },
@@ -1876,7 +1868,6 @@
     "material": "FERN",
     "model": "model/cross",
     "textures": [
-      "block/modded/fern",
       "block/modded/fern"
     ]
   },
@@ -1884,7 +1875,6 @@
     "material": "DEAD_BUSH",
     "model": "model/cross",
     "textures": [
-      "block/dead_bush",
       "block/dead_bush"
     ]
   },
@@ -1892,7 +1882,6 @@
     "material": "SEAGRASS",
     "model": "model/cross",
     "textures": [
-      "block/seagrass",
       "block/seagrass"
     ]
   },
@@ -1900,7 +1889,6 @@
     "material": "DANDELION",
     "model": "model/cross",
     "textures": [
-      "block/dandelion",
       "block/dandelion"
     ]
   },
@@ -1908,7 +1896,6 @@
     "material": "POPPY",
     "model": "model/cross",
     "textures": [
-      "block/poppy",
       "block/poppy"
     ]
   },
@@ -1916,7 +1903,6 @@
     "material": "BLUE_ORCHID",
     "model": "model/cross",
     "textures": [
-      "block/blue_orchid",
       "block/blue_orchid"
     ]
   },
@@ -1924,7 +1910,6 @@
     "material": "ALLIUM",
     "model": "model/cross",
     "textures": [
-      "block/allium",
       "block/allium"
     ]
   },
@@ -1932,7 +1917,6 @@
     "material": "AZURE_BLUET",
     "model": "model/cross",
     "textures": [
-      "block/azure_bluet",
       "block/azure_bluet"
     ]
   },
@@ -1940,7 +1924,6 @@
     "material": "RED_TULIP",
     "model": "model/cross",
     "textures": [
-      "block/red_tulip",
       "block/red_tulip"
     ]
   },
@@ -1948,7 +1931,6 @@
     "material": "ORANGE_TULIP",
     "model": "model/cross",
     "textures": [
-      "block/orange_tulip",
       "block/orange_tulip"
     ]
   },
@@ -1956,7 +1938,6 @@
     "material": "WHITE_TULIP",
     "model": "model/cross",
     "textures": [
-      "block/white_tulip",
       "block/white_tulip"
     ]
   },
@@ -1964,7 +1945,6 @@
     "material": "OXEYE_DAISY",
     "model": "model/cross",
     "textures": [
-      "block/oxeye_daisy",
       "block/oxeye_daisy"
     ]
   },
@@ -1972,7 +1952,6 @@
     "material": "CORNFLOWER",
     "model": "model/cross",
     "textures": [
-      "block/cornflower",
       "block/cornflower"
     ]
   },
@@ -1980,7 +1959,6 @@
     "material": "LILY_OF_THE_VALLEY",
     "model": "model/cross",
     "textures": [
-      "block/lily_of_the_valley",
       "block/lily_of_the_valley"
     ]
   },
@@ -1988,7 +1966,6 @@
     "material": "WITHER_ROSE",
     "model": "model/cross",
     "textures": [
-      "block/wither_rose",
       "block/wither_rose"
     ]
   },
@@ -1996,7 +1973,6 @@
     "material": "BROWN_MUSHROOM",
     "model": "model/cross",
     "textures": [
-      "block/brown_mushroom",
       "block/brown_mushroom"
     ]
   },
@@ -2004,7 +1980,6 @@
     "material": "RED_MUSHROOM",
     "model": "model/cross",
     "textures": [
-      "block/red_mushroom",
       "block/red_mushroom"
     ]
   },
@@ -2012,7 +1987,6 @@
     "material": "CRIMSON_FUNGUS",
     "model": "model/cross",
     "textures": [
-      "block/crimson_fungus",
       "block/crimson_fungus"
     ]
   },
@@ -2020,7 +1994,6 @@
     "material": "WARPED_FUNGUS",
     "model": "model/cross",
     "textures": [
-      "block/warped_fungus",
       "block/warped_fungus"
     ]
   },
@@ -2028,7 +2001,6 @@
     "material": "CRIMSON_ROOTS",
     "model": "model/cross",
     "textures": [
-      "block/crimson_roots",
       "block/crimson_roots"
     ]
   },
@@ -2036,7 +2008,6 @@
     "material": "WARPED_ROOTS",
     "model": "model/cross",
     "textures": [
-      "block/warped_roots",
       "block/warped_roots"
     ]
   },
@@ -2044,7 +2015,6 @@
     "material": "NETHER_SPROUTS",
     "model": "model/cross",
     "textures": [
-      "block/nether_sprouts",
       "block/nether_sprouts"
     ]
   },
@@ -2052,7 +2022,6 @@
     "material": "SUGAR_CANE",
     "model": "model/cross",
     "textures": [
-      "block/sugar_cane",
       "block/sugar_cane"
     ]
   },
@@ -2060,7 +2029,6 @@
     "material": "TUBE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/tube_coral",
       "block/tube_coral"
     ]
   },
@@ -2068,7 +2036,6 @@
     "material": "BRAIN_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/brain_coral",
       "block/brain_coral"
     ]
   },
@@ -2076,7 +2043,6 @@
     "material": "BUBBLE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/bubble_coral",
       "block/bubble_coral"
     ]
   },
@@ -2084,7 +2050,6 @@
     "material": "FIRE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/fire_coral",
       "block/fire_coral"
     ]
   },
@@ -2092,7 +2057,6 @@
     "material": "DEAD_BRAIN_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/dead_brain_coral",
       "block/dead_brain_coral"
     ]
   },
@@ -2100,7 +2064,6 @@
     "material": "DEAD_BUBBLE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/dead_bubble_coral",
       "block/dead_bubble_coral"
     ]
   },
@@ -2108,7 +2071,6 @@
     "material": "DEAD_FIRE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/dead_fire_coral",
       "block/dead_fire_coral"
     ]
   },
@@ -2116,7 +2078,6 @@
     "material": "DEAD_TUBE_CORAL",
     "model": "model/cross",
     "textures": [
-      "block/dead_tube_coral",
       "block/dead_tube_coral"
     ]
   },
@@ -2124,7 +2085,6 @@
     "material": "TUBE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/tube_coral_fan",
       "block/tube_coral_fan"
     ]
   },
@@ -2132,7 +2092,6 @@
     "material": "BRAIN_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/brain_coral_fan",
       "block/brain_coral_fan"
     ]
   },
@@ -2140,7 +2099,6 @@
     "material": "BUBBLE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/bubble_coral_fan",
       "block/bubble_coral_fan"
     ]
   },
@@ -2148,7 +2106,6 @@
     "material": "FIRE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/fire_coral_fan",
       "block/fire_coral_fan"
     ]
   },
@@ -2156,7 +2113,6 @@
     "material": "DEAD_TUBE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/dead_tube_coral_fan",
       "block/dead_tube_coral_fan"
     ]
   },
@@ -2164,7 +2120,6 @@
     "material": "DEAD_BRAIN_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/dead_brain_coral_fan",
       "block/dead_brain_coral_fan"
     ]
   },
@@ -2172,7 +2127,6 @@
     "material": "DEAD_BUBBLE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/dead_bubble_coral_fan",
       "block/dead_bubble_coral_fan"
     ]
   },
@@ -2180,7 +2134,6 @@
     "material": "DEAD_FIRE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
-      "block/dead_fire_coral_fan",
       "block/dead_fire_coral_fan"
     ]
   },
@@ -2879,8 +2832,6 @@
     "model": "model/cross",
     "textures": [
       "block/rose_bush_bottom",
-      "block/rose_bush_bottom",
-      "block/rose_bush_top",
       "block/rose_bush_top"
     ]
   },
@@ -2889,8 +2840,6 @@
     "model": "model/cross",
     "textures": [
       "block/lilac_bottom",
-      "block/lilac_bottom",
-      "block/lilac_top",
       "block/lilac_top"
     ]
   },
@@ -2899,8 +2848,6 @@
     "model": "model/cross",
     "textures": [
       "block/peony_bottom",
-      "block/peony_bottom",
-      "block/peony_top",
       "block/peony_top"
     ]
   },
@@ -2909,10 +2856,8 @@
     "model": "model/sunflower",
     "textures": [
       "block/sunflower_bottom",
-      "block/sunflower_bottom",
       "block/sunflower_front",
       "block/sunflower_back",
-      "block/sunflower_top",
       "block/sunflower_top",
       "block/sunflower_front",
       "block/sunflower_back"
@@ -2923,8 +2868,6 @@
     "model": "model/cross",
     "textures": [
       "block/modded/tall_grass_bottom",
-      "block/modded/tall_grass_bottom",
-      "block/modded/tall_grass_top",
       "block/modded/tall_grass_top"
     ]
   },
@@ -2933,8 +2876,6 @@
     "model": "model/cross",
     "textures": [
       "block/modded/large_fern_bottom",
-      "block/modded/large_fern_bottom",
-      "block/modded/large_fern_top",
       "block/modded/large_fern_top"
     ]
   },
@@ -2943,8 +2884,6 @@
     "model": "model/cross",
     "textures": [
       "block/tall_seagrass_bottom",
-      "block/tall_seagrass_bottom",
-      "block/tall_seagrass_top",
       "block/tall_seagrass_top"
     ]
   },
@@ -3473,6 +3412,77 @@
     "rotation": "UP",
     "textures": [
       "block/end_rod"
+    ]
+  },
+  {
+    "material": "BEETROOTS",
+    "model": "model/crop",
+    "textures": [
+      "block/beetroots_stage0",
+      "block/beetroots_stage1",
+      "block/beetroots_stage2",
+      "block/beetroots_stage3"
+    ]
+  },
+  {
+    "material": "CARROTS",
+    "model": "model/crop",
+    "textures": [
+      "block/carrots_stage0",
+      "block/carrots_stage0",
+      "block/carrots_stage1",
+      "block/carrots_stage1",
+      "block/carrots_stage2",
+      "block/carrots_stage2",
+      "block/carrots_stage2",
+      "block/carrots_stage3"
+    ]
+  },
+  {
+    "material": "NETHER_WART",
+    "model": "model/crop",
+    "textures": [
+      "block/nether_wart_stage0",
+      "block/nether_wart_stage1",
+      "block/nether_wart_stage2"
+    ]
+  },
+  {
+    "material": "POTATOES",
+    "model": "model/crop",
+    "textures": [
+      "block/potatoes_stage0",
+      "block/potatoes_stage0",
+      "block/potatoes_stage1",
+      "block/potatoes_stage1",
+      "block/potatoes_stage2",
+      "block/potatoes_stage2",
+      "block/potatoes_stage2",
+      "block/potatoes_stage3"
+    ]
+  },
+  {
+    "material": "WHEAT",
+    "model": "model/crop",
+    "textures": [
+      "block/wheat_stage0",
+      "block/wheat_stage1",
+      "block/wheat_stage2",
+      "block/wheat_stage3",
+      "block/wheat_stage4",
+      "block/wheat_stage5",
+      "block/wheat_stage6",
+      "block/wheat_stage7"
+    ]
+  },
+  {
+    "material": "SWEET_BERRY_BUSH",
+    "model": "model/cross",
+    "textures": [
+      "block/sweet_berry_bush_stage0",
+      "block/sweet_berry_bush_stage1",
+      "block/sweet_berry_bush_stage2",
+      "block/sweet_berry_bush_stage3"
     ]
   }
 ]

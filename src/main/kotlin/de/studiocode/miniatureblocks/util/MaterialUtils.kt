@@ -25,12 +25,15 @@ fun Material.isHead() = name.endsWith("HEAD") || name.endsWith("SKULL")
 
 fun Material.isBeaconBase() = MaterialUtils.beaconBaseMaterials.contains(this)
 
+fun Material.isCrop() = MaterialUtils.cropMaterials.contains(this)
+
 object MaterialUtils {
     
     val translucentMaterials = ArrayList<Material>()
     val glassMaterials = ArrayList<Material>()
     val flatMaterials = ArrayList<Material>()
     val beaconBaseMaterials = listOfMaterials("IRON_BLOCK", "GOLD_BLOCK", "DIAMOND_BLOCK", "NETHERITE_BLOCK", "EMERALD_BLOCK")
+    val cropMaterials = listOfMaterials("BEETROOTS", "CARROTS", "NETHER_WART", "POTATOES", "WHEAT", "SWEET_BERRY_BUSH")
     
     init {
         glassMaterials.addAll(Material.values().filter { it.name.endsWith("GLASS") || it.name.endsWith("GLASS_PANE") })
