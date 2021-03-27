@@ -3466,5 +3466,13 @@
       "block/brewing_stand_base",
       "block/brewing_stand"
     ]
+  },
+  {
+    "material": "END_ROD",
+    "model": "model/end_rod",
+    "rotation": "UP",
+    "textures": [
+      "block/end_rod"
+    ]
   }
 ]
