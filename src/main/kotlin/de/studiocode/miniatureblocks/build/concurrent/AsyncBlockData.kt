@@ -54,6 +54,10 @@ interface AsyncFaceAttachable : AsyncData {
     val attachedFace: AttachedFace
 }
 
+interface AsyncLevelled : AsyncData {
+    val level: Int
+}
+
 open class AsyncBlockData(override val material: Material) : AsyncData
 
 class AsyncDirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material), AsyncDirectional {
@@ -79,6 +83,10 @@ class AsyncMultipleFacingBlockData(material: Material, blockData: MultipleFacing
 
 class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncBlockData(material), AsyncTwoState {
     override val state = lightable.isLit
+}
+
+class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlockData(material), AsyncLevelled {
+    override val level = blockData.level
 }
 
 class AsyncSlab(material: Material, blockData: Slab) : AsyncBlockData(material) {
@@ -245,9 +253,9 @@ class AsyncHead(material: Material, block: Block) : AsyncBlockData(material) {
     
 }
 
-class AsyncFluid(material: Material, block: Block) : AsyncBlockData(material) {
+class AsyncFluid(material: Material, block: Block) : AsyncBlockData(material), AsyncLevelled {
     
-    val level = (block.blockData as Levelled).level
+    override val level = (block.blockData as Levelled).level
     val direction: Direction?
     
     init {
@@ -337,6 +345,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Bisected -> AsyncBisectedBlockData(material, blockData)
         blockData is Rotatable -> AsyncRotatableBlockData(material, blockData)
         blockData is Lightable -> AsyncLightableBlockData(material, blockData)
+        blockData is Levelled -> AsyncLevelledBlockData(material, blockData)
         
         else -> AsyncBlockData(material)
     }

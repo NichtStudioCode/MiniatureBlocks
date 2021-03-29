@@ -77,6 +77,7 @@ abstract class Part {
                 data.material.isFlat() -> FlatPart(data)
                 data.material.isCrop() -> AgeablePart(data as AsyncAgeable)
                 data.material == Material.IRON_BARS -> IronBarsPart(data as AsyncMultipleFacing)
+                data.material == Material.CAULDRON -> CauldronPart(data as AsyncLevelled)
                 data is AsyncMultipleFacing -> MultipleFacingPart(data)
                 else -> DefaultPart(data)
             }

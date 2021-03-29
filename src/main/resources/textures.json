@@ -3484,5 +3484,16 @@
       "block/sweet_berry_bush_stage2",
       "block/sweet_berry_bush_stage3"
     ]
+  },
+  {
+    "material": "CAULDRON",
+    "model": "model/cauldron",
+    "textures": [
+      "block/cauldron_top",
+      "block/cauldron_bottom",
+      "block/cauldron_side",
+      "block/cauldron_inner",
+      "block/modded/water_still"
+    ]
   }
 ]
