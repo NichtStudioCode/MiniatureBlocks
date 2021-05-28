@@ -13,10 +13,7 @@ import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.util.getTargetMiniature
 import de.studiocode.miniatureblocks.util.runTaskTimer
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage
-import org.bukkit.Bukkit
-import org.bukkit.Chunk
-import org.bukkit.GameMode
-import org.bukkit.Location
+import org.bukkit.*
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
@@ -27,6 +24,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.inventory.PrepareItemCraftEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.ChunkUnloadEvent
@@ -50,7 +48,7 @@ fun Action.isClick() =
         || this == Action.RIGHT_CLICK_BLOCK
         || this == Action.RIGHT_CLICK_AIR
 
-class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
+class MiniatureManager(plugin: MiniatureBlocks) : Listener {
     
     val loadedMiniatures = HashMap<ArmorStand, MiniatureArmorStand>()
     
@@ -63,6 +61,12 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     
     private fun handleTick() {
         loadedMiniatures.values.forEach(MiniatureArmorStand::handleTick)
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun handlePrepareCraft(event: PrepareItemCraftEvent) {
+        if (event.recipe != null && event.inventory.contents.any { it.itemMeta?.hasMiniatureData() == true })
+            event.inventory.result = ItemStack(Material.AIR)
     }
     
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

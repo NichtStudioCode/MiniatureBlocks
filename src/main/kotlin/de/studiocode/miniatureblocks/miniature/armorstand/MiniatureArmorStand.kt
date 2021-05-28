@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.miniature.armorstand
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.Miniature
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager.MiniatureType
 import de.studiocode.miniatureblocks.miniature.data.types.FloatArrayDataType
 import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.util.ReflectionUtils

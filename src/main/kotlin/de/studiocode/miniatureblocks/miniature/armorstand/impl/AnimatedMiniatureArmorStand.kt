@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.miniature.armorstand.impl
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType.ANIMATED
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager.MiniatureType.ANIMATED
 import de.studiocode.miniatureblocks.miniature.data.types.AnimatedMiniatureDataType
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel

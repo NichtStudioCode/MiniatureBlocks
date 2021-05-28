@@ -11,7 +11,7 @@ import de.studiocode.miniatureblocks.menu.TexturesMenu
 import de.studiocode.miniatureblocks.miniature.armorstand.ArmorStandMoveManager
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStand.CommandType
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
@@ -244,7 +244,7 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
             val itemStack = player.inventory.itemInMainHand
             
             val data = if (itemStack.itemMeta?.hasMiniatureData() == true) {
-                val item = MiniatureArmorStandManager.MiniatureType.newInstance(itemStack)
+                val item = MiniatureManager.MiniatureType.newInstance(itemStack)
                 if (item is AnimatedMiniatureItem) item.data
                 else null
             } else null

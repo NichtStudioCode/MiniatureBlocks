@@ -4,7 +4,7 @@ import de.studiocode.miniatureblocks.build.BuilderWorld
 import de.studiocode.miniatureblocks.command.CommandManager
 import de.studiocode.miniatureblocks.config.Config
 import de.studiocode.miniatureblocks.menu.Menus
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager
 import de.studiocode.miniatureblocks.region.RegionManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
@@ -25,7 +25,7 @@ class MiniatureBlocks : JavaPlugin() {
     lateinit var config: Config
     lateinit var builderWorld: BuilderWorld
     lateinit var resourcePack: ResourcePack
-    lateinit var miniatureManager: MiniatureArmorStandManager
+    lateinit var miniatureManager: MiniatureManager
     lateinit var regionManager: RegionManager
     
     override fun onEnable() {
@@ -34,7 +34,7 @@ class MiniatureBlocks : JavaPlugin() {
         config = Config(this)
         builderWorld = BuilderWorld()
         resourcePack = ResourcePack(this)
-        miniatureManager = MiniatureArmorStandManager(this)
+        miniatureManager = MiniatureManager(this)
         regionManager = RegionManager(this)
         CommandManager(this)
         

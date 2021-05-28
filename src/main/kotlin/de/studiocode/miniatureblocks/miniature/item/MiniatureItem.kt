@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.miniature.item
 import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.Miniature
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager.MiniatureType
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataContainer

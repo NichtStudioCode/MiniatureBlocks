@@ -1,7 +1,7 @@
 package de.studiocode.miniatureblocks.miniature.item.impl
 
 import de.studiocode.miniatureblocks.MiniatureBlocks
-import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureArmorStandManager.MiniatureType.NORMAL
+import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager.MiniatureType.NORMAL
 import de.studiocode.miniatureblocks.miniature.data.impl.NormalMiniatureData
 import de.studiocode.miniatureblocks.miniature.data.types.NormalMiniatureDataType
 import de.studiocode.miniatureblocks.miniature.item.MiniatureItem
