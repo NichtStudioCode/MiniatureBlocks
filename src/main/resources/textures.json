@@ -167,7 +167,6 @@
   "SEA_LANTERN",
   "SHROOMLIGHT",
   "SHULKER_BOX",
-  "SLIME_BLOCK",
   "SMOOTH_STONE",
   "SOUL_SAND",
   "SOUL_SOIL",
@@ -1293,17 +1292,6 @@
       "block/hay_block_side",
       "block/hay_block_top",
       "block/hay_block_top"
-    ]
-  },
-  {
-    "material": "HONEY_BLOCK",
-    "textures": [
-      "block/honey_block_side",
-      "block/honey_block_side",
-      "block/honey_block_side",
-      "block/honey_block_side",
-      "block/honey_block_top",
-      "block/honey_block_bottom"
     ]
   },
   {
@@ -3501,6 +3489,22 @@
     "model": "model/conduit",
     "textures": [
       "block/conduit"
+    ]
+  },
+  {
+    "material": "SLIME_BLOCK",
+    "model": "model/slime_block",
+    "textures": [
+      "block/slime_block"
+    ]
+  },
+  {
+    "material": "HONEY_BLOCK",
+    "model": "model/honey_block",
+    "textures": [
+      "block/honey_block_bottom",
+      "block/honey_block_top",
+      "block/honey_block_side"
     ]
   }
 ]
