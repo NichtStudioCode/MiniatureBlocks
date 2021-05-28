@@ -3506,5 +3506,12 @@
       "block/honey_block_top",
       "block/honey_block_side"
     ]
+  },
+  {
+    "material": "DRAGON_EGG",
+    "model": "model/dragon_egg",
+    "textures": [
+      "block/dragon_egg"
+    ]
   }
 ]
