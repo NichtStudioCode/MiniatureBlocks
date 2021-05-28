@@ -8,6 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
@@ -27,8 +28,8 @@ object ArmorStandMoveManager : Listener {
     }
     
     fun addToMove(player: Player, armorStand: ArmorStand) {
-        armorStands[player] =
-            MoveArmorStand(armorStand, player.eyeLocation.distance(armorStand.location).roundToInt().toDouble())
+        armorStands[player] = MoveArmorStand(armorStand, player.eyeLocation.distance(armorStand.location).roundToInt().toDouble())
+        armorStand.getMiniature()?.let { it.setAutoRotate(0f); it.setBounce(0f, 0f) }
     }
     
     private fun handleTick() {
@@ -73,7 +74,7 @@ object ArmorStandMoveManager : Listener {
         }
     }
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     fun handleInteract(event: PlayerInteractEvent) {
         val action = event.action
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {

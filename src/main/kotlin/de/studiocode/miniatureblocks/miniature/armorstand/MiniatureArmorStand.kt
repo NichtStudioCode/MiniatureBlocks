@@ -149,7 +149,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
     }
     
     fun setBounce(maxHeight: Float, speed: Float) {
-        if (speed != 0f) {
+        if (maxHeight != 0f && speed != 0f) {
             val bounceData = floatArrayOf(defaultHeight, maxHeight, speed)
             dataContainer.set(BOUNCE_KEY, FloatArrayDataType, bounceData)
             
@@ -160,6 +160,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
             this.maxHeight = 0f
             bounceSpeed = 0f
             heightModifier = 0f
+            armorStand.teleport(armorStand.location.also { it.y = defaultHeight.toDouble() })
         }
     }
     

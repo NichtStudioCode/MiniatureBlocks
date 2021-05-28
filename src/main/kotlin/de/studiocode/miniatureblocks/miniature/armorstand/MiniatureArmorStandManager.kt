@@ -20,6 +20,7 @@ import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -36,6 +37,18 @@ import org.bukkit.persistence.PersistentDataHolder
 fun ArmorStand.getMiniature(): MiniatureArmorStand? = MiniatureBlocks.INSTANCE.miniatureManager.loadedMiniatures[this]
 
 fun PersistentDataHolder.hasMiniatureData() = Miniature.hasTypeId(this)
+
+fun PlayerInteractEvent.isCompletelyDenied() = useInteractedBlock() == Event.Result.DENY && useItemInHand() == Event.Result.DENY
+
+fun Action.isRightClick() =
+    this == Action.RIGHT_CLICK_AIR
+        || this == Action.RIGHT_CLICK_BLOCK
+
+fun Action.isClick() =
+    this == Action.LEFT_CLICK_BLOCK
+        || this == Action.LEFT_CLICK_AIR
+        || this == Action.RIGHT_CLICK_BLOCK
+        || this == Action.RIGHT_CLICK_AIR
 
 class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
     
@@ -95,9 +108,9 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
             .forEach { it.armorStand.remove() }
     }
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun handleInteract(event: PlayerInteractEvent) {
-        if (event.hand != null && event.hand == EquipmentSlot.HAND) { // right click is called twice for each hand
+        if (!event.isCompletelyDenied() && event.hand != null && event.hand == EquipmentSlot.HAND) {
             val player = event.player
             val action = event.action
             if (action.isClick()) {
@@ -111,20 +124,10 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
         }
     }
     
-    private fun Action.isClick() =
-        this == Action.LEFT_CLICK_BLOCK
-            || this == Action.LEFT_CLICK_AIR
-            || this == Action.RIGHT_CLICK_BLOCK
-            || this == Action.RIGHT_CLICK_AIR
-    
-    private fun Action.isRightClick() =
-        this == Action.RIGHT_CLICK_AIR
-            || this == Action.RIGHT_CLICK_BLOCK
-    
     private fun handleMiniatureBreak(miniature: MiniatureArmorStand, player: Player) {
         val entity = miniature.armorStand
         val location = entity.location
-    
+        
         // check if player is allowed to break things here
         val breakEvent = BlockBreakEvent(location.block, player)
         Bukkit.getServer().pluginManager.callEvent(breakEvent)
@@ -132,7 +135,7 @@ class MiniatureArmorStandManager(plugin: MiniatureBlocks) : Listener {
             if (player.gameMode != GameMode.CREATIVE) {
                 val item = if (miniature is NormalMiniatureArmorStand) NormalMiniatureItem.create(NormalMiniatureData(miniature))
                 else AnimatedMiniatureItem.create(AnimatedMiniatureData(miniature as AnimatedMiniatureArmorStand))
-        
+                
                 location.world!!.dropItem(location, item.itemStack)
             }
             entity.remove()
