@@ -8,6 +8,7 @@ import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
+import org.bukkit.util.BoundingBox
 import xyz.xenondevs.particle.ParticleBuilder
 import xyz.xenondevs.particle.ParticleEffect
 import java.awt.Color
@@ -20,21 +21,26 @@ fun Location.getMiniatureLookingAt(maxDistance: Double, stepSize: Double = 0.25)
     val location = this.clone()
     val vector = location.direction.multiply(stepSize)
     
-    val miniatures = HashMap<Chunk, List<ArmorStand>>()
+    var hitboxCache: Map<ArmorStand, Pair<Location, Location>>? = null
+    var lastChunk: Chunk? = null
     
     var distance = 0.0
     while (distance <= maxDistance) {
         location.add(vector)
         
         val chunk = location.chunk
-        if (!miniatures.containsKey(chunk)) miniatures[chunk] = chunk.getMiniatures()
+        if (chunk != lastChunk) {
+            hitboxCache = chunk.getMiniatures().associateWith {
+                it.location.clone().subtract(0.5, 0.0, 0.5) to it.location.clone().add(0.5, 1.0, 0.5)
+            }
+            lastChunk = chunk
+        }
         
-        if (location.block.type.isTraversable()) {
-            for (miniature in miniatures[chunk]!!) {
-                val start = miniature.location.clone().subtract(0.5, 0.0, 0.5)
-                val end = miniature.location.clone().add(0.5, 1.0, 0.5)
-                
-                if (location.isBetween(start, end)) return miniature.getMiniature()
+        val block = location.block
+        if (block.type.isTraversable() || !block.boundingBox.contains(location)) {
+            for ((armorStand, hitbox) in hitboxCache!!) {
+                if (location.isBetween(hitbox.first, hitbox.second))
+                    return armorStand.getMiniature()
             }
         } else return null
         
@@ -43,6 +49,9 @@ fun Location.getMiniatureLookingAt(maxDistance: Double, stepSize: Double = 0.25)
     
     return null
 }
+
+fun BoundingBox.contains(location: Location) =
+    contains(location.x, location.y, location.z)
 
 fun Chunk.getMiniatures(): List<ArmorStand> {
     return entities
