@@ -220,13 +220,13 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     }
     
     @Synchronized
-    fun removeMiniature(name: String) {
+    fun removeMiniature(name: String, updateResourcePack: Boolean) {
         File(moddedItemModels, "$name.json").delete()
         
         mainModelData.removeModel(name)
         mainModelData.writeToFile()
         
-        updateResourcePack()
+        if (updateResourcePack) updateResourcePack()
     }
     
     @Synchronized

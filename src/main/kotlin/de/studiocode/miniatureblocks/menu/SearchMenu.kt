@@ -73,6 +73,8 @@ abstract class SearchMenu(val player: Player, private val title: String, refresh
         previewGUI.setItems(getItems(true, filter))
     }
     
+    fun refresh() = refreshItems(lastFilter)
+    
     protected abstract fun getItems(preview: Boolean, filter: String = ""): List<Item>
     
     private inner class SearchItem(state: Boolean) : SimpleItem(

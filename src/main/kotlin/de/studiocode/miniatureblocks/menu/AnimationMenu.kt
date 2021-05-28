@@ -37,7 +37,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
     private val frameMap = HashMap<Int, AnimationFrameItem>()
     private var currentFrame = 0
     
-    private val selectMenu = SelectMiniatureMenu(player) { model, _ ->
+    private val selectMenu = SelectMiniatureMenu(player) { _, model, _ ->
         SelectMiniatureItem(model) {
             val item = frameMap[currentFrame]!!
             item.model = model

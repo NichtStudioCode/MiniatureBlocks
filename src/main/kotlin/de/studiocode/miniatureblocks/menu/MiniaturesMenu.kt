@@ -8,9 +8,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 
-class MiniaturesMenu(player: Player) : SelectMiniatureMenu(player, { model, obtainable -> TakeMiniatureItem(model, obtainable) }) {
+class MiniaturesMenu(player: Player) : SelectMiniatureMenu(player, { menu, model, obtainable -> TakeMiniatureItem(menu, model, obtainable) }) {
     
-    private class TakeMiniatureItem(val customModel: CustomModel, private val obtainable: Boolean = false) : SimpleItem(
+    private class TakeMiniatureItem(val menu: SelectMiniatureMenu, val customModel: CustomModel, private val obtainable: Boolean = false) : SimpleItem(
         customModel.createItemBuilder().apply {
             if (obtainable) addLoreLines("§7Left-click to obtain this miniature", "§cRight-click to delete this miniature")
         }) {
@@ -25,7 +25,8 @@ class MiniaturesMenu(player: Player) : SelectMiniatureMenu(player, { model, obta
                     val miniatureBlocks = MiniatureBlocks.INSTANCE
                     val resourcePack = miniatureBlocks.resourcePack
                     miniatureBlocks.miniatureManager.removeMiniatureArmorStands(customModel)
-                    resourcePack.removeMiniature(customModel.name)
+                    resourcePack.removeMiniature(customModel.name, false)
+                    menu.refresh()
                 }
             }
         }
