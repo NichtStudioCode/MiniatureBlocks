@@ -3495,5 +3495,12 @@
       "block/cauldron_inner",
       "block/modded/water_still"
     ]
+  },
+  {
+    "material": "CONDUIT",
+    "model": "model/conduit",
+    "textures": [
+      "block/conduit"
+    ]
   }
 ]
