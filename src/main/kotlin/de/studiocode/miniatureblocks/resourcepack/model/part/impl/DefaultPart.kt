@@ -46,7 +46,7 @@ open class DefaultPart(data: AsyncData) : Part() {
         if (data is AsyncTwoState) {
             elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
         }
-    
+        
         // apply correct rotation
         val defaultRotation = blockTexture.defaultRotation
         rotate(-defaultRotation.xRot, -defaultRotation.yRot, cube)

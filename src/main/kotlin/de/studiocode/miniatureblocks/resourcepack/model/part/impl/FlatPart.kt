@@ -23,7 +23,7 @@ class FlatPart(data: AsyncBlockData) : Part() {
         if (data is AsyncMultipleFacingBlockData) {
             data.faces
                 .map { Direction.of(it) }
-                .forEach { 
+                .forEach {
                     val element = createFlatElement(false)
                     element.rotatePosAroundYAxis(it.yRot)
                     element.rotateTexturesAroundYAxis(it.yRot)

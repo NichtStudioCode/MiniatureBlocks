@@ -54,13 +54,12 @@ class RailPart(data: AsyncRail) : Part() {
     
     private fun shouldUseSecondTexture(data: AsyncRail): Boolean {
         val shape = data.shape
-        return data.powered 
+        return data.powered
             || shape == SOUTH_EAST
             || shape == SOUTH_WEST
             || shape == NORTH_WEST
             || shape == NORTH_EAST
     }
-
-
+    
     
 }

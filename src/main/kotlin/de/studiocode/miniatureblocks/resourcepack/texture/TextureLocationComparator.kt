@@ -1,7 +1,5 @@
 package de.studiocode.miniatureblocks.resourcepack.texture
 
-import java.util.*
-
 private val PREFIXES = mapOf(
     "block/modded" to 1,
     "block/" to 0,

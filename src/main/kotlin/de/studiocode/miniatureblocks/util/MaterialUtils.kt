@@ -19,7 +19,7 @@ fun Material.isWall() = name.endsWith("WALL")
 
 fun Material.isTraversable() = isAir || name == "WATER" || name == "LAVA"
 
-fun Material.isFluid() =  name == "WATER" || name == "LAVA"
+fun Material.isFluid() = name == "WATER" || name == "LAVA"
 
 fun Material.isHead() = name.endsWith("HEAD") || name.endsWith("SKULL")
 
@@ -44,7 +44,7 @@ object MaterialUtils {
         translucentMaterials.addAll(
             Material.values().filter {
                 val name = it.name
-                name.endsWith("LEAVES") 
+                name.endsWith("LEAVES")
                     || (it.name.contains("coral", true) && !it.name.endsWith("BLOCK"))
             }
         )

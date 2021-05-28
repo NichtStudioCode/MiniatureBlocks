@@ -12,9 +12,6 @@ import de.studiocode.miniatureblocks.util.fromJson
 import de.studiocode.miniatureblocks.util.registerTypeAdapter
 import org.bukkit.Material
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
 
 class BlockTexture(
     materialName: String,

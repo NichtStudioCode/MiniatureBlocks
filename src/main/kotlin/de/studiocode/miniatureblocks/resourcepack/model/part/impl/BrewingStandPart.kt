@@ -12,7 +12,7 @@ class BrewingStandPart(data: AsyncBrewingStand) : Part() {
     
     init {
         elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
-        data.bottles.forEach { index -> elements.removeIf { it.name == "!$index"} }
+        data.bottles.forEach { index -> elements.removeIf { it.name == "!$index" } }
         (setOf(0, 1, 2) - data.bottles).forEach { index -> elements.removeIf { it.name == index.toString() } }
     }
     

@@ -16,7 +16,6 @@ import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Wall.Height
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
-import kotlin.collections.HashSet
 
 interface AsyncData {
     val material: Material

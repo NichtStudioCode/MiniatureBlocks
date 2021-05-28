@@ -64,7 +64,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         updateOldFiles()
         mainModelData = MainModelDataFile(this)
         textureModelData = TextureModelDataFile(this)
-    
+        
         extractDefaults()
         createTextureModelFiles()
         

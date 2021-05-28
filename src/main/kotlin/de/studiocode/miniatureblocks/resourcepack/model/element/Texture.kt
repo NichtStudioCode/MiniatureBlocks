@@ -12,9 +12,9 @@ class Texture : Cloneable {
     var textureLocation: String
     var rotation: Int
         set(value) {
-        field = value % 4
-        if (field < 0) field += 4
-    }
+            field = value % 4
+            if (field < 0) field += 4
+        }
     var tintIndex: Int? = null
     
     constructor(uv: UV, textureLocation: String, rotation: Int = 0, tintIndex: Int? = null) {

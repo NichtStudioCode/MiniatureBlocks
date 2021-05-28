@@ -145,7 +145,7 @@ class BuildDataCreator(min: Location, max: Location) {
             }
             
             part.elements
-                .filter { it.rotationData == null} // ignore elements with rotation
+                .filter { it.rotationData == null } // ignore elements with rotation
                 .forEach { element ->
                     val surroundingElements = neighborElements +
                         part.elements
