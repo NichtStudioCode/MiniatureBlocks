@@ -221,6 +221,82 @@
   "WARPED_TRAPDOOR",
   "IRON_TRAPDOOR",
   "SNOW",
+  "DEEPSLATE",
+  "COBBLED_DEEPSLATE",
+  "POLISHED_DEEPSLATE",
+  "DEEPSLATE_BRICKS",
+  "DEEPSLATE_TILES",
+  "CRACKED_DEEPSLATE_BRICKS",
+  "CRACKED_DEEPSLATE_TILES",
+  "CHISELED_DEEPSLATE",
+  "DEEPSLATE_COAL_ORE",
+  "DEEPSLATE_IRON_ORE",
+  "DEEPSLATE_COPPER_ORE",
+  "DEEPSLATE_GOLD_ORE",
+  "DEEPSLATE_REDSTONE_ORE",
+  "DEEPSLATE_EMERALD_ORE",
+  "DEEPSLATE_LAPIS_ORE",
+  "DEEPSLATE_LAPIS_ORE",
+  "DEEPSLATE_DIAMOND_ORE",
+  "CALCITE",
+  "TUFF",
+  "DRIPSTONE_BLOCK",
+  "COPPER_ORE",
+  "RAW_IRON_BLOCK",
+  "RAW_COPPER_BLOCK",
+  "RAW_GOLD_BLOCK",
+  "AMETHYST_BLOCK",
+  "BUDDING_AMETHYST",
+  "TINTED_GLASS",
+  "AZALEA_LEAVES",
+  "FLOWERING_AZALEA_LEAVES",
+  "MOSS_BLOCK",
+  "ROOTED_DIRT",
+  "POWDER_SNOW",
+  "COPPER_BLOCK",
+  "EXPOSED_COPPER",
+  "WEATHERED_COPPER",
+  "OXIDIZED_COPPER",
+  "CUT_COPPER",
+  "EXPOSED_CUT_COPPER",
+  "WEATHERED_CUT_COPPER",
+  "OXIDIZED_CUT_COPPER",
+  {
+    "material": "WAXED_COPPER_BLOCK",
+    "texture": "block/copper_block"
+  },
+  {
+    "material": "WAXED_EXPOSED_COPPER",
+    "texture": "block/exposed_copper"
+  },
+  {
+    "material": "WAXED_WEATHERED_COPPER",
+    "texture": "block/weathered_copper"
+  },
+  {
+    "material": "WAXED_OXIDIZED_COPPER",
+    "texture": "block/oxidized_copper"
+  },
+  {
+    "material": "WAXED_CUT_COPPER",
+    "texture": "block/cut_copper"
+  },
+  {
+    "material": "WAXED_EXPOSED_CUT_COPPER",
+    "texture": "block/exposed_cut_copper"
+  },
+  {
+    "material": "WAXED_WEATHERED_CUT_COPPER",
+    "texture": "block/weathered_cut_copper"
+  },
+  {
+    "material": "WAXED_OXIDIZED_CUT_COPPER",
+    "texture": "block/oxidized_cut_copper"
+  },
+  {
+    "material": "INFESTED_DEEPSLATE",
+    "texture": "block/deepslate"
+  },
   {
     "material": "CRIMSON_HYPHAE",
     "textures": "block/crimson_stem"
@@ -386,6 +462,54 @@
     "textures": "block/diorite"
   },
   {
+    "material": "COBBLED_DEEPSLATE_SLAB",
+    "textures": "block/cobbled_deepslate"
+  },
+  {
+    "material": "POLISHED_DEEPSLATE_SLAB",
+    "textures": "block/polished_deepslate"
+  },
+  {
+    "material": "DEEPSLATE_BRICK_SLAB",
+    "textures": "block/deepslate_bricks"
+  },
+  {
+    "material": "DEEPSLATE_TILE_SLAB",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "CUT_COPPER_SLAB",
+    "textures": "block/cut_copper"
+  },
+  {
+    "material": "EXPOSED_COPPER_SLAB",
+    "textures": "block/exposed_cut_copper"
+  },
+  {
+    "material": "WEATHERED_COPPER_SLAB",
+    "textures": "block/weathered_cut_copper"
+  },
+  {
+    "material": "OXIDIZED_COPPER_SLAB",
+    "textures": "block/oxidized_cut_copper"
+  },
+  {
+    "material": "WAXED_CUT_COPPER_SLAB",
+    "textures": "block/cut_copper"
+  },
+  {
+    "material": "WAXED_EXPOSED_COPPER_SLAB",
+    "textures": "block/exposed_cut_copper"
+  },
+  {
+    "material": "WAXED_WEATHERED_COPPER_SLAB",
+    "textures": "block/weathered_cut_copper"
+  },
+  {
+    "material": "WAXED_OXIDIZED_COPPER_SLAB",
+    "textures": "block/oxidized_cut_copper"
+  },
+  {
     "material": "ACACIA_STAIRS",
     "textures": "block/acacia_planks"
   },
@@ -518,6 +642,54 @@
     "textures": "block/warped_planks"
   },
   {
+    "material": "COBBLED_DEEPSLATE_STAIRS",
+    "textures": "block/cobbled_deepslate"
+  },
+  {
+    "material": "POLISHED_DEEPSLATE_STAIRS",
+    "textures": "block/polished_deepslate"
+  },
+  {
+    "material": "DEEPSLATE_BRICK_STAIRS",
+    "textures": "block/deepslate_bricks"
+  },
+  {
+    "material": "DEEPSLATE_TILE_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "CUT_COPPER_STAIRS",
+    "textures": "block/cut_copper"
+  },
+  {
+    "material": "EXPOSED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "WEATHERED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "OXIDIZED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "WAXED_CUT_COPPER_STAIRS",
+    "textures": "block/cut_copper"
+  },
+  {
+    "material": "WAXED_EXPOSED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "WAXED_WEATHERED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
+    "material": "WAXED_OXIDIZED_CUT_COPPER_STAIRS",
+    "textures": "block/deepslate_tiles"
+  },
+  {
     "material": "ACACIA_LEAVES",
     "textures": "block/modded/acacia_leaves"
   },
@@ -620,6 +792,11 @@
     "material": "BLACK_CARPET",
     "model": "model/carpet",
     "textures": "block/black_wool"
+  },
+  {
+    "material": "MOSS_CARPET",
+    "model": "model/carpet",
+    "textures": "block/moss_carpet"
   },
   {
     "material": "STONE_PRESSURE_PLATE",
@@ -866,6 +1043,22 @@
   {
     "material": "POLISHED_BLACKSTONE_BRICK_WALL",
     "textures": "block/polished_blackstone_bricks"
+  },
+  {
+    "material": "COBBLED_DEEPSLATE_WALL",
+    "textures": "block/cobbled_deepslate"
+  },
+  {
+    "material": "POLISHED_DEEPSLATE_WALL",
+    "textures": "block/polished_deepslate"
+  },
+  {
+    "material": "DEEPSLATE_BRICK_WALL",
+    "textures": "block/deepslate_bricks"
+  },
+  {
+    "material": "DEEPSLATE_TILE_WALL_WALL",
+    "textures": "block/deepslate_tiles"
   },
   {
     "material": "ACACIA_WOOD",
