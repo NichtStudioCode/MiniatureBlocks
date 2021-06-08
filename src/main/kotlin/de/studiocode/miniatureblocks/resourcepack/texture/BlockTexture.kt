@@ -17,13 +17,13 @@ class BlockTexture(
     materialName: String,
     val textures: Array<String>,
     val defaultRotation: Direction = NORTH,
-    val model: String? = null
+    val models: List<String>? = null
 ) {
     
     val material = findMaterialByName(materialName)
     
-    constructor(materialName: String, texture: String, defaultRotation: Direction = NORTH, model: String? = null)
-        : this(materialName, Array<String>(6) { texture }, defaultRotation, model)
+    constructor(materialName: String, texture: String, defaultRotation: Direction = NORTH, models: List<String>? = null)
+        : this(materialName, Array<String>(6) { texture }, defaultRotation, models)
     
     constructor(material: String) : this(material, Array<String>(6) { "block/${material.toLowerCase()}" })
     
@@ -36,7 +36,7 @@ class BlockTexture(
     fun copyOfChange(affectedIndices: List<Int>, textureName: String): BlockTexture {
         val texturesCopy = textures.copyOf()
         affectedIndices.forEach { index -> texturesCopy[index] = textureName }
-        return BlockTexture(material?.name ?: "", texturesCopy, defaultRotation, model)
+        return BlockTexture(material?.name ?: "", texturesCopy, defaultRotation, models)
     }
     
     override fun equals(other: Any?): Boolean {

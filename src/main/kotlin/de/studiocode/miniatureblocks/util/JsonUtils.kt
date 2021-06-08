@@ -36,6 +36,9 @@ fun JsonArray.addAll(doubleArray: DoubleArray) =
 fun JsonArray.addAll(stringArray: Array<String>) =
     stringArray.forEach(this::add)
 
+fun JsonArray.addAll(stringArray: Iterable<String>) =
+    stringArray.forEach(this::add)
+
 fun JsonArray.getAllStrings() =
     filter(JsonElement::isString).map { it.asString }
 

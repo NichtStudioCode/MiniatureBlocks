@@ -11,7 +11,7 @@ class CauldronPart(data: AsyncLevelled) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
+        elements += SerializedPart.getModelElements(blockTexture.models!![0], blockTexture.textures)
         (setOf(1, 2, 3) - data.level).forEach { level -> elements.removeIf { it.name?.toIntOrNull() == level } }
     }
     

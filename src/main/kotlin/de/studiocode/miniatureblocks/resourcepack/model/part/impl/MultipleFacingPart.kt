@@ -12,7 +12,7 @@ open class MultipleFacingPart(data: AsyncMultipleFacing) : Part() {
     final override val elements = ArrayList<Element>()
     
     init {
-        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
+        elements += SerializedPart.getModelElements(blockTexture.models!![0], blockTexture.textures)
         val directions = (Direction.cardinalPoints - data.faces.map(Direction::of))
         elements.removeIf { element -> directions.any { direction -> element.name.equals(direction.name, true) } }
     }

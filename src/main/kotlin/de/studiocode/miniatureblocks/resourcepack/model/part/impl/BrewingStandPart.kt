@@ -11,7 +11,7 @@ class BrewingStandPart(data: AsyncBrewingStand) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
+        elements += SerializedPart.getModelElements(blockTexture.models!![0], blockTexture.textures)
         data.bottles.forEach { index -> elements.removeIf { it.name == "!$index" } }
         (setOf(0, 1, 2) - data.bottles).forEach { index -> elements.removeIf { it.name == index.toString() } }
     }

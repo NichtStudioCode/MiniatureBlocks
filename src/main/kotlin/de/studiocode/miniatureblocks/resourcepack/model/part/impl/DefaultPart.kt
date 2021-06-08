@@ -14,6 +14,7 @@ private val CUBE_UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
 private val CUBE_FROM = Point3D(0.0, 0.0, 0.0)
 private val CUBE_TO = Point3D(1.0, 1.0, 1.0)
 
+// TODO: use AsyncMultiModel and AsyncMultiTexture instead of AsyncTwoState
 open class DefaultPart(data: AsyncData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
@@ -23,13 +24,18 @@ open class DefaultPart(data: AsyncData) : Part() {
     init {
         // create elements
         val cube =
-            if (blockTexture.model != null) {
-                elements += SerializedPart.getModelElements(blockTexture.model)
+            if (blockTexture.models != null) {
+                val model = if (data is AsyncMultiModel) blockTexture.models[data.model] else blockTexture.models[0]
+                elements += SerializedPart.getModelElements(model)
                 
                 val textures = if (data is AsyncTwoState) {
                     val texturesNeeded = SerializedPart.countTexturesNeeded(elements)
                     if (texturesNeeded < this.textures.size) cutTextures(!data.state)
                     else this.textures
+                } else if (data is AsyncMultiTexture) {
+                    val texturesNeeded = SerializedPart.countTexturesNeeded(elements)
+                    val startIndex = texturesNeeded * data.texture
+                    this.textures.copyOfRange(startIndex, startIndex + texturesNeeded)
                 } else this.textures
                 
                 SerializedPart.applyTextures(elements, textures)
@@ -75,12 +81,7 @@ open class DefaultPart(data: AsyncData) : Part() {
     private fun createCubeElement(textures: Array<String>) =
         Element(
             CUBE_FROM, CUBE_TO,
-            Texture(CUBE_UV, textures[0]),
-            Texture(CUBE_UV, textures[1]),
-            Texture(CUBE_UV, textures[2]),
-            Texture(CUBE_UV, textures[3]),
-            Texture(CUBE_UV, textures[4]),
-            Texture(CUBE_UV, textures[5])
+            *Array(6) { Texture(CUBE_UV, textures[it]) }
         )
     
     private fun cutTextures(first: Boolean): Array<String> {

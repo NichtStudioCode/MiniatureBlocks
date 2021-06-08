@@ -2866,6 +2866,11 @@
   },
   {
     "material": "CHEST",
+    "models": [
+      "model/chest",
+      "model/chest_left",
+      "model/chest_right"
+    ],
     "textures": [
       "entity/chest/normal",
       "entity/chest/normal_left",
@@ -2874,6 +2879,11 @@
   },
   {
     "material": "TRAPPED_CHEST",
+    "models": [
+      "model/chest",
+      "model/chest_left",
+      "model/chest_right"
+    ],
     "textures": [
       "entity/chest/trapped",
       "entity/chest/trapped_left",
@@ -3717,6 +3727,20 @@
     "model": "model/dragon_egg",
     "textures": [
       "block/dragon_egg"
+    ]
+  },
+  {
+    "material": "TURTLE_EGG",
+    "models": [
+      "model/turtle_egg/one_turtle_egg",
+      "model/turtle_egg/two_turtle_eggs",
+      "model/turtle_egg/three_turtle_eggs",
+      "model/turtle_egg/four_turtle_eggs"
+    ],
+    "textures": [
+      "block/turtle_egg",
+      "block/turtle_egg_slightly_cracked",
+      "block/turtle_egg_very_cracked"
     ]
   }
 ]

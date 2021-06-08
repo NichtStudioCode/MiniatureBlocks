@@ -7,6 +7,6 @@ import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 class AgeablePart(data: AsyncAgeable) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
-    override val elements = SerializedPart.getModelElements(blockTexture.model!!, arrayOf(blockTexture.textures[data.age]))
+    override val elements = SerializedPart.getModelElements(blockTexture.models!![0], arrayOf(blockTexture.textures[data.age]))
     
 }

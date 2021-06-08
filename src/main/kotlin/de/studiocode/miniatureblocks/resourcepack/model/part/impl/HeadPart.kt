@@ -38,7 +38,7 @@ class HeadPart(data: AsyncHead) : Part() {
             textures
         } else blockTexture.textures
         
-        elements += SerializedPart.getModelElements(blockTexture.model!!, textures)
+        elements += SerializedPart.getModelElements(blockTexture.models!![0], textures)
         
         val rotation = Direction.ofRotation(data.facing)
         val direction = if (data.wall) {

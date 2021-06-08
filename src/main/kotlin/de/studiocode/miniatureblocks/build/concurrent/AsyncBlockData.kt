@@ -57,6 +57,14 @@ interface AsyncLevelled : AsyncData {
     val level: Int
 }
 
+interface AsyncMultiModel : AsyncData {
+    val model: Int
+}
+
+interface AsyncMultiTexture : AsyncData {
+    val texture: Int
+}
+
 open class AsyncBlockData(override val material: Material) : AsyncData
 
 class AsyncDirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material), AsyncDirectional {
@@ -187,6 +195,11 @@ class AsyncBrewingStand(material: Material, blockData: BrewingStand) : AsyncBloc
 
 class AsyncAgeable(material: Material, blockData: Ageable) : AsyncBlockData(material) {
     val age = blockData.age
+}
+
+class AsyncTurtleEgg(material: Material, blockData: TurtleEgg) : AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture {
+    override val model = blockData.eggs -1
+    override val texture = blockData.hatch
 }
 
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
@@ -336,6 +349,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is RedstoneWire -> AsyncRedstoneWire(material, blockData)
         blockData is Farmland -> AsyncFarmland(material, blockData)
         blockData is BrewingStand -> AsyncBrewingStand(material, blockData)
+        blockData is TurtleEgg -> AsyncTurtleEgg(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

@@ -14,7 +14,7 @@ class SwitchPart(data: AsyncSwitch) : Part() {
     override val elements = ArrayList<Element>()
     
     init {
-        elements += SerializedPart.getModelElements(blockTexture.model!!, blockTexture.textures)
+        elements += SerializedPart.getModelElements(blockTexture.models!![0], blockTexture.textures)
         elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
         
         if (data.attachedFace == FaceAttachable.AttachedFace.CEILING) rotate(2, 2)
