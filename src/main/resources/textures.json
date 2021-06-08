@@ -3742,5 +3742,17 @@
       "block/turtle_egg_slightly_cracked",
       "block/turtle_egg_very_cracked"
     ]
+  },
+  {
+    "material": "HOPPER",
+    "models": [
+      "model/hopper/hopper",
+      "model/hopper/hopper_side"
+    ],
+    "textures": [
+      "block/hopper_top",
+      "block/hopper_outside",
+      "block/hopper_inside"
+    ]
   }
 ]

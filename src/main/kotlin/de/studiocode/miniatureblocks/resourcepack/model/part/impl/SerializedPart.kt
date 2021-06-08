@@ -21,7 +21,6 @@ object SerializedPart {
             .create()
         
         FileUtils.listExtractableFiles("model/").forEach {
-            println("loading in custom model: /$it")
             val bytes = FileUtils.getFileInJar("/$it")
             val jsonArray = JsonParser().parse(String(bytes)).asJsonArray
             models[it.substringBeforeLast('.')] = gson.fromJson(jsonArray)!!
