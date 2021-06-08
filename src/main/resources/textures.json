@@ -221,7 +221,6 @@
   "WARPED_TRAPDOOR",
   "IRON_TRAPDOOR",
   "SNOW",
-  "DEEPSLATE",
   "COBBLED_DEEPSLATE",
   "POLISHED_DEEPSLATE",
   "DEEPSLATE_BRICKS",
@@ -240,6 +239,7 @@
   "DEEPSLATE_DIAMOND_ORE",
   "CALCITE",
   "TUFF",
+  "SMOOTH_BASALT",
   "DRIPSTONE_BLOCK",
   "COPPER_ORE",
   "RAW_IRON_BLOCK",
@@ -1134,6 +1134,18 @@
     "material": "WARPED_HYPHAE",
     "rotation": "UP",
     "textures": "block/warped_stem"
+  },
+  {
+    "material": "DEEPSLATE",
+    "rotation": "UP",
+    "textures": [
+      "block/deepslate",
+      "block/deepslate",
+      "block/deepslate",
+      "block/deepslate",
+      "block/deepslate_top",
+      "block/deepslate_top"
+    ]
   },
   {
     "material": "ACACIA_LOG",
