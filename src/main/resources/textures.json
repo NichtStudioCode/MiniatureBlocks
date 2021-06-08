@@ -3754,5 +3754,18 @@
       "block/hopper_outside",
       "block/hopper_inside"
     ]
+  },
+  {
+    "material": "END_PORTAL_FRAME",
+    "models": [
+      "model/end_portal_frame/end_portal_frame",
+      "model/end_portal_frame/end_portal_frame_filled"
+    ],
+    "textures": [
+      "block/end_portal_frame_top",
+      "block/end_stone",
+      "block/end_portal_frame_side",
+      "block/end_portal_frame_eye"
+    ]
   }
 ]

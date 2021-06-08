@@ -198,13 +198,19 @@ class AsyncAgeable(material: Material, blockData: Ageable) : AsyncBlockData(mate
 }
 
 class AsyncTurtleEgg(material: Material, blockData: TurtleEgg) : AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture {
-    override val model = blockData.eggs -1
+    override val model = blockData.eggs - 1
     override val texture = blockData.hatch
 }
 
 class AsyncHopper(material: Material, blockData: Hopper) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     override val facing = blockData.facing.let { if (it == BlockFace.DOWN) BlockFace.NORTH else it }
     override val model = if (blockData.facing == BlockFace.DOWN) 0 else 1
+}
+
+class AsyncEndPortalFrame(material: Material, blockData: EndPortalFrame) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+    override val facing = blockData.facing
+    override val model = if (blockData.hasEye()) 1 else 0
+    
 }
 
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
@@ -356,6 +362,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is BrewingStand -> AsyncBrewingStand(material, blockData)
         blockData is TurtleEgg -> AsyncTurtleEgg(material, blockData)
         blockData is Hopper -> AsyncHopper(material, blockData)
+        blockData is EndPortalFrame -> AsyncEndPortalFrame(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
