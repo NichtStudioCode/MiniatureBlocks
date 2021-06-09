@@ -3815,5 +3815,21 @@
       "block/cake_side",
       "block/cake_inner"
     ]
+  },
+  {
+    "material": "SEA_PICKLE",
+    "models": [
+      "model/sea_pickle/one_sea_pickle",
+      "model/sea_pickle/two_sea_pickles",
+      "model/sea_pickle/three_sea_pickles",
+      "model/sea_pickle/four_sea_pickles",
+      "model/sea_pickle/one_dead_sea_pickle",
+      "model/sea_pickle/two_dead_sea_pickles",
+      "model/sea_pickle/three_dead_sea_pickles",
+      "model/sea_pickle/four_dead_sea_pickles"
+      ],
+    "textures": [
+      "block/sea_pickle"
+    ]
   }
 ]

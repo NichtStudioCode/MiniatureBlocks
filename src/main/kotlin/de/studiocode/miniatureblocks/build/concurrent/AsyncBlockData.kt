@@ -214,6 +214,10 @@ class AsyncCake(material: Material, blockData: Cake) : AsyncBlockData(material),
     override val model = blockData.bites
 }
 
+class AsyncSeaPickle(material: Material, blockData: SeaPickle) : AsyncBlockData(material), AsyncMultiModel {
+    override val model = blockData.pickles - 1 + if (blockData.isWaterlogged) 0 else 4
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -365,6 +369,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Hopper -> AsyncHopper(material, blockData)
         blockData is EndPortalFrame -> AsyncEndPortalFrame(material, blockData)
         blockData is Cake -> AsyncCake(material, blockData)
+        blockData is SeaPickle -> AsyncSeaPickle(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
