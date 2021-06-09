@@ -21,10 +21,6 @@ interface AsyncData {
     val material: Material
 }
 
-interface AsyncTwoState : AsyncData {
-    val state: Boolean
-}
-
 interface AsyncDirectional : AsyncData {
     val facing: BlockFace
 }
@@ -37,15 +33,16 @@ interface AsyncOrientable : AsyncData {
     val axis: Axis
 }
 
-interface AsyncBisected : AsyncTwoState {
+interface AsyncBisected {
     val half: Half
+    val state: Boolean
 }
 
 interface AsyncMultipleFacing : AsyncData {
     val faces: HashSet<BlockFace>
 }
 
-interface AsyncLightable : AsyncTwoState {
+interface AsyncLightable {
     val lit: Boolean
 }
 
@@ -79,17 +76,18 @@ class AsyncOrientableBlockData(material: Material, blockData: Orientable) : Asyn
     override val axis = blockData.axis
 }
 
-class AsyncBisectedBlockData(material: Material, blockData: Bisected) : AsyncBlockData(material), AsyncBisected {
+class AsyncBisectedBlockData(material: Material, blockData: Bisected) : AsyncBlockData(material), AsyncBisected, AsyncMultiTexture {
     override val half = blockData.half
     override val state = half == Half.TOP
+    override val texture = state.intValue
 }
 
 class AsyncMultipleFacingBlockData(material: Material, blockData: MultipleFacing) : AsyncBlockData(material), AsyncMultipleFacing {
     override val faces = HashSet(blockData.faces)
 }
 
-class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncBlockData(material), AsyncTwoState {
-    override val state = lightable.isLit
+class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = lightable.isLit.intValue
 }
 
 class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlockData(material), AsyncLevelled {
@@ -131,8 +129,8 @@ class AsyncGate(material: Material, blockData: Gate) : AsyncBlockData(material),
     val open = blockData.isOpen
 }
 
-class AsyncDaylightDetector(material: Material, blockData: DaylightDetector) : AsyncBlockData(material), AsyncTwoState {
-    override val state = blockData.isInverted
+class AsyncDaylightDetector(material: Material, blockData: DaylightDetector) : AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = blockData.isInverted.intValue
 }
 
 class AsyncSnow(material: Material, blockData: Snow) : AsyncBlockData(material) {
@@ -140,13 +138,13 @@ class AsyncSnow(material: Material, blockData: Snow) : AsyncBlockData(material) 
     val maximumLayers = blockData.maximumLayers
 }
 
-class AsyncSnowable(material: Material, blockData: Snowable) : AsyncBlockData(material), AsyncTwoState {
-    override val state = blockData.isSnowy
+class AsyncSnowable(material: Material, blockData: Snowable) : AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = blockData.isSnowy.intValue
 }
 
-class AsyncSwitch(material: Material, blockData: Switch) : AsyncBlockData(material), AsyncFaceAttachable, AsyncDirectional, AsyncTwoState {
+class AsyncSwitch(material: Material, blockData: Switch) : AsyncBlockData(material), AsyncFaceAttachable, AsyncDirectional, AsyncMultiModel {
     override val facing = blockData.facing
-    override val state = blockData.isPowered
+    override val model = blockData.isPowered.intValue
     override val attachedFace = blockData.attachedFace
 }
 
@@ -155,21 +153,21 @@ class AsyncChest(material: Material, blockData: Chest) : AsyncBlockData(material
     val type = blockData.type
 }
 
-class AsyncCampfire(material: Material, blockData: Campfire) : AsyncBlockData(material), AsyncDirectional, AsyncLightable {
+class AsyncCampfire(material: Material, blockData: Campfire) : AsyncBlockData(material), AsyncDirectional, AsyncLightable, AsyncMultiModel {
     override val facing = blockData.facing
     override val lit = blockData.isLit
-    override val state = lit
+    override val model = lit.intValue
 }
 
-class AsyncRedstoneWallTorch(material: Material, blockData: RedstoneWallTorch) : AsyncBlockData(material), AsyncDirectional, AsyncLightable {
+class AsyncRedstoneWallTorch(material: Material, blockData: RedstoneWallTorch) : AsyncBlockData(material), AsyncDirectional, AsyncLightable, AsyncMultiTexture {
     override val facing = blockData.facing
     override val lit = blockData.isLit
-    override val state = lit
+    override val texture = lit.intValue
 }
 
-class AsyncDropperDispenser(material: Material, blockData: BlockData) : AsyncBlockData(material), AsyncDirectional, AsyncTwoState {
+class AsyncDropperDispenser(material: Material, blockData: BlockData) : AsyncBlockData(material), AsyncDirectional, AsyncMultiTexture {
     override val facing = (blockData as Directional).facing
-    override val state = facing == BlockFace.UP || facing == BlockFace.DOWN
+    override val texture = (facing == BlockFace.UP || facing == BlockFace.DOWN).intValue
 }
 
 class AsyncRail(material: Material, blockData: Rail) : AsyncBlockData(material) {
@@ -177,16 +175,16 @@ class AsyncRail(material: Material, blockData: Rail) : AsyncBlockData(material) 
     val powered = if (blockData is RedstoneRail) blockData.isPowered else false
 }
 
-class AsyncScaffolding(material: Material, blockData: Scaffolding) : AsyncBlockData(material), AsyncTwoState {
-    override val state = blockData.isBottom
+class AsyncScaffolding(material: Material, blockData: Scaffolding) : AsyncBlockData(material), AsyncMultiModel {
+    override val model = blockData.isBottom.intValue
 }
 
 class AsyncFire(material: Material, blockData: Fire) : AsyncBlockData(material), AsyncMultipleFacing {
     override val faces = HashSet(blockData.faces)
 }
 
-class AsyncFarmland(material: Material, blockData: Farmland) : AsyncBlockData(material), AsyncTwoState {
-    override val state = blockData.moisture > 0
+class AsyncFarmland(material: Material, blockData: Farmland) : AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = (blockData.moisture > 0).intValue
 }
 
 class AsyncBrewingStand(material: Material, blockData: BrewingStand) : AsyncBlockData(material) {
@@ -204,13 +202,12 @@ class AsyncTurtleEgg(material: Material, blockData: TurtleEgg) : AsyncBlockData(
 
 class AsyncHopper(material: Material, blockData: Hopper) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     override val facing = blockData.facing.let { if (it == BlockFace.DOWN) BlockFace.NORTH else it }
-    override val model = if (blockData.facing == BlockFace.DOWN) 0 else 1
+    override val model = (blockData.facing != BlockFace.DOWN).intValue
 }
 
 class AsyncEndPortalFrame(material: Material, blockData: EndPortalFrame) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     override val facing = blockData.facing
-    override val model = if (blockData.hasEye()) 1 else 0
-    
+    override val model = blockData.hasEye().intValue
 }
 
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {

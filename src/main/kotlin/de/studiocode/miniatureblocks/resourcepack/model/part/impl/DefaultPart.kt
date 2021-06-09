@@ -14,8 +14,7 @@ private val CUBE_UV = Texture.UV(0.0, 0.0, 1.0, 1.0)
 private val CUBE_FROM = Point3D(0.0, 0.0, 0.0)
 private val CUBE_TO = Point3D(1.0, 1.0, 1.0)
 
-// TODO: use AsyncMultiModel and AsyncMultiTexture instead of AsyncTwoState
-open class DefaultPart(data: AsyncData) : Part() {
+open class DefaultPart(private val data: AsyncData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val textures = blockTexture.textures
@@ -23,42 +22,21 @@ open class DefaultPart(data: AsyncData) : Part() {
     
     init {
         // create elements
-        val cube =
-            if (blockTexture.models != null) {
-                val model = if (data is AsyncMultiModel) blockTexture.models[data.model] else blockTexture.models[0]
-                elements += SerializedPart.getModelElements(model)
-                
-                val textures = if (data is AsyncTwoState) {
-                    val texturesNeeded = SerializedPart.countTexturesNeeded(elements)
-                    if (texturesNeeded < this.textures.size) cutTextures(!data.state)
-                    else this.textures
-                } else if (data is AsyncMultiTexture) {
-                    val texturesNeeded = SerializedPart.countTexturesNeeded(elements)
-                    val startIndex = texturesNeeded * data.texture
-                    this.textures.copyOfRange(startIndex, startIndex + texturesNeeded)
-                } else this.textures
-                
-                SerializedPart.applyTextures(elements, textures)
-                false
-            } else {
-                elements += createCubeElement(
-                    if (data is AsyncTwoState) cutTextures(!data.state)
-                    else this.textures
-                )
-                true
-            }
-        
-        // remove elements
-        if (data is AsyncTwoState) {
-            elements.removeIf { (data.state && it.name.equals("0")) || (!data.state && it.name.equals("1")) }
+        val isCube = blockTexture.models == null
+        if (!isCube) {
+            val model = if (data is AsyncMultiModel) blockTexture.models!![data.model] else blockTexture.models!![0]
+            elements += SerializedPart.getModelElements(model)
+            SerializedPart.applyTextures(elements, getTextures(SerializedPart.countTexturesNeeded(elements)))
+        } else {
+            elements += createCubeElement(getTextures(6))
         }
         
         // apply correct rotation
         val defaultRotation = blockTexture.defaultRotation
-        rotate(-defaultRotation.xRot, -defaultRotation.yRot, cube)
+        rotate(-defaultRotation.xRot, -defaultRotation.yRot, isCube)
         when (data) {
-            is AsyncDirectional -> rotate(Direction.of(data.facing), cube)
-            is AsyncOrientable -> rotate(Direction.of(data.axis), cube)
+            is AsyncDirectional -> rotate(Direction.of(data.facing), isCube)
+            is AsyncOrientable -> rotate(Direction.of(data.axis), isCube)
             is AsyncRotatable -> {
                 val rotation = Direction.ofRotation(data.rotation)
                 rotate(rotation.first)
@@ -84,11 +62,11 @@ open class DefaultPart(data: AsyncData) : Part() {
             *Array(6) { Texture(CUBE_UV, textures[it]) }
         )
     
-    private fun cutTextures(first: Boolean): Array<String> {
-        val size = textures.size
-        return if (first) {
-            textures.copyOfRange(0, size / 2)
-        } else textures.copyOfRange(size / 2, size)
+    private fun getTextures(texturesNeeded: Int): Array<String> {
+        return if (data is AsyncMultiTexture) {
+            val startIndex = texturesNeeded * data.texture
+            this.textures.copyOfRange(startIndex, startIndex + texturesNeeded)
+        } else this.textures
     }
     
 }

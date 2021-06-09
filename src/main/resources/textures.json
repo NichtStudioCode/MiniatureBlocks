@@ -154,7 +154,6 @@
   "PURPUR_BLOCK",
   "QUARTZ_BRICKS",
   "REDSTONE_BLOCK",
-  "REDSTONE_LAMP",
   "REDSTONE_ORE",
   "RED_CONCRETE",
   "RED_GLAZED_TERRACOTTA",
@@ -2920,6 +2919,10 @@
   },
   {
     "material": "CAMPFIRE",
+    "models": [
+      "model/campfire/campfire_off",
+      "model/campfire/campfire_on"
+    ],
     "textures": [
       "block/campfire_log",
       "block/campfire_log_lit",
@@ -2928,6 +2931,10 @@
   },
   {
     "material": "SOUL_CAMPFIRE",
+    "models": [
+      "model/campfire/campfire_off",
+      "model/campfire/campfire_on"
+    ],
     "textures": [
       "block/campfire_log",
       "block/soul_campfire_log_lit",
@@ -3290,7 +3297,10 @@
   },
   {
     "material": "SCAFFOLDING",
-    "model": "model/scaffolding",
+    "models": [
+      "model/scaffolding/scaffolding",
+      "model/scaffolding/scaffolding_bottom"
+    ],
     "textures": [
       "block/scaffolding_top",
       "block/scaffolding_side",
@@ -3580,7 +3590,10 @@
   },
   {
     "material": "LEVER",
-    "model": "model/lever",
+    "models": [
+      "model/lever/lever_off",
+      "model/lever/lever_on"
+    ],
     "textures": [
       "block/cobblestone",
       "block/lever"
@@ -3766,6 +3779,23 @@
       "block/end_stone",
       "block/end_portal_frame_side",
       "block/end_portal_frame_eye"
+    ]
+  },
+  {
+    "material": "REDSTONE_LAMP",
+    "textures": [
+      "block/redstone_lamp",
+      "block/redstone_lamp",
+      "block/redstone_lamp",
+      "block/redstone_lamp",
+      "block/redstone_lamp",
+      "block/redstone_lamp",
+      "block/redstone_lamp_on",
+      "block/redstone_lamp_on",
+      "block/redstone_lamp_on",
+      "block/redstone_lamp_on",
+      "block/redstone_lamp_on",
+      "block/redstone_lamp_on"
     ]
   }
 ]

@@ -64,7 +64,6 @@ abstract class Part {
                 data is AsyncSnow -> SnowPart(data)
                 data is AsyncWall -> WallPart(data)
                 data is AsyncChest -> ChestPart(data)
-                data is AsyncCampfire -> CampfirePart(data)
                 data is AsyncFluid -> FluidPart(data)
                 data is AsyncHead -> HeadPart(data)
                 data is AsyncBeacon -> BeaconPart(data, context, point)
