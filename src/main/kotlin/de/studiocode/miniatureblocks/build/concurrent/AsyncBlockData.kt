@@ -210,6 +210,10 @@ class AsyncEndPortalFrame(material: Material, blockData: EndPortalFrame) : Async
     override val model = blockData.hasEye().intValue
 }
 
+class AsyncCake(material: Material, blockData: Cake) : AsyncBlockData(material), AsyncMultiModel {
+    override val model = blockData.bites
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -360,6 +364,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is TurtleEgg -> AsyncTurtleEgg(material, blockData)
         blockData is Hopper -> AsyncHopper(material, blockData)
         blockData is EndPortalFrame -> AsyncEndPortalFrame(material, blockData)
+        blockData is Cake -> AsyncCake(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

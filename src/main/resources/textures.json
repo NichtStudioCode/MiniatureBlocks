@@ -3797,5 +3797,23 @@
       "block/redstone_lamp_on",
       "block/redstone_lamp_on"
     ]
+  },
+  {
+    "material": "CAKE",
+    "models": [
+      "model/cake/cake",
+      "model/cake/cake_slice_1",
+      "model/cake/cake_slice_2",
+      "model/cake/cake_slice_3",
+      "model/cake/cake_slice_4",
+      "model/cake/cake_slice_5",
+      "model/cake/cake_slice_6"
+    ],
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/cake_inner"
+    ]
   }
 ]
