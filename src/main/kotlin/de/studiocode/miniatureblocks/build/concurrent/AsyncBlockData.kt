@@ -225,6 +225,11 @@ class AsyncCauldron(blockData: Levelled) : AsyncBlockData(Material.CAULDRON), As
     override val texture = 0
 }
 
+class AsyncBed(material: Material, blockData: Bed): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+    override val model = blockData.part.ordinal
+    override val facing = blockData.facing
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -378,6 +383,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is EndPortalFrame -> AsyncEndPortalFrame(material, blockData)
         blockData is Cake -> AsyncCake(material, blockData)
         blockData is SeaPickle -> AsyncSeaPickle(material, blockData)
+        blockData is Bed -> AsyncBed(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

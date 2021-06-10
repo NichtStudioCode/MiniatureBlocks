@@ -3858,5 +3858,165 @@
       "block/composter_compost",
       "block/composter_ready"
     ]
+  },
+  {
+    "material": "WHITE_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/white"
+    ]
+  },
+  {
+    "material": "ORANGE_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/orange"
+    ]
+  },
+  {
+    "material": "PURPLE_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/purple"
+    ]
+  },
+  {
+    "material": "LIGHT_BLUE_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/light_blue"
+    ]
+  },
+  {
+    "material": "YELLOW_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/yellow"
+    ]
+  },
+  {
+    "material": "LIME_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/lime"
+    ]
+  },
+  {
+    "material": "PINK_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/pink"
+    ]
+  },
+  {
+    "material": "GRAY_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/gray"
+    ]
+  },
+  {
+    "material": "LIGHT_GRAY_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/light_gray"
+    ]
+  },
+  {
+    "material": "CYAN_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/cyan"
+    ]
+  },
+  {
+    "material": "MAGENTA_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/magenta"
+    ]
+  },
+  {
+    "material": "BLUE_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/blue"
+    ]
+  },
+  {
+    "material": "BROWN_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/brown"
+    ]
+  },
+  {
+    "material": "GREEN_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/green"
+    ]
+  },
+  {
+    "material": "RED_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/red"
+    ]
+  },
+  {
+    "material": "BLACK_BED",
+    "models": [
+      "model/bed/bed_head",
+      "model/bed/bed_foot"
+    ],
+    "textures": [
+      "entity/bed/black"
+    ]
   }
 ]
