@@ -90,8 +90,9 @@ class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncB
     override val texture = lightable.isLit.intValue
 }
 
-class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlockData(material), AsyncLevelled {
+class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlockData(material), AsyncLevelled, AsyncMultiModel {
     override val level = blockData.level
+    override val model = level
 }
 
 class AsyncSlab(material: Material, blockData: Slab) : AsyncBlockData(material) {
@@ -218,6 +219,12 @@ class AsyncSeaPickle(material: Material, blockData: SeaPickle) : AsyncBlockData(
     override val model = blockData.pickles - 1 + if (blockData.isWaterlogged) 0 else 4
 }
 
+// TODO: 1.17: lava and powder snow cauldrons
+class AsyncCauldron(blockData: Levelled) : AsyncBlockData(Material.CAULDRON), AsyncMultiModel, AsyncMultiTexture {
+    override val model = blockData.level
+    override val texture = 0
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -340,6 +347,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
     val blockData = blockData
     return when {
         material == Material.BEACON -> AsyncBeacon(this)
+        material == Material.CAULDRON -> AsyncCauldron(blockData as Levelled)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)

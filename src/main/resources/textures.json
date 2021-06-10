@@ -3703,6 +3703,12 @@
   },
   {
     "material": "CAULDRON",
+    "models": [
+      "model/cauldron/cauldron_level_0",
+      "model/cauldron/cauldron_level_1",
+      "model/cauldron/cauldron_level_2",
+      "model/cauldron/cauldron_level_3"
+    ],
     "model": "model/cauldron",
     "textures": [
       "block/cauldron_top",
@@ -3827,9 +3833,30 @@
       "model/sea_pickle/two_dead_sea_pickles",
       "model/sea_pickle/three_dead_sea_pickles",
       "model/sea_pickle/four_dead_sea_pickles"
-      ],
+    ],
     "textures": [
       "block/sea_pickle"
+    ]
+  },
+  {
+    "material": "COMPOSTER",
+    "models": [
+      "model/composter/composter_stage_0",
+      "model/composter/composter_stage_1",
+      "model/composter/composter_stage_2",
+      "model/composter/composter_stage_3",
+      "model/composter/composter_stage_4",
+      "model/composter/composter_stage_5",
+      "model/composter/composter_stage_6",
+      "model/composter/composter_stage_7",
+      "model/composter/composter_stage_8"
+    ],
+    "textures": [
+      "block/composter_top",
+      "block/composter_bottom",
+      "block/composter_side",
+      "block/composter_compost",
+      "block/composter_ready"
     ]
   }
 ]
