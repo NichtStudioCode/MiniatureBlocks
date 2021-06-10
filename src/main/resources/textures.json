@@ -159,6 +159,7 @@
   "RED_GLAZED_TERRACOTTA",
   "RED_MUSHROOM_BLOCK",
   "RED_NETHER_BRICKS",
+  "RED_SAND",
   "RED_SHULKER_BOX",
   "RED_STAINED_GLASS",
   "RED_TERRACOTTA",
@@ -260,6 +261,30 @@
   "EXPOSED_CUT_COPPER",
   "WEATHERED_CUT_COPPER",
   "OXIDIZED_CUT_COPPER",
+  {
+    "material": "INFESTED_STONE",
+    "texture": "block/stone"
+  },
+  {
+    "material": "INFESTED_COBBLESTONE",
+    "texture": "block/cobblestone"
+  },
+  {
+    "material": "INFESTED_STONE_BRICKS",
+    "texture": "block/stone_bricks"
+  },
+  {
+    "material": "INFESTED_MOSSY_STONE_BRICKS",
+    "texture": "block/mossy_stone_bricks"
+  },
+  {
+    "material": "INFESTED_CRACKED_STONE_BRICKS",
+    "texture": "block/cracked_stone_bricks"
+  },
+  {
+    "material": "INFESTED_CHISELED_STONE_BRICKS",
+    "texture": "block/chiseled_stone_bricks"
+  },
   {
     "material": "WAXED_COPPER_BLOCK",
     "texture": "block/copper_block"
@@ -2001,6 +2026,13 @@
     ]
   },
   {
+    "material": "BAMBOO_SAPLING",
+    "model": "model/cross",
+    "textures": [
+      "block/bamboo_sapling"
+    ]
+  },
+  {
     "material": "OAK_SAPLING",
     "model": "model/cross",
     "textures": [
@@ -2117,6 +2149,13 @@
     "model": "model/cross",
     "textures": [
       "block/red_tulip"
+    ]
+  },
+  {
+    "material": "PINK_TULIP",
+    "model": "model/cross",
+    "textures": [
+      "block/pink_tulip"
     ]
   },
   {
@@ -2246,6 +2285,13 @@
     ]
   },
   {
+    "material": "HORN_CORAL",
+    "model": "model/cross",
+    "textures": [
+      "block/horn_coral"
+    ]
+  },
+  {
     "material": "DEAD_BRAIN_CORAL",
     "model": "model/cross",
     "textures": [
@@ -2271,6 +2317,13 @@
     "model": "model/cross",
     "textures": [
       "block/dead_tube_coral"
+    ]
+  },
+  {
+    "material": "DEAD_HORN_CORAL",
+    "model": "model/cross",
+    "textures": [
+      "block/dead_horn_coral"
     ]
   },
   {
@@ -2302,6 +2355,13 @@
     ]
   },
   {
+    "material": "HORN_CORAL_FAN",
+    "model": "model/cross",
+    "textures": [
+      "block/horn_coral_fan"
+    ]
+  },
+  {
     "material": "DEAD_TUBE_CORAL_FAN",
     "model": "model/cross",
     "textures": [
@@ -2327,6 +2387,13 @@
     "model": "model/cross",
     "textures": [
       "block/dead_fire_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_HORN_CORAL_FAN",
+    "model": "model/cross",
+    "textures": [
+      "block/dead_horn_coral_fan"
     ]
   },
   {
@@ -3263,6 +3330,13 @@
   {
     "material": "END_PORTAL",
     "model": "model/end_portal",
+    "textures": [
+      "entity/end_portal"
+    ]
+  },
+  {
+    "material": "END_GATEWAY",
+    "model": "model/end_gateway",
     "textures": [
       "entity/end_portal"
     ]
