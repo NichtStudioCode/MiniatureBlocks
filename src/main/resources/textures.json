@@ -4155,5 +4155,37 @@
       "block/flowering_azalea_top",
       "block/flowering_azalea_side"
     ]
+  },
+  {
+    "material": "SMALL_AMETHYST_BUD",
+    "model": "model/cross",
+    "rotation": "UP",
+    "textures": [
+      "block/small_amethyst_bud"
+    ]
+  },
+  {
+    "material": "MEDIUM_AMETHYST_BUD",
+    "model": "model/cross",
+    "rotation": "UP",
+    "textures": [
+      "block/medium_amethyst_bud"
+    ]
+  },
+  {
+    "material": "LARGE_AMETHYST_BUD",
+    "model": "model/cross",
+    "rotation": "UP",
+    "textures": [
+      "block/large_amethyst_bud"
+    ]
+  },
+  {
+    "material": "AMETHYST_CLUSTER",
+    "model": "model/cross",
+    "rotation": "UP",
+    "textures": [
+      "block/amethyst_cluster"
+    ]
   }
 ]
