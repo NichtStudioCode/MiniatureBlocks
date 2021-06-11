@@ -4273,5 +4273,21 @@
       "block/big_dripleaf_side",
       "block/big_dripleaf_tip"
     ]
+  },
+  {
+    "material": "POINTED_DRIPSTONE",
+    "model": "model/cross",
+    "textures": [
+      "block/pointed_dripstone_up_tip_merge",
+      "block/pointed_dripstone_up_tip",
+      "block/pointed_dripstone_up_frustum",
+      "block/pointed_dripstone_up_middle",
+      "block/pointed_dripstone_up_base",
+      "block/pointed_dripstone_down_tip_merge",
+      "block/pointed_dripstone_down_tip",
+      "block/pointed_dripstone_down_frustum",
+      "block/pointed_dripstone_down_middle",
+      "block/pointed_dripstone_down_base"
+    ]
   }
 ]

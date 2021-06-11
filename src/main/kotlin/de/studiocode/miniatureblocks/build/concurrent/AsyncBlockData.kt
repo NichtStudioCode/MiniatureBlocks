@@ -233,6 +233,10 @@ class AsyncSculkSensor(material: Material, blockData: SculkSensor): AsyncBlockDa
     override val texture = if (blockData.phase == SculkSensor.Phase.ACTIVE) 1 else 0
 }
 
+class AsyncDripstone(material: Material, blockData: PointedDripstone): AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = blockData.thickness.ordinal + if (blockData.verticalDirection == BlockFace.DOWN) 5 else 0
+}
+
 class AsyncDripleaf(material: Material, block: Block): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
     private val blockData = block.blockData
@@ -405,6 +409,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Bed -> AsyncBed(material, blockData)
         blockData is LightningRod -> AsyncLightningRod(material, blockData)
         blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
+        blockData is PointedDripstone -> AsyncDripstone(material, blockData)
         blockData is Dripleaf -> AsyncDripleaf(material, this)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
