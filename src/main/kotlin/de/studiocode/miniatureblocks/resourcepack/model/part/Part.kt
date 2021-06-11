@@ -8,7 +8,6 @@ import de.studiocode.miniatureblocks.resourcepack.model.part.impl.*
 import de.studiocode.miniatureblocks.util.isCrop
 import de.studiocode.miniatureblocks.util.isFence
 import de.studiocode.miniatureblocks.util.isFlat
-import de.studiocode.miniatureblocks.util.isPot
 import de.studiocode.miniatureblocks.util.point.Point3D
 import org.bukkit.Material
 
@@ -72,7 +71,6 @@ abstract class Part {
                 data is AsyncRedstoneWire -> RedstonePart(data)
                 data is AsyncBrewingStand -> BrewingStandPart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
-                data.material.isPot() -> PotPart(data)
                 data.material.isFlat() -> FlatPart(data)
                 data.material.isCrop() -> AgeablePart(data as AsyncAgeable)
                 data.material == Material.IRON_BARS -> IronBarsPart(data as AsyncMultipleFacing)

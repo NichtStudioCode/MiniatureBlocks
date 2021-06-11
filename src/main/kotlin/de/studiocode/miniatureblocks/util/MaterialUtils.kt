@@ -11,8 +11,6 @@ fun Material.isGlass() = MaterialUtils.glassMaterials.contains(this)
 
 fun Material.isFlat() = MaterialUtils.flatMaterials.contains(this)
 
-fun Material.isPot() = name.startsWith("POTTED") || name == "FLOWER_POT"
-
 fun Material.isFence() = name.endsWith("FENCE")
 
 fun Material.isWall() = name.endsWith("WALL")
