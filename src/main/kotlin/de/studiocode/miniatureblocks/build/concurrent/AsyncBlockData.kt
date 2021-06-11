@@ -219,12 +219,6 @@ class AsyncSeaPickle(material: Material, blockData: SeaPickle) : AsyncBlockData(
     override val model = blockData.pickles - 1 + if (blockData.isWaterlogged) 0 else 4
 }
 
-// TODO: 1.17: lava and powder snow cauldrons
-class AsyncCauldron(blockData: Levelled) : AsyncBlockData(Material.CAULDRON), AsyncMultiModel, AsyncMultiTexture {
-    override val model = blockData.level
-    override val texture = 0
-}
-
 class AsyncBed(material: Material, blockData: Bed): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     override val model = blockData.part.ordinal
     override val facing = blockData.facing
@@ -357,7 +351,6 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
     val blockData = blockData
     return when {
         material == Material.BEACON -> AsyncBeacon(this)
-        material == Material.CAULDRON -> AsyncCauldron(blockData as Levelled)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)

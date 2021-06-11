@@ -3776,23 +3776,6 @@
     ]
   },
   {
-    "material": "CAULDRON",
-    "models": [
-      "model/cauldron/cauldron_level_0",
-      "model/cauldron/cauldron_level_1",
-      "model/cauldron/cauldron_level_2",
-      "model/cauldron/cauldron_level_3"
-    ],
-    "model": "model/cauldron",
-    "textures": [
-      "block/cauldron_top",
-      "block/cauldron_bottom",
-      "block/cauldron_side",
-      "block/cauldron_inner",
-      "block/modded/water_still"
-    ]
-  },
-  {
     "material": "CONDUIT",
     "model": "model/conduit",
     "textures": [
@@ -4100,6 +4083,59 @@
     "textures": [
       "block/lightning_rod",
       "block/lightning_rod_on"
+    ]
+  },
+  {
+    "material": "CAULDRON",
+    "model": "model/cauldron/cauldron_level_0",
+    "textures": [
+      "block/cauldron_top",
+      "block/cauldron_bottom",
+      "block/cauldron_side",
+      "block/cauldron_inner"
+    ]
+  },
+  {
+    "material": "WATER_CAULDRON",
+    "models": [
+      "model/cauldron/cauldron_level_0",
+      "model/cauldron/cauldron_level_1",
+      "model/cauldron/cauldron_level_2",
+      "model/cauldron/cauldron_level_3"
+    ],
+    "textures": [
+      "block/cauldron_top",
+      "block/cauldron_bottom",
+      "block/cauldron_side",
+      "block/cauldron_inner",
+      "block/modded/water_still"
+    ]
+  },
+  {
+    "material": "LAVA_CAULDRON",
+    "model": "model/cauldron/cauldron_level_3",
+    "textures": [
+      "block/cauldron_top",
+      "block/cauldron_bottom",
+      "block/cauldron_side",
+      "block/cauldron_inner",
+      "block/lava_still"
+    ]
+  },
+  {
+    "material": "POWDER_SNOW_CAULDRON",
+    "models": [
+      "model/cauldron/cauldron_level_0",
+      "model/cauldron/cauldron_level_1",
+      "model/cauldron/cauldron_level_2",
+      "model/cauldron/cauldron_level_3"
+    ],
+    "textures": [
+      "block/cauldron_top",
+      "block/cauldron_bottom",
+      "block/cauldron_side",
+      "block/cauldron_inner",
+      "block/powder_snow"
     ]
   }
 ]
