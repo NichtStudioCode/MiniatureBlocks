@@ -687,15 +687,15 @@
   },
   {
     "material": "EXPOSED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/exposed_cut_copper"
   },
   {
     "material": "WEATHERED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/weathered_cut_copper"
   },
   {
     "material": "OXIDIZED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/oxidized_cut_copper"
   },
   {
     "material": "WAXED_CUT_COPPER_STAIRS",
@@ -703,15 +703,15 @@
   },
   {
     "material": "WAXED_EXPOSED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/exposed_cut_copper"
   },
   {
     "material": "WAXED_WEATHERED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/weathered_cut_copper"
   },
   {
     "material": "WAXED_OXIDIZED_CUT_COPPER_STAIRS",
-    "textures": "block/deepslate_tiles"
+    "textures": "block/oxidized_cut_copper"
   },
   {
     "material": "ACACIA_LEAVES",
@@ -2029,7 +2029,7 @@
     "material": "BAMBOO_SAPLING",
     "model": "model/cross",
     "textures": [
-      "block/bamboo_sapling"
+      "block/bamboo_stage0"
     ]
   },
   {
