@@ -1,0 +1,22 @@
+[
+  {
+    "from": [4.5, 0, 8],
+    "to": [11.5, 16, 8],
+    "shade": false,
+    "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+    "faces": {
+      "north": {"uv": [3, 0, 14, 16], "texture": "0"},
+      "south": {"uv": [3, 0, 14, 16], "texture": "0"}
+    }
+  },
+  {
+    "from": [4.5, 0, 8],
+    "to": [11.5, 16, 8],
+    "shade": false,
+    "rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+    "faces": {
+      "north": {"uv": [3, 0, 14, 16], "texture": "0"},
+      "south": {"uv": [3, 0, 14, 16], "texture": "0"}
+    }
+  }
+]

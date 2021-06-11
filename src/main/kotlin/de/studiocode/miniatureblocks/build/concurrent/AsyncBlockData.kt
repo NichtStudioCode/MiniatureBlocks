@@ -233,6 +233,23 @@ class AsyncSculkSensor(material: Material, blockData: SculkSensor): AsyncBlockDa
     override val texture = if (blockData.phase == SculkSensor.Phase.ACTIVE) 1 else 0
 }
 
+class AsyncDripleaf(material: Material, block: Block): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+    
+    private val blockData = block.blockData
+    override val facing = (blockData as Directional).facing
+    override val model: Int = when {
+        blockData is BigDripleaf -> blockData.tilt.ordinal
+        
+        material == Material.SMALL_DRIPLEAF -> {
+            // there is currently no other way to check which half of the dripleaf it is?
+            (block.location.clone().add(0.0, 1.0, 0.0).block.type != Material.SMALL_DRIPLEAF).intValue
+        }
+        
+        else -> 0
+    }
+    
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -388,6 +405,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Bed -> AsyncBed(material, blockData)
         blockData is LightningRod -> AsyncLightningRod(material, blockData)
         blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
+        blockData is Dripleaf -> AsyncDripleaf(material, this)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

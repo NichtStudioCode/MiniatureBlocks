@@ -1,0 +1,22 @@
+[
+  {
+    "from": [5, 0, 12],
+    "to": [11, 16, 12],
+    "shade": false,
+    "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 12], "rescale": true},
+    "faces": {
+      "north": {"uv": [3, 0, 14, 16], "texture": "0"},
+      "south": {"uv": [3, 0, 14, 16], "texture": "0"}
+    }
+  },
+  {
+    "from": [5, 0, 12],
+    "to": [11, 16, 12],
+    "shade": false,
+    "rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 12], "rescale": true},
+    "faces": {
+      "north": {"uv": [3, 0, 14, 16], "texture": "0"},
+      "south": {"uv": [3, 0, 14, 16], "texture": "0"}
+    }
+  }
+]

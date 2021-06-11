@@ -4239,5 +4239,39 @@
       "block/spore_blossom_base",
       "block/spore_blossom"
     ]
+  },
+  {
+    "material": "SMALL_DRIPLEAF",
+    "models": [
+      "model/small_dripleaf/small_dripleaf_bottom",
+      "model/small_dripleaf/small_dripleaf_top"
+    ],
+    "textures": [
+      "block/small_dripleaf_stem_bottom",
+      "block/small_dripleaf_stem_top",
+      "block/small_dripleaf_top",
+      "block/small_dripleaf_side"
+    ]
+  },
+  {
+    "material": "BIG_DRIPLEAF_STEM",
+    "model": "model/big_dripleaf/big_dripleaf_stem",
+    "textures": [
+      "block/big_dripleaf_stem"
+    ]
+  },
+  {
+    "material": "BIG_DRIPLEAF",
+    "models": [
+      "model/big_dripleaf/big_dripleaf",
+      "model/big_dripleaf/big_dripleaf_partial_tilt",
+      "model/big_dripleaf/big_dripleaf_full_tilt"
+    ],
+    "textures": [
+      "block/big_dripleaf_top",
+      "block/big_dripleaf_stem",
+      "block/big_dripleaf_side",
+      "block/big_dripleaf_tip"
+    ]
   }
 ]
