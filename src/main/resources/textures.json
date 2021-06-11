@@ -4201,5 +4201,13 @@
       "block/sculk_sensor_side",
       "block/sculk_sensor_tendril_active"
     ]
+  },
+  {
+    "material": "SPORE_BLOSSOM",
+    "model": "model/spore_blossom",
+    "textures": [
+      "block/spore_blossom_base",
+      "block/spore_blossom"
+    ]
   }
 ]
