@@ -229,6 +229,10 @@ class AsyncLightningRod(material: Material, blockData: LightningRod): AsyncBlock
     override val facing = blockData.facing
 }
 
+class AsyncSculkSensor(material: Material, blockData: SculkSensor): AsyncBlockData(material), AsyncMultiTexture {
+    override val texture = if (blockData.phase == SculkSensor.Phase.ACTIVE) 1 else 0
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -383,6 +387,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is SeaPickle -> AsyncSeaPickle(material, blockData)
         blockData is Bed -> AsyncBed(material, blockData)
         blockData is LightningRod -> AsyncLightningRod(material, blockData)
+        blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

@@ -4187,5 +4187,19 @@
     "textures": [
       "block/amethyst_cluster"
     ]
+  },
+  {
+    "material": "SCULK_SENSOR",
+    "model": "model/sculk_sensor",
+    "textures": [
+      "block/sculk_sensor_top",
+      "block/sculk_sensor_bottom",
+      "block/sculk_sensor_side",
+      "block/sculk_sensor_tendril_inactive",
+      "block/sculk_sensor_top",
+      "block/sculk_sensor_bottom",
+      "block/sculk_sensor_side",
+      "block/sculk_sensor_tendril_active"
+    ]
   }
 ]
