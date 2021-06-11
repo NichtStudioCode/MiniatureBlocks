@@ -230,6 +230,11 @@ class AsyncBed(material: Material, blockData: Bed): AsyncBlockData(material), As
     override val facing = blockData.facing
 }
 
+class AsyncLightningRod(material: Material, blockData: LightningRod): AsyncBlockData(material), AsyncMultiTexture, AsyncDirectional {
+    override val texture = blockData.isPowered.intValue
+    override val facing = blockData.facing
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -384,6 +389,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Cake -> AsyncCake(material, blockData)
         blockData is SeaPickle -> AsyncSeaPickle(material, blockData)
         blockData is Bed -> AsyncBed(material, blockData)
+        blockData is LightningRod -> AsyncLightningRod(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

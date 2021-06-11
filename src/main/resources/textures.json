@@ -4092,5 +4092,14 @@
     "textures": [
       "entity/bed/black"
     ]
+  },
+  {
+    "material": "LIGHTNING_ROD",
+    "rotation": "UP",
+    "model": "model/lightning_rod",
+    "textures": [
+      "block/lightning_rod",
+      "block/lightning_rod_on"
+    ]
   }
 ]
