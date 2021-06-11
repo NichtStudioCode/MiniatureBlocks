@@ -4137,5 +4137,23 @@
       "block/cauldron_inner",
       "block/powder_snow"
     ]
+  },
+  {
+    "material": "AZALEA",
+    "model": "model/azalea",
+    "textures": [
+      "block/azalea_plant",
+      "block/azalea_top",
+      "block/azalea_side"
+    ]
+  },
+  {
+    "material": "FLOWERING_AZALEA",
+    "model": "model/azalea",
+    "textures": [
+      "block/azalea_plant",
+      "block/flowering_azalea_top",
+      "block/flowering_azalea_side"
+    ]
   }
 ]
