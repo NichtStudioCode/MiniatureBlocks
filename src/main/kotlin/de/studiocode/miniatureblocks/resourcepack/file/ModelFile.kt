@@ -62,6 +62,8 @@ abstract class ModelFile(val material: Material, resourcePack: ResourcePack, pat
     
     fun getCustomModelFromPath(path: String): CustomModel? = customModels.find { it.path == path }
     
+    fun getCustomModelFromName(name: String): CustomModel? = customModels.find { it.name == name }
+    
     fun getExactModel(jsonArray: JsonArray) = getExactModel(jsonArray[0].asString, jsonArray[1].asInt)
     
     private fun getExactModel(name: String, customModelData: Int): CustomModel? =

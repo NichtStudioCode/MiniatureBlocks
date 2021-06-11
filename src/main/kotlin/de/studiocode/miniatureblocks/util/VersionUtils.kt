@@ -13,14 +13,14 @@ object VersionUtils {
         val parts = parseVersion(version)
         major = parts[0]
         minor = parts[1]
-        patch = parts[2]
+        patch = if (parts.size > 2) parts[2] else 0
     }
     
     private fun parseVersion(version: String) = version.split('.').map(Integer::parseInt).toTypedArray()
     
     fun isVersionOrHigher(version: String): Boolean {
         val parts = parseVersion(version)
-        return major >= parts[0] && minor >= parts[1] && patch >= parts[2]
+        return major >= parts[0] && minor >= parts[1] && patch >= (if (parts.size > 2) parts[2] else 0)
     }
     
 }

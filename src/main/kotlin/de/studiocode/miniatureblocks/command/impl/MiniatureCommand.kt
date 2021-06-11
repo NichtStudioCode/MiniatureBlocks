@@ -15,6 +15,7 @@ import de.studiocode.miniatureblocks.miniature.armorstand.MiniatureManager
 import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
 import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
+import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.RPTaskManager
 import de.studiocode.miniatureblocks.util.getArgument
 import de.studiocode.miniatureblocks.util.getPlayer
@@ -159,6 +160,12 @@ class MiniatureCommand(name: String, permission: String) : PlayerCommand(name, p
                         if (min != null && max != null) {
                             RPTaskManager.submitMiniatureCreationRequest(name, forceResourcePack, min!!, max!!) {
                                 player.sendPrefixedMessage("§7A new model has been created.")
+    
+                                val item = NormalMiniatureItem.create(
+                                    MiniatureBlocks.INSTANCE.resourcePack.mainModelData.getCustomModelFromName(name)!!
+                                ).itemStack
+                                
+                                player.inventory.addItem(item)
                             }
                         }
                     } else player.sendPrefixedMessage("§cMiniatureBlocks is busy, try again later.")

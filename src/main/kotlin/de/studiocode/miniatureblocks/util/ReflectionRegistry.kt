@@ -9,6 +9,7 @@ import de.studiocode.miniatureblocks.util.ReflectionUtils.getField
 import de.studiocode.miniatureblocks.util.ReflectionUtils.getMethod
 import de.studiocode.miniatureblocks.util.ReflectionUtils.getNMS
 import de.studiocode.miniatureblocks.util.ReflectionUtils.getNMSClass
+import de.studiocode.miniatureblocks.util.VersionUtils.isVersionOrHigher
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
@@ -23,11 +24,11 @@ object ReflectionRegistry {
     val CB_PACKAGE_PATH = getCB()
     
     // NMS classes
-    val NMS_MINECRAFT_SERVER_CLASS = getNMSClass("MinecraftServer")
-    val NMS_COMMAND_DISPATCHER_CLASS = getNMSClass("CommandDispatcher")
-    val NMS_COMMAND_LISTENER_WRAPPER_CLASS = getNMSClass("CommandListenerWrapper")
-    val NMS_ENTITY_CLASS = getNMSClass("Entity")
-    val NMS_ENTITY_ARMOR_STAND_CLASS = getNMSClass("EntityArmorStand")
+    val NMS_MINECRAFT_SERVER_CLASS = if (isVersionOrHigher("1.17.0")) getNMSClass("server.MinecraftServer") else getNMSClass("MinecraftServer")
+    val NMS_COMMAND_DISPATCHER_CLASS = if (isVersionOrHigher("1.17.0")) getNMSClass("commands.CommandDispatcher") else getNMSClass("CommandDispatcher")
+    val NMS_COMMAND_LISTENER_WRAPPER_CLASS = if (isVersionOrHigher("1.17.0")) getNMSClass("commands.CommandListenerWrapper") else getNMSClass("CommandListenerWrapper")
+    val NMS_ENTITY_CLASS = if (isVersionOrHigher("1.17.0")) getNMSClass("world.entity.Entity") else getNMSClass("Entity")
+    val NMS_ENTITY_ARMOR_STAND_CLASS = if (isVersionOrHigher("1.17.0")) getNMSClass("world.entity.decoration.EntityArmorStand") else getNMSClass("EntityArmorStand")
     
     // CB classes
     val CB_CRAFT_SERVER_CLASS = getCBClass("CraftServer")
@@ -51,7 +52,7 @@ object ReflectionRegistry {
     
     // NMS fields
     val NMS_MINECRAFT_SERVER_VANILLA_COMMAND_DISPATCHER_FIELD = getField(NMS_MINECRAFT_SERVER_CLASS, true, "vanillaCommandDispatcher")
-    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "armorItems")
+    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = if (isVersionOrHigher("1.17.0")) getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "cd") else getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "armorItems")
     
     // CB fields
     val CB_CRAFT_META_SKULL_PROFILE_FIELD = getField(CB_CRAFT_META_SKULL_CLASS, true, "profile")

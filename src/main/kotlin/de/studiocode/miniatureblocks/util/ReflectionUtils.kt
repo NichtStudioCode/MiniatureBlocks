@@ -32,9 +32,13 @@ import java.lang.reflect.Method
 object ReflectionUtils {
     
     fun getNMS(): String {
-        val path = Bukkit.getServer().javaClass.getPackage().name
-        val version = path.substring(path.lastIndexOf(".") + 1)
-        return "net.minecraft.server.$version."
+        return if (VersionUtils.isVersionOrHigher("1.17.0")) {
+            "net.minecraft."
+        } else {
+            val path = Bukkit.getServer().javaClass.getPackage().name
+            val version = path.substring(path.lastIndexOf(".") + 1)
+            "net.minecraft.server.$version."
+        }
     }
     
     fun getCB(): String {
