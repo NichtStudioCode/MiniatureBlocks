@@ -3,6 +3,7 @@ package de.studiocode.miniatureblocks.build.concurrent
 import com.mojang.authlib.GameProfile
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.util.*
+import de.studiocode.miniatureblocks.util.VersionUtils.isVersionOrHigher
 import org.bukkit.Axis
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -99,7 +100,7 @@ class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlo
     override val model = level
 }
 
-class AsyncMultiCopyableBlockData(material: Material, blockData: MultipleFacing): AsyncBlockData(material), AsyncMultiCopyable {
+class AsyncMultiCopyableBlockData(material: Material, blockData: MultipleFacing) : AsyncBlockData(material), AsyncMultiCopyable {
     override val faces = HashSet(blockData.faces)
 }
 
@@ -227,38 +228,38 @@ class AsyncSeaPickle(material: Material, blockData: SeaPickle) : AsyncBlockData(
     override val model = blockData.pickles - 1 + if (blockData.isWaterlogged) 0 else 4
 }
 
-class AsyncBed(material: Material, blockData: Bed): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+class AsyncBed(material: Material, blockData: Bed) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     override val model = blockData.part.ordinal
     override val facing = blockData.facing
 }
 
-class AsyncLightningRod(material: Material, blockData: LightningRod): AsyncBlockData(material), AsyncMultiTexture, AsyncDirectional {
+class AsyncLightningRod(material: Material, blockData: LightningRod) : AsyncBlockData(material), AsyncMultiTexture, AsyncDirectional {
     override val texture = blockData.isPowered.intValue
     override val facing = blockData.facing
 }
 
-class AsyncSculkSensor(material: Material, blockData: SculkSensor): AsyncBlockData(material), AsyncMultiTexture {
+class AsyncSculkSensor(material: Material, blockData: SculkSensor) : AsyncBlockData(material), AsyncMultiTexture {
     override val texture = if (blockData.phase == SculkSensor.Phase.ACTIVE) 1 else 0
 }
 
-class AsyncDripstone(material: Material, blockData: PointedDripstone): AsyncBlockData(material), AsyncMultiTexture {
+class AsyncDripstone(material: Material, blockData: PointedDripstone) : AsyncBlockData(material), AsyncMultiTexture {
     override val texture = blockData.thickness.ordinal + if (blockData.verticalDirection == BlockFace.DOWN) 5 else 0
 }
 
-class AsyncCandle(material: Material, blockData: Candle): AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture {
+class AsyncCandle(material: Material, blockData: Candle) : AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture {
     override val model = blockData.candles - 1
     override val texture = blockData.isLit.intValue
 }
 
-class AsyncCaveVinesPlant(material: Material, blockData: CaveVinesPlant): AsyncBlockData(material), AsyncMultiTexture  {
+class AsyncCaveVinesPlant(material: Material, blockData: CaveVinesPlant) : AsyncBlockData(material), AsyncMultiTexture {
     override val texture = blockData.isBerries.intValue
 }
 
-class AsyncSunflower(blockData: Bisected): AsyncBlockData(Material.SUNFLOWER), AsyncMultiModel {
+class AsyncSunflower(blockData: Bisected) : AsyncBlockData(Material.SUNFLOWER), AsyncMultiModel {
     override val model = blockData.half.ordinal
 }
 
-class AsyncDripleaf(material: Material, blockData: Dripleaf): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+class AsyncDripleaf(material: Material, blockData: Dripleaf) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
     override val facing = blockData.facing
     override val model: Int = when (blockData) {
@@ -289,7 +290,7 @@ class AsyncWall(material: Material, blockData: BlockData) : AsyncBlockData(mater
     
     init {
         faces = EnumMap(BlockFace::class.java)
-        if (VersionUtils.isVersionOrHigher("1.16.0")) {
+        if (isVersionOrHigher("1.16.0")) {
             val wall = blockData as Wall
             up = wall.isUp
             Direction.cardinalPoints
@@ -423,13 +424,13 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is EndPortalFrame -> AsyncEndPortalFrame(material, blockData)
         blockData is Cake -> AsyncCake(material, blockData)
         blockData is SeaPickle -> AsyncSeaPickle(material, blockData)
-        blockData is Bed -> AsyncBed(material, blockData)
-        blockData is LightningRod -> AsyncLightningRod(material, blockData)
-        blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
-        blockData is PointedDripstone -> AsyncDripstone(material, blockData)
-        blockData is Dripleaf -> AsyncDripleaf(material, blockData)
-        blockData is Candle -> AsyncCandle(material, blockData)
-        blockData is CaveVinesPlant -> AsyncCaveVinesPlant(material, blockData)
+        isVersionOrHigher("1.17") && blockData is Bed -> AsyncBed(material, blockData)
+        isVersionOrHigher("1.17") && blockData is LightningRod -> AsyncLightningRod(material, blockData)
+        isVersionOrHigher("1.17") && blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
+        isVersionOrHigher("1.17") && blockData is PointedDripstone -> AsyncDripstone(material, blockData)
+        isVersionOrHigher("1.17") && blockData is Dripleaf -> AsyncDripleaf(material, blockData)
+        isVersionOrHigher("1.17") && blockData is Candle -> AsyncCandle(material, blockData)
+        isVersionOrHigher("1.17") && blockData is CaveVinesPlant -> AsyncCaveVinesPlant(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
@@ -450,4 +451,4 @@ private fun BlockData.isSnow() = this is Snow && this.layers < this.maximumLayer
 
 private fun Material.isDropperDispenser() = this == Material.DISPENSER || this == Material.DROPPER
 
-private fun Material.isMultiCopyable() = this == Material.VINE || this == Material.GLOW_LICHEN
+private fun Material.isMultiCopyable() = this == Material.VINE || this.name == "GLOW_LICHEN"
