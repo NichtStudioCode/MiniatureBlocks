@@ -2782,25 +2782,6 @@
     ]
   },
   {
-    "material": "LADDER",
-    "textures": [
-      "block/ladder"
-    ]
-  },
-  {
-    "material": "VINE",
-    "textures": [
-      "block/modded/vine"
-    ]
-  },
-  {
-    "material": "LILY_PAD",
-    "rotation": "UP",
-    "textures": [
-      "block/modded/lily_pad"
-    ]
-  },
-  {
     "material": "GLASS_PANE",
     "model": "model/glass_pane",
     "textures": [
@@ -4747,6 +4728,43 @@
       "block/cake_bottom",
       "block/cake_side",
       "block/black_candle_lit"
+    ]
+  },
+  {
+    "material": "HANGING_ROOTS",
+    "model": "model/cross",
+    "textures": [
+      "block/hanging_roots"
+    ]
+  },
+  {
+    "material": "LADDER",
+    "rotation": "SOUTH",
+    "model": "model/spaced_flat_wall",
+    "textures": [
+      "block/ladder"
+    ]
+  },
+  {
+    "material": "VINE",
+    "model": "model/spaced_flat_wall",
+    "textures": [
+      "block/modded/vine"
+    ]
+  },
+  {
+    "material": "LILY_PAD",
+    "model": "model/spaced_flat_wall",
+    "rotation": "UP",
+    "textures": [
+      "block/modded/lily_pad"
+    ]
+  },
+  {
+    "material": "GLOW_LICHEN",
+    "model": "model/flat_wall",
+    "textures": [
+      "block/glow_lichen"
     ]
   }
 ]

@@ -18,7 +18,7 @@ open class DefaultPart(private val data: AsyncData) : Part() {
     
     private val blockTexture = BlockTexture.of(data.material)
     private val textures = blockTexture.textures
-    final override val elements = ArrayList<Element>()
+    final override var elements = ArrayList<Element>()
     
     init {
         // create elements
@@ -34,6 +34,26 @@ open class DefaultPart(private val data: AsyncData) : Part() {
         // apply correct rotation
         val defaultRotation = blockTexture.defaultRotation
         rotate(-defaultRotation.xRot, -defaultRotation.yRot, isCube)
+        
+        if (data is AsyncMultiCopyable) {
+            val newElements = ArrayList<Element>()
+            data.faces.map(Direction::of).forEach { direction ->
+                val elementsCopy = ArrayList<Element>()
+                elements.forEach { elementsCopy.add(it.clone()) }
+                
+                elementsCopy.forEach { 
+                    it.rotatePosAroundXAxis(direction.xRot)
+                    it.rotatePosAroundYAxis(direction.yRot)
+                    it.rotateTexturesAroundXAxis(direction.xRot)
+                    it.rotateTexturesAroundYAxis(direction.yRot)
+                }
+                
+                newElements.addAll(elementsCopy)
+            }
+            
+            elements = newElements
+        }
+        
         when (data) {
             is AsyncDirectional -> rotate(Direction.of(data.facing), isCube)
             is AsyncOrientable -> rotate(Direction.of(data.axis), isCube)

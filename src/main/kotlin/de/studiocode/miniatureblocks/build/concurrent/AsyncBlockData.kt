@@ -62,6 +62,10 @@ interface AsyncMultiTexture : AsyncData {
     val texture: Int
 }
 
+interface AsyncMultiCopyable : AsyncData {
+    val faces: HashSet<BlockFace>
+}
+
 open class AsyncBlockData(override val material: Material) : AsyncData
 
 class AsyncDirectionalBlockData(material: Material, blockData: Directional) : AsyncBlockData(material), AsyncDirectional {
@@ -93,6 +97,10 @@ class AsyncLightableBlockData(material: Material, lightable: Lightable) : AsyncB
 class AsyncLevelledBlockData(material: Material, blockData: Levelled) : AsyncBlockData(material), AsyncLevelled, AsyncMultiModel {
     override val level = blockData.level
     override val model = level
+}
+
+class AsyncMultiCopyableBlockData(material: Material, blockData: MultipleFacing): AsyncBlockData(material), AsyncMultiCopyable {
+    override val faces = HashSet(blockData.faces)
 }
 
 class AsyncSlab(material: Material, blockData: Slab) : AsyncBlockData(material) {
@@ -380,6 +388,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         material.isHead() -> AsyncHead(material, this)
         material.isWall() -> AsyncWall(material, blockData)
         material.isDropperDispenser() -> AsyncDropperDispenser(material, blockData)
+        material.isMultiCopyable() -> AsyncMultiCopyableBlockData(material, blockData as MultipleFacing)
         
         blockData.isSlab() -> AsyncSlab(material, blockData as Slab)
         blockData.isSnow() -> AsyncSnow(material, blockData as Snow)
@@ -430,3 +439,5 @@ private fun BlockData.isSlab() = this is Slab && this.type != Type.DOUBLE
 private fun BlockData.isSnow() = this is Snow && this.layers < this.maximumLayers
 
 private fun Material.isDropperDispenser() = this == Material.DISPENSER || this == Material.DROPPER
+
+private fun Material.isMultiCopyable() = this == Material.VINE || this == Material.GLOW_LICHEN
