@@ -1512,6 +1512,18 @@
     ]
   },
   {
+    "material": "DIRT_PATH",
+    "model": "model/grass_path",
+    "textures": [
+      "block/dirt_path_side",
+      "block/dirt_path_side",
+      "block/dirt_path_side",
+      "block/dirt_path_side",
+      "block/dirt_path_top",
+      "block/dirt"
+    ]
+  },
+  {
     "material": "HAY_BLOCK",
     "rotation": "UP",
     "textures": [
