@@ -4795,5 +4795,47 @@
       "block/cave_vines_plant",
       "block/cave_vines_plant_lit"
     ]
+  },
+  {
+    "material": "WEEPING_VINES",
+    "model": "model/cross",
+    "textures": [
+      "block/weeping_vines"
+    ]
+  },
+  {
+    "material": "WEEPING_VINES_PLANT",
+    "model": "model/cross",
+    "textures": [
+      "block/weeping_vines_plant"
+    ]
+  },
+  {
+    "material": "TWISTING_VINES",
+    "model": "model/cross",
+    "textures": [
+      "block/twisting_vines"
+    ]
+  },
+  {
+    "material": "TWISTING_VINES_PLANT",
+    "model": "model/cross",
+    "textures": [
+      "block/twisting_vines_plant"
+    ]
+  },
+  {
+    "material": "KELP",
+    "model": "model/cross",
+    "textures": [
+      "block/kelp"
+    ]
+  },
+  {
+    "material": "KELP_PLANT",
+    "model": "model/cross",
+    "textures": [
+      "block/kelp_plant"
+    ]
   }
 ]
