@@ -4510,5 +4510,243 @@
       "block/black_candle",
       "block/black_candle_lit"
     ]
+  },
+  {
+    "material": "CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/candle_lit"
+    ]
+  },
+  {
+    "material": "WHITE_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/white_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/white_candle_lit"
+    ]
+  },
+  {
+    "material": "ORANGE_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/orange_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/orange_candle_lit"
+    ]
+  },
+  {
+    "material": "MAGENTA_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/magenta_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/magenta_candle_lit"
+    ]
+  },
+  {
+    "material": "CYAN_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/cyan_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/cyan_candle_lit"
+    ]
+  },
+  {
+    "material": "YELLOW_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/yellow_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/yellow_candle_lit"
+    ]
+  },
+  {
+    "material": "LIME_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/lime_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/lime_candle_lit"
+    ]
+  },
+  {
+    "material": "PINK_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/pink_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/pink_candle_lit"
+    ]
+  },
+  {
+    "material": "GRAY_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/gray_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/gray_candle_lit"
+    ]
+  },
+  {
+    "material": "LIGHT_GRAY_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/light_gray_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/light_gray_candle_lit"
+    ]
+  },
+  {
+    "material": "LIGHT_BLUE_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/light_blue_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/light_blue_candle_lit"
+    ]
+  },
+  {
+    "material": "PURPLE_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/purple_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/purple_candle_lit"
+    ]
+  },
+  {
+    "material": "BLUE_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/blue_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/blue_candle_lit"
+    ]
+  },
+  {
+    "material": "BROWN_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/brown_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/brown_candle_lit"
+    ]
+  },
+  {
+    "material": "GREEN_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/green_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/green_candle_lit"
+    ]
+  },
+  {
+    "material": "RED_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/red_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/red_candle_lit"
+    ]
+  },
+  {
+    "material": "BLACK_CANDLE_CAKE",
+    "model": "model/cake/candle_cake",
+    "textures": [
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/black_candle",
+      "block/cake_top",
+      "block/cake_bottom",
+      "block/cake_side",
+      "block/black_candle_lit"
+    ]
   }
 ]
