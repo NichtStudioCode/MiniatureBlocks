@@ -250,6 +250,10 @@ class AsyncCandle(material: Material, blockData: Candle): AsyncBlockData(materia
     override val texture = blockData.isLit.intValue
 }
 
+class AsyncCaveVinesPlant(material: Material, blockData: CaveVinesPlant): AsyncBlockData(material), AsyncMultiTexture  {
+    override val texture = blockData.isBerries.intValue
+}
+
 class AsyncDripleaf(material: Material, blockData: Dripleaf): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
     override val facing = blockData.facing
@@ -420,6 +424,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is PointedDripstone -> AsyncDripstone(material, blockData)
         blockData is Dripleaf -> AsyncDripleaf(material, blockData)
         blockData is Candle -> AsyncCandle(material, blockData)
+        blockData is CaveVinesPlant -> AsyncCaveVinesPlant(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)

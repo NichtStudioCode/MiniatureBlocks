@@ -4766,5 +4766,21 @@
     "textures": [
       "block/glow_lichen"
     ]
+  },
+  {
+    "material": "CAVE_VINES",
+    "model": "model/cross",
+    "textures": [
+      "block/cave_vines",
+      "block/cave_vines_lit"
+    ]
+  },
+  {
+    "material": "CAVE_VINES_PLANT",
+    "model": "model/cross",
+    "textures": [
+      "block/cave_vines_plant",
+      "block/cave_vines_plant_lit"
+    ]
   }
 ]
