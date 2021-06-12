@@ -30,10 +30,6 @@
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -82,10 +78,11 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>1.7</version>
         </dependency>
+        <!--Requires manual installation at the moment-->
         <dependency>
-            <groupId>com.github.NichtStudioCode</groupId>
+            <groupId>de.studiocode.invui</groupId>
             <artifactId>InvUI</artifactId>
-            <version>da96b415a9</version>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>xyz.xenondevs</groupId>

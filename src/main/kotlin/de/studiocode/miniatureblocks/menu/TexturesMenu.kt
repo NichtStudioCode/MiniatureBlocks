@@ -7,7 +7,7 @@ import de.studiocode.invui.item.Item
 import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.invui.item.impl.BaseItem
 import de.studiocode.invui.item.impl.SimpleItem
-import de.studiocode.invui.item.impl.SupplierItem
+import de.studiocode.invui.item.impl.SuppliedItem
 import de.studiocode.invui.resourcepack.Icon
 import de.studiocode.invui.window.impl.single.SimpleWindow
 import de.studiocode.miniatureblocks.MiniatureBlocks
@@ -150,9 +150,9 @@ class TexturesMenu(val player: Player) {
             }
         }
         
-        inner class CurrentMaterialItem : SupplierItem({
+        inner class CurrentMaterialItem : SuppliedItem({
             MATERIALS[material]!!.clone().setDisplayName("§7Current material")
-        })
+        }, null)
         
         inner class ClearOverridesItem : BaseItem() {
             

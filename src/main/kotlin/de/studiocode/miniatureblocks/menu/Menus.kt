@@ -1,7 +1,9 @@
 package de.studiocode.miniatureblocks.menu
 
+import de.studiocode.invui.gui.impl.PagedGUI
 import de.studiocode.invui.gui.structure.Marker
 import de.studiocode.invui.gui.structure.Structure
+import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.invui.item.impl.controlitem.PageItem
 import de.studiocode.invui.resourcepack.Icon
 
@@ -24,27 +26,41 @@ object Menus {
         Structure.addGlobalIngredient('8', Icon.LIGHT_HORIZONTAL_DOWN.item)
     }
     
-    class PageBackItem : PageItem(false, {
-        (if (it.hasPageBefore()) Icon.ARROW_1_LEFT else Icon.LIGHT_ARROW_1_LEFT).itemBuilder
-            .setDisplayName("§7Go back")
-            .addLoreLines(if (it.hasInfinitePages()) {
-                if (it.currentPageIndex == 0) "§cYou can't go further back"
-                else "§8Go to page ${it.currentPageIndex}"
-            } else {
-                if (it.hasPageBefore()) "§8Go to page ${it.currentPageIndex}/${it.pageAmount}"
-                else "§8You can't go further back"
-            })
-    })
+    class PageBackItem : PageItem(false) {
+        
+        override fun getItemBuilder(gui: PagedGUI): ItemBuilder {
+            val itemBuilder = (if (gui.hasPageBefore()) Icon.ARROW_1_LEFT else Icon.LIGHT_ARROW_1_LEFT).itemBuilder
+            itemBuilder.displayName = "§7Go back"
+            itemBuilder.addLoreLines(
+                if (gui.hasInfinitePages()) {
+                    if (gui.currentPageIndex == 0) "§cYou can't go further back"
+                    else "§8Go to page ${gui.currentPageIndex}"
+                } else {
+                    if (gui.hasPageBefore()) "§8Go to page ${gui.currentPageIndex}/${gui.pageAmount}"
+                    else "§8You can't go further back"
+                }
+            )
+            return itemBuilder
+        }
+        
+    }
     
-    class PageForwardItem : PageItem(true, {
-        (if (it.hasNextPage()) Icon.ARROW_1_RIGHT else Icon.LIGHT_ARROW_1_RIGHT).itemBuilder
-            .setDisplayName("§7Next page")
-            .addLoreLines(if (it.hasInfinitePages()) {
-                "§8Go to page ${it.currentPageIndex + 2}"
-            } else {
-                if (it.hasNextPage()) "§8Go to page ${it.currentPageIndex + 2}/${it.pageAmount}"
-                else "§8There are no more pages"
-            })
-    })
+    class PageForwardItem : PageItem(true) {
+        
+        override fun getItemBuilder(gui: PagedGUI): ItemBuilder {
+            val itemBuilder = (if (gui.hasNextPage()) Icon.ARROW_1_RIGHT else Icon.LIGHT_ARROW_1_RIGHT).itemBuilder
+            itemBuilder.displayName = "§7Next page"
+            itemBuilder.addLoreLines(
+                if (gui.hasInfinitePages()) {
+                    "§8Go to page ${gui.currentPageIndex + 2}"
+                } else {
+                    if (gui.hasNextPage()) "§8Go to page ${gui.currentPageIndex + 2}/${gui.pageAmount}"
+                    else "§8There are no more pages"
+                }
+            )
+            return itemBuilder
+        }
+        
+    }
     
 }
