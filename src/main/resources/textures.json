@@ -3153,11 +3153,12 @@
   },
   {
     "material": "SUNFLOWER",
-    "model": "model/sunflower",
+    "models": [
+      "model/sunflower/sunflower_top",
+      "model/sunflower/sunflower_bottom"
+    ],
     "textures": [
       "block/sunflower_bottom",
-      "block/sunflower_front",
-      "block/sunflower_back",
       "block/sunflower_top",
       "block/sunflower_front",
       "block/sunflower_back"

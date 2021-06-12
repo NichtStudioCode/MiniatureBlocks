@@ -254,6 +254,10 @@ class AsyncCaveVinesPlant(material: Material, blockData: CaveVinesPlant): AsyncB
     override val texture = blockData.isBerries.intValue
 }
 
+class AsyncSunflower(blockData: Bisected): AsyncBlockData(Material.SUNFLOWER), AsyncMultiModel {
+    override val model = blockData.half.ordinal
+}
+
 class AsyncDripleaf(material: Material, blockData: Dripleaf): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
     override val facing = blockData.facing
@@ -387,6 +391,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
     val blockData = blockData
     return when {
         material == Material.BEACON -> AsyncBeacon(this)
+        material == Material.SUNFLOWER -> AsyncSunflower(blockData as Bisected)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)
