@@ -42,7 +42,7 @@ class ForcedResourcePack(val player: Player, private val resourcePack: ResourceP
     }
     
     private fun kickLater() {
-        bukkitTask = runTaskLater(20 * 5, this::kickPlayer)
+        bukkitTask = runTaskLater(20 * 15, this::kickPlayer)
     }
     
     private fun kickPlayer() {
