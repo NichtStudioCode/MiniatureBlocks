@@ -820,7 +820,7 @@
   {
     "material": "MOSS_CARPET",
     "model": "model/carpet",
-    "textures": "block/moss_carpet"
+    "textures": "block/moss_block"
   },
   {
     "material": "STONE_PRESSURE_PLATE",
