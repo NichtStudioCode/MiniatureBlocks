@@ -4243,8 +4243,8 @@
   {
     "material": "SMALL_DRIPLEAF",
     "models": [
-      "model/small_dripleaf/small_dripleaf_bottom",
-      "model/small_dripleaf/small_dripleaf_top"
+      "model/small_dripleaf/small_dripleaf_top",
+      "model/small_dripleaf/small_dripleaf_bottom"
     ],
     "textures": [
       "block/small_dripleaf_stem_bottom",
@@ -4288,6 +4288,227 @@
       "block/pointed_dripstone_down_frustum",
       "block/pointed_dripstone_down_middle",
       "block/pointed_dripstone_down_base"
+    ]
+  },
+  {
+    "material": "CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/candle",
+      "block/candle_lit"
+    ]
+  },
+  {
+    "material": "WHITE_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/white_candle",
+      "block/white_candle_lit"
+    ]
+  },
+  {
+    "material": "ORANGE_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/orange_candle",
+      "block/orange_candle_lit"
+    ]
+  },
+  {
+    "material": "MAGENTA_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/magenta_candle",
+      "block/magenta_candle_lit"
+    ]
+  },
+  {
+    "material": "CYAN_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/cyan_candle",
+      "block/cyan_candle_lit"
+    ]
+  },
+  {
+    "material": "YELLOW_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/yellow_candle",
+      "block/yellow_candle_lit"
+    ]
+  },
+  {
+    "material": "LIME_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/lime_candle",
+      "block/lime_candle_lit"
+    ]
+  },
+  {
+    "material": "PINK_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/pink_candle",
+      "block/pink_candle_lit"
+    ]
+  },
+  {
+    "material": "GRAY_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/gray_candle",
+      "block/gray_candle_lit"
+    ]
+  },
+  {
+    "material": "LIGHT_GRAY_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/light_gray_candle",
+      "block/light_gray_candle_lit"
+    ]
+  },
+  {
+    "material": "LIGHT_BLUE_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/light_blue_candle",
+      "block/light_blue_candle_lit"
+    ]
+  },
+  {
+    "material": "PURPLE_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/purple_candle",
+      "block/purple_candle_lit"
+    ]
+  },
+  {
+    "material": "BLUE_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/blue_candle",
+      "block/blue_candle_lit"
+    ]
+  },
+  {
+    "material": "BROWN_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/brown_candle",
+      "block/brown_candle_lit"
+    ]
+  },
+  {
+    "material": "GREEN_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/green_candle",
+      "block/green_candle_lit"
+    ]
+  },
+  {
+    "material": "RED_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/red_candle",
+      "block/red_candle_lit"
+    ]
+  },
+  {
+    "material": "BLACK_CANDLE",
+    "models": [
+      "model/candle/one_candle",
+      "model/candle/two_candles",
+      "model/candle/three_candles",
+      "model/candle/four_candles"
+    ],
+    "textures": [
+      "block/black_candle",
+      "block/black_candle_lit"
     ]
   }
 ]

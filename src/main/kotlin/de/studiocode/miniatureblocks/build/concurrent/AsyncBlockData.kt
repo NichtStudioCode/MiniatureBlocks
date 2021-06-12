@@ -237,18 +237,17 @@ class AsyncDripstone(material: Material, blockData: PointedDripstone): AsyncBloc
     override val texture = blockData.thickness.ordinal + if (blockData.verticalDirection == BlockFace.DOWN) 5 else 0
 }
 
-class AsyncDripleaf(material: Material, block: Block): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+class AsyncCandle(material: Material, blockData: Candle): AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture {
+    override val model = blockData.candles - 1
+    override val texture = blockData.isLit.intValue
+}
+
+class AsyncDripleaf(material: Material, blockData: Dripleaf): AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
-    private val blockData = block.blockData
-    override val facing = (blockData as Directional).facing
-    override val model: Int = when {
-        blockData is BigDripleaf -> blockData.tilt.ordinal
-        
-        material == Material.SMALL_DRIPLEAF -> {
-            // there is currently no other way to check which half of the dripleaf it is?
-            (block.location.clone().add(0.0, 1.0, 0.0).block.type != Material.SMALL_DRIPLEAF).intValue
-        }
-        
+    override val facing = blockData.facing
+    override val model: Int = when (blockData) {
+        is BigDripleaf -> blockData.tilt.ordinal
+        is SmallDripleaf -> blockData.half.ordinal
         else -> 0
     }
     
@@ -410,7 +409,8 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is LightningRod -> AsyncLightningRod(material, blockData)
         blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
         blockData is PointedDripstone -> AsyncDripstone(material, blockData)
-        blockData is Dripleaf -> AsyncDripleaf(material, this)
+        blockData is Dripleaf -> AsyncDripleaf(material, blockData)
+        blockData is Candle -> AsyncCandle(material, blockData)
         
         blockData is Ageable -> AsyncAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
