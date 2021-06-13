@@ -4837,5 +4837,171 @@
     "textures": [
       "block/kelp_plant"
     ]
+  },
+  {
+    "material": "COMMAND_BLOCK",
+    "textures": [
+      "block/command_block_front",
+      "block/command_block_side",
+      "block/command_block_back",
+      "block/command_block_side",
+      "block/command_block_side",
+      "block/command_block_side",
+      "block/command_block_front",
+      "block/command_block_conditional",
+      "block/command_block_back",
+      "block/command_block_conditional",
+      "block/command_block_conditional",
+      "block/command_block_conditional"
+    ]
+  },
+  {
+    "material": "CHAIN_COMMAND_BLOCK",
+    "textures": [
+      "block/chain_command_block_front",
+      "block/chain_command_block_side",
+      "block/chain_command_block_back",
+      "block/chain_command_block_side",
+      "block/chain_command_block_side",
+      "block/chain_command_block_side",
+      "block/chain_command_block_front",
+      "block/chain_command_block_conditional",
+      "block/chain_command_block_back",
+      "block/chain_command_block_conditional",
+      "block/chain_command_block_conditional",
+      "block/chain_command_block_conditional"
+    ]
+  },
+  {
+    "material": "REPEATING_COMMAND_BLOCK",
+    "textures": [
+      "block/repeating_command_block_front",
+      "block/repeating_command_block_side",
+      "block/repeating_command_block_back",
+      "block/repeating_command_block_side",
+      "block/repeating_command_block_side",
+      "block/repeating_command_block_side",
+      "block/repeating_command_block_front",
+      "block/repeating_command_block_conditional",
+      "block/repeating_command_block_back",
+      "block/repeating_command_block_conditional",
+      "block/repeating_command_block_conditional",
+      "block/repeating_command_block_conditional"
+    ]
+  },
+  {
+    "material": "STONECUTTER",
+    "model": "model/stonecutter",
+    "textures": [
+      "block/stonecutter_top",
+      "block/stonecutter_bottom",
+      "block/stonecutter_side",
+      "block/stonecutter_saw"
+    ]
+  },
+  {
+    "material": "GRINDSTONE",
+    "model": "model/grindstone",
+    "textures": [
+      "block/grindstone_pivot",
+      "block/grindstone_round",
+      "block/grindstone_side",
+      "block/dark_oak_log"
+    ]
+  },
+  {
+    "material": "LANTERN",
+    "models":  [
+      "model/lantern/lantern",
+      "model/lantern/lantern_hanging"
+    ],
+    "textures": [
+      "block/lantern"
+    ]
+  },
+  {
+    "material": "SOUL_LANTERN",
+    "models":  [
+      "model/lantern/lantern",
+      "model/lantern/lantern_hanging"
+    ],
+    "textures": [
+      "block/soul_lantern"
+    ]
+  },
+  {
+    "material": "OBSERVER",
+    "model": "model/observer",
+    "textures": [
+      "block/observer_front",
+      "block/observer_back",
+      "block/observer_side",
+      "block/observer_top",
+      "block/observer_front",
+      "block/observer_back_on",
+      "block/observer_side",
+      "block/observer_top"
+    ]
+  },
+  {
+    "material": "COCOA",
+    "models": [
+      "model/cocoa/cocoa_stage_0",
+      "model/cocoa/cocoa_stage_1",
+      "model/cocoa/cocoa_stage_2"
+    ],
+    "textures": [
+      "block/cocoa_stage0",
+      "block/cocoa_stage1",
+      "block/cocoa_stage2"
+    ]
+  },
+  {
+    "material": "MELON_STEM",
+    "models": [
+      "model/stem/stem_stage_0",
+      "model/stem/stem_stage_1",
+      "model/stem/stem_stage_2",
+      "model/stem/stem_stage_3",
+      "model/stem/stem_stage_4",
+      "model/stem/stem_stage_5",
+      "model/stem/stem_stage_6",
+      "model/stem/stem_stage_7"
+    ],
+    "textures": [
+      "block/modded/melon_stem"
+    ]
+  },
+  {
+    "material": "ATTACHED_MELON_STEM",
+    "model": "model/stem/stem_attached",
+    "textures": [
+      "block/modded/melon_stem",
+      "block/modded/attached_melon_stem"
+    ]
+  },
+  {
+    "material": "PUMPKIN_STEM",
+    "models": [
+      "model/stem/stem_stage_0",
+      "model/stem/stem_stage_1",
+      "model/stem/stem_stage_2",
+      "model/stem/stem_stage_3",
+      "model/stem/stem_stage_4",
+      "model/stem/stem_stage_5",
+      "model/stem/stem_stage_6",
+      "model/stem/stem_stage_7"
+    ],
+    "textures": [
+      "block/modded/pumpkin_stem"
+    ]
+  },
+  {
+    "material": "ATTACHED_PUMPKIN_STEM",
+    "model": "model/stem/stem_attached",
+    "textures": [
+      "block/modded/pumpkin_stem",
+      "block/modded/attached_pumpkin_stem"
+    ]
   }
 ]
