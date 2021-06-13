@@ -284,6 +284,11 @@ class AsyncCocoa(material: Material, blockData: Cocoa): AsyncBlockData(material)
     override val texture = blockData.age
 }
 
+class AsyncBamboo(blockData: Bamboo): AsyncBlockData(Material.BAMBOO) {
+    val age = blockData.age
+    val leaves = blockData.leaves
+}
+
 class AsyncDripleaf(material: Material, blockData: Dripleaf) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
     
     override val facing = blockData.facing
@@ -418,6 +423,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
     return when {
         material == Material.BEACON -> AsyncBeacon(this)
         material == Material.SUNFLOWER -> AsyncSunflower(blockData as Bisected)
+        material == Material.BAMBOO -> AsyncBamboo(blockData as Bamboo)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)

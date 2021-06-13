@@ -5003,5 +5003,13 @@
       "block/modded/pumpkin_stem",
       "block/modded/attached_pumpkin_stem"
     ]
+  },
+  {
+    "material": "BAMBOO",
+    "textures": [
+      "block/bamboo_stalk",
+      "block/bamboo_small_leaves",
+      "block/bamboo_large_leaves"
+    ]
   }
 ]
