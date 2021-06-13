@@ -5,7 +5,7 @@ import de.studiocode.miniatureblocks.util.getBoxOutline
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import xyz.xenondevs.particle.utils.ReflectionUtils
+import xyz.xenondevs.particle.utils.ParticleUtils
 import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
@@ -37,7 +37,7 @@ class Region(player: Player) {
                     }
                 }
                 
-                particlePackets?.forEach { ReflectionUtils.sendPacket(player, it) }
+                if (particlePackets != null) ParticleUtils.sendBulk(particlePackets, player)
             }
         }
     }
