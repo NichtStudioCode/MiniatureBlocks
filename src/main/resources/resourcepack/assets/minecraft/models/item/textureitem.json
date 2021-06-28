@@ -1,6 +1,6 @@
 {
   "textures": {
-    "2": "item/inventory_part"
+    "2": "invui:item/inventory_part"
   },
   "elements": [
     {
