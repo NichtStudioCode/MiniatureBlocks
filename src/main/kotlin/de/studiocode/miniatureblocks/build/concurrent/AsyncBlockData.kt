@@ -460,8 +460,8 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Lantern -> AsyncLantern(material, blockData)
         blockData is Observer -> AsyncObserver(material, blockData)
         blockData is Cocoa -> AsyncCocoa(material, blockData)
+        blockData is Bed -> AsyncBed(material, blockData)
         
-        isVersionOrHigher("1.17") && blockData is Bed -> AsyncBed(material, blockData)
         isVersionOrHigher("1.17") && blockData is LightningRod -> AsyncLightningRod(material, blockData)
         isVersionOrHigher("1.17") && blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
         isVersionOrHigher("1.17") && blockData is PointedDripstone -> AsyncDripstone(material, blockData)

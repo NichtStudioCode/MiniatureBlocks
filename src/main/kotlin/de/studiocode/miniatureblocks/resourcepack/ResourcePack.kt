@@ -243,7 +243,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         val mbRP = File("plugins/MiniatureBlocks/MiniatureBlocks.zip")
         
         // use InvUI ResourcePack as base
-        invUIRP.downloadFrom(URL(ForceResourcePack.LIGHT_RESOURCE_PACK_URL))
+        invUIRP.downloadFrom(URL(ForceResourcePack.RESOURCE_PACK_URL))
         
         // create MiniatureBlocks ResourcePack
         val zip = ZipFile(mbRP)

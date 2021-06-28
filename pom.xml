@@ -9,12 +9,12 @@
     <version>0.13-SNAPSHOT</version>
 
     <properties>
-        <kotlin.version>1.5.20-RC</kotlin.version>
+        <kotlin.version>1.5.20</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <shadePath>de.studiocode.miniatureblocks.lib</shadePath>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <repositories>
@@ -132,7 +132,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>16</jvmTarget>
+                    <jvmTarget>1.8</jvmTarget>
                 </configuration>
             </plugin>
             <plugin>
@@ -170,6 +170,30 @@
                                 <relocation>
                                     <pattern>xyz.xenondevs.particle</pattern>
                                     <shadedPattern>${shadePath}.xyz.xenondevs.particle</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>kotlin</pattern>
+                                    <shadedPattern>${shadePath}.kotlin</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.intellij.lang.annotations</pattern>
+                                    <shadedPattern>${shadePath}.org.intellij.lang.annotations</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.jetbrains.annotations</pattern>
+                                    <shadedPattern>${shadePath}.org.jetbrains.annotations</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.commons.io</pattern>
+                                    <shadedPattern>${shadePath}.org.apache.commons.io</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.lingala.zip4j</pattern>
+                                    <shadedPattern>${shadePath}.net.lingala.zip4j</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>me.xdrop</pattern>
+                                    <shadedPattern>${shadePath}.me.xdrop</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
