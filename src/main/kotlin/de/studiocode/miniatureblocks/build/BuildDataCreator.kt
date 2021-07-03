@@ -1,27 +1,28 @@
 package de.studiocode.miniatureblocks.build
 
 import de.studiocode.miniatureblocks.build.concurrent.AsyncBlockData
+import de.studiocode.miniatureblocks.build.concurrent.AsyncMiniature
 import de.studiocode.miniatureblocks.build.concurrent.SyncTaskExecutor
 import de.studiocode.miniatureblocks.build.concurrent.toAsyncBlockData
+import de.studiocode.miniatureblocks.miniature.armorstand.hasMiniatureData
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.resourcepack.model.Direction.*
 import de.studiocode.miniatureblocks.resourcepack.model.element.Element
 import de.studiocode.miniatureblocks.resourcepack.model.element.Texture
 import de.studiocode.miniatureblocks.resourcepack.model.part.Part
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
-import de.studiocode.miniatureblocks.util.isGlass
-import de.studiocode.miniatureblocks.util.isTranslucent
+import de.studiocode.miniatureblocks.util.*
 import de.studiocode.miniatureblocks.util.point.Point3D
-import de.studiocode.miniatureblocks.util.toPoint
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.entity.ArmorStand
 import java.util.concurrent.*
 
 typealias ElementData = Triple<Element, Point3D, Material>
 
 val EMPTY_TEXTURE = Texture(Texture.UV(0.0, 0.0, 0.0, 0.0), "")
 
-class BuildDataCreator(min: Location, max: Location) {
+class BuildDataCreator(private val min: Location, private val max: Location) {
     
     private val context = BuildContext(min.toPoint(), max.toPoint())
     
@@ -83,6 +84,20 @@ class BuildDataCreator(min: Location, max: Location) {
                     worldData[it] = data // save data (block and material) of this point
                 }
             }
+            
+            for (chunk in LocationUtils.getChunksBetween(min, max)) {
+                chunk.entities
+                    .filter {
+                        it is ArmorStand
+                            && it.hasMiniatureData()
+                            && it.location.blockLocation.isBetween(min, max)
+                    }
+                    .forEach {
+                        val point = it.location.toPoint()
+                        worldData[point] = AsyncMiniature(it as ArmorStand)
+                    }
+            }
+            
             after(worldData) // continue processing async
         }
     }

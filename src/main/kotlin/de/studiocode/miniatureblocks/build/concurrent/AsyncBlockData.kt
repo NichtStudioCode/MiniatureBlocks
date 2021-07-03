@@ -1,6 +1,10 @@
 package de.studiocode.miniatureblocks.build.concurrent
 
 import com.mojang.authlib.GameProfile
+import de.studiocode.miniatureblocks.miniature.armorstand.getMiniature
+import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
+import de.studiocode.miniatureblocks.miniature.armorstand.impl.NormalMiniatureArmorStand
+import de.studiocode.miniatureblocks.resourcepack.file.ModelFile
 import de.studiocode.miniatureblocks.resourcepack.model.Direction
 import de.studiocode.miniatureblocks.util.*
 import de.studiocode.miniatureblocks.util.VersionUtils.isVersionOrHigher
@@ -16,6 +20,7 @@ import org.bukkit.block.data.type.Observer
 import org.bukkit.block.data.type.RedstoneWire.Connection
 import org.bukkit.block.data.type.Slab.Type
 import org.bukkit.block.data.type.Wall.Height
+import org.bukkit.entity.ArmorStand
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
@@ -413,6 +418,22 @@ class AsyncBeacon(block: Block) : AsyncBlockData(Material.BEACON) {
             }
             !obstructed
         } else false
+    }
+    
+}
+
+class AsyncMiniature(armorStand: ArmorStand) : AsyncBlockData(Material.AIR) {
+    
+    val model: ModelFile.CustomModel
+    val yaw = armorStand.location.yaw
+    
+    init {
+        val miniature = armorStand.getMiniature()
+        model = when (miniature) {
+            is NormalMiniatureArmorStand -> miniature.model!!
+            is AnimatedMiniatureArmorStand -> miniature.models!![0]
+            else -> throw UnsupportedOperationException()
+        }
     }
     
 }

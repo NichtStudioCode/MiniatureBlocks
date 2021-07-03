@@ -12,8 +12,12 @@ import org.bukkit.util.BoundingBox
 import xyz.xenondevs.particle.ParticleBuilder
 import xyz.xenondevs.particle.ParticleEffect
 import java.awt.Color
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
+
+val Location.blockLocation: Location
+    get() = Location(world, blockX.toDouble(), blockY.toDouble(), blockZ.toDouble())
 
 fun Location.toPoint() = Point3D(x, y, z)
 
@@ -125,4 +129,28 @@ operator fun Location.rangeTo(end: Location): List<Location> {
     }
     
     return locations
+}
+
+object LocationUtils {
+    
+    fun getChunksBetween(min: Location, max: Location): List<Chunk> {
+        Preconditions.checkArgument(min.world != null && min.world == max.world)
+        
+        val startX = floor(min.blockX / 16.0).toInt()
+        val startZ = floor(min.blockZ / 16.0).toInt()
+        val endX = floor(max.blockX / 16.0).toInt()
+        val endZ = floor(max.blockZ / 16.0).toInt()
+        
+        val chunks = ArrayList<Chunk>()
+        val world = min.world!!
+        
+        for (x in startX..endX) {
+            for (z in startZ..endZ) {
+                chunks.add(world.getChunkAt(x, z))
+            }
+        }
+        
+        return chunks
+    }
+    
 }

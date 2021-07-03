@@ -30,7 +30,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     val main = File("plugins/MiniatureBlocks/ResourcePack/")
     val models = DirectoryFile(this, "assets/minecraft/models/")
-    private val moddedItemModels = DirectoryFile(this, "assets/minecraft/models/item/modded")
+    val moddedItemModels = DirectoryFile(this, "assets/minecraft/models/item/modded")
     private val textureItemModels = DirectoryFile(this, "assets/minecraft/models/item/textureitem")
     private val materialItemModels = DirectoryFile(this, "assets/minecraft/models/item/materialitem")
     private val textures = DirectoryFile(this, "assets/minecraft/textures/")
