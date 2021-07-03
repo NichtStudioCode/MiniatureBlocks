@@ -141,6 +141,7 @@
                 <version>3.3.0-SNAPSHOT</version>
                 <configuration>
                     <outputFile>${dir}/${project.artifactId}-${project.version}-shaded.jar</outputFile>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
                 <executions>
                     <execution>
