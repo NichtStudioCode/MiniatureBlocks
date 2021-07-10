@@ -39,8 +39,8 @@ class StairPart(data: AsyncStairs) : Part() {
                 Direction.of(facing).yRot + if (right && !top) 1 else if (!right && top) -1 else 0
             }
         
-        rotatePos(0, yRot)
         if (top) rotatePos(2, 2)
+        rotatePos(0, yRot)
     }
     
     private fun createStraightStairElement(): Element {
