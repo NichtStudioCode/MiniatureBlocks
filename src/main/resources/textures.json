@@ -4901,6 +4901,11 @@
   },
   {
     "material": "GRINDSTONE",
+    "models": [
+      "model/grindstone/grindstone_floor",
+      "model/grindstone/grindstone_wall",
+      "model/grindstone/grindstone_ceiling"
+    ],
     "model": "model/grindstone",
     "textures": [
       "block/grindstone_pivot",

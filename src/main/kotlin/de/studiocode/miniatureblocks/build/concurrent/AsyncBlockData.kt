@@ -278,18 +278,18 @@ class AsyncLantern(material: Material, blockData: Lantern) : AsyncBlockData(mate
     override val model = blockData.isHanging.intValue
 }
 
-class AsyncObserver(material: Material, blockData: Observer): AsyncBlockData(material), AsyncMultiTexture, AsyncDirectional {
+class AsyncObserver(material: Material, blockData: Observer) : AsyncBlockData(material), AsyncMultiTexture, AsyncDirectional {
     override val texture = blockData.isPowered.intValue
     override val facing = blockData.facing
 }
 
-class AsyncCocoa(material: Material, blockData: Cocoa): AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture, AsyncDirectional {
+class AsyncCocoa(material: Material, blockData: Cocoa) : AsyncBlockData(material), AsyncMultiModel, AsyncMultiTexture, AsyncDirectional {
     override val facing = blockData.facing
     override val model = blockData.age
     override val texture = blockData.age
 }
 
-class AsyncBamboo(blockData: Bamboo): AsyncBlockData(Material.BAMBOO) {
+class AsyncBamboo(blockData: Bamboo) : AsyncBlockData(Material.BAMBOO) {
     val age = blockData.age
     val leaves = blockData.leaves
 }
@@ -303,6 +303,11 @@ class AsyncDripleaf(material: Material, blockData: Dripleaf) : AsyncBlockData(ma
         else -> 0
     }
     
+}
+
+class AsyncGrindstone(material: Material, blockData: Grindstone) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+    override val facing = blockData.facing
+    override val model = blockData.attachedFace.ordinal
 }
 
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
@@ -482,6 +487,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Observer -> AsyncObserver(material, blockData)
         blockData is Cocoa -> AsyncCocoa(material, blockData)
         blockData is Bed -> AsyncBed(material, blockData)
+        blockData is Grindstone -> AsyncGrindstone(material, blockData)
         
         isVersionOrHigher("1.17") && blockData is LightningRod -> AsyncLightningRod(material, blockData)
         isVersionOrHigher("1.17") && blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
