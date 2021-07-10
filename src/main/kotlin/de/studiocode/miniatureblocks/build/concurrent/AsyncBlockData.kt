@@ -305,9 +305,9 @@ class AsyncDripleaf(material: Material, blockData: Dripleaf) : AsyncBlockData(ma
     
 }
 
-class AsyncGrindstone(material: Material, blockData: Grindstone) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
-    override val facing = blockData.facing
-    override val model = blockData.attachedFace.ordinal
+class AsyncGrindstone(blockData: BlockData) : AsyncBlockData(Material.GRINDSTONE), AsyncMultiModel, AsyncDirectional {
+    override val facing = (blockData as Directional).facing
+    override val model = if (isVersionOrHigher("1.15.0")) (blockData as Grindstone).attachedFace.ordinal else 0
 }
 
 class AsyncBell(material: Material, blockData: Bell) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
@@ -459,6 +459,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         material == Material.BEACON -> AsyncBeacon(this)
         material == Material.SUNFLOWER -> AsyncSunflower(blockData as Bisected)
         material == Material.BAMBOO -> AsyncBamboo(blockData as Bamboo)
+        material == Material.GRINDSTONE -> AsyncGrindstone(blockData)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)
@@ -497,7 +498,6 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Observer -> AsyncObserver(material, blockData)
         blockData is Cocoa -> AsyncCocoa(material, blockData)
         blockData is Bed -> AsyncBed(material, blockData)
-        blockData is Grindstone -> AsyncGrindstone(material, blockData)
         blockData is Bell -> AsyncBell(material, blockData)
         
         isVersionOrHigher("1.17") && blockData is LightningRod -> AsyncLightningRod(material, blockData)
