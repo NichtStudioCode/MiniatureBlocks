@@ -315,6 +315,10 @@ class AsyncBell(material: Material, blockData: Bell) : AsyncBlockData(material),
     override val model = blockData.attachment.ordinal
 }
 
+class AsyncHugeMushroom(material: Material, blockData: MultipleFacing) : AsyncBlockData(material) {
+    val faces = HashSet(blockData.faces)
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -462,6 +466,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         material.isDropperDispenser() -> AsyncDropperDispenser(material, blockData)
         material.isMultiCopyable() -> AsyncMultiCopyableBlockData(material, blockData as MultipleFacing)
         material.isStem() -> AsyncModelAgeable(material, blockData as Ageable)
+        material.isMushroomBlock() -> AsyncHugeMushroom(material, blockData as MultipleFacing)
         
         blockData.isSlab() -> AsyncSlab(material, blockData as Slab)
         blockData.isSnow() -> AsyncSnow(material, blockData as Snow)
@@ -524,3 +529,5 @@ private fun Material.isDropperDispenser() = this == Material.DISPENSER || this =
 private fun Material.isMultiCopyable() = this == Material.VINE || this.name == "GLOW_LICHEN"
 
 private fun Material.isStem() = this == Material.MELON_STEM || this == Material.PUMPKIN_STEM
+
+private fun Material.isMushroomBlock() = this == Material.MUSHROOM_STEM || this == Material.BROWN_MUSHROOM_BLOCK || this == Material.RED_MUSHROOM_BLOCK

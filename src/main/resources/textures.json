@@ -20,7 +20,6 @@
   "BRICKS",
   "BROWN_CONCRETE",
   "BROWN_GLAZED_TERRACOTTA",
-  "BROWN_MUSHROOM_BLOCK",
   "BROWN_SHULKER_BOX",
   "BROWN_STAINED_GLASS",
   "BROWN_TERRACOTTA",
@@ -115,7 +114,6 @@
   "MAGENTA_WOOL",
   "MOSSY_COBBLESTONE",
   "MOSSY_STONE_BRICKS",
-  "MUSHROOM_STEM",
   "NETHERITE_BLOCK",
   "NETHERRACK",
   "NETHER_BRICKS",
@@ -157,7 +155,6 @@
   "REDSTONE_ORE",
   "RED_CONCRETE",
   "RED_GLAZED_TERRACOTTA",
-  "RED_MUSHROOM_BLOCK",
   "RED_NETHER_BRICKS",
   "RED_SAND",
   "RED_SHULKER_BOX",
@@ -5130,6 +5127,27 @@
       "block/frosted_ice_3",
       "block/frosted_ice_3",
       "block/frosted_ice_3"
+    ]
+  },
+  {
+    "material": "MUSHROOM_STEM",
+    "textures": [
+      "block/mushroom_block_inside",
+      "block/mushroom_stem"
+    ]
+  },
+  {
+    "material": "BROWN_MUSHROOM_BLOCK",
+    "textures": [
+      "block/mushroom_block_inside",
+      "block/brown_mushroom_block"
+    ]
+  },
+  {
+    "material": "RED_MUSHROOM_BLOCK",
+    "textures": [
+      "block/mushroom_block_inside",
+      "block/red_mushroom_block"
     ]
   }
 ]

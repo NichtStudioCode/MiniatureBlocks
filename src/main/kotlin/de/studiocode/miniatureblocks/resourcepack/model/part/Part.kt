@@ -70,6 +70,7 @@ abstract class Part {
                 data is AsyncBrewingStand -> BrewingStandPart(data)
                 data is AsyncBamboo -> BambooPart(data)
                 data is AsyncMiniature -> MiniaturePart(data)
+                data is AsyncHugeMushroom -> HugeMushroomPart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material == Material.IRON_BARS -> IronBarsPart(data as AsyncMultipleFacing)
                 data is AsyncMultipleFacing -> MultipleFacingPart(data)
