@@ -2340,70 +2340,140 @@
   },
   {
     "material": "TUBE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/tube_coral_fan"
     ]
   },
   {
     "material": "BRAIN_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/brain_coral_fan"
     ]
   },
   {
     "material": "BUBBLE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/bubble_coral_fan"
     ]
   },
   {
     "material": "FIRE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/fire_coral_fan"
     ]
   },
   {
     "material": "HORN_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/horn_coral_fan"
     ]
   },
   {
     "material": "DEAD_TUBE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/dead_tube_coral_fan"
     ]
   },
   {
     "material": "DEAD_BRAIN_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/dead_brain_coral_fan"
     ]
   },
   {
     "material": "DEAD_BUBBLE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/dead_bubble_coral_fan"
     ]
   },
   {
     "material": "DEAD_FIRE_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
     "textures": [
       "block/dead_fire_coral_fan"
     ]
   },
   {
     "material": "DEAD_HORN_CORAL_FAN",
-    "model": "model/cross",
+    "model": "model/coral/coral_fan",
+    "textures": [
+      "block/dead_horn_coral_fan"
+    ]
+  },
+  {
+    "material": "TUBE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/tube_coral_fan"
+    ]
+  },
+  {
+    "material": "BRAIN_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/brain_coral_fan"
+    ]
+  },
+  {
+    "material": "BUBBLE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/bubble_coral_fan"
+    ]
+  },
+  {
+    "material": "FIRE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/fire_coral_fan"
+    ]
+  },
+  {
+    "material": "HORN_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/horn_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_TUBE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/dead_tube_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_BRAIN_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/dead_brain_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_BUBBLE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/dead_bubble_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_FIRE_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
+    "textures": [
+      "block/dead_fire_coral_fan"
+    ]
+  },
+  {
+    "material": "DEAD_HORN_CORAL_WALL_FAN",
+    "model": "model/coral/coral_wall_fan",
     "textures": [
       "block/dead_horn_coral_fan"
     ]
