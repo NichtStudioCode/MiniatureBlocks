@@ -507,7 +507,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         isVersionOrHigher("1.17") && blockData is Candle -> AsyncCandle(material, blockData)
         isVersionOrHigher("1.17") && blockData is CaveVinesPlant -> AsyncCaveVinesPlant(material, blockData)
         
-        blockData is Ageable -> AsyncTextureAgeable(material, blockData)
+        blockData is Ageable && !material.isAgeableIgnored() -> AsyncTextureAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
         blockData is Orientable -> AsyncOrientableBlockData(material, blockData)
         blockData is MultipleFacing -> AsyncMultipleFacingBlockData(material, blockData)
@@ -531,3 +531,5 @@ private fun Material.isMultiCopyable() = this == Material.VINE || this.name == "
 private fun Material.isStem() = this == Material.MELON_STEM || this == Material.PUMPKIN_STEM
 
 private fun Material.isMushroomBlock() = this == Material.MUSHROOM_STEM || this == Material.BROWN_MUSHROOM_BLOCK || this == Material.RED_MUSHROOM_BLOCK
+
+private fun Material.isAgeableIgnored() = this == Material.SUGAR_CANE || this == Material.CACTUS
