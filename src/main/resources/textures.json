@@ -506,15 +506,15 @@
     "textures": "block/cut_copper"
   },
   {
-    "material": "EXPOSED_COPPER_SLAB",
+    "material": "EXPOSED_CUT_COPPER_SLAB",
     "textures": "block/exposed_cut_copper"
   },
   {
-    "material": "WEATHERED_COPPER_SLAB",
+    "material": "WEATHERED_CUT_COPPER_SLAB",
     "textures": "block/weathered_cut_copper"
   },
   {
-    "material": "OXIDIZED_COPPER_SLAB",
+    "material": "OXIDIZED_CUT_COPPER_SLAB",
     "textures": "block/oxidized_cut_copper"
   },
   {
@@ -522,15 +522,15 @@
     "textures": "block/cut_copper"
   },
   {
-    "material": "WAXED_EXPOSED_COPPER_SLAB",
+    "material": "WAXED_EXPOSED_CUT_COPPER_SLAB",
     "textures": "block/exposed_cut_copper"
   },
   {
-    "material": "WAXED_WEATHERED_COPPER_SLAB",
+    "material": "WAXED_WEATHERED_CUT_COPPER_SLAB",
     "textures": "block/weathered_cut_copper"
   },
   {
-    "material": "WAXED_OXIDIZED_COPPER_SLAB",
+    "material": "WAXED_OXIDIZED_CUT_COPPER_SLAB",
     "textures": "block/oxidized_cut_copper"
   },
   {
@@ -1081,7 +1081,7 @@
     "textures": "block/deepslate_bricks"
   },
   {
-    "material": "DEEPSLATE_TILE_WALL_WALL",
+    "material": "DEEPSLATE_TILE_WALL",
     "textures": "block/deepslate_tiles"
   },
   {
