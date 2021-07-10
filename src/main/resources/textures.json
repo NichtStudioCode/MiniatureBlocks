@@ -5016,5 +5016,21 @@
       "block/bamboo_small_leaves",
       "block/bamboo_large_leaves"
     ]
+  },
+  {
+    "material": "BELL",
+    "models": [
+      "model/bell/bell_floor",
+      "model/bell/bell_ceiling",
+      "model/bell/bell_wall",
+      "model/bell/bell_between_walls"
+    ],
+    "textures": [
+      "block/dark_oak_planks",
+      "block/stone",
+      "block/bell_side",
+      "block/bell_bottom",
+      "block/bell_top"
+    ]
   }
 ]

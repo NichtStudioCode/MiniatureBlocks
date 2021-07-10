@@ -310,6 +310,11 @@ class AsyncGrindstone(material: Material, blockData: Grindstone) : AsyncBlockDat
     override val model = blockData.attachedFace.ordinal
 }
 
+class AsyncBell(material: Material, blockData: Bell) : AsyncBlockData(material), AsyncMultiModel, AsyncDirectional {
+    override val facing = blockData.facing
+    override val model = blockData.attachment.ordinal
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -488,6 +493,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         blockData is Cocoa -> AsyncCocoa(material, blockData)
         blockData is Bed -> AsyncBed(material, blockData)
         blockData is Grindstone -> AsyncGrindstone(material, blockData)
+        blockData is Bell -> AsyncBell(material, blockData)
         
         isVersionOrHigher("1.17") && blockData is LightningRod -> AsyncLightningRod(material, blockData)
         isVersionOrHigher("1.17") && blockData is SculkSensor -> AsyncSculkSensor(material, blockData)
