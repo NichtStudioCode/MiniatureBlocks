@@ -4916,7 +4916,7 @@
   },
   {
     "material": "LANTERN",
-    "models":  [
+    "models": [
       "model/lantern/lantern",
       "model/lantern/lantern_hanging"
     ],
@@ -4926,7 +4926,7 @@
   },
   {
     "material": "SOUL_LANTERN",
-    "models":  [
+    "models": [
       "model/lantern/lantern",
       "model/lantern/lantern_hanging"
     ],
@@ -5031,6 +5031,35 @@
       "block/bell_side",
       "block/bell_bottom",
       "block/bell_top"
+    ]
+  },
+  {
+    "material": "FROSTED_ICE",
+    "textures": [
+      "block/frosted_ice_0",
+      "block/frosted_ice_0",
+      "block/frosted_ice_0",
+      "block/frosted_ice_0",
+      "block/frosted_ice_0",
+      "block/frosted_ice_0",
+      "block/frosted_ice_1",
+      "block/frosted_ice_1",
+      "block/frosted_ice_1",
+      "block/frosted_ice_1",
+      "block/frosted_ice_1",
+      "block/frosted_ice_1",
+      "block/frosted_ice_2",
+      "block/frosted_ice_2",
+      "block/frosted_ice_2",
+      "block/frosted_ice_2",
+      "block/frosted_ice_2",
+      "block/frosted_ice_2",
+      "block/frosted_ice_3",
+      "block/frosted_ice_3",
+      "block/frosted_ice_3",
+      "block/frosted_ice_3",
+      "block/frosted_ice_3",
+      "block/frosted_ice_3"
     ]
   }
 ]
