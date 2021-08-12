@@ -5149,5 +5149,19 @@
       "block/mushroom_block_inside",
       "block/red_mushroom_block"
     ]
+  },
+  {
+    "material": "DRAGON_HEAD",
+    "model": "model/dragon_head",
+    "textures": [
+      "entity/enderdragon/dragon"
+    ]
+  },
+  {
+    "material": "DRAGON_WALL_HEAD",
+    "model": "model/dragon_head",
+    "textures": [
+      "entity/enderdragon/dragon"
+    ]
   }
 ]

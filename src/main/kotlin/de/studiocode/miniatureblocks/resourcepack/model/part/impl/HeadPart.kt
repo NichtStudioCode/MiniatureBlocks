@@ -42,7 +42,10 @@ class HeadPart(data: AsyncHead) : Part() {
         
         val rotation = Direction.ofRotation(data.facing)
         val direction = if (data.wall) {
-            move(0.0, 4.0 / 16.0, -4.0 / 16.0)
+            if (data.material.name.startsWith("DRAGON")) {
+                move(0.0, 4.0 / 16.0, -3.5 / 16.0)
+            } else move(0.0, 4.0 / 16.0, -4.0 / 16.0)
+            
             rotation.first.opposite
         } else rotation.first
         
