@@ -18,7 +18,7 @@ class MaterialModelDataFile(resourcePack: ResourcePack) :
     }
     
     fun getModelByMaterial(material: Material): CustomModel? {
-        return getCustomModelFromPath("item/materialitem/${material.name.toLowerCase()}")
+        return getCustomModelFromPath("item/materialitem/${material.name.lowercase()}")
     }
     
 }

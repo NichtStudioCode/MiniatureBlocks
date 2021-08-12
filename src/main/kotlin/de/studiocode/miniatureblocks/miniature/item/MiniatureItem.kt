@@ -21,7 +21,7 @@ abstract class MiniatureItem(val itemStack: ItemStack) : Miniature(itemStack.ite
             miniatureType: MiniatureType,
             setData: (PersistentDataContainer) -> Unit
         ): ItemStack {
-            val itemStack = itemBuilder.build()
+            val itemStack = itemBuilder.get()
             val itemMeta = itemStack.itemMeta!!
             val dataContainer = itemMeta.persistentDataContainer
             

@@ -52,7 +52,7 @@ class AnimatedMiniatureArmorStand(armorStand: ArmorStand) : MiniatureArmorStand(
     
     private fun generateItemStacks() {
         for (model in models!!)
-            nmsItemStacks.add(ReflectionUtils.createNMSItemStackCopy(model.createItemBuilder().build()))
+            nmsItemStacks.add(ReflectionUtils.createNMSItemStackCopy(model.createItemBuilder().get()))
     }
     
     override fun handleTick() {

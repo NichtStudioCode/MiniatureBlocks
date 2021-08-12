@@ -111,7 +111,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         BlockTexture.supportedMaterials
             .filterNot { it.isItem }
             .forEach { material ->
-                val file = File(materialItemModels, "${material.name.toLowerCase()}.json")
+                val file = File(materialItemModels, "${material.name.lowercase()}.json")
                 if (!file.exists()) {
                     executor.submit {
                         val blockState = block.state
@@ -125,7 +125,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
                     modelDataObj.writeToFile(file)
                     
                     val customModelData = materialModelData.getNextCustomModelData()
-                    materialModelData.customModels += materialModelData.CustomModel(customModelData, "item/materialitem/${material.name.toLowerCase()}")
+                    materialModelData.customModels += materialModelData.CustomModel(customModelData, "item/materialitem/${material.name.lowercase()}")
                 }
             }
         

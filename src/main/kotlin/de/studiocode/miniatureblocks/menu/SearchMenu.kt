@@ -105,7 +105,7 @@ abstract class SearchMenu(val player: Player, private val title: String, refresh
                 if (value) task = runTaskLater(40) { animated = false }
             }
         
-        override fun getItemBuilder(): ItemBuilder = if (animated) animatedBuilder else builder
+        override fun getItemProvider(): ItemBuilder = if (animated) animatedBuilder else builder
         
         override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
             if (clickType == ClickType.LEFT) {

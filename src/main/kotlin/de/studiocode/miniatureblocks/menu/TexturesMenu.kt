@@ -156,7 +156,7 @@ class TexturesMenu(val player: Player) {
         
         inner class ClearOverridesItem : BaseItem() {
             
-            override fun getItemBuilder(): ItemBuilder =
+            override fun getItemProvider(): ItemBuilder =
                 if (BlockTexture.hasOverrides(material)) Icon.X.itemBuilder.setDisplayName("§7Clear overrides")
                 else Icon.BACKGROUND.itemBuilder
             
@@ -172,7 +172,7 @@ class TexturesMenu(val player: Player) {
         
         inner class TextureItem(private val index: Int) : BaseItem() {
             
-            override fun getItemBuilder(): ItemBuilder {
+            override fun getItemProvider(): ItemBuilder {
                 val textureLocation = BlockTexture.of(material).textures[index]
                 val model = MiniatureBlocks.INSTANCE.resourcePack.textureModelData.getModelByTextureLocation(textureLocation)
                 val name = if (material.hasSixTextures()) "§7Texture ${Direction.values()[index].name}" else "§7Texture ${1 + index}"

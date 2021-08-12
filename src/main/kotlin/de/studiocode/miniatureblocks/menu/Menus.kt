@@ -28,9 +28,9 @@ object Menus {
     
     class PageBackItem : PageItem(false) {
         
-        override fun getItemBuilder(gui: PagedGUI): ItemBuilder {
+        override fun getItemProvider(gui: PagedGUI): ItemBuilder {
             val itemBuilder = (if (gui.hasPageBefore()) Icon.ARROW_1_LEFT else Icon.LIGHT_ARROW_1_LEFT).itemBuilder
-            itemBuilder.displayName = "§7Go back"
+            itemBuilder.setDisplayName("§7Go back")
             itemBuilder.addLoreLines(
                 if (gui.hasInfinitePages()) {
                     if (gui.currentPageIndex == 0) "§cYou can't go further back"
@@ -47,9 +47,9 @@ object Menus {
     
     class PageForwardItem : PageItem(true) {
         
-        override fun getItemBuilder(gui: PagedGUI): ItemBuilder {
+        override fun getItemProvider(gui: PagedGUI): ItemBuilder {
             val itemBuilder = (if (gui.hasNextPage()) Icon.ARROW_1_RIGHT else Icon.LIGHT_ARROW_1_RIGHT).itemBuilder
-            itemBuilder.displayName = "§7Next page"
+            itemBuilder.setDisplayName("§7Next page")
             itemBuilder.addLoreLines(
                 if (gui.hasInfinitePages()) {
                     "§8Go to page ${gui.currentPageIndex + 2}"

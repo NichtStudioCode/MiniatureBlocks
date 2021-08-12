@@ -13,7 +13,7 @@ object BlockTextureSerializer : JsonSerializer<BlockTexture> {
         if (src.defaultRotation == Direction.NORTH
             && src.models == null
             && src.textures.size == 6
-            && src.textures.all { "block/" + (src.material?.name ?: "").toLowerCase() == it }) {
+            && src.textures.all { "block/" + (src.material?.name ?: "").lowercase() == it }) {
             return JsonPrimitive(src.material?.name ?: "")
         } else {
             val jsonObj = JsonObject()

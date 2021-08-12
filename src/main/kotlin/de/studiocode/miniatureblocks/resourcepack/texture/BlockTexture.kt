@@ -25,7 +25,7 @@ class BlockTexture(
     constructor(materialName: String, texture: String, defaultRotation: Direction = NORTH, models: List<String>? = null)
         : this(materialName, Array<String>(6) { texture }, defaultRotation, models)
     
-    constructor(material: String) : this(material, Array<String>(6) { "block/${material.toLowerCase()}" })
+    constructor(material: String) : this(material, Array<String>(6) { "block/${material.lowercase()}" })
     
     fun getTexture(direction: Direction): String {
         Preconditions.checkState(textures.size == 6,

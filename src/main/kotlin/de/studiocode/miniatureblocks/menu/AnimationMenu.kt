@@ -114,7 +114,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
                 if (field < 1) field = 1
             }
         
-        override fun getItemBuilder(): ItemBuilder {
+        override fun getItemProvider(): ItemBuilder {
             return Icon.HORIZONTAL_DOTS.itemBuilder
                 .setDisplayName("§7Tick delay: §b$tickDelay")
                 .addLoreLines("§7Left-click to increase", "§7Right-click to decrease")
@@ -133,7 +133,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
     
     private inner class AnimationFrameItem(private val frame: Int, var model: CustomModel?) : BaseItem() {
         
-        override fun getItemBuilder(): ItemBuilder {
+        override fun getItemProvider(): ItemBuilder {
             return (model?.createItemBuilder()
                 ?.also { it.addLoreLines("§7Miniature: §b${model!!.name}") }
                 ?: ItemBuilder(Material.WHITE_STAINED_GLASS_PANE))

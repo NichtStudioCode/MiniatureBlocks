@@ -17,7 +17,7 @@ import java.util.*
 
 class RegionManager(plugin: JavaPlugin) : Listener {
     
-    private val marker = ItemBuilder(Material.STONE_AXE).setDisplayName("§bMiniatureBlocks Marker").build()
+    private val marker = ItemBuilder(Material.STONE_AXE).setDisplayName("§bMiniatureBlocks Marker").get()
     val regions = HashMap<UUID, Region>()
     
     init {

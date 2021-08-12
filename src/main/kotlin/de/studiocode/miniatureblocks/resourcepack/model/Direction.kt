@@ -53,7 +53,7 @@ enum class Direction(
         BlockFace.DOWN, Y
     );
     
-    val modelDataName = name.toLowerCase()
+    val modelDataName = name.lowercase()
     val opposite by opposite
     
     companion object {

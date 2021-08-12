@@ -63,7 +63,7 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
     private fun getTextures(faces: JsonObject): List<Texture> {
         val textures = ArrayList<Texture>()
         Direction.values().forEach { direction ->
-            val face = faces.get(direction.name.toLowerCase())?.asJsonObject
+            val face = faces.get(direction.name.lowercase())?.asJsonObject
             textures.add(
                 if (face != null) {
                     val uv = face.get("uv")
@@ -86,7 +86,7 @@ object ModelDeserializer : JsonDeserializer<List<Element>> {
     
     private fun Element.setRotation(rotation: JsonObject) {
         val angle = rotation.get("angle").asFloat
-        val axis = Axis.valueOf(rotation.get("axis").asString.toUpperCase())
+        val axis = Axis.valueOf(rotation.get("axis").asString.uppercase())
         val origin = rotation.get("origin").asJsonArray.getAllDoubles().map { it / 16.0 }.toPoint3D()
         val rescale = rotation.get("rescale")?.asBoolean ?: false
         
