@@ -319,6 +319,10 @@ class AsyncHugeMushroom(material: Material, blockData: MultipleFacing) : AsyncBl
     val faces = HashSet(blockData.faces)
 }
 
+class AsyncChorusFlower(blockData: Ageable) : AsyncBlockData(Material.CHORUS_FLOWER), AsyncMultiTexture {
+    override val texture = (blockData.age == blockData.maximumAge).intValue
+}
+
 class AsyncRedstoneWire(material: Material, blockData: RedstoneWire) : AsyncBlockData(material) {
     
     val faces = HashMap<BlockFace, Connection>()
@@ -460,6 +464,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         material == Material.SUNFLOWER -> AsyncSunflower(blockData as Bisected)
         material == Material.BAMBOO -> AsyncBamboo(blockData as Bamboo)
         material == Material.GRINDSTONE -> AsyncGrindstone(blockData)
+        material == Material.CHORUS_FLOWER -> AsyncChorusFlower(blockData as Ageable)
         
         material.isFluid() -> AsyncFluid(material, this)
         material.isHead() -> AsyncHead(material, this)

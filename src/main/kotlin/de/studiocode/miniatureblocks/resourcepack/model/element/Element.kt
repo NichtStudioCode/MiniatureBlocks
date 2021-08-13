@@ -66,6 +66,10 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         toPos.z += z
     }
     
+    fun rotate(direction: Direction, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
+        rotate(direction.xRot, direction.yRot, origin)
+    }
+    
     fun rotate(x: Int, y: Int, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {
         rotateTexturesAroundXAxis(x)
         rotateTexturesAroundYAxis(y)

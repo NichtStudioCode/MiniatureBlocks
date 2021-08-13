@@ -73,6 +73,7 @@ abstract class Part {
                 data is AsyncHugeMushroom -> HugeMushroomPart(data)
                 data.material.isFence() -> FencePart(data as AsyncMultipleFacingBlockData)
                 data.material == Material.IRON_BARS -> IronBarsPart(data as AsyncMultipleFacing)
+                data.material == Material.CHORUS_PLANT -> ChorusPlantPart(data as AsyncMultipleFacing)
                 data is AsyncMultipleFacing -> MultipleFacingPart(data)
                 else -> DefaultPart(data)
             }

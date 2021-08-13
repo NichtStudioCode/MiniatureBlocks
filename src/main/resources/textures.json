@@ -5163,5 +5163,22 @@
     "textures": [
       "entity/enderdragon/dragon"
     ]
+  },
+  {
+    "material": "CHORUS_FLOWER",
+    "model": "model/chorus_flower",
+    "textures": [
+      "block/chorus_plant",
+      "block/chorus_flower",
+      "block/chorus_plant",
+      "block/chorus_flower_dead"
+    ]
+  },
+  {
+    "material": "CHORUS_PLANT",
+    "model": "model/chorus_flower",
+    "textures": [
+      "block/chorus_plant"
+    ]
   }
 ]
