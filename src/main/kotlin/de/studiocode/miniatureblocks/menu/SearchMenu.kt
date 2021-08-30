@@ -2,7 +2,7 @@ package de.studiocode.miniatureblocks.menu
 
 import de.studiocode.invui.gui.GUI
 import de.studiocode.invui.gui.builder.GUIBuilder
-import de.studiocode.invui.gui.builder.GUIType
+import de.studiocode.invui.gui.builder.guitype.GUIType
 import de.studiocode.invui.gui.impl.SimpleGUI
 import de.studiocode.invui.gui.impl.SimplePagedItemsGUI
 import de.studiocode.invui.item.Item

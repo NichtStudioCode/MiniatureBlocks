@@ -30,6 +30,10 @@
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -38,7 +42,7 @@
             <url>https://repository.apache.org/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -78,11 +82,10 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>1.7</version>
         </dependency>
-        <!--Requires manual installation at the moment-->
         <dependency>
-            <groupId>de.studiocode.invui</groupId>
+            <groupId>com.github.NichtStudioCode.InvUI</groupId>
             <artifactId>InvUI</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>e92abcf079</version>
         </dependency>
         <dependency>
             <groupId>xyz.xenondevs</groupId>

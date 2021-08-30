@@ -1,7 +1,7 @@
 package de.studiocode.miniatureblocks.menu
 
 import de.studiocode.invui.gui.impl.PagedGUI
-import de.studiocode.invui.gui.structure.Marker
+import de.studiocode.invui.gui.structure.Markers
 import de.studiocode.invui.gui.structure.Structure
 import de.studiocode.invui.item.ItemBuilder
 import de.studiocode.invui.item.impl.controlitem.PageItem
@@ -10,7 +10,7 @@ import de.studiocode.invui.resourcepack.Icon
 object Menus {
     
     fun registerGlobalIngredients() {
-        Structure.addGlobalIngredient('x', Marker.ITEM_LIST_SLOT)
+        Structure.addGlobalIngredient('x', Markers.ITEM_LIST_SLOT)
         Structure.addGlobalIngredient('<', ::PageBackItem)
         Structure.addGlobalIngredient('>', ::PageForwardItem)
         Structure.addGlobalIngredient('#', Icon.BACKGROUND.item)
