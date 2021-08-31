@@ -1,5 +1,6 @@
 package de.studiocode.miniatureblocks.miniature.armorstand
 
+import de.studiocode.inventoryaccess.util.VersionUtils
 import de.studiocode.miniatureblocks.MiniatureBlocks
 import de.studiocode.miniatureblocks.miniature.Miniature
 import de.studiocode.miniatureblocks.miniature.armorstand.impl.AnimatedMiniatureArmorStand
@@ -11,6 +12,7 @@ import de.studiocode.miniatureblocks.miniature.item.impl.AnimatedMiniatureItem
 import de.studiocode.miniatureblocks.miniature.item.impl.NormalMiniatureItem
 import de.studiocode.miniatureblocks.resourcepack.file.ModelFile.CustomModel
 import de.studiocode.miniatureblocks.util.getTargetMiniature
+import de.studiocode.miniatureblocks.util.runTaskLater
 import de.studiocode.miniatureblocks.util.runTaskTimer
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.*
@@ -150,22 +152,31 @@ class MiniatureManager(plugin: MiniatureBlocks) : Listener {
     fun handleChunkLoad(event: ChunkLoadEvent) = handleChunkLoad(event.chunk)
     
     private fun handleChunkLoad(chunk: Chunk) {
-        chunk.entities
-            .filterValidCoordinates()
-            .filterIsInstance<ArmorStand>()
-            .filter { it.hasMiniatureData() }
-            .forEach { armorStand ->
-                val miniature = MiniatureType.newInstance(armorStand)!!
-                
-                if (miniature.isValid()) {
-                    // put it into map
-                    loadedMiniatures[armorStand] = miniature
-                    armorStand.isMarker = true // set version < 0.10 armor stands to marker
-                } else {
-                    // remove armor stand if this miniature model does no longer exist
-                    armorStand.remove()
+        if (VersionUtils.isServerHigherOrEqual("1.17")) {
+            // Workaround async entity loading (https://hub.spigotmc.org/jira/browse/SPIGOT-6547)
+            runTaskLater(20 * 15) { loadArmorStandsInChunk(chunk) }
+        } else loadArmorStandsInChunk(chunk)
+    }
+    
+    private fun loadArmorStandsInChunk(chunk: Chunk) {
+        if (chunk.isLoaded) {
+            chunk.entities
+                .filterValidCoordinates()
+                .filterIsInstance<ArmorStand>()
+                .filter { it.hasMiniatureData() }
+                .forEach { armorStand ->
+                    val miniature = MiniatureType.newInstance(armorStand)!!
+                    
+                    if (miniature.isValid()) {
+                        // put it into map
+                        loadedMiniatures[armorStand] = miniature
+                        armorStand.isMarker = true // set version < 0.10 armor stands to marker
+                    } else {
+                        // remove armor stand if this miniature model does no longer exist
+                        armorStand.remove()
+                    }
                 }
-            }
+        }
     }
     
     @EventHandler
