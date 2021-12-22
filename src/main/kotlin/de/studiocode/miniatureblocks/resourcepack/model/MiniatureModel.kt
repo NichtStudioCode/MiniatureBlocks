@@ -5,9 +5,9 @@ import com.google.gson.JsonObject
 import de.studiocode.miniatureblocks.build.BuildData
 import de.studiocode.miniatureblocks.util.addAll
 
-class MiniatureModel(buildData: BuildData) {
+class MiniatureModel(buildData: BuildData, stepSizeScaleFactor: Double = 1.0) {
     
-    private val stepSize = 16.0 / buildData.size
+    private val stepSize = 16.0 / buildData.size * stepSizeScaleFactor
     
     val modelDataObj = JsonObject()
     private val elementArray = JsonArray()

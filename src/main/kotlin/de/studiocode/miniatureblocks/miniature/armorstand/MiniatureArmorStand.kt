@@ -38,7 +38,7 @@ abstract class MiniatureArmorStand(val armorStand: ArmorStand) : Miniature(armor
             val nmsArmorStand = ReflectionUtils.createNMSEntity(world, location, EntityType.ARMOR_STAND)
             
             // set head item silently
-            ReflectionUtils.setArmorStandArmorItems(nmsArmorStand, 3, ReflectionUtils.createNMSItemStackCopy(itemStack))
+            ReflectionUtils.setArmorStandHeadStack(nmsArmorStand, ReflectionUtils.createNMSItemStackCopy(itemStack))
             
             // get CraftArmorStand
             val armorStand = ReflectionUtils.createBukkitEntityFromNMSEntity(nmsArmorStand) as ArmorStand

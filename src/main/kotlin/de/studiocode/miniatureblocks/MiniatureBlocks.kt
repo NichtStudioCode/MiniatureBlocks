@@ -9,7 +9,7 @@ import de.studiocode.miniatureblocks.region.RegionManager
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import org.bstats.bukkit.Metrics
-import org.bstats.bukkit.Metrics.SingleLineChart
+import org.bstats.charts.SingleLineChart
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 

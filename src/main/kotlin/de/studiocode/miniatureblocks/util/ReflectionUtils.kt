@@ -138,8 +138,8 @@ object ReflectionUtils {
         return CB_CRAFT_ITEM_STACK_AS_NMS_COPY_METHOD.invoke(null, itemStack)
     }
     
-    fun setArmorStandArmorItems(entityArmorStand: Any, index: Int, nmsItemStack: Any) {
-        (NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD.get(entityArmorStand) as MutableList<Any>)[index] = nmsItemStack
+    fun setArmorStandHeadStack(entityArmorStand: Any, nmsItemStack: Any) {
+        (NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD.get(entityArmorStand) as MutableList<Any>)[3] = nmsItemStack
     }
     
 }

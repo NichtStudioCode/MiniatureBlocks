@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.menu
 import de.studiocode.invui.gui.impl.PagedGUI
 import de.studiocode.invui.gui.structure.Markers
 import de.studiocode.invui.gui.structure.Structure
-import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.invui.item.builder.ItemBuilder
 import de.studiocode.invui.item.impl.controlitem.PageItem
 import de.studiocode.invui.resourcepack.Icon
 

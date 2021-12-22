@@ -24,7 +24,7 @@ open class DefaultPart(private val data: AsyncData) : Part() {
         // create elements
         val isCube = blockTexture.models == null
         if (!isCube) {
-            val model = if (data is AsyncMultiModel) blockTexture.models!![data.model] else blockTexture.models!![0]
+            val model = if (data is AsyncMultiModel && blockTexture.models!!.size > data.model) blockTexture.models[data.model] else blockTexture.models!![0]
             elements += SerializedPart.getModelElements(model)
             SerializedPart.applyTextures(elements, getTextures(SerializedPart.countTexturesNeeded(elements)))
         } else {
@@ -41,7 +41,7 @@ open class DefaultPart(private val data: AsyncData) : Part() {
                 val elementsCopy = ArrayList<Element>()
                 elements.forEach { elementsCopy.add(it.clone()) }
                 
-                elementsCopy.forEach { 
+                elementsCopy.forEach {
                     it.rotatePosAroundXAxis(direction.xRot)
                     it.rotatePosAroundYAxis(direction.yRot)
                     it.rotateTexturesAroundXAxis(direction.xRot)
@@ -83,10 +83,10 @@ open class DefaultPart(private val data: AsyncData) : Part() {
         )
     
     private fun getTextures(texturesNeeded: Int): Array<String> {
-        return if (data is AsyncMultiTexture) {
+        return if (data is AsyncMultiTexture && textures.size > data.texture * texturesNeeded) {
             val startIndex = texturesNeeded * data.texture
-            this.textures.copyOfRange(startIndex, startIndex + texturesNeeded)
-        } else this.textures
+            textures.copyOfRange(startIndex, startIndex + texturesNeeded)
+        } else textures
     }
     
 }

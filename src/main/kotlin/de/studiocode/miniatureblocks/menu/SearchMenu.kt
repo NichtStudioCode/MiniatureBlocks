@@ -6,7 +6,7 @@ import de.studiocode.invui.gui.builder.guitype.GUIType
 import de.studiocode.invui.gui.impl.SimpleGUI
 import de.studiocode.invui.gui.impl.SimplePagedItemsGUI
 import de.studiocode.invui.item.Item
-import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.invui.item.builder.ItemBuilder
 import de.studiocode.invui.item.impl.BaseItem
 import de.studiocode.invui.item.impl.SimpleItem
 import de.studiocode.invui.resourcepack.Icon

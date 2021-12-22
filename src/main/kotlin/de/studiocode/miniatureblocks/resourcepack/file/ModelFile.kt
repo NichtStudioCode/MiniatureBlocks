@@ -3,7 +3,7 @@ package de.studiocode.miniatureblocks.resourcepack.file
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.invui.item.builder.ItemBuilder
 import de.studiocode.miniatureblocks.resourcepack.ResourcePack
 import org.bukkit.Material
 

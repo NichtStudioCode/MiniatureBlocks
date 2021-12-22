@@ -71,6 +71,12 @@ data class Point3D(var x: Double, var y: Double, var z: Double) {
         z = point.z
     }
     
+    operator fun timesAssign(factor: Double) {
+        x *= factor
+        y *= factor
+        z *= factor
+    }
+    
     companion object {
         
         fun sort(first: Point3D, second: Point3D): Pair<Point3D, Point3D> {

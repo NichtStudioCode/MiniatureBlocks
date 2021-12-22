@@ -1,6 +1,6 @@
 package de.studiocode.miniatureblocks.region
 
-import de.studiocode.invui.item.ItemBuilder
+import de.studiocode.invui.item.builder.ItemBuilder
 import de.studiocode.miniatureblocks.util.runTaskTimer
 import de.studiocode.miniatureblocks.util.sendPrefixedMessage
 import org.bukkit.Bukkit

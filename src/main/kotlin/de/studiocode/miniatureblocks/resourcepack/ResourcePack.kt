@@ -9,19 +9,17 @@ import de.studiocode.miniatureblocks.resourcepack.file.DirectoryFile
 import de.studiocode.miniatureblocks.resourcepack.file.MainModelDataFile
 import de.studiocode.miniatureblocks.resourcepack.file.MaterialModelDataFile
 import de.studiocode.miniatureblocks.resourcepack.file.TextureModelDataFile
-import de.studiocode.miniatureblocks.resourcepack.forced.ForcedResourcePack
 import de.studiocode.miniatureblocks.resourcepack.model.MiniatureModel
 import de.studiocode.miniatureblocks.resourcepack.texture.BlockTexture
 import de.studiocode.miniatureblocks.storage.PermanentStorage
 import de.studiocode.miniatureblocks.util.*
 import net.lingala.zip4j.ZipFile
+import net.md_5.bungee.api.chat.ComponentBuilder
 import org.apache.commons.io.FilenameUtils
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerLoginEvent
 import java.io.File
 import java.net.URL
@@ -42,12 +40,11 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     private val config = plugin.config
     
     private val zipFile = File(main.parentFile, "ResourcePack.zip")
-    var hash = ByteArray(0)
     
     private val lastUploadUrl: String?
         @Synchronized get() = PermanentStorage.retrieveOrNull<String>("rp-download-url")
     
-    val downloadUrl: String?
+    private val downloadUrl: String?
         @Synchronized get() {
             return if (config.hasCustomUploader()) {
                 if (lastUploadUrl == null) uploadToCustom()
@@ -70,7 +67,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         
         runAsyncTask {
             createMaterialModelFiles()
-            packZip()
+            updateResourcePack(false)
             
             initialized = true
             println("[MiniatureBlocks] ResourcePack initialized")
@@ -232,7 +229,11 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     @Synchronized
     private fun updateResourcePack(force: Boolean = true) {
         packZip()
-        if (force) forceResourcePack(*Bukkit.getOnlinePlayers().toTypedArray())
+        ForceResourcePack.getInstance().setResourcePack(
+            downloadUrl,
+            ComponentBuilder("MiniatureBlocks ResourcePack").create(),
+            force
+        )
     }
     
     @Synchronized
@@ -256,15 +257,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
         mbRP.delete()
         invUIRP.delete()
         
-        updateZipHash() // update hash
         if (config.hasCustomUploader()) uploadToCustom() // upload if custom uploader is set
-    }
-    
-    @Synchronized
-    private fun updateZipHash() {
-        hash = if (zipFile.exists()) {
-            HashUtils.createSha1Hash(zipFile)
-        } else ByteArray(0)
     }
     
     @Synchronized
@@ -289,16 +282,7 @@ class ResourcePack(plugin: MiniatureBlocks) : Listener {
     
     @EventHandler
     fun handlePlayerLogin(event: PlayerLoginEvent) {
-        if (!initialized) event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "")
-    }
-    
-    @EventHandler
-    fun handlePlayerJoin(event: PlayerJoinEvent) {
-        runTaskLater(5) { forceResourcePack(event.player) }
-    }
-    
-    private fun forceResourcePack(vararg players: Player) {
-        players.forEach { ForcedResourcePack(it, this).force() }
+        if (!initialized) event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§cThe resource pack is not ready. Please try again later.")
     }
     
 }

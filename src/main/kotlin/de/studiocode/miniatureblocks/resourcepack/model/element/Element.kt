@@ -64,6 +64,12 @@ open class Element(var fromPos: Point3D, var toPos: Point3D, vararg textures: Te
         toPos.x += x
         toPos.y += y
         toPos.z += z
+        
+        rotationData?.run {
+            pivotPoint.x += x
+            pivotPoint.y += y
+            pivotPoint.z += z
+        }
     }
     
     fun rotate(direction: Direction, origin: Point3D = Point3D(0.5, 0.5, 0.5)) {

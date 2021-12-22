@@ -38,7 +38,7 @@ object ReflectionRegistry {
     
     // NMS methods
     val NMS_COMMAND_DISPATCHER_GET_BRIGADIER_COMMAND_DISPATCHER_METHOD = getMethod(NMS_COMMAND_DISPATCHER_CLASS, false, "a")
-    val NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD = getMethod(NMS_COMMAND_LISTENER_WRAPPER_CLASS, false, "getEntity")
+    val NMS_COMMAND_LISTENER_WRAPPER_GET_ENTITY_METHOD = getMethod(NMS_COMMAND_LISTENER_WRAPPER_CLASS, false, if (isVersionOrHigher("1.18.0")) "g" else "getEntity")
     val NMS_ENTITY_GET_BUKKIT_ENTITY_METHOD = getMethod(NMS_ENTITY_CLASS, false, "getBukkitEntity")
     
     // CB methods
@@ -51,7 +51,15 @@ object ReflectionRegistry {
     
     // NMS fields
     val NMS_MINECRAFT_SERVER_VANILLA_COMMAND_DISPATCHER_FIELD = getField(NMS_MINECRAFT_SERVER_CLASS, true, "vanillaCommandDispatcher")
-    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = if (isVersionOrHigher("1.17.0")) getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "cd") else getField(NMS_ENTITY_ARMOR_STAND_CLASS, true, "armorItems")
+    val NMS_ENTITY_ARMOR_STAND_ARMOR_ITEMS_FIELD = getField(
+        NMS_ENTITY_ARMOR_STAND_CLASS,
+        true,
+        when {
+            isVersionOrHigher("1.18.0") -> "ce"
+            isVersionOrHigher("1.17.0") -> "cd"
+            else -> "armorItems"
+        }
+    )
     
     // CB fields
     val CB_CRAFT_META_SKULL_PROFILE_FIELD = getField(CB_CRAFT_META_SKULL_CLASS, true, "profile")

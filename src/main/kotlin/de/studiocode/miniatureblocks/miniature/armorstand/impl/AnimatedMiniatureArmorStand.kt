@@ -62,7 +62,7 @@ class AnimatedMiniatureArmorStand(armorStand: ArmorStand) : MiniatureArmorStand(
         if (ticksPassed == tickDelay) {
             ticksPassed = 0
             if (nmsItemStacks.size == currentIndex) currentIndex = 0
-            ReflectionUtils.setArmorStandArmorItems(nmsArmorStand, 3, nmsItemStacks[currentIndex])
+            ReflectionUtils.setArmorStandHeadStack(nmsArmorStand, nmsItemStacks[currentIndex])
             currentIndex++
         }
     }
