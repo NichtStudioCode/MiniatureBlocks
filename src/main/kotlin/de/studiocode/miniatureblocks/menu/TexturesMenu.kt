@@ -107,12 +107,12 @@ class TexturesMenu(val player: Player) {
         private val directionItems = ArrayList<Item>()
         private var listItems: List<Item> = ArrayList()
         
-        private val cubeGui = GUIBuilder(GUIType.NORMAL, 9, 5)
-            .setStructure("" +
-                "b - - - - - - - 2" +
-                "| # # # # e # x |" +
-                "| # m # n d s u |" +
-                "| # # # # w # * |" +
+        private val cubeGui = GUIBuilder(GUIType.NORMAL)
+            .setStructure(
+                "b - - - - - - - 2",
+                "| # # # # e # x |",
+                "| # m # n d s u |",
+                "| # # # # w # * |",
                 "3 - - - - - - - 4")
             .addIngredient('b', BackItem())
             .addIngredient('m', CurrentMaterialItem())
@@ -126,12 +126,12 @@ class TexturesMenu(val player: Player) {
             .addIngredient('x', ClearOverridesItem())
             .build()
         
-        private val miscGui = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 5)
-            .setStructure("" +
-                "b - - - - - - - 2" +
-                "| # # # x x x x |" +
-                "| # m # x x x x |" +
-                "| # # # < c > * |" +
+        private val miscGui = (GUIBuilder(GUIType.PAGED_ITEMS)
+            .setStructure(
+                "b - - - - - - - 2",
+                "| # # # x x x x |",
+                "| # m # x x x x |",
+                "| # # # < c > * |",
                 "3 - - - - - - - 4")
             .addIngredient('b', BackItem())
             .addIngredient('m', CurrentMaterialItem())
@@ -185,7 +185,7 @@ class TexturesMenu(val player: Player) {
         }
         
         inner class AllDirectionsItem : SimpleItem(Icon.HORIZONTAL_DOTS.itemBuilder.setDisplayName("§7All sides")) {
-            override fun handleClick(clickType: ClickType?, player: Player?, event: InventoryClickEvent?) {
+            override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
                 if (clickType == ClickType.LEFT) handleDirectionChoose((BlockTexture.of(material).textures.indices).toList())
             }
         }

@@ -2,8 +2,8 @@
 
 # Custom uploader
 # For sending players custom resource packs, they need to be uploaded somewhere first.
-# This plugin uses the free uploader https://file.io by default, but it is recommended to use your own upload service.
-# Put this script on your web server and set the the values below accordingly: https://gist.github.com/NichtStudioCode/be6da03bdd47a503a6a953be6734d346
+# This plugin uses the free uploader https://file.io by default, but it is recommended to set up your own upload service.
+# Put this script on your web server and set the values below accordingly: https://gist.github.com/NichtStudioCode/be6da03bdd47a503a6a953be6734d346
 # Make sure to choose a strong key and set it in this config and in the upload script
 
 # Change custom-uploader-request to your custom uploader request url Example: https://example.com/upload.php

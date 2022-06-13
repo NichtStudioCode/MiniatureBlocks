@@ -10,7 +10,7 @@ import de.studiocode.invui.resourcepack.Icon
 object Menus {
     
     fun registerGlobalIngredients() {
-        Structure.addGlobalIngredient('x', Markers.ITEM_LIST_SLOT)
+        Structure.addGlobalIngredient('x', Markers.ITEM_LIST_SLOT_HORIZONTAL)
         Structure.addGlobalIngredient('<', ::PageBackItem)
         Structure.addGlobalIngredient('>', ::PageForwardItem)
         Structure.addGlobalIngredient('#', Icon.BACKGROUND.item)

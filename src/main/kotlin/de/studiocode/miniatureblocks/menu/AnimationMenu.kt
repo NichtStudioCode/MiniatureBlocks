@@ -78,6 +78,8 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
         return elements
     }
     
+    override fun handlePageChange(previous: Int, now: Int) = Unit
+    
     override fun getPageAmount() = -1
     
     fun createAnimation() {
@@ -156,7 +158,7 @@ class AnimationMenu(val player: Player, data: AnimatedMiniatureData? = null) :
     private class SelectMiniatureItem(model: CustomModel, private val selectHandler: () -> Unit) :
         SimpleItem(model.createItemBuilder().addLoreLines("§7Use this miniature as the frame")) {
         
-        override fun handleClick(clickType: ClickType?, player: Player?, event: InventoryClickEvent?) {
+        override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
             if (clickType == ClickType.LEFT) selectHandler.invoke()
         }
         

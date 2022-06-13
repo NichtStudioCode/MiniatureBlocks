@@ -20,24 +20,24 @@ import org.bukkit.scheduler.BukkitTask
 
 abstract class SearchMenu(val player: Player, private val title: String, refreshItem: Boolean, modifier: (GUI, Boolean) -> Unit = { _, _ -> }) {
     
-    private val listGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 6)
-        .setStructure("" +
-            "1 - - - - - - - s" +
-            "| x x x x x x x |" +
-            "| x x x x x x x |" +
-            "| x x x x x x x |" +
-            "| x x x x x x x |" +
+    private val listGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS)
+        .setStructure(
+            "1 - - - - - - - s",
+            "| x x x x x x x |",
+            "| x x x x x x x |",
+            "| x x x x x x x |",
+            "| x x x x x x x |",
             "3 - - < - > - - 4")
         .addIngredient('s', SearchItem(true))
         .build() as SimplePagedItemsGUI)
         .apply { if (refreshItem) setItem(46, RefreshItem()) }
         .also { modifier(it, true) }
     
-    private val previewGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS, 9, 4)
-        .setStructure("" +
-            "x x x x x x x x x" +
-            "x x x x x x x x x" +
-            "x x x x x x x x x" +
+    private val previewGUI: SimplePagedItemsGUI = (GUIBuilder(GUIType.PAGED_ITEMS)
+        .setStructure(
+            "x x x x x x x x x",
+            "x x x x x x x x x",
+            "x x x x x x x x x",
             "# # # < # > # # s")
         .addIngredient('s', SearchItem(false))
         .build() as SimplePagedItemsGUI)
