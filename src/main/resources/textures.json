@@ -217,6 +217,7 @@
   "CRIMSON_TRAPDOOR",
   "WARPED_TRAPDOOR",
   "IRON_TRAPDOOR",
+  "MANGROVE_TRAPDOOR",
   "SNOW",
   "COBBLED_DEEPSLATE",
   "POLISHED_DEEPSLATE",
@@ -258,6 +259,7 @@
   "EXPOSED_CUT_COPPER",
   "WEATHERED_CUT_COPPER",
   "OXIDIZED_CUT_COPPER",
+  "MANGROVE_PLANKS",
   {
     "material": "INFESTED_STONE",
     "texture": "block/stone"
@@ -531,6 +533,10 @@
     "textures": "block/oxidized_cut_copper"
   },
   {
+    "material": "MANGROVE_SLAB",
+    "textures": "block/mangrove_planks"
+  },
+  {
     "material": "ACACIA_STAIRS",
     "textures": "block/acacia_planks"
   },
@@ -711,6 +717,10 @@
     "textures": "block/oxidized_cut_copper"
   },
   {
+    "material": "MANGROVE_STAIRS",
+    "textures": "block/mangrove_planks"
+  },
+  {
     "material": "ACACIA_LEAVES",
     "textures": "block/modded/acacia_leaves"
   },
@@ -733,6 +743,10 @@
   {
     "material": "SPRUCE_LEAVES",
     "textures": "block/modded/spruce_leaves"
+  },
+  {
+    "material": "MANGROVE_LEAVES",
+    "textures": "block/modded/mangrove_leaves"
   },
   {
     "material": "WHITE_CARPET",
@@ -880,6 +894,11 @@
     "textures": "block/iron_block"
   },
   {
+    "material": "MANGROVE_PRESSURE_PLATE",
+    "model": "model/pressure_plate",
+    "textures": "block/mangrove_planks"
+  },
+  {
     "material": "OAK_FENCE",
     "textures": "block/oak_planks"
   },
@@ -916,6 +935,10 @@
     "textures": "block/nether_bricks"
   },
   {
+    "material": "MANGROVE_FENCE",
+    "textures": "block/mangrove_planks"
+  },
+  {
     "material": "OAK_FENCE_GATE",
     "textures": "block/oak_planks"
   },
@@ -946,6 +969,10 @@
   {
     "material": "WARPED_FENCE_GATE",
     "textures": "block/warped_planks"
+  },
+  {
+    "material": "MANGROVE_FENCE_GATE",
+    "textures": "block/mangrove_planks"
   },
   {
     "material": "STONE_BUTTON",
@@ -996,6 +1023,11 @@
     "material": "POLISHED_BLACKSTONE_BUTTON",
     "model": "model/button",
     "textures": "block/polished_blackstone"
+  },
+  {
+    "material": "MANGROVE_BUTTON",
+    "model": "model/button",
+    "textures": "block/mangrove_planks"
   },
   {
     "material": "COBBLESTONE_WALL",
@@ -1112,6 +1144,11 @@
     "textures": "block/spruce_log"
   },
   {
+    "material": "MANGROVE_WOOD",
+    "rotation": "UP",
+    "textures": "block/mangrove_log"
+  },
+  {
     "material": "STRIPPED_ACACIA_WOOD",
     "rotation": "UP",
     "textures": "block/stripped_acacia_log"
@@ -1150,6 +1187,11 @@
     "material": "STRIPPED_WARPED_HYPHAE",
     "rotation": "UP",
     "textures": "block/stripped_warped_stem"
+  },
+  {
+    "material": "STRIPPED_MANGROVE_WOOD",
+    "rotation": "UP",
+    "textures": "block/stripped_mangrove_log"
   },
   {
     "material": "WARPED_HYPHAE",
@@ -2539,6 +2581,13 @@
     ]
   },
   {
+    "material": "MANGROVE_DOOR",
+    "textures": [
+      "block/mangrove_door_bottom",
+      "block/mangrove_door_top"
+    ]
+  },
+  {
     "material": "DAYLIGHT_DETECTOR",
     "model": "model/daylight_detector",
     "textures": [
@@ -3365,6 +3414,20 @@
     "model": "model/sign_wall",
     "textures": [
       "entity/signs/warped"
+    ]
+  },
+  {
+    "material": "MANGROVE_SIGN",
+    "model": "model/sign",
+    "textures": [
+      "entity/signs/mangrove"
+    ]
+  },
+  {
+    "material": "MANGROVE_WALL_SIGN",
+    "model": "model/sign_wall",
+    "textures": [
+      "entity/signs/mangrove"
     ]
   },
   {
@@ -5179,6 +5242,101 @@
     "model": "model/chorus_flower",
     "textures": [
       "block/chorus_plant"
+    ]
+  },
+  {
+    "material": "OCHRE_FROGLIGHT",
+    "rotation": "UP",
+    "textures": [
+      "block/ochre_froglight_side",
+      "block/ochre_froglight_side",
+      "block/ochre_froglight_side",
+      "block/ochre_froglight_side",
+      "block/ochre_froglight_up",
+      "block/ochre_froglight_up"
+    ]
+  },
+  {
+    "material": "PEARLESCENT_FROGLIGHT",
+    "rotation": "UP",
+    "textures": [
+      "block/pearlescent_froglight_side",
+      "block/pearlescent_froglight_side",
+      "block/pearlescent_froglight_side",
+      "block/pearlescent_froglight_side",
+      "block/pearlescent_froglight_up",
+      "block/pearlescent_froglight_up"
+    ]
+  },
+  {
+    "material": "VERDANT_FROGLIGHT",
+    "rotation": "UP",
+    "textures": [
+      "block/verdant_froglight_side",
+      "block/verdant_froglight_side",
+      "block/verdant_froglight_side",
+      "block/verdant_froglight_side",
+      "block/verdant_froglight_up",
+      "block/verdant_froglight_up"
+    ]
+  },
+  {
+    "material": "MANGROVE_LOG",
+    "rotation": "UP",
+    "textures": [
+      "block/mangrove_log",
+      "block/mangrove_log",
+      "block/mangrove_log",
+      "block/mangrove_log",
+      "block/mangrove_log_top",
+      "block/mangrove_log_top"
+    ]
+  },
+  {
+    "material": "STRIPPED_MANGROVE_LOG",
+    "rotation": "UP",
+    "textures": [
+      "block/stripped_mangrove_log",
+      "block/stripped_mangrove_log",
+      "block/stripped_mangrove_log",
+      "block/stripped_mangrove_log",
+      "block/stripped_mangrove_log_top",
+      "block/stripped_mangrove_log_top"
+    ]
+  },
+  {
+    "material": "MUDDY_MANGROVE_ROOTS",
+    "rotation": "UP",
+    "textures": [
+      "block/muddy_mangrove_roots_side",
+      "block/muddy_mangrove_roots_side",
+      "block/muddy_mangrove_roots_side",
+      "block/muddy_mangrove_roots_side",
+      "block/muddy_mangrove_roots_top",
+      "block/muddy_mangrove_roots_top"
+    ]
+  },
+  {
+    "material": "MANGROVE_ROOTS",
+    "model": "model/mangrove_roots",
+    "textures": [
+      "block/mangrove_roots_side",
+      "block/mangrove_roots_top"
+    ]
+  },
+  {
+    "material": "MANGROVE_PROPAGULE",
+    "models": [
+      "model/mangrove_propagule/hanging_0",
+      "model/mangrove_propagule/hanging_1",
+      "model/mangrove_propagule/hanging_2",
+      "model/mangrove_propagule/hanging_3",
+      "model/mangrove_propagule/hanging_4",
+      "model/mangrove_propagule/standing"
+    ],
+    "textures": [
+      "block/mangrove_propagule_hanging",
+      "block/mangrove_propagule"
     ]
   }
 ]

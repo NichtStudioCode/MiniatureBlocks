@@ -440,6 +440,12 @@ class AsyncBeacon(block: Block) : AsyncBlockData(Material.BEACON) {
     
 }
 
+class AsyncMangrovePropagule(data: MangrovePropagule) : AsyncBlockData(Material.MANGROVE_PROPAGULE), AsyncMultiModel {
+    
+    override val model = if (data.isHanging) data.age else 5
+    
+}
+
 class AsyncMiniature(armorStand: ArmorStand) : AsyncBlockData(Material.AIR) {
     
     val model: ModelFile.CustomModel
@@ -511,6 +517,7 @@ fun Block.toAsyncBlockData(): AsyncBlockData {
         isVersionOrHigher("1.17") && blockData is Dripleaf -> AsyncDripleaf(material, blockData)
         isVersionOrHigher("1.17") && blockData is Candle -> AsyncCandle(material, blockData)
         isVersionOrHigher("1.17") && blockData is CaveVinesPlant -> AsyncCaveVinesPlant(material, blockData)
+        isVersionOrHigher("1.19") && blockData is MangrovePropagule -> AsyncMangrovePropagule(blockData)
         
         blockData is Ageable && !material.isAgeableIgnored() -> AsyncTextureAgeable(material, blockData)
         blockData is Directional -> AsyncDirectionalBlockData(material, blockData)
